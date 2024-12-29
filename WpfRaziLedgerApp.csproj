@@ -1,0 +1,248 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="UserControls\Commerce\**" />
+    <EmbeddedResource Remove="UserControls\Commerce\**" />
+    <None Remove="UserControls\Commerce\**" />
+    <Page Remove="UserControls\Commerce\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Model2.Context.cs" />
+    <Compile Remove="Model2.cs" />
+    <Compile Remove="Model2.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Fonts\FontsFree-Net-ir_sans.ttf" />
+    <None Remove="Fonts\Yekan Bakh EN 01 Light.ttf" />
+    <None Remove="Fonts\Yekan Bakh EN 02-Bold.ttf" />
+    <None Remove="Fonts\Yekan Bakh EN 02-Regular.ttf" />
+    <None Remove="Images\AddData.gif" />
+    <None Remove="Images\AddDataLarge.gif" />
+    <None Remove="Images\AddDataSmall.gif" />
+    <None Remove="Images\Cancel.png" />
+    <None Remove="Images\ClearSearch.png" />
+    <None Remove="Images\Data - Copy.jpg" />
+    <None Remove="Images\Data.jpg" />
+    <None Remove="Images\Data.png" />
+    <None Remove="Images\DataEdit.jpg" />
+    <None Remove="Images\DataEdit.png" />
+    <None Remove="Images\Delete.png" />
+    <None Remove="Images\filter_8365477.png" />
+    <None Remove="Images\RazyLogo.jpg" />
+    <None Remove="Images\RazyLogo.png" />
+    <None Remove="Images\Save.png" />
+    <None Remove="Images\search %282%29.png" />
+    <None Remove="Images\SearchPng copy.png" />
+    <None Remove="Images\SearchPng.png" />
+    <None Remove="Images\settings - Copy.png" />
+    <None Remove="Images\settings.png" />
+    <None Remove="Model2.Context.tt" />
+    <None Remove="Model2.edmx" />
+    <None Remove="Model2.edmx.diagram" />
+    <None Remove="Model2.tt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="UserControls\Commerce\Definitions\GroupCommodity.xaml.cs" />
+    <Compile Include="UserControls\Commerce\Definitions\usrCity.xaml.cs" />
+    <Compile Include="UserControls\Commerce\Definitions\usrCommodity.xaml.cs" />
+    <Compile Include="UserControls\Commerce\Definitions\usrCommodityPricingPanel.xaml.cs" />
+    <Compile Include="UserControls\Commerce\Definitions\usrCustomerGroup.xaml.cs" />
+    <Compile Include="UserControls\Commerce\Definitions\usrGroupStorage.xaml.cs" />
+    <Compile Include="UserControls\Commerce\Definitions\usrPriceGroup.xaml.cs" />
+    <Compile Include="UserControls\Commerce\Definitions\usrProvince.xaml.cs" />
+    <Compile Include="UserControls\Commerce\Definitions\usrStorage.xaml.cs" />
+    <Compile Include="UserControls\Commerce\Definitions\usrUnit.xaml.cs" />
+    <Compile Include="UserControls\Commerce\SellAndBuy\usrOrder.xaml.cs" />
+    <Compile Include="UserControls\Commerce\SellAndBuy\usrPreInvoice.xaml.cs" />
+    <Compile Include="UserControls\Commerce\SellAndBuy\usrProductBuy.xaml.cs" />
+    <Compile Include="UserControls\Commerce\SellAndBuy\usrProductSell.xaml.cs" />
+    <Compile Include="UserControls\Commerce\Storage\usrCodingReceiptTypes.xaml.cs" />
+    <Compile Include="UserControls\Commerce\Storage\usrCodingTypesTransfer.xaml.cs" />
+    <Compile Include="UserControls\Commerce\Storage\usrNPStorage.xaml.cs" />
+    <Compile Include="UserControls\Commerce\Storage\usrStorageBetweenTransfer.xaml.cs" />
+    <Compile Include="UserControls\Commerce\Storage\usrStorageReceipt.xaml.cs" />
+    <Compile Include="UserControls\Commerce\Storage\usrStorageRotation.xaml.cs" />
+    <Compile Include="UserControls\Commerce\Storage\usrStorageTransfer.xaml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.17" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.17">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.17" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.0" />
+    <PackageReference Include="System.Drawing.Common" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Include="UserControls\Commerce\Definitions\GroupCommodity.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Commerce\Definitions\usrCity.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Commerce\Definitions\usrCommodity.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Commerce\Definitions\usrCommodityPricingPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Commerce\Definitions\usrCustomerGroup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Commerce\Definitions\usrGroupStorage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Commerce\Definitions\usrPriceGroup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Commerce\Definitions\usrProvince.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Commerce\Definitions\usrStorage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Commerce\Definitions\usrUnit.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Commerce\SellAndBuy\usrOrder.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Commerce\SellAndBuy\usrPreInvoice.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Commerce\SellAndBuy\usrProductBuy.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Commerce\SellAndBuy\usrProductSell.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Commerce\Storage\usrCodingReceiptTypes.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Commerce\Storage\usrCodingTypesTransfer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Commerce\Storage\usrNPStorage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Commerce\Storage\usrStorageBetweenTransfer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Commerce\Storage\usrStorageReceipt.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Commerce\Storage\usrStorageRotation.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Commerce\Storage\usrStorageTransfer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="ClosedXML">
+      <HintPath>bin\Debug\net5.0-windows8.0\ClosedXML.dll</HintPath>
+    </Reference>
+    <Reference Include="PersianCalendarWPF">
+      <HintPath>bin\Debug\net5.0-windows8.0\PersianCalendarWPF.dll</HintPath>
+    </Reference>
+    <Reference Include="PersianDateControlsNet">
+      <HintPath>bin\Debug\net6.0-windows8.0\PersianDateControlsNet.dll</HintPath>
+    </Reference>
+    <Reference Include="PersianDateNet">
+      <HintPath>bin\Debug\net6.0-windows8.0\PersianDateNet.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.Data.WPF">
+      <HintPath>..\..\..\..\..\Program Files (x86)\Syncfusion\Essential Studio\WPF\27.1.48\precompiledassemblies\net6.0\Syncfusion.Data.WPF.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.Edit.Wpf">
+      <HintPath>..\..\..\..\..\Program Files (x86)\Syncfusion\Essential Studio\WPF\27.1.48\precompiledassemblies\net6.0\Syncfusion.Edit.WPF.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.GridConverter.Wpf">
+      <HintPath>..\..\..\..\..\Program Files (x86)\Syncfusion\Essential Studio\WPF\27.1.48\precompiledassemblies\4.0\Syncfusion.GridConverter.WPF.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.Licensing">
+      <HintPath>..\..\..\..\..\Program Files (x86)\Syncfusion\Essential Studio\WPF\27.1.48\precompiledassemblies\net6.0\Syncfusion.Licensing.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.Linq.Base">
+      <HintPath>..\..\..\..\..\Program Files (x86)\Syncfusion\Essential Studio\WPF\27.1.48\precompiledassemblies\net6.0\Syncfusion.Linq.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.SfGrid.WPF">
+      <HintPath>..\..\..\..\..\Program Files (x86)\Syncfusion\Essential Studio\WPF\27.1.48\precompiledassemblies\net6.0\Syncfusion.SfGrid.WPF.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.SfGridConverter.WPF">
+      <HintPath>..\..\..\..\..\Program Files (x86)\Syncfusion\Essential Studio\WPF\27.1.48\precompiledassemblies\net6.0\Syncfusion.SfGridConverter.WPF.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.SfInput.Wpf">
+      <HintPath>..\..\..\..\..\Program Files (x86)\Syncfusion\Essential Studio\WPF\27.1.48\precompiledassemblies\net6.0\Syncfusion.SfInput.WPF.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.SfTextInputLayout.WPF">
+      <HintPath>..\..\..\..\..\Program Files (x86)\Syncfusion\Essential Studio\WPF\27.1.48\precompiledassemblies\net6.0\Syncfusion.SfTextInputLayout.WPF.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.Shared.WPF">
+      <HintPath>..\..\..\..\..\Program Files (x86)\Syncfusion\Essential Studio\WPF\27.1.48\precompiledassemblies\net6.0\Syncfusion.Shared.WPF.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.Tools.Wpf">
+      <HintPath>..\..\..\..\..\Program Files (x86)\Syncfusion\Essential Studio\WPF\27.1.48\precompiledassemblies\net6.0\Syncfusion.Tools.WPF.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.XlsIO.Base">
+      <HintPath>..\..\..\..\..\Program Files (x86)\Syncfusion\Essential Studio\WPF\27.1.48\precompiledassemblies\net6.0\Syncfusion.XlsIO.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <HintPath>..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.Windows.Forms.dll</HintPath>
+    </Reference>
+    <Reference Include="XamlAnimatedGif">
+      <HintPath>bin\Debug\net6.0-windows8.0\XamlAnimatedGif.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.Toolkit">
+      <HintPath>bin\Debug\net6.0-windows8.0\Xceed.Wpf.Toolkit.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Fonts\FontsFree-Net-ir_sans.ttf" />
+    <Resource Include="Fonts\Yekan Bakh EN 01 Light.ttf" />
+    <Resource Include="Fonts\Yekan Bakh EN 02-Bold.ttf" />
+    <Resource Include="Fonts\Yekan Bakh EN 02-Regular.ttf" />
+    <Resource Include="Images\AddData.gif" />
+    <Resource Include="Images\AddDataLarge.gif" />
+    <Resource Include="Images\AddDataSmall.gif" />
+    <Resource Include="Images\Cancel.png" />
+    <Resource Include="Images\ClearSearch.png" />
+    <Resource Include="Images\Data.jpg" />
+    <Resource Include="Images\Data.png" />
+    <Resource Include="Images\DataEdit.jpg" />
+    <Resource Include="Images\DataEdit.png" />
+    <Resource Include="Images\Delete.png" />
+    <Resource Include="Images\filter_8365477.png" />
+    <Resource Include="Images\RazyLogo.jpg" />
+    <Resource Include="Images\RazyLogo.png" />
+    <Resource Include="Images\Save.png" />
+    <Resource Include="Images\search (2).png" />
+    <Resource Include="Images\SearchPng copy.png" />
+    <Resource Include="Images\SearchPng.png" />
+    <Resource Include="Images\settings.png" />
+  </ItemGroup>
+
+</Project>
