@@ -233,20 +233,13 @@ namespace WpfRaziLedgerApp
                 InvoiceNumber = (header1.InvoiceNumber + 1).ToString();
             }
             var list = db.Preferentials.AsNoTracking()
-                .Select(z => new
-                {
-                    z.Id,
-                    z.PreferentialName,
-                    z.PreferentialCode
-                })
-                .ToList()
-                .Select(x => new Preferential
-                {
-                    Id = x.Id,
-                    PreferentialName = x.PreferentialName,
-                    PreferentialCode = x.PreferentialCode
-                })
-                .ToList();
+                    .Select(z => new Preferential
+                    {
+                        Id = z.Id,
+                        PreferentialName = z.PreferentialName,
+                        PreferentialCode = z.PreferentialCode
+                    })
+                    .ToList();
             if (id == Guid.Empty)
             {
                 e_addHeader = new ProductSellHeader()
@@ -267,6 +260,31 @@ namespace WpfRaziLedgerApp
                     FkPreferentialIdDriverNavigation = list.FirstOrDefault(t => t.PreferentialCode == (int.TryParse(txtDriver.Text, out code) ? code : -1)),
                     FkPreferentialIdPersonnelNavigation = list.FirstOrDefault(t => t.PreferentialCode == (int.TryParse(txtPersonnel.Text, out code) ? code : -1))
                 };
+                try
+                {
+                    if (e_addHeader.FkPreferentialIdReceiverNavigation != null)
+                        db.Attach(e_addHeader.FkPreferentialIdReceiverNavigation);
+                }
+                catch { }
+                try
+                {
+                    if (e_addHeader.FkPreferentialIdFreightNavigation != null)
+                        db.Attach(e_addHeader.FkPreferentialIdFreightNavigation);
+                }
+                catch { }
+                try
+                {
+                    if (e_addHeader.FkPreferentialIdDriverNavigation != null)
+                        db.Attach(e_addHeader.FkPreferentialIdDriverNavigation);
+                }
+                catch { }
+                try
+                {
+                    if (e_addHeader.FkPreferentialIdPersonnelNavigation != null)
+                        db.Attach(e_addHeader.FkPreferentialIdPersonnelNavigation);
+                }
+                catch { }
+
                 if (txtOrderNumber.Text != "")
                     e_addHeader.OrderNumber = long.Parse(txtOrderNumber.Text);
                 if (txtShippingCost.Text != "")
@@ -284,7 +302,6 @@ namespace WpfRaziLedgerApp
                         Indexer = index,
                         Discount = item.Discount,
                         Fee = item.Fee,
-                        IsTax = item.IsTax,
                         TaxPercent = item.TaxPercent,
                         Id = Guid.NewGuid()
                     };
@@ -339,7 +356,6 @@ namespace WpfRaziLedgerApp
                         Indexer = index,
                         Discount = item.Discount,
                         Fee = item.Fee,
-                        IsTax = item.IsTax,
                         TaxPercent = item.TaxPercent,
                         Id = Guid.NewGuid()
                     };
@@ -618,6 +634,14 @@ namespace WpfRaziLedgerApp
                             ProductSellDetail.FkCommodity = commodity;
                         }
                             datagrid.View.Refresh();
+                    }
+                    else if (e.RowColumnIndex.ColumnIndex == 6)
+                    {
+                        if(ProductSellDetail.TaxPercent!=0&& ProductSellDetail.TaxPercent != MainWindow.Current.TaxPercent)
+                        {
+                            ProductSellDetail.TaxPercent2 = ProductSellDetail.TaxPercent = 0;
+                            Xceed.Wpf.Toolkit.MessageBox.Show("این درصد مالیات مجاز نمی باشد!", "خطا", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        }
                     }
                 }
             }
@@ -1642,7 +1666,7 @@ namespace WpfRaziLedgerApp
                         Dispatcher.BeginInvoke(new Action(async () =>
                         {
                             await Task.Delay(50);
-                            txtOrderNumber.Focus();
+                            txtFreight.Focus();
                         }));
                         break;
                     case "txtFreight":
@@ -1710,7 +1734,7 @@ namespace WpfRaziLedgerApp
                         Dispatcher.BeginInvoke(new Action(async () =>
                         {
                             await Task.Delay(50);
-                            txtOrderNumber.Focus();
+                            txtFreight.Focus();
                         }));
                         break;
                     case "txtFreight":
@@ -1839,7 +1863,7 @@ namespace WpfRaziLedgerApp
             if (db.OrderHeaders.FirstOrDefault(R => R.NoDoument == y) is OrderHeader orderHeader)
             {
                 ProductSell_Details.Clear();
-                foreach (var item in db.OrderDetails.Where(r => r.FkHeaderId == orderHeader.Id))
+                foreach (var item in db.OrderDetails.Include(y=>y.FkCommodity).Where(r => r.FkHeaderId == orderHeader.Id))
                 {
                     ProductSell_Details.Add(new ProductSellDetail()
                     {

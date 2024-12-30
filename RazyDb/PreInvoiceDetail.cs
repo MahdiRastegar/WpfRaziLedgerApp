@@ -15,7 +15,6 @@ namespace WpfRaziLedgerApp
         public decimal Fee { get; set; }
         public decimal Discount { get; set; }
         public decimal TaxPercent { get; set; }
-        public bool? IsTax { get; set; }
 
         public virtual Commodity FkCommodity { get; set; }
         public virtual PreInvoiceHeader FkHeader { get; set; }

@@ -33,7 +33,7 @@ public string CommodityName
         }
         private int _CommodityCode;
         [NotMapped]
-public int CommodityCode
+        public int CommodityCode
         {
             get
             {
@@ -45,33 +45,43 @@ public int CommodityCode
                 _CommodityCode = FkCommodity.Code;
                 return _CommodityCode;
             }
-            set { _CommodityCode = value; }
+            set 
+            {
+                _CommodityCode = value; 
+                if(FkCommodity != null) 
+                {
+                    TaxPercent2 = (decimal)-.4;
+                }
+            }
         }
+        private decimal _TaxPercent2=(decimal)-.4;
         [NotMapped]
-        bool? _IsTax2
-        {
-            get => IsTax;
-            set => IsTax = value;
-        }
-        [NotMapped]
-        public bool? IsTax2
+        public decimal TaxPercent2
         {
             get
             {
                 if (FkCommodity == null)
                 {
                 }
-                else if (_IsTax2 == null)
+                else if (_TaxPercent2 == (decimal)-.4)
                 {
-                    _IsTax2 = FkCommodity.Taxable;
+                    if (TaxPercent == 0)
+                    {
+                        if (FkCommodity.Taxable == true)
+                            _TaxPercent2 = MainWindow.Current.TaxPercent;
+                        else
+                            _TaxPercent2 = 0;
+                    }
+                    else
+                        _TaxPercent2 = TaxPercent;
                 }
-                if (_IsTax2 == false)
-                    TaxPercent = 0;
-                else
-                    TaxPercent = MainWindow.Current.TaxPercent == -1 ? 10 : MainWindow.Current.TaxPercent;
-                return _IsTax2;
+                TaxPercent = _TaxPercent2;
+                return _TaxPercent2;
+            }            
+            set
+            {
+                _TaxPercent2 = value;
             }
-            set { _IsTax2 = value; }
         }
         public decimal SumNextDiscount
         {

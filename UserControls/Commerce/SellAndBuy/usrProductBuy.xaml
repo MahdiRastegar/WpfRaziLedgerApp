@@ -647,7 +647,7 @@ AutoCompleteMode="Suggest" SuggestionsChanged="SfTextBoxExt_SuggestionsChanged" 
                         <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="0" MinimumWidth="118" HeaderText="فی" MappingName="Fee" TextAlignment="Left"/>
                         <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="0" MinimumWidth="118" HeaderText="تخفیف" MappingName="Discount" TextAlignment="Left"/>
                         <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="0" MinimumWidth="118" HeaderText="مبلغ" IsReadOnly="True" MappingName="SumNextDiscount" TextAlignment="Left"/>
-                        <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="0" MinimumWidth="118" HeaderText="درصد مالیات" MappingName="TaxPercent" TextAlignment="Left"/>
+                        <Syncfusion:GridNumericColumn NumberDecimalDigits="0" MinimumWidth="100" HeaderText="درصد مالیات" MappingName="TaxPercent2" TextAlignment="Left"/>
                         <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="0" MinimumWidth="118" HeaderText="مبلغ مالیات" IsReadOnly="True" MappingName="Tax" TextAlignment="Left"/>
                         <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="0" MinimumWidth="118" HeaderText="مبلغ کل" MappingName="Sum" TextAlignment="Left"/>
                     </Syncfusion:SfDataGrid.Columns>

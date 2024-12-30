@@ -605,7 +605,7 @@ FontFamily="{StaticResource IranSans}" Width="27"
                         <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="0" MinimumWidth="118" HeaderText="فی" MappingName="Fee" TextAlignment="Left"/>
                         <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="0" MinimumWidth="118" HeaderText="تخفیف" MappingName="Discount" TextAlignment="Left"/>
                         <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="0" MinimumWidth="118" HeaderText="مبلغ" MappingName="SumNextDiscount" TextAlignment="Left"/>
-                        <Syncfusion:GridCheckBoxColumn MinimumWidth="100" HeaderText="تعلق مالیات" MappingName="IsTax2" TextAlignment="Left"/>
+                        <Syncfusion:GridNumericColumn NumberDecimalDigits="0" MinimumWidth="100" HeaderText="درصد مالیات" MappingName="TaxPercent2" TextAlignment="Left"/>
                         <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="0" MinimumWidth="118" HeaderText="مبلغ مالیات" IsReadOnly="True" MappingName="Tax" TextAlignment="Left"/>
                         <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="0" MinimumWidth="118" HeaderText="مبلغ کل" MappingName="Sum" TextAlignment="Left"/>
                     </Syncfusion:SfDataGrid.Columns>
@@ -649,7 +649,7 @@ Source="{Binding acDocument_Headers}"/>
                             <Syncfusion:GridViewDefinition.DataGrid>
                                 <Syncfusion:SfDataGrid x:Name="FirstLevelNestedGrid" AllowFiltering="True" AllowSorting="False" HeaderRowHeight="30" ColumnSizer="Star" AllowResizingColumns="True" AutoGenerateColumns="False" ShowRowHeader="True">
                                     <Syncfusion:SfDataGrid.Columns>
-                                        <Syncfusion:GridTextColumn MinimumWidth="97" Width="80" HeaderText="کد کالا" MappingName="FCommodity.Code"/>
+                                        <Syncfusion:GridTextColumn MinimumWidth="97" Width="80" HeaderText="کد کالا" MappingName="FkCommodity.Code"/>
                                         <Syncfusion:GridTextColumn MinimumWidth="170" HeaderText="نام" ColumnSizer="AutoWithLastColumnFill" IsReadOnly="True" MappingName="FkCommodity.Name"/>
                                         <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="3" MinimumWidth="118" HeaderText="مقدار" MappingName="Value" TextAlignment="Left"/>
                                         <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="0" MinimumWidth="118" HeaderText="فی" MappingName="Fee" TextAlignment="Left"/>

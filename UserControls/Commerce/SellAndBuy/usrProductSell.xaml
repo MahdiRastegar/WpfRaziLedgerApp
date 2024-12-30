@@ -433,8 +433,8 @@
                     </EventTrigger>
                 </Border.Triggers>
             </Border>
-            <TextBlock VerticalAlignment="Center" Name="txbCalender" HorizontalAlignment="Left" Margin="116 0 0 9" FontSize="17" Text="" Grid.Row="2"/>
-            <PersianCalendarWPF:PersianDatePicker Grid.Row="2" SelectedDateChanged="pcw1_SelectedDateChanged" BorderThickness="0" HorizontalAlignment="Left" Name="pcw1" FlowDirection="LeftToRight" Margin="85,29,0,35"
+            <TextBlock VerticalAlignment="Center" Name="txbCalender" HorizontalAlignment="Left" Margin="116 0 0 9" FontSize="17" Text="" Grid.Row="1" Grid.Column="2"/>
+            <PersianCalendarWPF:PersianDatePicker Grid.Row="1" Grid.Column="2" SelectedDateChanged="pcw1_SelectedDateChanged" BorderThickness="0" HorizontalAlignment="Left" Name="pcw1" FlowDirection="LeftToRight" Margin="85,29,0,35"
 PersianCalendarWPF:FontSize="13.5"
 PersianCalendarWPF:InfoElement.DateInRangeTextColor="Gray"
 PersianCalendarWPF:InfoElement.WeekNameColor="Blue"
@@ -449,7 +449,7 @@ FontFamily="{StaticResource IranSans}" Width="27"
                     <SolidColorBrush Color="Transparent"/>
                 </PersianCalendarWPF:PersianDatePicker.Background>
             </PersianCalendarWPF:PersianDatePicker>
-            <Syncfusion:SfTextInputLayout IsHitTestVisible="False" x:Name="Sf_txtType" OutlineCornerRadius="8" Hint="تاریخ" Grid.Row="2"  VerticalAlignment="Center" Margin="20 0">
+            <Syncfusion:SfTextInputLayout IsHitTestVisible="False" x:Name="Sf_txtType" OutlineCornerRadius="8" Hint="تاریخ" Grid.Row="1" Grid.Column="2"  VerticalAlignment="Center" Margin="20 0">
                 <Label Height="25" FontSize="18"/>
             </Syncfusion:SfTextInputLayout>
             <Syncfusion:SfTextInputLayout Name="Sf_txtPreferential" OutlineCornerRadius="8" Hint="کد تفضیلی" Grid.Row="1"  VerticalAlignment="Center" Margin="20 0"  HorizontalAlignment="Stretch">
@@ -458,13 +458,13 @@ FontFamily="{StaticResource IranSans}" Width="27"
             <Syncfusion:SfTextInputLayout  Name="Sf_txtInvoiceNumber" OutlineCornerRadius="8" Grid.Row="1" Grid.Column="1" Hint="شماره فاکتور" VerticalAlignment="Center" Margin="20 0"  HorizontalAlignment="Stretch">
                 <TextBox Name="txtInvoiceNumber" Text="" TextChanged="txtInvoiceNumber_TextChanged" MaxLength="50" VerticalContentAlignment="Center" IsReadOnly="True" PreviewTextInput="Txt_PreviewTextInput" Margin="0" FontSize="18"/>
             </Syncfusion:SfTextInputLayout>
-            <Syncfusion:SfTextInputLayout Name="Sf_txtReciever" OutlineCornerRadius="8" Grid.Column="2" Hint="کد گیرنده" Grid.Row="1"  VerticalAlignment="Center" Margin="20 0"  HorizontalAlignment="Stretch">
-                <TextBox Name="txtReciever" LostFocus="txtPreferential_LostFocus" PreviewKeyDown="txtPreferential_PreviewKeyDown" VerticalContentAlignment="Center" TextChanged="txtPreferential_TextChanged" IsEnabled="True" IsReadOnly="False" PreviewTextInput="txtPreferential_PreviewTextInput" Margin="0" FontSize="18"/>
-            </Syncfusion:SfTextInputLayout>
-            <Syncfusion:SfTextInputLayout  Name="Sf_txtOrderNumber" OutlineCornerRadius="8" Grid.Row="2" Grid.Column="1" Hint="شماره سفارش" VerticalAlignment="Center" Margin="20 0"  HorizontalAlignment="Stretch">
+            <Syncfusion:SfTextInputLayout  Name="Sf_txtOrderNumber" OutlineCornerRadius="8" Grid.Row="2" Grid.Column="0" Hint="شماره سفارش" VerticalAlignment="Center" Margin="20 0"  HorizontalAlignment="Stretch">
                 <Syncfusion:SfTextBoxExt PreviewKeyDown="txtInvoiceDiscount_PreviewKeyDown" FontSize="18" Name="txtOrderNumber"  PreviewTextInput="Txt_PreviewTextInput" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" Syncfusion:VisualContainer.WantsMouseInput="True" LostFocus="txtOrderNumber_LostFocus" TextChanged="txtInvoiceNumber_TextChanged"
 VerticalAlignment="Center"
 AutoCompleteMode="Suggest" SuggestionsChanged="SfTextBoxExt_SuggestionsChanged" SuggestionPopupClosed="SfTextBoxExt_SuggestionPopupClosed" />
+            </Syncfusion:SfTextInputLayout>
+            <Syncfusion:SfTextInputLayout Name="Sf_txtReciever" OutlineCornerRadius="8" Grid.Column="1" Hint="کد گیرنده" Grid.Row="2"  VerticalAlignment="Center" Margin="20 0"  HorizontalAlignment="Stretch">
+                <TextBox Name="txtReciever" LostFocus="txtPreferential_LostFocus" PreviewKeyDown="txtPreferential_PreviewKeyDown" VerticalContentAlignment="Center" TextChanged="txtPreferential_TextChanged" IsEnabled="True" IsReadOnly="False" PreviewTextInput="txtPreferential_PreviewTextInput" Margin="0" FontSize="18"/>
             </Syncfusion:SfTextInputLayout>
             <Syncfusion:SfTextInputLayout Name="Sf_txtFreight" OutlineCornerRadius="8" Grid.Column="2" Hint="کد باربری" Grid.Row="2"  VerticalAlignment="Center" Margin="20 0"  HorizontalAlignment="Stretch">
                 <TextBox Name="txtFreight" LostFocus="txtPreferential_LostFocus" PreviewKeyDown="txtPreferential_PreviewKeyDown" VerticalContentAlignment="Center" TextChanged="txtPreferential_TextChanged" IsEnabled="True" IsReadOnly="False" PreviewTextInput="txtPreferential_PreviewTextInput" Margin="0" FontSize="18"/>
@@ -672,7 +672,7 @@ AutoCompleteMode="Suggest" SuggestionsChanged="SfTextBoxExt_SuggestionsChanged" 
                         <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="0" MinimumWidth="115" HeaderText="فی" MappingName="Fee" TextAlignment="Left"/>
                         <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="0" MinimumWidth="108" HeaderText="تخفیف" MappingName="Discount" TextAlignment="Left"/>
                         <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="0" MinimumWidth="118" HeaderText="مبلغ" IsReadOnly="True" MappingName="SumNextDiscount" TextAlignment="Left"/>
-                        <Syncfusion:GridCheckBoxColumn MinimumWidth="77" HeaderText="تعلق مالیات" MappingName="IsTax2" TextAlignment="Left"/>
+                        <Syncfusion:GridNumericColumn NumberDecimalDigits="0" MinimumWidth="100" HeaderText="درصد مالیات" MappingName="TaxPercent2" TextAlignment="Left"/>
                         <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="0" MinimumWidth="108" HeaderText="مبلغ مالیات" IsReadOnly="True" MappingName="Tax" TextAlignment="Left"/>
                         <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="0" MinimumWidth="118" HeaderText="مبلغ کل" MappingName="Sum" TextAlignment="Left"/>
                     </Syncfusion:SfDataGrid.Columns>

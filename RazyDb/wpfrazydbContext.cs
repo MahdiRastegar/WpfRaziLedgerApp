@@ -75,7 +75,7 @@ namespace WpfRaziLedgerApp
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasAnnotation("Relational:Collation", "Arabic_CI_AS");
+            modelBuilder.HasAnnotation("Relational:Collation", "Persian_100_CI_AS_SC_UTF8");
 
             modelBuilder.Entity<AcDocumentDetail>(entity =>
             {

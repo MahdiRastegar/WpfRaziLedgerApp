@@ -571,6 +571,14 @@ namespace WpfRaziLedgerApp
                         }
                         datagrid.View.Refresh();
                     }
+                    else if (e.RowColumnIndex.ColumnIndex == 6)
+                    {
+                        if (ProductBuyDetail.TaxPercent != 0 && ProductBuyDetail.TaxPercent != MainWindow.Current.TaxPercent)
+                        {
+                            ProductBuyDetail.TaxPercent2 = ProductBuyDetail.TaxPercent = 0;
+                            Xceed.Wpf.Toolkit.MessageBox.Show("این درصد مالیات مجاز نمی باشد!", "خطا", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        }
+                    }
                 }
             }
             if (Keyboard.IsKeyDown(Key.Enter))

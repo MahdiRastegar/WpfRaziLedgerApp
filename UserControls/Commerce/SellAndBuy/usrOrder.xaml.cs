@@ -249,7 +249,6 @@ namespace WpfRaziLedgerApp
                         Discount = item.Discount,
                         Fee = item.Fee,
                         TaxPercent = item.TaxPercent,
-                        IsTax = item.IsTax,
                         Id = Guid.NewGuid()
                     };
                     db.OrderDetails.Add(en);
@@ -284,7 +283,6 @@ namespace WpfRaziLedgerApp
                         Discount = item.Discount,
                         Fee = item.Fee,
                         TaxPercent = item.TaxPercent,
-                        IsTax = item.IsTax,
                         Id = Guid.NewGuid()
                     };
                     db.OrderDetails.Add(en);
@@ -558,6 +556,14 @@ namespace WpfRaziLedgerApp
                             OrderDetail.FkCommodity = commodity;
                         }
                             datagrid.View.Refresh();
+                    }
+                    else if (e.RowColumnIndex.ColumnIndex == 6)
+                    {
+                        if (OrderDetail.TaxPercent != 0 && OrderDetail.TaxPercent != MainWindow.Current.TaxPercent)
+                        {
+                            OrderDetail.TaxPercent2 = OrderDetail.TaxPercent = 0;
+                            Xceed.Wpf.Toolkit.MessageBox.Show("این درصد مالیات مجاز نمی باشد!", "خطا", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        }
                     }
                 }
             }
