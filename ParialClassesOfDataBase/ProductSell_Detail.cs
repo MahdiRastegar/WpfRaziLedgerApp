@@ -75,7 +75,8 @@ public string CommodityName
                     else
                         _TaxPercent2 = TaxPercent;
                 }
-                TaxPercent = _TaxPercent2;
+                if (_TaxPercent2 != (decimal)-.4)
+                    TaxPercent = _TaxPercent2;
                 return _TaxPercent2;
             }            
             set

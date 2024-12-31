@@ -75,6 +75,7 @@ namespace WpfRaziLedgerApp
                     else
                         _TaxPercent2 = TaxPercent;
                 }
+                if (_TaxPercent2 != (decimal)-.4)
                 TaxPercent = _TaxPercent2;
                 return _TaxPercent2;
             }
