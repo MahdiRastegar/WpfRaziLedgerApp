@@ -732,17 +732,18 @@ namespace WpfRaziLedgerApp
             txtDescription.Text = string.Empty;
             txtPreferential.Text = string.Empty;
             Sf_txtPreferential.HasError = false;
-            Sf_txtPreferential.HelperText = "";
+            txtPersonnelName.Text = "";
+            txtPreferentialName.Text = "";
 
             txtReciever.Text = string.Empty;
             txtFreight.Text = string.Empty;
             txtDriver.Text = string.Empty;
             txtPersonnel.Text = string.Empty;
 
-            Sf_txtReciever.HelperText = string.Empty;
-            Sf_txtFreight.HelperText = string.Empty;
-            Sf_txtDriver.HelperText = string.Empty;
-            Sf_txtPersonnel.HelperText = string.Empty;
+            txtRecieverName.Text = string.Empty;
+            txtFreightName.Text = string.Empty;
+            txtDriverName.Text = string.Empty;
+            txtPersonnelName.Text = string.Empty;
 
             txtOrderNumber.Text = string.Empty;
             Sf_txtOrderNumber.HasError = false;
@@ -1135,7 +1136,7 @@ namespace WpfRaziLedgerApp
                     txbCalender.Text = pcw1.SelectedDate.ToString();
                     txtInvoiceNumber.Text = header.InvoiceNumber.ToString();
                     txtPreferential.Text = header.FkPreferential.PreferentialCode.ToString();
-                    Sf_txtPreferential.HelperText = header.FkPreferential.PreferentialName.ToString();
+                    txtPreferentialName.Text = header.FkPreferential.PreferentialName.ToString();
                     txtDescription.Text = header.Description.ToString();
                     txtSerial.Text = header.Serial.ToString();
 
@@ -1158,10 +1159,10 @@ namespace WpfRaziLedgerApp
                     txtDriver.Text = header.FkPreferentialIdDriverNavigation?.PreferentialCode.ToString();
                     txtPersonnel.Text = header.FkPreferentialIdPersonnelNavigation?.PreferentialCode.ToString();
 
-                    Sf_txtReciever.HelperText = header.FkPreferentialIdReceiverNavigation?.PreferentialName.ToString();
-                    Sf_txtFreight.HelperText = header.FkPreferentialIdFreightNavigation?.PreferentialName.ToString();
-                    Sf_txtDriver.HelperText = header.FkPreferentialIdDriverNavigation?.PreferentialName.ToString();
-                    Sf_txtPersonnel.HelperText = header.FkPreferentialIdPersonnelNavigation?.PreferentialName.ToString();
+                    txtRecieverName.Text = header.FkPreferentialIdReceiverNavigation?.PreferentialName.ToString();
+                    txtFreightName.Text = header.FkPreferentialIdFreightNavigation?.PreferentialName.ToString();
+                    txtDriverName.Text = header.FkPreferentialIdDriverNavigation?.PreferentialName.ToString();
+                    txtPersonnelName.Text = header.FkPreferentialIdPersonnelNavigation?.PreferentialName.ToString();
 
                     var Y = header.ProductSellDetails.Sum(y => y.Sum);
                     txtSum.Text = Y.ToString();
@@ -1376,7 +1377,7 @@ namespace WpfRaziLedgerApp
             {
                 var Y = ProductSell_Details.Sum(y => y.Sum);
                 txtSum.Text = Y.ToString();
-                txtSumDiscount.Text = (Y - decimal.Parse(txtInvoiceDiscount.Text.Replace(",", ""))).ToString();
+                txtSumDiscount.Text = (Y - decimal.Parse(txtInvoiceDiscount.Text.Replace(",", "")) + decimal.Parse(txtShippingCost.Text.Replace(",", ""))).ToString();
                 //return;
 
                 var t = datagrid.ItemsSource;
@@ -1700,11 +1701,11 @@ namespace WpfRaziLedgerApp
         private void txtPreferential_LostFocus(object sender, RoutedEventArgs e)
         {
             var textbox = sender as TextBox;
-            var Sf_textbox = textbox.GetParentOfType<SfTextInputLayout>();
+            var Sf_textbox = this.GetChildByName<TextBlock>(textbox.Name + "Name");
             if (textbox.Text == "")
             {
                 textbox.Text = string.Empty;
-                Sf_textbox.HelperText = string.Empty;
+                Sf_textbox.Text = string.Empty;
                 return;
             }
             using var db = new wpfrazydbContext();
@@ -1713,21 +1714,18 @@ namespace WpfRaziLedgerApp
             if (mu == null)
             {
                 Xceed.Wpf.Toolkit.MessageBox.Show("چنین کد تفضیلی وجود ندارد!");
-                textbox.Text = Sf_textbox.HelperText = string.Empty;
+                textbox.Text = Sf_textbox.Text = string.Empty;
             }
             else
             {
-                Sf_textbox.HelperText = mu.PreferentialName;
+                Sf_textbox.Text = mu.PreferentialName;
                 switch(textbox.Name)
                 {
                     case "txtPreferential":
                         Dispatcher.BeginInvoke(new Action(async () =>
                         {
                             await Task.Delay(50);
-                            if (!txtInvoiceNumber.IsReadOnly)
-                                txtInvoiceNumber.Focus();
-                            else
-                                txtReciever.Focus();
+                            txtOrderNumber.Focus();
                         }));
                         break;
                     case "txtReciever":
@@ -1749,7 +1747,7 @@ namespace WpfRaziLedgerApp
                         Dispatcher.BeginInvoke(new Action(async () =>
                         {
                             await Task.Delay(50);
-                            txtCarType.Focus();
+                            txtCarPlate.Focus();
                         }));
                         break;
                     case "txtPersonnel":
@@ -1789,22 +1787,16 @@ namespace WpfRaziLedgerApp
         }
 
         private void txtInvoiceDiscount_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {            
+        {
+            var txt = sender as TextBox;
             if (e.Text == "\r")
             {
-                btnConfirm.Focus();
-                Dispatcher.BeginInvoke(new Action(() =>
-                {
-                    if (btnConfirm.IsFocused)
-                    {
-                        btnConfirm_Click(null, null);
-                    }
-                }));
+                txtShippingCost.Focus();                
                 return;
             }
             e.Handled = !IsTextAllowed(e.Text);
-            if (txtInvoiceDiscount.Text == "")
-                txtInvoiceDiscount.Text = "0";
+            if (txt.Text == "")
+                txt.Text = "0";
         }
 
         private void txtInvoiceDiscount_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -1818,11 +1810,12 @@ namespace WpfRaziLedgerApp
 
         private void txtInvoiceDiscount_LostFocus(object sender, RoutedEventArgs e)
         {
-            if (txtInvoiceDiscount.Text == "")
-                txtInvoiceDiscount.Text = "0";
+            var txt = sender as TextBox;
+            if (txt.Text == "")
+                txt.Text = "0";
             try
             {
-                txtSumDiscount.Text = (decimal.Parse(txtSum.Text.Replace(",", "")) - decimal.Parse(txtInvoiceDiscount.Text.Replace(",", ""))).ToString();
+                txtSumDiscount.Text = (decimal.Parse(txtSum.Text.Replace(",", "")) - decimal.Parse(txtInvoiceDiscount.Text.Replace(",", "")) + decimal.Parse(txtShippingCost.Text.Replace(",", ""))).ToString();
             }
             catch { }
         }
@@ -1966,6 +1959,26 @@ namespace WpfRaziLedgerApp
             stackPanel.Children.Add(textInputLayout);
 
             return groupBox;
+        }
+
+        private void txtShippingCost_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            var txt = sender as TextBox;
+            if (e.Text == "\r")
+            {
+                btnConfirm.Focus();
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    if (btnConfirm.IsFocused)
+                    {
+                        btnConfirm_Click(null, null);
+                    }
+                }));
+                return;
+            }
+            e.Handled = !IsTextAllowed(e.Text);
+            if (txt.Text == "")
+                txt.Text = "0";
         }
 
         private void persianCalendar_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)

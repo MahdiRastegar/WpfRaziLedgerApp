@@ -659,7 +659,7 @@ namespace WpfRaziLedgerApp
             txtDescription.Text = string.Empty;
             txtPreferential.Text = string.Empty;
             Sf_txtPreferential.HasError = false;
-            Sf_txtPreferential.HelperText = "";
+            txtPreferentialName.Text = "";
 
             txtOrderNumber.Text = string.Empty;
             Sf_txtOrderNumber.HasError = false;
@@ -952,48 +952,59 @@ namespace WpfRaziLedgerApp
 
         public void SetNull()
         {
-            if(window!=null&&(window as winSearch).ParentTextBox is ProductBuyDetail storage)
+            if(window!=null)
             {
-                var y = (window as winSearch).ParentTextBox as ProductBuyDetail;
-                //((datagrid.SelectionController.CurrentCellManager.CurrentCell.Element as GridCell).Content as FrameworkElement).DataContext = null;
-                //((datagrid.SelectionController.CurrentCellManager.CurrentCell.Element as GridCell).Content as FrameworkElement).DataContext = y;
-                var detail = y;                
-                var v = datagrid.SelectionController.CurrentCellManager.CurrentCell;
-                if ((window as winSearch)?.MuText != null)
+                if ((window as winSearch).ParentTextBox is ProductBuyDetail storage)
                 {
-                    using var db = new wpfrazydbContext();
-                    var jid = (window as winSearch)?.MuText.Id;
-                    storage.FkCommodity = db.Commodities.Include("FkUnit").First(j=>j.Id== jid);
-                    datagrid.Dispatcher.BeginInvoke(new Action(() =>
-                    {                        
-                        //MMM
-                        var th = new Thread(() =>
+                    var y = (window as winSearch).ParentTextBox as ProductBuyDetail;
+                    //((datagrid.SelectionController.CurrentCellManager.CurrentCell.Element as GridCell).Content as FrameworkElement).DataContext = null;
+                    //((datagrid.SelectionController.CurrentCellManager.CurrentCell.Element as GridCell).Content as FrameworkElement).DataContext = y;
+                    var detail = y;
+                    var v = datagrid.SelectionController.CurrentCellManager.CurrentCell;
+                    if ((window as winSearch)?.MuText != null)
+                    {
+                        using var db = new wpfrazydbContext();
+                        var jid = (window as winSearch)?.MuText.Id;
+                        storage.FkCommodity = db.Commodities.Include("FkUnit").First(j => j.Id == jid);
+                        datagrid.Dispatcher.BeginInvoke(new Action(() =>
                         {
-                            Thread.Sleep(100);
-                            Dispatcher.Invoke(() =>
+                            //MMM
+                            var th = new Thread(() =>
                             {
-                                var i = 1;
-                                if (v.ColumnIndex == 0)
-                                    i++;
-                                if (datagrid.SelectedIndex == -1)
+                                Thread.Sleep(100);
+                                Dispatcher.Invoke(() =>
                                 {
-                                    datagrid.GetAddNewRowController().CommitAddNew();
-                                    datagrid.View.Refresh();
-                                    datagrid.SelectedIndex = datagrid.GetLastRowIndex() - 1;
-                                    if (datagrid.SelectedIndex != -1)
-                                        (this.datagrid.SelectionController as GridSelectionController).MoveCurrentCell(new RowColumnIndex(v.RowIndex - 1, v.ColumnIndex + i));
-                                }
-                                else
-                                {
-                                    datagrid.View.Refresh();
-                                    (this.datagrid.SelectionController as GridSelectionController).MoveCurrentCell(new RowColumnIndex(v.RowIndex, v.ColumnIndex + i));
-                                }
-                                //MMM
-                                datagrid.IsHitTestVisible = true;
+                                    var i = 1;
+                                    if (v.ColumnIndex == 0)
+                                        i++;
+                                    if (datagrid.SelectedIndex == -1)
+                                    {
+                                        datagrid.GetAddNewRowController().CommitAddNew();
+                                        datagrid.View.Refresh();
+                                        datagrid.SelectedIndex = datagrid.GetLastRowIndex() - 1;
+                                        if (datagrid.SelectedIndex != -1)
+                                            (this.datagrid.SelectionController as GridSelectionController).MoveCurrentCell(new RowColumnIndex(v.RowIndex - 1, v.ColumnIndex + i));
+                                    }
+                                    else
+                                    {
+                                        datagrid.View.Refresh();
+                                        (this.datagrid.SelectionController as GridSelectionController).MoveCurrentCell(new RowColumnIndex(v.RowIndex, v.ColumnIndex + i));
+                                    }
+                                    //MMM
+                                    datagrid.IsHitTestVisible = true;
+                                });
                             });
-                        });
-                        th.Start();
-                        //datagrid.SelectCells(datagrid.GetRecordAtRowIndex(datagrid.SelectedIndex-1), datagrid.Columns[1], datagrid.GetRecordAtRowIndex(datagrid.SelectedIndex), datagrid.Columns[2]);
+                            th.Start();
+                            //datagrid.SelectCells(datagrid.GetRecordAtRowIndex(datagrid.SelectedIndex-1), datagrid.Columns[1], datagrid.GetRecordAtRowIndex(datagrid.SelectedIndex), datagrid.Columns[2]);
+                        }));
+                    }
+                }
+                else if((window as winSearch).ParentTextBox is TextBox hh)
+                {
+                    Dispatcher.BeginInvoke(new Action(async () =>
+                    {
+                        await Task.Delay(50);
+                        txtOrderNumber.Focus();
                     }));
                 }
             }
@@ -1052,7 +1063,7 @@ namespace WpfRaziLedgerApp
                     txbCalender.Text = pcw1.SelectedDate.ToString();
                     txtInvoiceNumber.Text = header.InvoiceNumber.ToString();
                     txtPreferential.Text = header.FkPreferential.PreferentialCode.ToString();
-                    Sf_txtPreferential.HelperText = header.FkPreferential.PreferentialName.ToString();
+                    txtPreferentialName.Text = header.FkPreferential.PreferentialName.ToString();
                     txtDescription.Text = header.Description.ToString();
                     txtSerial.Text = header.Serial.ToString();
 
@@ -1283,7 +1294,7 @@ namespace WpfRaziLedgerApp
             {
                 var Y = ProductBuy_Details.Sum(y => y.Sum);
                 txtSum.Text = Y.ToString();
-                txtSumDiscount.Text = (Y - decimal.Parse(txtInvoiceDiscount.Text.Replace(",", ""))).ToString();
+                txtSumDiscount.Text = (Y - decimal.Parse(txtInvoiceDiscount.Text.Replace(",", "")) + decimal.Parse(txtShippingCost.Text.Replace(",", ""))).ToString();
                 //return;
 
                 var t = datagrid.ItemsSource;
@@ -1552,7 +1563,7 @@ namespace WpfRaziLedgerApp
         {
             if (e.Text == "\r")
             {
-                txtInvoiceNumber.Focus();                
+                txtOrderNumber.Focus();                
                 return;
             }
             e.Handled = !IsTextAllowed(e.Text);
@@ -1563,7 +1574,7 @@ namespace WpfRaziLedgerApp
             if (txtPreferential.Text == "")
             {
                 txtPreferential.Text = string.Empty;
-                Sf_txtPreferential.HelperText = string.Empty;
+                txtPreferentialName.Text = string.Empty;
                 return;
             }
             using var db = new wpfrazydbContext();
@@ -1572,16 +1583,12 @@ namespace WpfRaziLedgerApp
             if (mu == null)
             {
                 Xceed.Wpf.Toolkit.MessageBox.Show("چنین کد تفضیلی وجود ندارد!");
-                txtPreferential.Text = Sf_txtPreferential.HelperText = string.Empty;
+                txtPreferential.Text = txtPreferentialName.Text = string.Empty;
             }
             else
             {
-                Sf_txtPreferential.HelperText = mu.PreferentialName;
-                Dispatcher.BeginInvoke(new Action(async () =>
-                {
-                    await Task.Delay(50);
-                    txtInvoiceNumber.Focus();
-                }));
+                txtPreferentialName.Text = mu.PreferentialName;
+                
                 long t = 0;
                 try
                 {
@@ -1622,22 +1629,17 @@ namespace WpfRaziLedgerApp
         }
 
         private void txtInvoiceDiscount_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {            
+        {
+            var txt = sender as TextBox;
+
             if (e.Text == "\r")
             {
-                btnConfirm.Focus();
-                Dispatcher.BeginInvoke(new Action(() =>
-                {
-                    if (btnConfirm.IsFocused)
-                    {
-                        btnConfirm_Click(null, null);
-                    }
-                }));
+                txtShippingCost.Focus();
                 return;
             }
             e.Handled = !IsTextAllowed(e.Text);
-            if (txtInvoiceDiscount.Text == "")
-                txtInvoiceDiscount.Text = "0";
+            if (txt.Text == "")
+                txt.Text = "0";
         }
 
         private void txtInvoiceDiscount_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -1651,11 +1653,12 @@ namespace WpfRaziLedgerApp
 
         private void txtInvoiceDiscount_LostFocus(object sender, RoutedEventArgs e)
         {
-            if (txtInvoiceDiscount.Text == "")
-                txtInvoiceDiscount.Text = "0";
+            var txt = sender as TextBox;
+            if (txt.Text == "")
+                txt.Text = "0";
             try
             {
-                txtSumDiscount.Text = (decimal.Parse(txtSum.Text.Replace(",", "")) - decimal.Parse(txtInvoiceDiscount.Text.Replace(",", ""))).ToString();
+                txtSumDiscount.Text = (decimal.Parse(txtSum.Text.Replace(",", "")) - decimal.Parse(txtInvoiceDiscount.Text.Replace(",", "")) + decimal.Parse(txtShippingCost.Text.Replace(",", ""))).ToString();
             }
             catch { }
         }
@@ -1696,7 +1699,7 @@ namespace WpfRaziLedgerApp
             if (db.OrderHeaders.FirstOrDefault(R=>R.NoDoument==y) is OrderHeader orderHeader)
             {
                 ProductBuy_Details.Clear();
-                foreach (var item in db.OrderDetails.Where(r=>r.FkHeaderId== orderHeader.Id))
+                foreach (var item in db.OrderDetails.Include(y => y.FkCommodity).Where(r=>r.FkHeaderId== orderHeader.Id))
                 {
                     ProductBuy_Details.Add(new ProductBuyDetail()
                     {
@@ -1712,6 +1715,26 @@ namespace WpfRaziLedgerApp
             {
                 txtOrderNumber.Text = "";
             }
+        }
+
+        private void txtShippingCost_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            var txt = sender as TextBox;
+            if (e.Text == "\r")
+            {
+                btnConfirm.Focus();
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    if (btnConfirm.IsFocused)
+                    {
+                        btnConfirm_Click(null, null);
+                    }
+                }));
+                return;
+            }
+            e.Handled = !IsTextAllowed(e.Text);
+            if (txt.Text == "")
+                txt.Text = "0";
         }
 
         private void persianCalendar_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)

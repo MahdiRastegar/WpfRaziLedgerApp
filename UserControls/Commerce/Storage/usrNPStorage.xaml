@@ -583,7 +583,7 @@ FontFamily="{StaticResource IranSans}" Width="27"
                     <Syncfusion:SfDataGrid.Columns>
                         <Syncfusion:GridTextColumn MinimumWidth="97" Width="80" HeaderText="کد کالا" MappingName="CommodityCode"/>
                         <Syncfusion:GridTextColumn MinimumWidth="170" HeaderText="نام" ColumnSizer="AutoWithLastColumnFill" IsReadOnly="True" MappingName="CommodityName"/>
-                        <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="3" MinimumWidth="118" HeaderText="مقدار" MappingName="Value" TextAlignment="Left"/>
+                        <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="3" MinimumWidth="118" HeaderText="مقدار" MaxValue="999999" MappingName="Value" TextAlignment="Left"/>
                         <Syncfusion:GridTextColumn MinimumWidth="170" HeaderText="واحد" ColumnSizer="Star" IsReadOnly="True" MappingName="FkCommodity.FkUnit.Name"/>
                     </Syncfusion:SfDataGrid.Columns>
                 </Syncfusion:SfDataGrid>
@@ -626,7 +626,7 @@ Source="{Binding acDocument_Headers}"/>
                                     <Syncfusion:SfDataGrid.Columns>
                                         <Syncfusion:GridTextColumn MinimumWidth="97" Width="80" HeaderText="کد کالا" MappingName="FkCommodity.Code"/>
                                         <Syncfusion:GridTextColumn MinimumWidth="170" HeaderText="نام" ColumnSizer="AutoWithLastColumnFill" IsReadOnly="True" MappingName="FkCommodity.Name"/>
-                                        <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="3" MinimumWidth="118" HeaderText="مقدار" MappingName="Value" TextAlignment="Left"/>
+                                        <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="3" MinimumWidth="118" HeaderText="مقدار" MaxValue="999999" MappingName="Value" TextAlignment="Left"/>
                                         <Syncfusion:GridTextColumn MinimumWidth="170" HeaderText="واحد" ColumnSizer="Star" IsReadOnly="True" MappingName="FkCommodity.FkUnit.Name"/>
                                     </Syncfusion:SfDataGrid.Columns>
                                 </Syncfusion:SfDataGrid>

@@ -378,8 +378,8 @@
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"/>
-                <RowDefinition Height="1*" MinHeight="90"/>
-                <RowDefinition Height="1*" MinHeight="90"/>
+                <RowDefinition Height="90"/>
+                <RowDefinition Height="90"/>
                 <RowDefinition Height="1*" MinHeight="90"/>
                 <RowDefinition Height="1*" MinHeight="90"/>
                 <RowDefinition Height="1*" MinHeight="90"/>
@@ -388,7 +388,7 @@
                 <RowDefinition Height="1*" MinHeight="90"/>
                 <RowDefinition Height="25"/>
             </Grid.RowDefinitions>
-            <Border  Name="borderEdit" Visibility="Hidden" Grid.ColumnSpan="3" CornerRadius="5" Margin="4 -10 0 0" Grid.Row="1" Grid.RowSpan="9" BorderThickness="4">
+            <Border  Name="borderEdit" Visibility="Hidden" Grid.ColumnSpan="3" CornerRadius="5" Margin="4 -10 -10 0" Grid.Row="1" Grid.RowSpan="9" BorderThickness="4">
                 <Border.Background>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                         <GradientStop Color="White" Offset="0"/>
@@ -433,8 +433,8 @@
                     </EventTrigger>
                 </Border.Triggers>
             </Border>
-            <TextBlock VerticalAlignment="Center" Name="txbCalender" HorizontalAlignment="Left" Margin="116 0 0 9" FontSize="17" Text="" Grid.Row="1" Grid.Column="2"/>
-            <PersianCalendarWPF:PersianDatePicker Grid.Row="1" Grid.Column="2" SelectedDateChanged="pcw1_SelectedDateChanged" BorderThickness="0" HorizontalAlignment="Left" Name="pcw1" FlowDirection="LeftToRight" Margin="85,29,0,35"
+            <TextBlock VerticalAlignment="Center" Name="txbCalender" HorizontalAlignment="Left" Margin="116 0 0 9" FontSize="17" Text="" Grid.Row="1" Grid.Column="0"/>
+            <PersianCalendarWPF:PersianDatePicker Grid.Row="1" Grid.Column="0" SelectedDateChanged="pcw1_SelectedDateChanged" BorderThickness="0" HorizontalAlignment="Left" Name="pcw1" FlowDirection="LeftToRight" Margin="85,29,0,35"
 PersianCalendarWPF:FontSize="13.5"
 PersianCalendarWPF:InfoElement.DateInRangeTextColor="Gray"
 PersianCalendarWPF:InfoElement.WeekNameColor="Blue"
@@ -449,47 +449,100 @@ FontFamily="{StaticResource IranSans}" Width="27"
                     <SolidColorBrush Color="Transparent"/>
                 </PersianCalendarWPF:PersianDatePicker.Background>
             </PersianCalendarWPF:PersianDatePicker>
-            <Syncfusion:SfTextInputLayout IsHitTestVisible="False" x:Name="Sf_txtType" OutlineCornerRadius="8" Hint="تاریخ" Grid.Row="1" Grid.Column="2"  VerticalAlignment="Center" Margin="20 0">
+            <Syncfusion:SfTextInputLayout IsHitTestVisible="False" x:Name="Sf_txtType" OutlineCornerRadius="8" Hint="تاریخ" Grid.Row="1" Grid.Column="0"  VerticalAlignment="Center" Margin="20 0">
                 <Label Height="25" FontSize="18"/>
             </Syncfusion:SfTextInputLayout>
-            <Syncfusion:SfTextInputLayout Name="Sf_txtPreferential" OutlineCornerRadius="8" Hint="کد تفضیلی" Grid.Row="1"  VerticalAlignment="Center" Margin="20 0"  HorizontalAlignment="Stretch">
+            <Syncfusion:SfTextInputLayout Name="Sf_txtPreferential" OutlineCornerRadius="8" Hint="کد تفضیلی" Grid.Row="2"  VerticalAlignment="Center" Margin="20 0" Grid.Column="1" HorizontalAlignment="Stretch">
                 <TextBox Name="txtPreferential" LostFocus="txtPreferential_LostFocus" PreviewKeyDown="txtPreferential_PreviewKeyDown" VerticalContentAlignment="Center" TextChanged="txtPreferential_TextChanged" IsEnabled="True" IsReadOnly="False" PreviewTextInput="txtPreferential_PreviewTextInput" Margin="0" FontSize="18"/>
             </Syncfusion:SfTextInputLayout>
-            <Syncfusion:SfTextInputLayout  Name="Sf_txtInvoiceNumber" OutlineCornerRadius="8" Grid.Row="1" Grid.Column="1" Hint="شماره فاکتور" VerticalAlignment="Center" Margin="20 0"  HorizontalAlignment="Stretch">
+            <TextBlock Grid.Row="2" Name="txtPreferentialName" Grid.Column="2" FontSize="18" VerticalAlignment="Center" TextWrapping="Wrap">
+                <TextBlock.Foreground>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FF9E9C6A"/>
+                        <GradientStop Color="#FFA2908F" Offset="1"/>
+                    </LinearGradientBrush>
+                </TextBlock.Foreground>
+            </TextBlock>
+            <Syncfusion:SfTextInputLayout  Name="Sf_txtInvoiceNumber" OutlineCornerRadius="8" Grid.Row="2" Grid.Column="0" Hint="شماره فاکتور" VerticalAlignment="Center" Margin="20 0"  HorizontalAlignment="Stretch">
                 <TextBox Name="txtInvoiceNumber" Text="" TextChanged="txtInvoiceNumber_TextChanged" MaxLength="50" VerticalContentAlignment="Center" IsReadOnly="True" PreviewTextInput="Txt_PreviewTextInput" Margin="0" FontSize="18"/>
             </Syncfusion:SfTextInputLayout>
-            <Syncfusion:SfTextInputLayout  Name="Sf_txtOrderNumber" OutlineCornerRadius="8" Grid.Row="2" Grid.Column="0" Hint="شماره سفارش" VerticalAlignment="Center" Margin="20 0"  HorizontalAlignment="Stretch">
-                <Syncfusion:SfTextBoxExt PreviewKeyDown="txtInvoiceDiscount_PreviewKeyDown" FontSize="18" Name="txtOrderNumber"  PreviewTextInput="Txt_PreviewTextInput" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" Syncfusion:VisualContainer.WantsMouseInput="True" LostFocus="txtOrderNumber_LostFocus" TextChanged="txtInvoiceNumber_TextChanged"
+            <ScrollViewer  Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="3">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="225"/>
+                        <ColumnDefinition Width="200"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*" MinHeight="90"/>
+                        <RowDefinition Height="1*" MinHeight="90"/>
+                        <RowDefinition Height="1*" MinHeight="90"/>
+                        <RowDefinition Height="1*" MinHeight="90"/>
+                        <RowDefinition Height="1*" MinHeight="90"/>
+                    </Grid.RowDefinitions>
+                    <Syncfusion:SfTextInputLayout  Name="Sf_txtOrderNumber" OutlineCornerRadius="8" Grid.Row="0" Grid.Column="0" Hint="شماره سفارش" VerticalAlignment="Center" Margin="20 0"  HorizontalAlignment="Stretch">
+                        <Syncfusion:SfTextBoxExt PreviewKeyDown="txtInvoiceDiscount_PreviewKeyDown" FontSize="18" Name="txtOrderNumber"  PreviewTextInput="Txt_PreviewTextInput" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" Syncfusion:VisualContainer.WantsMouseInput="True" LostFocus="txtOrderNumber_LostFocus" TextChanged="txtInvoiceNumber_TextChanged"
 VerticalAlignment="Center"
 AutoCompleteMode="Suggest" SuggestionsChanged="SfTextBoxExt_SuggestionsChanged" SuggestionPopupClosed="SfTextBoxExt_SuggestionPopupClosed" />
-            </Syncfusion:SfTextInputLayout>
-            <Syncfusion:SfTextInputLayout Name="Sf_txtReciever" OutlineCornerRadius="8" Grid.Column="1" Hint="کد گیرنده" Grid.Row="2"  VerticalAlignment="Center" Margin="20 0"  HorizontalAlignment="Stretch">
-                <TextBox Name="txtReciever" LostFocus="txtPreferential_LostFocus" PreviewKeyDown="txtPreferential_PreviewKeyDown" VerticalContentAlignment="Center" TextChanged="txtPreferential_TextChanged" IsEnabled="True" IsReadOnly="False" PreviewTextInput="txtPreferential_PreviewTextInput" Margin="0" FontSize="18"/>
-            </Syncfusion:SfTextInputLayout>
-            <Syncfusion:SfTextInputLayout Name="Sf_txtFreight" OutlineCornerRadius="8" Grid.Column="2" Hint="کد باربری" Grid.Row="2"  VerticalAlignment="Center" Margin="20 0"  HorizontalAlignment="Stretch">
-                <TextBox Name="txtFreight" LostFocus="txtPreferential_LostFocus" PreviewKeyDown="txtPreferential_PreviewKeyDown" VerticalContentAlignment="Center" TextChanged="txtPreferential_TextChanged" IsEnabled="True" IsReadOnly="False" PreviewTextInput="txtPreferential_PreviewTextInput" Margin="0" FontSize="18"/>
-            </Syncfusion:SfTextInputLayout>
-            <Syncfusion:SfTextInputLayout  Name="Sf_txtWayBillNumber" OutlineCornerRadius="8" Grid.Row="3" Grid.Column="0" Hint="شماره بارنامه" VerticalAlignment="Center" Margin="20 0"  HorizontalAlignment="Stretch">
-                <TextBox Name="txtWayBillNumber" Text="" TextChanged="txtInvoiceNumber_TextChanged" MaxLength="10" VerticalContentAlignment="Center"   PreviewTextInput="Txt_PreviewTextInput" Margin="0" FontSize="18"/>
-            </Syncfusion:SfTextInputLayout>
-            <Syncfusion:SfTextInputLayout  Name="Sf_txtCarPlate" OutlineCornerRadius="8" Grid.Row="3" Grid.Column="1" Hint="پلاک ماشین" VerticalAlignment="Center" Margin="20 0"  HorizontalAlignment="Stretch">
-                <TextBox Name="txtCarPlate" Text="" TextChanged="txtInvoiceNumber_TextChanged" MaxLength="50" VerticalContentAlignment="Center"   PreviewTextInput="Txt_PreviewTextInput" Margin="0" FontSize="18"/>
-            </Syncfusion:SfTextInputLayout>
-            <Syncfusion:SfTextInputLayout Name="Sf_txtDriver" OutlineCornerRadius="8" Grid.Column="2" Hint="کد راننده" Grid.Row="3"  VerticalAlignment="Center" Margin="20 0"  HorizontalAlignment="Stretch">
-                <TextBox Name="txtDriver" LostFocus="txtPreferential_LostFocus" PreviewKeyDown="txtPreferential_PreviewKeyDown" VerticalContentAlignment="Center" TextChanged="txtPreferential_TextChanged" IsEnabled="True" IsReadOnly="False" PreviewTextInput="txtPreferential_PreviewTextInput" Margin="0" FontSize="18"/>
-            </Syncfusion:SfTextInputLayout>
-            <Syncfusion:SfTextInputLayout  Name="Sf_txtCarType" OutlineCornerRadius="8" Grid.Row="4" Grid.Column="0" Hint="نوع ماشین" VerticalAlignment="Center" Margin="20 0"  HorizontalAlignment="Stretch">
-                <TextBox Name="txtCarType" Text="" TextChanged="txtInvoiceNumber_TextChanged" MaxLength="50" VerticalContentAlignment="Center"   PreviewTextInput="Txt_PreviewTextInput" Margin="0" FontSize="18"/>
-            </Syncfusion:SfTextInputLayout>
-            <Syncfusion:SfTextInputLayout  Name="Sf_txtShippingCost" OutlineCornerRadius="8" Grid.Row="4" Grid.Column="1" Hint="هزینه حمل" VerticalAlignment="Center" Margin="20 0"  HorizontalAlignment="Stretch">
-                <TextBox Name="txtShippingCost" Text="" TextChanged="txtInvoiceNumber_TextChanged" MaxLength="50" VerticalContentAlignment="Center"   PreviewTextInput="Txt_PreviewTextInput" Margin="0" FontSize="18"/>
-            </Syncfusion:SfTextInputLayout>
-            <Syncfusion:SfTextInputLayout Name="Sf_txtPersonnel" OutlineCornerRadius="8" Grid.Column="2" Hint="کد پرسنل" Grid.Row="4"  VerticalAlignment="Center" Margin="20 0"  HorizontalAlignment="Stretch">
-                <TextBox Name="txtPersonnel" LostFocus="txtPreferential_LostFocus" PreviewKeyDown="txtPreferential_PreviewKeyDown" VerticalContentAlignment="Center" TextChanged="txtPreferential_TextChanged" IsEnabled="True" IsReadOnly="False" PreviewTextInput="txtPreferential_PreviewTextInput" Margin="0" FontSize="18"/>
-            </Syncfusion:SfTextInputLayout>
-            <Syncfusion:SfTextInputLayout  Name="Sf_Description"  OutlineCornerRadius="8" Grid.Column="0" Grid.ColumnSpan="3" Hint="توضیحات" Grid.Row="5" VerticalAlignment="Center" Margin="20 0"  HorizontalAlignment="Stretch">
-                <TextBox Name="txtDescription" TextChanged="txtPreferential_TextChanged" VerticalContentAlignment="Center" IsEnabled="True" IsReadOnly="False" PreviewTextInput="Txt_PreviewTextInput" Margin="0" FontSize="18"/>
-            </Syncfusion:SfTextInputLayout>
+                    </Syncfusion:SfTextInputLayout>
+                    <Syncfusion:SfTextInputLayout Name="Sf_txtReciever" OutlineCornerRadius="8" Grid.Column="1" Hint="کد گیرنده" Grid.Row="0"  VerticalAlignment="Center" Margin="20 0"  HorizontalAlignment="Stretch">
+                        <TextBox Name="txtReciever" LostFocus="txtPreferential_LostFocus" PreviewKeyDown="txtPreferential_PreviewKeyDown" VerticalContentAlignment="Center" TextChanged="txtPreferential_TextChanged" IsEnabled="True" IsReadOnly="False" PreviewTextInput="txtPreferential_PreviewTextInput" Margin="0" FontSize="18"/>
+                    </Syncfusion:SfTextInputLayout>
+                    <TextBlock Grid.Row="0" Name="txtRecieverName" Grid.Column="2" FontSize="18" VerticalAlignment="Center" TextWrapping="Wrap">
+                        <TextBlock.Foreground>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FFFF7C7C"/>
+                                <GradientStop Color="#FFBF645F" Offset="1"/>
+                            </LinearGradientBrush>
+                        </TextBlock.Foreground>
+                    </TextBlock>
+                    <Syncfusion:SfTextInputLayout Name="Sf_txtFreight" OutlineCornerRadius="8" Grid.Column="0" Hint="کد باربری" Grid.Row="1"  VerticalAlignment="Center" Margin="20 0"  HorizontalAlignment="Stretch">
+                        <TextBox Name="txtFreight" LostFocus="txtPreferential_LostFocus" PreviewKeyDown="txtPreferential_PreviewKeyDown" VerticalContentAlignment="Center" TextChanged="txtPreferential_TextChanged" IsEnabled="True" IsReadOnly="False" PreviewTextInput="txtPreferential_PreviewTextInput" Margin="0" FontSize="18"/>
+                    </Syncfusion:SfTextInputLayout>
+                    <TextBlock Grid.Row="1" Name="txtFreightName" Grid.Column="1" FontSize="18" VerticalAlignment="Center" TextWrapping="Wrap">
+                        <TextBlock.Foreground>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FF3C9A22"/>
+                                <GradientStop Color="#FF85BF5F" Offset="1"/>
+                            </LinearGradientBrush>
+                        </TextBlock.Foreground>
+                    </TextBlock>
+                    <Syncfusion:SfTextInputLayout  Name="Sf_txtWayBillNumber" OutlineCornerRadius="8" Grid.Row="1" Grid.Column="2" Hint="شماره بارنامه" VerticalAlignment="Center" Margin="20 0"  HorizontalAlignment="Stretch">
+                        <TextBox Name="txtWayBillNumber" Text="" TextChanged="txtInvoiceNumber_TextChanged" MaxLength="10" VerticalContentAlignment="Center"   PreviewTextInput="Txt_PreviewTextInput" Margin="0" FontSize="18"/>
+                    </Syncfusion:SfTextInputLayout>
+                    <Syncfusion:SfTextInputLayout Name="Sf_txtDriver" OutlineCornerRadius="8" Grid.Column="0" Hint="کد راننده" Grid.Row="2"  VerticalAlignment="Center" Margin="20 0"  HorizontalAlignment="Stretch">
+                        <TextBox Name="txtDriver" LostFocus="txtPreferential_LostFocus" PreviewKeyDown="txtPreferential_PreviewKeyDown" VerticalContentAlignment="Center" TextChanged="txtPreferential_TextChanged" IsEnabled="True" IsReadOnly="False" PreviewTextInput="txtPreferential_PreviewTextInput" Margin="0" FontSize="18"/>
+                    </Syncfusion:SfTextInputLayout>
+                    <TextBlock Grid.Row="2" Name="txtDriverName" Grid.Column="1" FontSize="18" VerticalAlignment="Center" TextWrapping="Wrap">
+                        <TextBlock.Foreground>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FF4755CC"/>
+                                <GradientStop Color="#FF8AD6FD" Offset="1"/>
+                            </LinearGradientBrush>
+                        </TextBlock.Foreground>
+                    </TextBlock>
+                    <Syncfusion:SfTextInputLayout  Name="Sf_txtCarPlate" OutlineCornerRadius="8" Grid.Row="2" Grid.Column="2" Hint="پلاک ماشین" VerticalAlignment="Center" Margin="20 0"  HorizontalAlignment="Stretch">
+                        <TextBox Name="txtCarPlate" Text="" TextChanged="txtInvoiceNumber_TextChanged" MaxLength="50" VerticalContentAlignment="Center"   PreviewTextInput="Txt_PreviewTextInput" Margin="0" FontSize="18"/>
+                    </Syncfusion:SfTextInputLayout>
+                    <Syncfusion:SfTextInputLayout  Name="Sf_txtCarType" OutlineCornerRadius="8" Grid.Row="3" Grid.Column="0" Hint="نوع ماشین" VerticalAlignment="Center" Margin="20 0"  HorizontalAlignment="Stretch">
+                        <TextBox Name="txtCarType" Text="" TextChanged="txtInvoiceNumber_TextChanged" MaxLength="50" VerticalContentAlignment="Center"   PreviewTextInput="Txt_PreviewTextInput" Margin="0" FontSize="18"/>
+                    </Syncfusion:SfTextInputLayout>
+                    <Syncfusion:SfTextInputLayout Name="Sf_txtPersonnel" OutlineCornerRadius="8" Grid.Column="1" Hint="کد پرسنل" Grid.Row="3"  VerticalAlignment="Center" Margin="20 0"  HorizontalAlignment="Stretch">
+                        <TextBox Name="txtPersonnel" LostFocus="txtPreferential_LostFocus" PreviewKeyDown="txtPreferential_PreviewKeyDown" VerticalContentAlignment="Center" TextChanged="txtPreferential_TextChanged" IsEnabled="True" IsReadOnly="False" PreviewTextInput="txtPreferential_PreviewTextInput" Margin="0" FontSize="18"/>
+                    </Syncfusion:SfTextInputLayout>
+                    <TextBlock Grid.Row="3" Name="txtPersonnelName" Grid.Column="2" FontSize="18" VerticalAlignment="Center" TextWrapping="Wrap">
+                        <TextBlock.Foreground>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FF96509A"/>
+                                <GradientStop Color="#FFF8B9FF" Offset="1"/>
+                            </LinearGradientBrush>
+                        </TextBlock.Foreground>
+                    </TextBlock>
+                    <Syncfusion:SfTextInputLayout  Name="Sf_Description"  OutlineCornerRadius="8" Grid.Column="0" Grid.ColumnSpan="3" Hint="توضیحات" Grid.Row="4" VerticalAlignment="Center" Margin="20 0"  HorizontalAlignment="Stretch">
+                        <TextBox Name="txtDescription" TextChanged="txtPreferential_TextChanged" VerticalContentAlignment="Center" IsEnabled="True" IsReadOnly="False" PreviewTextInput="Txt_PreviewTextInput" Margin="0" FontSize="18"/>
+                    </Syncfusion:SfTextInputLayout>
+                </Grid>
+            </ScrollViewer>
             <Border Grid.Row="6" Grid.ColumnSpan="3" Grid.RowSpan="2" BorderThickness="1" BorderBrush="#FF9C9C9C" CornerRadius="10" Margin="10 0 10 10">
                 <Border.Background>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -505,7 +558,10 @@ AutoCompleteMode="Suggest" SuggestionsChanged="SfTextBoxExt_SuggestionsChanged" 
             <Syncfusion:SfTextInputLayout  Name="Sf_txtInvoiceDiscount" OutlineCornerRadius="8" Grid.Row="6" Grid.Column="2" Hint="تخفیف زیر فاکتور" VerticalAlignment="Center" Margin="20 10"  HorizontalAlignment="Stretch">
                 <TextBox Name="txtInvoiceDiscount" LostFocus="txtInvoiceDiscount_LostFocus" PreviewKeyDown="txtInvoiceDiscount_PreviewKeyDown" Text="0" TextChanged="txtSum_TextChanged" MaxLength="50" VerticalContentAlignment="Center" PreviewTextInput="txtInvoiceDiscount_PreviewTextInput" Margin="0" FontSize="18"/>
             </Syncfusion:SfTextInputLayout>
-            <Syncfusion:SfTextInputLayout Grid.ColumnSpan="2" Name="Sf_txtSumDiscount" OutlineCornerRadius="8" Grid.Row="7" Grid.Column="0" Hint="مبلغ کل" VerticalAlignment="Center" Margin="20 0"  HorizontalAlignment="Stretch">
+            <Syncfusion:SfTextInputLayout  Name="Sf_txtShippingCost" OutlineCornerRadius="8" Grid.Row="7" Grid.Column="0" Hint="هزینه حمل" VerticalAlignment="Center" Margin="20 0"  HorizontalAlignment="Stretch">
+                <TextBox Name="txtShippingCost" Text="0" TextChanged="txtSum_TextChanged" MaxLength="50" VerticalContentAlignment="Center"   LostFocus="txtInvoiceDiscount_LostFocus" PreviewKeyDown="txtInvoiceDiscount_PreviewKeyDown" PreviewTextInput="txtShippingCost_PreviewTextInput" Margin="0" FontSize="18"/>
+            </Syncfusion:SfTextInputLayout>
+            <Syncfusion:SfTextInputLayout Grid.ColumnSpan="2" Name="Sf_txtSumDiscount" OutlineCornerRadius="8" Grid.Row="7" Grid.Column="1" Hint="مبلغ کل" VerticalAlignment="Center" Margin="20 0"  HorizontalAlignment="Stretch">
                 <TextBox Name="txtSumDiscount" Text="" TextChanged="txtSum_TextChanged" MaxLength="50" VerticalContentAlignment="Center"  IsReadOnly="True"  PreviewTextInput="Txt_PreviewTextInput" Margin="0" FontSize="18"/>
             </Syncfusion:SfTextInputLayout>
             <Syncfusion:SfTextInputLayout Visibility="Collapsed" Name="Sf_txtSerial" OutlineCornerRadius="8" Hint="سریال" Grid.Row="4"  VerticalAlignment="Center" Margin="20 0" Grid.Column="0"  HorizontalAlignment="Stretch">
@@ -668,11 +724,11 @@ AutoCompleteMode="Suggest" SuggestionsChanged="SfTextBoxExt_SuggestionsChanged" 
                     <Syncfusion:SfDataGrid.Columns>
                         <Syncfusion:GridTextColumn MinimumWidth="97" Width="80" HeaderText="کد کالا" MappingName="CommodityCode"/>
                         <Syncfusion:GridTextColumn MinimumWidth="170" HeaderText="نام" ColumnSizer="AutoWithLastColumnFill" IsReadOnly="True" MappingName="CommodityName"/>
-                        <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="3" MinimumWidth="100" HeaderText="مقدار" MappingName="Value" TextAlignment="Left"/>
+                        <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="3" MinimumWidth="100" HeaderText="مقدار" MaxValue="999999" MappingName="Value" TextAlignment="Left"/>
                         <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="0" MinimumWidth="115" HeaderText="فی" MappingName="Fee" TextAlignment="Left"/>
                         <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="0" MinimumWidth="108" HeaderText="تخفیف" MappingName="Discount" TextAlignment="Left"/>
                         <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="0" MinimumWidth="118" HeaderText="مبلغ" IsReadOnly="True" MappingName="SumNextDiscount" TextAlignment="Left"/>
-                        <Syncfusion:GridNumericColumn NumberDecimalDigits="0" MinimumWidth="100" HeaderText="درصد مالیات" MappingName="TaxPercent2" TextAlignment="Left"/>
+                        <Syncfusion:GridNumericColumn NumberDecimalDigits="0" MinimumWidth="100" HeaderText="درصد مالیات" MaxValue="9999"  MappingName="TaxPercent2" TextAlignment="Left"/>
                         <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="0" MinimumWidth="108" HeaderText="مبلغ مالیات" IsReadOnly="True" MappingName="Tax" TextAlignment="Left"/>
                         <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="0" MinimumWidth="118" HeaderText="مبلغ کل" MappingName="Sum" TextAlignment="Left"/>
                     </Syncfusion:SfDataGrid.Columns>
@@ -724,7 +780,7 @@ Source="{Binding acDocument_Headers}"/>
                                     <Syncfusion:SfDataGrid.Columns>
                                         <Syncfusion:GridTextColumn MinimumWidth="97" Width="80" HeaderText="کد کالا" MappingName="FkCommodity.Code"/>
                                         <Syncfusion:GridTextColumn MinimumWidth="170" HeaderText="نام" ColumnSizer="AutoWithLastColumnFill" IsReadOnly="True" MappingName="FkCommodity.Name"/>
-                                        <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="3" MinimumWidth="118" HeaderText="مقدار" MappingName="Value" TextAlignment="Left"/>
+                                        <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="3" MinimumWidth="118" HeaderText="مقدار" MaxValue="999999" MappingName="Value" TextAlignment="Left"/>
                                         <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="0" MinimumWidth="118" HeaderText="فی" MappingName="Fee" TextAlignment="Left"/>
                                         <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="0" MinimumWidth="118" HeaderText="تخفیف" MappingName="Discount" TextAlignment="Left"/>
                                         <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="0" MinimumWidth="118" HeaderText="مبلغ" MappingName="SumNextDiscount" TextAlignment="Left"/>

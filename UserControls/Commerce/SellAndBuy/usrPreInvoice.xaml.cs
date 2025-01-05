@@ -145,6 +145,16 @@ namespace WpfRaziLedgerApp
             if (AddedMode)
             {               
                 PreInvoice_Details = PreInvoiceViewModel.PreInvoice_Details;
+                var y = db.PreInvoiceHeaders.OrderByDescending(k => k.Serial).FirstOrDefault();
+                if (y == null)
+                {
+                    txtSerial.Text = "1";
+                }
+                else
+                {
+                    var yb = db.PreInvoiceHeaders.OrderByDescending(k => k.Serial).FirstOrDefault();
+                    txtSerial.Text = (y.Serial + 1).ToString();
+                }
                 //PreInvoice_Details.Clear();                
                 dataPager.Source = null;
                 dataPager.Source = PreInvoice_Details;
@@ -614,7 +624,7 @@ namespace WpfRaziLedgerApp
             txtDescription.Text = string.Empty;
             txtPreferential.Text = string.Empty;
             Sf_txtPreferential.HasError = false;
-            Sf_txtPreferential.HelperText = "";
+            txtPreferentialName.Text = "";
 
             txtInvoiceDiscount.Text = "0";
             Sf_txtInvoiceDiscount.HasError = false;
@@ -991,7 +1001,7 @@ namespace WpfRaziLedgerApp
                     pcw1.SelectedDate = new PersianCalendarWPF.PersianDate(header.Date);
                     txbCalender.Text = pcw1.SelectedDate.ToString();
                     txtPreferential.Text = header.FkPreferential.PreferentialCode.ToString();
-                    Sf_txtPreferential.HelperText = header.FkPreferential.PreferentialName.ToString();
+                    txtPreferentialName.Text = header.FkPreferential.PreferentialName.ToString();
                     txtDescription.Text = header.Description.ToString();
                     txtSerial.Text = header.Serial.ToString();
 
@@ -1495,7 +1505,7 @@ namespace WpfRaziLedgerApp
             if (txtPreferential.Text == "")
             {
                 txtPreferential.Text = string.Empty;
-                Sf_txtPreferential.HelperText = string.Empty;
+                txtPreferentialName.Text = string.Empty;
                 return;
             }
             using var db = new wpfrazydbContext();
@@ -1504,11 +1514,11 @@ namespace WpfRaziLedgerApp
             if (mu == null)
             {
                 Xceed.Wpf.Toolkit.MessageBox.Show("چنین کد تفضیلی وجود ندارد!");
-                txtPreferential.Text = Sf_txtPreferential.HelperText = string.Empty;
+                txtPreferential.Text = txtPreferentialName.Text = string.Empty;
             }
             else
             {
-                Sf_txtPreferential.HelperText = mu.PreferentialName;
+                txtPreferentialName.Text = mu.PreferentialName;
                 Dispatcher.BeginInvoke(new Action(async () =>
                 {
                     await Task.Delay(50);
