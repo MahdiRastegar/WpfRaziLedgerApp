@@ -328,6 +328,30 @@ namespace WpfRaziLedgerApp
                 e_Edidet.FkPreferentialIdFreightNavigation = header.FkPreferentialIdFreightNavigation = list.FirstOrDefault(t => t.PreferentialCode == (int.TryParse(txtFreight.Text, out code) ? code : -1));
                 e_Edidet.FkPreferentialIdDriverNavigation = header.FkPreferentialIdDriverNavigation = list.FirstOrDefault(t => t.PreferentialCode == (int.TryParse(txtDriver.Text, out code) ? code : -1));
                 e_Edidet.FkPreferentialIdPersonnelNavigation = header.FkPreferentialIdPersonnelNavigation = list.FirstOrDefault(t => t.PreferentialCode == (int.TryParse(txtPersonnel.Text, out code) ? code : -1));
+                try
+                {
+                    if (e_Edidet.FkPreferentialIdReceiverNavigation != null)
+                        db.Attach(e_Edidet.FkPreferentialIdReceiverNavigation);
+                }
+                catch { }
+                try
+                {
+                    if (e_Edidet.FkPreferentialIdFreightNavigation != null)
+                        db.Attach(e_Edidet.FkPreferentialIdFreightNavigation);
+                }
+                catch { }
+                try
+                {
+                    if (e_Edidet.FkPreferentialIdDriverNavigation != null)
+                        db.Attach(e_Edidet.FkPreferentialIdDriverNavigation);
+                }
+                catch { }
+                try
+                {
+                    if (e_Edidet.FkPreferentialIdPersonnelNavigation != null)
+                        db.Attach(e_Edidet.FkPreferentialIdPersonnelNavigation);
+                }
+                catch { }
 
                 if (txtOrderNumber.Text != "")
                     e_Edidet.OrderNumber = header.OrderNumber = long.Parse(txtOrderNumber.Text);
@@ -1282,6 +1306,10 @@ namespace WpfRaziLedgerApp
                 using var db = new wpfrazydbContext();
                 var documents = db.ProductSellHeaders
                     .Include(h => h.FkPreferential)
+                    .Include(h => h.FkPreferentialIdDriverNavigation)
+                    .Include(h => h.FkPreferentialIdFreightNavigation)
+                    .Include(h => h.FkPreferentialIdReceiverNavigation)
+                    .Include(h => h.FkPreferentialIdPersonnelNavigation)
                     .Include(h => h.ProductSellDetails)
                     .ThenInclude(h => h.FkCommodity)
                     .AsNoTracking()

@@ -466,7 +466,7 @@ FontFamily="{StaticResource IranSans}" Width="27"
             <Syncfusion:SfTextInputLayout  Name="Sf_txtInvoiceNumber" OutlineCornerRadius="8" Grid.Row="2" Grid.Column="0" Hint="شماره فاکتور" VerticalAlignment="Center" Margin="20 0"  HorizontalAlignment="Stretch">
                 <TextBox Name="txtInvoiceNumber" Text="" TextChanged="txtInvoiceNumber_TextChanged" MaxLength="50" VerticalContentAlignment="Center" IsReadOnly="True" PreviewTextInput="Txt_PreviewTextInput" Margin="0" FontSize="18"/>
             </Syncfusion:SfTextInputLayout>
-            <ScrollViewer  Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="3">
+            <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="3">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="225"/>
