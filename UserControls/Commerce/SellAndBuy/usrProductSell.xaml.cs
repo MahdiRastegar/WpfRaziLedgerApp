@@ -1688,7 +1688,7 @@ namespace WpfRaziLedgerApp
                         Dispatcher.BeginInvoke(new Action(async () =>
                         {
                             await Task.Delay(50);
-                            txtInvoiceNumber.Focus();
+                            txtOrderNumber.Focus();
                         }));
                         break;
                     case "txtReciever":
@@ -1705,12 +1705,11 @@ namespace WpfRaziLedgerApp
                             txtWayBillNumber.Focus();
                         }));
                         break;
-                        break;
                     case "txtDriver":
                         Dispatcher.BeginInvoke(new Action(async () =>
                         {
                             await Task.Delay(50);
-                            txtCarType.Focus();
+                            txtCarPlate.Focus();
                         }));
                         break;
                     case "txtPersonnel":
@@ -1769,7 +1768,6 @@ namespace WpfRaziLedgerApp
                             await Task.Delay(50);
                             txtWayBillNumber.Focus();
                         }));
-                        break;
                         break;
                     case "txtDriver":
                         Dispatcher.BeginInvoke(new Action(async () =>
