@@ -385,7 +385,7 @@
                 <RowDefinition Height="1*" MinHeight="90"/>
                 <RowDefinition Height="25"/>
             </Grid.RowDefinitions>
-            <Border  Name="borderEdit" Visibility="Hidden" Grid.ColumnSpan="2" CornerRadius="5" Margin="4 -10 0 0" Grid.Row="1" Grid.RowSpan="9" BorderThickness="4">
+            <Border  Name="borderEdit" Visibility="Hidden" Grid.ColumnSpan="4" CornerRadius="5" Margin="4 -10 0 0" Grid.Row="1" Grid.RowSpan="9" BorderThickness="4">
                 <Border.Background>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                         <GradientStop Color="White" Offset="0"/>
@@ -463,24 +463,36 @@ FontFamily="{StaticResource IranSans}" Width="27"
             <Syncfusion:SfTextInputLayout  Name="Sf_Description"  OutlineCornerRadius="8" Grid.Column="0" Grid.ColumnSpan="2" Hint="توضیحات" Grid.Row="3" VerticalAlignment="Center" Margin="20 0"  HorizontalAlignment="Stretch">
                 <TextBox Name="txtDescription" TextChanged="txtPreferential_TextChanged" VerticalContentAlignment="Center" IsEnabled="True" IsReadOnly="False" PreviewTextInput="Txt_PreviewTextInput" Margin="0" FontSize="18"/>
             </Syncfusion:SfTextInputLayout>
-            <Border Grid.Row="4" Grid.ColumnSpan="2" Grid.RowSpan="2" BorderThickness="1" BorderBrush="#FF9C9C9C" CornerRadius="10" Margin="10 0 10 10">
-                <Border.Background>
-                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                        <GradientStop Color="#33E2FF36" Offset="1"/>
-                        <GradientStop Color="#33AFE7F1" Offset="0"/>
-                        <GradientStop Color="#33576711" Offset="0.465"/>
-                    </LinearGradientBrush>
-                </Border.Background>
-            </Border>
-            <Syncfusion:SfTextInputLayout  Name="Sf_txtSum" OutlineCornerRadius="8" Grid.Row="4" Grid.Column="0" Hint="جمع کل فاکتور" VerticalAlignment="Center" Margin="20 10"  HorizontalAlignment="Stretch">
-                <TextBox Name="txtSum" Text="" TextChanged="txtSum_TextChanged" MaxLength="50" VerticalContentAlignment="Center"  IsReadOnly="True" PreviewTextInput="Txt_PreviewTextInput" Margin="0" FontSize="18"/>
-            </Syncfusion:SfTextInputLayout>
-            <Syncfusion:SfTextInputLayout  Name="Sf_txtInvoiceDiscount" OutlineCornerRadius="8" Grid.Row="4" Grid.Column="1" Hint="تخفیف زیر فاکتور" VerticalAlignment="Center" Margin="20 10"  HorizontalAlignment="Stretch">
-                <TextBox Name="txtInvoiceDiscount" LostFocus="txtInvoiceDiscount_LostFocus" PreviewKeyDown="txtInvoiceDiscount_PreviewKeyDown" Text="0" TextChanged="txtSum_TextChanged" MaxLength="50" VerticalContentAlignment="Center" PreviewTextInput="txtInvoiceDiscount_PreviewTextInput" Margin="0" FontSize="18"/>
-            </Syncfusion:SfTextInputLayout>
-            <Syncfusion:SfTextInputLayout  Name="Sf_txtSumDiscount" OutlineCornerRadius="8" Grid.Row="5" Grid.Column="0" Hint="مبلغ کل" VerticalAlignment="Center" Margin="20 0"  HorizontalAlignment="Stretch">
-                <TextBox Name="txtSumDiscount" Text="" TextChanged="txtSum_TextChanged" MaxLength="50" VerticalContentAlignment="Center"  IsReadOnly="True"  PreviewTextInput="Txt_PreviewTextInput" Margin="0" FontSize="18"/>
-            </Syncfusion:SfTextInputLayout>
+            <Grid Grid.Row="5" Grid.ColumnSpan="4" Grid.Column="2" Height="100" Grid.RowSpan="2" x:Name="gridFactor">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Border Grid.ColumnSpan="3" BorderThickness="1" BorderBrush="#FF9C9C9C" CornerRadius="10" Margin="10 0 10 10">
+                    <Border.Background>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="#33E2FF36" Offset="1"/>
+                            <GradientStop Color="#33AFE7F1" Offset="0"/>
+                            <GradientStop Color="#33576711" Offset="0.465"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                </Border>
+                <Syncfusion:SfTextInputLayout  x:Name="Sf_txtSum" OutlineCornerRadius="8" Grid.Row="0" Grid.Column="0" Hint="جمع کل فاکتور" VerticalAlignment="Top" Margin="20,10">
+                    <TextBox x:Name="txtSum" Text="" TextChanged="txtSum_TextChanged" MaxLength="50" VerticalContentAlignment="Center"  IsReadOnly="True" PreviewTextInput="Txt_PreviewTextInput" Margin="0" FontSize="18"/>
+                </Syncfusion:SfTextInputLayout>
+                <Syncfusion:SfTextInputLayout  x:Name="Sf_txtInvoiceDiscount" OutlineCornerRadius="8" Grid.Row="0" Grid.Column="1" Hint="تخفیف زیر فاکتور" VerticalAlignment="Top" Margin="20,10">
+                    <TextBox x:Name="txtInvoiceDiscount" LostFocus="txtInvoiceDiscount_LostFocus" PreviewKeyDown="txtInvoiceDiscount_PreviewKeyDown" Text="0" TextChanged="txtSum_TextChanged" MaxLength="50" VerticalContentAlignment="Center" PreviewTextInput="txtInvoiceDiscount_PreviewTextInput" Margin="0" FontSize="18"/>
+                </Syncfusion:SfTextInputLayout>
+                <Syncfusion:SfTextInputLayout  x:Name="Sf_txtSumDiscount" OutlineCornerRadius="8" Grid.Column="2" Hint="مبلغ کل" VerticalAlignment="Top" Margin="20,12">
+                    <TextBox x:Name="txtSumDiscount" Text="" TextChanged="txtSum_TextChanged" MaxLength="50" VerticalContentAlignment="Center"  IsReadOnly="True"  PreviewTextInput="Txt_PreviewTextInput" Margin="0" FontSize="18"/>
+                </Syncfusion:SfTextInputLayout>
+
+            </Grid>
             <Syncfusion:SfTextInputLayout Visibility="Visible" Name="Sf_txtSerial" OutlineCornerRadius="8" Hint="شماره" Grid.Row="1"  VerticalAlignment="Center" Margin="20 0" Grid.Column="1"  HorizontalAlignment="Stretch">
                 <TextBox Name="txtSerial" VerticalContentAlignment="Center"  IsEnabled="True" IsReadOnly="True" Margin="0" FontSize="18"/>
             </Syncfusion:SfTextInputLayout>
@@ -523,7 +535,7 @@ FontFamily="{StaticResource IranSans}" Width="27"
                     <Image Source="/Images/settings.png" IsHitTestVisible="False" Width="36" />
                 </Grid>
             </DockPanel>
-            <Grid  Grid.Row="1" Grid.RowSpan="6" Grid.Column="2" Margin="0 -10 0 40" Grid.ColumnSpan="2">
+            <Grid  Grid.Row="1" Grid.RowSpan="5" Grid.Column="2" Margin="0 -10 0 60" Grid.ColumnSpan="2" Name="gridContainer">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
                     <RowDefinition/>

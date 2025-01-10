@@ -644,6 +644,8 @@ namespace WpfRaziLedgerApp
             dataPager.Visibility = Visibility.Collapsed;
             gridDelete.Visibility = Visibility.Hidden;
             borderEdit.Visibility = Visibility.Hidden;
+            Grid.SetRowSpan(gridContainer, 5);
+            gridFactor.Visibility = Visibility.Visible;
             txtSerial.Text = "";
             datagrid.BorderBrush = new System.Windows.Media.SolidColorBrush((System.Windows.Media.Color)ColorConverter.ConvertFromString("#FF808080"));
             if (PreInvoice_Details.Count > 0)
@@ -1014,6 +1016,8 @@ namespace WpfRaziLedgerApp
                     datagrid.Visibility = Visibility.Visible;
                     dataPager.Visibility = Visibility.Collapsed;
                     testsearch.Text = "جستجو...";
+                    Grid.SetRowSpan(gridContainer, 5);
+                    gridFactor.Visibility = Visibility.Visible;
                     datagrid.SearchHelper.ClearSearch();
                     SearchTermTextBox.TextChanged-= SearchTermTextBox_TextChanged;
                     SearchTermTextBox.Text = "";
@@ -1079,6 +1083,8 @@ namespace WpfRaziLedgerApp
                     datagrid.Visibility = Visibility.Collapsed;
                     datagridSearch.Visibility = Visibility.Visible;
                     dataPager.Visibility = Visibility.Visible;
+                    Grid.SetRowSpan(gridContainer, 6);
+                    gridFactor.Visibility = Visibility.Collapsed;
                     testsearch.Text = "جستجو در جزئیات...";
                     Dispatcher.BeginInvoke(new Action(() =>
                     {

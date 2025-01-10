@@ -42,7 +42,7 @@ namespace WpfRaziLedgerApp
     /// <summary>
     /// Interaction logic for winCol.xaml
     /// </summary>
-    public partial class usrProductBuy : UserControl,ITabForm,ITabEdidGrid,IDisposable
+    public partial class usrProductBuy : UserControl, ITabForm, ITabEdidGrid, IDisposable
     {
         public bool DataGridIsFocused
         {
@@ -87,7 +87,7 @@ namespace WpfRaziLedgerApp
             {
                 //if ((sender as TextBox).Name == "txtInvoiceNumber")
                 //{
-                    
+
                 //}
                 //else
                 {
@@ -103,9 +103,9 @@ namespace WpfRaziLedgerApp
                     }
                 }));
                 return;
-            }            
-            if ((sender as TextBox).Name != "txtDescription"&& (sender as TextBox).Name != "txtCarPlate"&& (sender as TextBox).Name != "txtCarType" && (sender as TextBox).Name != "txtWayBillNumber")
-                e.Handled = !IsTextAllowed(e.Text);            
+            }
+            if ((sender as TextBox).Name != "txtDescription" && (sender as TextBox).Name != "txtCarPlate" && (sender as TextBox).Name != "txtCarType" && (sender as TextBox).Name != "txtWayBillNumber")
+                e.Handled = !IsTextAllowed(e.Text);
         }
         private static readonly Regex _regex = new Regex("[^0-9]"); //regex that matches disallowed text
         private static bool IsTextAllowed(string text)
@@ -131,10 +131,10 @@ namespace WpfRaziLedgerApp
             //    });
             //}
             foreach (var item in commodities)
-            {                
+            {
                 mus2.Add(new Mu()
                 {
-                    Id= item.Id,
+                    Id = item.Id,
                     Name = $"{item.Name}",
                     Value = $"{item.Code}",
                     Name2 = item.FkUnit.Name
@@ -142,7 +142,7 @@ namespace WpfRaziLedgerApp
             }
 
             if (AddedMode)
-            {               
+            {
                 ProductBuy_Details = ProductBuyViewModel.ProductBuy_Details;
                 //ProductBuy_Details.Clear();                
                 dataPager.Source = null;
@@ -154,7 +154,7 @@ namespace WpfRaziLedgerApp
                 ProductBuy_Details = ProductBuyViewModel.ProductBuy_Details;
                 ProductBuy_Details.Clear();
                 //ProductBuy_Details.Clear();
-                var h = db.ProductBuyDetails.Where(u=>u.FkHeaderId==id).ToList();
+                var h = db.ProductBuyDetails.Where(u => u.FkHeaderId == id).ToList();
                 h.ForEach(u => ProductBuy_Details.Add(u));
                 RefreshDataGridForSetPersianNumber();
             }
@@ -190,7 +190,7 @@ namespace WpfRaziLedgerApp
             if (id == Guid.Empty)
             {
                 var h = long.Parse(txtInvoiceNumber.Text);
-                if (db.ProductBuyHeaders.Any(u => u.InvoiceNumber == h&&u.FkPreferentialId==preferential.Id))
+                if (db.ProductBuyHeaders.Any(u => u.InvoiceNumber == h && u.FkPreferentialId == preferential.Id))
                 {
                     Xceed.Wpf.Toolkit.MessageBox.Show("شماره فاکتور برای این تفضیلی تکراریست!");
                     return;
@@ -205,7 +205,7 @@ namespace WpfRaziLedgerApp
                     Xceed.Wpf.Toolkit.MessageBox.Show("شماره فاکتور برای این تفضیلی تکراریست!");
                     return;
                 }
-            }            
+            }
             ProductBuyHeader e_addHeader = null;
             ProductBuyHeader header = null;
             var yx = db.ProductBuyHeaders.OrderByDescending(k => k.Serial).FirstOrDefault();
@@ -264,10 +264,10 @@ namespace WpfRaziLedgerApp
                 {
                     db.ProductBuyDetails.Remove(item);
                     header.ProductBuyDetails.Remove(header.ProductBuyDetails.First(x => x.Id == item.Id));
-                }                
+                }
                 e_Edidet.InvoiceNumber = header.InvoiceNumber = long.Parse(txtInvoiceNumber.Text);
                 e_Edidet.Date = header.Date = pcw1.SelectedDate.ToDateTime();
-                e_Edidet.Description= header.Description=txtDescription.Text;
+                e_Edidet.Description = header.Description = txtDescription.Text;
                 e_Edidet.FkPreferential = header.FkPreferential = preferential;
                 if (txtOrderNumber.Text != "")
                     e_Edidet.OrderNumber = header.OrderNumber = long.Parse(txtOrderNumber.Text);
@@ -304,7 +304,7 @@ namespace WpfRaziLedgerApp
                 //e_Edidet.FkGroupId = ProductBuyDetail.FkGroupId = col.Id;
                 //e_Edidet.ProductBuy_DetailName = ProductBuyDetail.ProductBuy_DetailName = txtInvoiceNumber.Text;
             }
-            if (!db.SafeSaveChanges())  return;
+            if (!db.SafeSaveChanges()) return;
             if (header != null)
             {
                 int i = 0;
@@ -314,7 +314,7 @@ namespace WpfRaziLedgerApp
                     i++;
                 }
             }
-            if(e_addHeader!=null)
+            if (e_addHeader != null)
             {
                 int i = 0;
                 foreach (var item in e_addHeader.ProductBuyDetails)
@@ -364,15 +364,15 @@ namespace WpfRaziLedgerApp
             }
             btnCancel_Click(null, null);
             txtPreferential.Focus();
-                            
-            isCancel = true;                        
+
+            isCancel = true;
             id = Guid.Empty;
         }
         Guid id = Guid.Empty;
         private bool GetError()
         {
             var haserror = false;
-            datagrid.BorderBrush = new  System.Windows.Media.SolidColorBrush((System.Windows.Media.Color)ColorConverter.ConvertFromString("#FF808080"));
+            datagrid.BorderBrush = new System.Windows.Media.SolidColorBrush((System.Windows.Media.Color)ColorConverter.ConvertFromString("#FF808080"));
 
             if (txtInvoiceNumber.Text.Trim() == "")
             {
@@ -381,7 +381,7 @@ namespace WpfRaziLedgerApp
             }
             else
                 Sf_txtInvoiceNumber.HasError = false;
-            
+
             if (txtPreferential.Text.Trim() == "")
             {
                 Sf_txtPreferential.HasError = true;
@@ -397,7 +397,7 @@ namespace WpfRaziLedgerApp
                 datagrid.BorderBrush = Brushes.Red;
                 haserror = true;
             }
-            else if (ProductBuy_Details.Any(t => t.FkCommodity == null || t.Value == 0 )|| (ProductBuy_Details.Any(t => t.Error != string.Empty)))
+            else if (ProductBuy_Details.Any(t => t.FkCommodity == null || t.Value == 0) || (ProductBuy_Details.Any(t => t.Error != string.Empty)))
             {
                 datagrid.BorderBrush = Brushes.Red;
                 haserror = true;
@@ -495,7 +495,7 @@ namespace WpfRaziLedgerApp
         private void datagrid_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.F1)
-            {                
+            {
                 if (datagrid.SelectionController.CurrentCellManager?.CurrentCell?.ColumnIndex == 0)
                 {
                     dynamic y = null;
@@ -525,8 +525,8 @@ namespace WpfRaziLedgerApp
                     {
                         datagrid.IsHitTestVisible = true;
                     };
-                    win.datagrid.Columns.Add(new GridTextColumn() {TextAlignment= TextAlignment.Center, HeaderText = "واحد اندازه گیری", MappingName = "Name2", Width = 150, AllowSorting = true });
-                    win.Width = 640;                    
+                    win.datagrid.Columns.Add(new GridTextColumn() { TextAlignment = TextAlignment.Center, HeaderText = "واحد اندازه گیری", MappingName = "Name2", Width = 150, AllowSorting = true });
+                    win.Width = 640;
                     win.Tag = this;
                     win.ParentTextBox = y;
                     win.SearchTermTextBox.Text = "";
@@ -537,8 +537,8 @@ namespace WpfRaziLedgerApp
                     win.Focus();
                     datagrid.IsHitTestVisible = false;
                 }
-            }           
-        }     
+            }
+        }
         private void datagrid_CurrentCellEndEdit(object sender, Syncfusion.UI.Xaml.Grid.CurrentCellEndEditEventArgs e)
         {
             isCancel = false;
@@ -566,7 +566,7 @@ namespace WpfRaziLedgerApp
                         }
                         else
                         {
-                            var commodity = db.Commodities.Include("FkUnit").First(j=>j.Id== mu.Id);
+                            var commodity = db.Commodities.Include("FkUnit").First(j => j.Id == mu.Id);
                             ProductBuyDetail.FkCommodity = commodity;
                         }
                         datagrid.View.Refresh();
@@ -603,13 +603,13 @@ namespace WpfRaziLedgerApp
             if (e.Key == Key.Escape)
             {
                 CloseForm();
-            }         
+            }
         }
 
         bool isCancel = true;
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
-            if (AddedMode&&isCancel)
+            if (AddedMode && isCancel)
             {
                 return;
             }
@@ -626,7 +626,7 @@ namespace WpfRaziLedgerApp
                 G = 248,
                 B = 255,
                 A = 255
-            };            
+            };
             searchImage.Opacity = 1;
             using var db = new wpfrazydbContext();
             if (!AddedMode)
@@ -694,6 +694,8 @@ namespace WpfRaziLedgerApp
             dataPager.Visibility = Visibility.Collapsed;
             gridDelete.Visibility = Visibility.Hidden;
             borderEdit.Visibility = Visibility.Hidden;
+            Grid.SetRowSpan(gridContainer, 7);
+            gridFactor.Visibility = Visibility.Visible;
             txtSerial.Text = "";
             datagrid.BorderBrush = new System.Windows.Media.SolidColorBrush((System.Windows.Media.Color)ColorConverter.ConvertFromString("#FF808080"));
             if (ProductBuy_Details.Count > 0)
@@ -704,8 +706,8 @@ namespace WpfRaziLedgerApp
                 }));
                 RefreshDataGridForSetPersianNumber();
             }
-            
-            if(sender!=null)
+
+            if (sender != null)
                 txtPreferential.Focus();
             isCancel = true;
             id = Guid.Empty;
@@ -748,7 +750,7 @@ namespace WpfRaziLedgerApp
                 db.ProductBuyDetails.Remove(item);
             }
             db.ProductBuyHeaders.Remove(db.ProductBuyHeaders.Find(id));
-            if (!db.SafeSaveChanges())  return;
+            if (!db.SafeSaveChanges()) return;
             try
             {
                 ProductBuyHeaders.Remove(ProductBuyHeaders.First(f => f.Id == id));
@@ -759,7 +761,7 @@ namespace WpfRaziLedgerApp
             }
             //btnCancel_Click(null, null);
         }
-        
+
         private void SearchTermTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (SearchTermTextBox.Text.Trim() == string.Empty)
@@ -830,9 +832,9 @@ namespace WpfRaziLedgerApp
                     }
                 }
                 if (SearchTermTextBox.Text == "")
-                    RefreshDataGridForSetPersianNumber();                
+                    RefreshDataGridForSetPersianNumber();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
             }
             Mouse.OverrideCursor = null;
@@ -847,7 +849,7 @@ namespace WpfRaziLedgerApp
             foreach (var item in datagridSearch.View?.Records)
             {
                 var tt = item.Data as ProductBuyHeader;
-                if (!tt.ProductBuyDetails.Any(i => i.Value.ToString().Contains(SearchTermTextBox.Text.ToLower())==true ||
+                if (!tt.ProductBuyDetails.Any(i => i.Value.ToString().Contains(SearchTermTextBox.Text.ToLower()) == true ||
                 i.FkCommodity.FkUnit.Name.ToString().Contains(SearchTermTextBox.Text.ToLower()) ||
                 i.FkCommodity.Code.ToString().Contains(SearchTermTextBox.Text.ToLower()) ||
                 i.FkCommodity.Name.ToLower().Contains(SearchTermTextBox.Text.ToLower()) == true))
@@ -870,7 +872,7 @@ namespace WpfRaziLedgerApp
             }
 
             datagridSearch.ExpandAllDetailsView();
-                
+
         }
 
         private void txtInvoiceNumber_TextChanged(object sender, TextChangedEventArgs e)
@@ -890,19 +892,19 @@ namespace WpfRaziLedgerApp
 
         private void txtDoumentType_LostFocus(object sender, RoutedEventArgs e)
         {
-            
+
         }
 
         private void DataPager_PageIndexChanging(object sender, Syncfusion.UI.Xaml.Controls.DataPager.PageIndexChangingEventArgs e)
         {
             var ex = datagrid.View.FilterPredicates;
-            
+
             using var db = new wpfrazydbContext();
             //db.ProductBuyDetails.Where(ex)
             var count = db.ProductBuyDetails.Count();
-            var F = db.ProductBuyDetails.OrderBy(d=>d.Id).Skip(10 * e.NewPageIndex).Take(10).ToList();
+            var F = db.ProductBuyDetails.OrderBy(d => d.Id).Skip(10 * e.NewPageIndex).Take(10).ToList();
             int j = 0;
-            for (int i = 10 * e.NewPageIndex; i < 10 * (e.NewPageIndex + 1)&&i<count; i++)
+            for (int i = 10 * e.NewPageIndex; i < 10 * (e.NewPageIndex + 1) && i < count; i++)
             {
                 ProductBuy_Details[i] = F[j];
                 j++;
@@ -952,7 +954,7 @@ namespace WpfRaziLedgerApp
 
         public void SetNull()
         {
-            if(window!=null)
+            if (window != null)
             {
                 if ((window as winSearch).ParentTextBox is ProductBuyDetail storage)
                 {
@@ -999,7 +1001,7 @@ namespace WpfRaziLedgerApp
                         }));
                     }
                 }
-                else if((window as winSearch).ParentTextBox is TextBox hh)
+                else if ((window as winSearch).ParentTextBox is TextBox hh)
                 {
                     Dispatcher.BeginInvoke(new Action(async () =>
                     {
@@ -1089,10 +1091,12 @@ namespace WpfRaziLedgerApp
                     datagrid.Visibility = Visibility.Visible;
                     dataPager.Visibility = Visibility.Collapsed;
                     testsearch.Text = "جستجو...";
+                    Grid.SetRowSpan(gridContainer, 7);
+                    gridFactor.Visibility = Visibility.Visible;
                     datagrid.SearchHelper.ClearSearch();
-                    SearchTermTextBox.TextChanged-= SearchTermTextBox_TextChanged;
+                    SearchTermTextBox.TextChanged -= SearchTermTextBox_TextChanged;
                     SearchTermTextBox.Text = "";
-                    SearchTermTextBox.TextChanged+= SearchTermTextBox_TextChanged;
+                    SearchTermTextBox.TextChanged += SearchTermTextBox_TextChanged;
                     datagridSearch.Visibility = Visibility.Collapsed;
                     gridConfirm.Visibility = Visibility.Visible;
                     Sf_txtInvoiceNumber.HasError = false;
@@ -1151,10 +1155,12 @@ namespace WpfRaziLedgerApp
                     dataPager.Source = null;
                     datagridSearch.SelectedIndex = 0;
                     borderEdit.Visibility = Visibility.Collapsed;
-                    gridDelete.Visibility= Visibility.Visible;
+                    gridDelete.Visibility = Visibility.Visible;
                     datagrid.Visibility = Visibility.Collapsed;
                     datagridSearch.Visibility = Visibility.Visible;
                     dataPager.Visibility = Visibility.Visible;
+                    Grid.SetRowSpan(gridContainer, 8);
+                    gridFactor.Visibility = Visibility.Collapsed;
                     testsearch.Text = "جستجو در جزئیات...";
                     Dispatcher.BeginInvoke(new Action(() =>
                     {
@@ -1288,7 +1294,7 @@ namespace WpfRaziLedgerApp
             //}));
         }
 
-        private void CalDebCre(bool force=false)
+        private void CalDebCre(bool force = false)
         {
             if (force || datagrid.SelectionController.CurrentCellManager?.CurrentCell?.ColumnIndex >= 1)
             {
@@ -1307,14 +1313,14 @@ namespace WpfRaziLedgerApp
 
         private void datagridSearch_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            if(e.Key == Key.Enter) 
+            if (e.Key == Key.Enter)
             {
                 searchImage_PreviewMouseDown(null, null);
             }
         }
         private void PART_AdvancedFilterControl_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-          
+
         }
         TextBox textBox1, textBox2;
         DatePicker datePicker1, datePicker2;
@@ -1323,7 +1329,7 @@ namespace WpfRaziLedgerApp
             var advance = sender as AdvancedFilterControl;
             if (datePicker1 == null)
             {
-                var comboBoxes = advance.GetChildsOfType<ComboBox>();                
+                var comboBoxes = advance.GetChildsOfType<ComboBox>();
                 var combo = comboBoxes[1];
                 var grid = combo.Parent as Grid;
                 grid.Children[0].Visibility = Visibility.Collapsed;
@@ -1372,7 +1378,7 @@ namespace WpfRaziLedgerApp
         GridFilterControl gridFilterControl;
         private void PART_AdvancedFilterControl_Loaded(object sender, RoutedEventArgs e)
         {
-            if(textBox1!=null)
+            if (textBox1 != null)
             {
                 textBox1.Text = string.Empty;
                 textBox1.TextChanged += TextBox1_TextChanged;
@@ -1382,7 +1388,7 @@ namespace WpfRaziLedgerApp
             datePicker1 = datePicker2 = null;
             //textBox1 = null;
             //textBox2 = null;
-            var advance = sender as AdvancedFilterControl;            
+            var advance = sender as AdvancedFilterControl;
             advance.Tag = true;
             FieldInfo fieldInfo = typeof(AdvancedFilterControl).GetField("gridFilterCtrl", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
             gridFilterControl = (GridFilterControl)fieldInfo.GetValue(advance);
@@ -1460,7 +1466,7 @@ namespace WpfRaziLedgerApp
             RightClick();
         }
         RowColumnIndex CurrentRowColumnIndex;
-    
+
         private void datagrid_CurrentCellBeginEdit(object sender, CurrentCellBeginEditEventArgs e)
         {
             if (SearchTermTextBox.Text != "")
@@ -1510,7 +1516,7 @@ namespace WpfRaziLedgerApp
             if (t == null) return;
             var textBlock = (t.Children[0] as Grid).Children[1] as TextBlock;
             textBlock.Foreground = Brushes.DarkBlue;
-            textBlock.FontWeight= FontWeights.Bold;
+            textBlock.FontWeight = FontWeights.Bold;
         }
 
         private void datagridSearch_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -1563,7 +1569,7 @@ namespace WpfRaziLedgerApp
         {
             if (e.Text == "\r")
             {
-                txtOrderNumber.Focus();                
+                txtOrderNumber.Focus();
                 return;
             }
             e.Handled = !IsTextAllowed(e.Text);
@@ -1588,7 +1594,7 @@ namespace WpfRaziLedgerApp
             else
             {
                 txtPreferentialName.Text = mu.PreferentialName;
-                
+
                 long t = 0;
                 try
                 {
@@ -1601,7 +1607,7 @@ namespace WpfRaziLedgerApp
 
         private void txtDescription_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            
+
         }
 
         private void txtPreferential_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -1609,7 +1615,7 @@ namespace WpfRaziLedgerApp
             if (e.Key == Key.F1)
             {
                 using var db = new wpfrazydbContext();
-                var list = db.Preferentials.Include("FkGroup").ToList().Select(r => new Mu() { Name = r.PreferentialName, Value = r.PreferentialCode.ToString(),Name2=r.FkGroup.GroupName }).ToList();
+                var list = db.Preferentials.Include("FkGroup").ToList().Select(r => new Mu() { Name = r.PreferentialName, Value = r.PreferentialCode.ToString(), Name2 = r.FkGroup.GroupName }).ToList();
                 var win = new winSearch(list);
                 win.Closed += (yf, rs) =>
                 {
@@ -1679,7 +1685,7 @@ namespace WpfRaziLedgerApp
                 if (textbox.Text == "")
                     textbox.Text = "0";
                 textbox.TextChanged += txtSum_TextChanged;
-            }            
+            }
         }
         private void SfTextBoxExt_SuggestionsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -1696,10 +1702,10 @@ namespace WpfRaziLedgerApp
             using var db = new wpfrazydbContext();
             long code = -1;
             var y = long.TryParse(txtOrderNumber.Text, out code) ? code : -1;
-            if (db.OrderHeaders.FirstOrDefault(R=>R.NoDoument==y) is OrderHeader orderHeader)
+            if (db.OrderHeaders.FirstOrDefault(R => R.NoDoument == y) is OrderHeader orderHeader)
             {
                 ProductBuy_Details.Clear();
-                foreach (var item in db.OrderDetails.Include(y => y.FkCommodity).Where(r=>r.FkHeaderId== orderHeader.Id))
+                foreach (var item in db.OrderDetails.Include(y => y.FkCommodity).Where(r => r.FkHeaderId == orderHeader.Id))
                 {
                     ProductBuy_Details.Add(new ProductBuyDetail()
                     {
