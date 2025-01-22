@@ -1062,49 +1062,104 @@ namespace WpfRaziLedgerApp
 
         public void SetNull()
         {
-            if(window!=null&&(window as winSearch).ParentTextBox is ProductSellDetail storage)
+            if (window != null)
             {
-                var y = (window as winSearch).ParentTextBox as ProductSellDetail;
-                //((datagrid.SelectionController.CurrentCellManager.CurrentCell.Element as GridCell).Content as FrameworkElement).DataContext = null;
-                //((datagrid.SelectionController.CurrentCellManager.CurrentCell.Element as GridCell).Content as FrameworkElement).DataContext = y;
-                var detail = y;                
-                var v = datagrid.SelectionController.CurrentCellManager.CurrentCell;
-                if ((window as winSearch)?.MuText != null)
+                if ((window as winSearch).ParentTextBox is ProductSellDetail storage)
                 {
-                    using var db = new wpfrazydbContext();
-                    var jid = (window as winSearch)?.MuText.Id;
-                    storage.FkCommodity = db.Commodities.Include("FkUnit").First(j=>j.Id== jid);
-                    datagrid.Dispatcher.BeginInvoke(new Action(() =>
-                    {                        
-                        //MMM
-                        var th = new Thread(() =>
+                    var y = (window as winSearch).ParentTextBox as ProductSellDetail;
+                    //((datagrid.SelectionController.CurrentCellManager.CurrentCell.Element as GridCell).Content as FrameworkElement).DataContext = null;
+                    //((datagrid.SelectionController.CurrentCellManager.CurrentCell.Element as GridCell).Content as FrameworkElement).DataContext = y;
+                    var detail = y;
+                    var v = datagrid.SelectionController.CurrentCellManager.CurrentCell;
+                    if ((window as winSearch)?.MuText != null)
+                    {
+                        using var db = new wpfrazydbContext();
+                        var jid = (window as winSearch)?.MuText.Id;
+                        storage.FkCommodity = db.Commodities.Include("FkUnit").First(j => j.Id == jid);
+                        datagrid.Dispatcher.BeginInvoke(new Action(() =>
                         {
-                            Thread.Sleep(100);
-                            Dispatcher.Invoke(() =>
+                            //MMM
+                            var th = new Thread(() =>
                             {
-                                var i = 1;
-                                if (v.ColumnIndex == 0)
-                                    i++;
-                                if (datagrid.SelectedIndex == -1)
+                                Thread.Sleep(100);
+                                Dispatcher.Invoke(() =>
                                 {
-                                    datagrid.GetAddNewRowController().CommitAddNew();
-                                    datagrid.View.Refresh();
-                                    datagrid.SelectedIndex = datagrid.GetLastRowIndex() - 1;
-                                    if (datagrid.SelectedIndex != -1)
-                                        (this.datagrid.SelectionController as GridSelectionController).MoveCurrentCell(new RowColumnIndex(v.RowIndex - 1, v.ColumnIndex + i));
-                                }
-                                else
-                                {
-                                    datagrid.View.Refresh();
-                                    (this.datagrid.SelectionController as GridSelectionController).MoveCurrentCell(new RowColumnIndex(v.RowIndex, v.ColumnIndex + i));
-                                }
-                                //MMM
-                                datagrid.IsHitTestVisible = true;
+                                    var i = 1;
+                                    if (v.ColumnIndex == 0)
+                                        i++;
+                                    if (datagrid.SelectedIndex == -1)
+                                    {
+                                        datagrid.GetAddNewRowController().CommitAddNew();
+                                        datagrid.View.Refresh();
+                                        datagrid.SelectedIndex = datagrid.GetLastRowIndex() - 1;
+                                        if (datagrid.SelectedIndex != -1)
+                                            (this.datagrid.SelectionController as GridSelectionController).MoveCurrentCell(new RowColumnIndex(v.RowIndex - 1, v.ColumnIndex + i));
+                                    }
+                                    else
+                                    {
+                                        datagrid.View.Refresh();
+                                        (this.datagrid.SelectionController as GridSelectionController).MoveCurrentCell(new RowColumnIndex(v.RowIndex, v.ColumnIndex + i));
+                                    }
+                                    //MMM
+                                    datagrid.IsHitTestVisible = true;
+                                });
                             });
-                        });
-                        th.Start();
-                        //datagrid.SelectCells(datagrid.GetRecordAtRowIndex(datagrid.SelectedIndex-1), datagrid.Columns[1], datagrid.GetRecordAtRowIndex(datagrid.SelectedIndex), datagrid.Columns[2]);
-                    }));
+                            th.Start();
+                            //datagrid.SelectCells(datagrid.GetRecordAtRowIndex(datagrid.SelectedIndex-1), datagrid.Columns[1], datagrid.GetRecordAtRowIndex(datagrid.SelectedIndex), datagrid.Columns[2]);
+                        }));
+                    }
+                }
+                else if ((window as winSearch).ParentTextBox is TextBox textbox)
+                {
+                    var Sf_textbox = this.GetChildByName<TextBlock>(textbox.Name + "Name");
+                    if (textbox.Text == "")
+                    {
+                        textbox.Text = string.Empty;
+                        Sf_textbox.Text = string.Empty;
+                        return;
+                    }
+                    using var db = new wpfrazydbContext();
+                    var code = int.Parse(txtPreferential.Text);
+                    var mu = db.Preferentials.FirstOrDefault(t => t.PreferentialCode == code);
+                    Sf_textbox.Text = mu.PreferentialName;
+                    switch (textbox.Name)
+                    {
+                        case "txtPreferential":
+                            Dispatcher.BeginInvoke(new Action(async () =>
+                            {
+                                await Task.Delay(50);
+                                txtOrderNumber.Focus();
+                            }));
+                            break;
+                        case "txtReciever":
+                            Dispatcher.BeginInvoke(new Action(async () =>
+                            {
+                                await Task.Delay(50);
+                                txtFreight.Focus();
+                            }));
+                            break;
+                        case "txtFreight":
+                            Dispatcher.BeginInvoke(new Action(async () =>
+                            {
+                                await Task.Delay(50);
+                                txtWayBillNumber.Focus();
+                            }));
+                            break;
+                        case "txtDriver":
+                            Dispatcher.BeginInvoke(new Action(async () =>
+                            {
+                                await Task.Delay(50);
+                                txtCarPlate.Focus();
+                            }));
+                            break;
+                        case "txtPersonnel":
+                            Dispatcher.BeginInvoke(new Action(async () =>
+                            {
+                                await Task.Delay(50);
+                                txtDescription.Focus();
+                            }));
+                            break;
+                    }
                 }
             }
             window = null;
@@ -1751,45 +1806,7 @@ namespace WpfRaziLedgerApp
             }
             else
             {
-                Sf_textbox.Text = mu.PreferentialName;
-                switch(textbox.Name)
-                {
-                    case "txtPreferential":
-                        Dispatcher.BeginInvoke(new Action(async () =>
-                        {
-                            await Task.Delay(50);
-                            txtOrderNumber.Focus();
-                        }));
-                        break;
-                    case "txtReciever":
-                        Dispatcher.BeginInvoke(new Action(async () =>
-                        {
-                            await Task.Delay(50);
-                            txtFreight.Focus();
-                        }));
-                        break;
-                    case "txtFreight":
-                        Dispatcher.BeginInvoke(new Action(async () =>
-                        {
-                            await Task.Delay(50);
-                            txtWayBillNumber.Focus();
-                        }));
-                        break;
-                    case "txtDriver":
-                        Dispatcher.BeginInvoke(new Action(async () =>
-                        {
-                            await Task.Delay(50);
-                            txtCarPlate.Focus();
-                        }));
-                        break;
-                    case "txtPersonnel":
-                        Dispatcher.BeginInvoke(new Action(async () =>
-                        {
-                            await Task.Delay(50);
-                            txtDescription.Focus();
-                        }));
-                        break;
-                }
+                
             }
         }
 
