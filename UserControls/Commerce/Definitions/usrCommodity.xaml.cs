@@ -98,7 +98,9 @@ namespace WpfRaziLedgerApp
                 return;
             }
             var i = int.Parse(txtCodeCommodity.Text);
-            var Commodity = db.Commodities.Include("FkUnit").First(j=>j.Id== id);
+            Commodity Commodity = null;
+            if (id != Guid.Empty)
+                Commodity = db.Commodities.Include("FkUnit").First(j => j.Id == id);
             //var mCommodity = db.Commodities.FirstOrDefault(g => g.FkGroupId == col.Id && g.Code == i);
             //if (Commodity?.Id != mCommodity?.Id && mCommodity != null)
             //{
