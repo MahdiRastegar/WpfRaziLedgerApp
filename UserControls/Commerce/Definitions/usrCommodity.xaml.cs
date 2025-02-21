@@ -113,7 +113,14 @@ namespace WpfRaziLedgerApp
                 Xceed.Wpf.Toolkit.MessageBox.Show("این نام کالا و کد گروه از قبل وجود داشته است!");
                 return;
             }
-
+            if (id == Guid.Empty)
+            {
+                if (db.Commodities.Any(u => u.Code == i))
+                {
+                    Xceed.Wpf.Toolkit.MessageBox.Show("کد کالا تکراریست!");
+                    return;
+                }
+            }
             Commodity e_add = null;
             var Unitcode = int.Parse(txtUnit.Text);
             var mu = db.Units.First(t => t.Code == Unitcode);
@@ -474,7 +481,7 @@ namespace WpfRaziLedgerApp
 
         private void TxtGroup_LostFocus(object sender, RoutedEventArgs e)
         {
-            if (!isCancel)
+            if (!isCancel && !txtCodeCommodity.IsReadOnly)
                 try
                 {
                     using var db = new wpfrazydbContext();
@@ -553,8 +560,16 @@ namespace WpfRaziLedgerApp
             if ((window as winSearch).ParentTextBox == txtUnit)
             {
                 window = null;
+                int g;
                 using var db = new wpfrazydbContext();
-                var g = int.Parse(txtUnit.Text);
+                try
+                {
+                    g = int.Parse(txtUnit.Text);
+                }
+                catch 
+                {
+                    return;
+                }
 
                 var y = db.Units.FirstOrDefault(gs => gs.Code == g);
                 if (y != null)

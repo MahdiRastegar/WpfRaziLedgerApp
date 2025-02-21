@@ -133,7 +133,7 @@
                 <TextBox Name="txtPreferentialName" Text="" TextChanged="txtPreferentialName_TextChanged" MaxLength="50" VerticalContentAlignment="Center"   PreviewTextInput="Txt_PreviewTextInput" Margin="0" FontSize="16"/>
             </Syncfusion:SfTextInputLayout>
             <Expander  x:Name="expander" Grid.Row="3" Grid.ColumnSpan="2" Margin="10 0 10 50" Header="اطلاعات بیشتر" FontSize="16" Grid.RowSpan="2" FlowDirection="RightToLeft">
-                <ScrollViewer>
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
                     <GroupBox Margin="5">
                         <StackPanel>
                             <Syncfusion:SfTextInputLayout  Width="150" Name="Sf_Mobile"  OutlineCornerRadius="8" Hint="تلفن همراه" Grid.Row="2"  VerticalAlignment="Center" Margin="10 0"  HorizontalAlignment="Left">

@@ -118,7 +118,14 @@ namespace WpfRaziLedgerApp
                 Xceed.Wpf.Toolkit.MessageBox.Show("این نام گروه مشتریان و کد گروه از قبل وجود داشته است!");
                 return;
             }
-
+            if (id == Guid.Empty)
+            {
+                if (db.CustomerGroups.Any(u => u.CustomerGroupCode == i))
+                {
+                    Xceed.Wpf.Toolkit.MessageBox.Show("کد گروه مشتریان تکراریست!");
+                    return;
+                }
+            }
             CustomerGroup e_add = null;
             if (id == Guid.Empty)
             {
@@ -425,7 +432,7 @@ namespace WpfRaziLedgerApp
 
         private void TxtGroup_LostFocus(object sender, RoutedEventArgs e)
         {
-            if (!isCancel)
+            if (!isCancel && !txtCodeCustomerGroup.IsReadOnly)
                 try
                 {
                     using var db = new wpfrazydbContext();

@@ -527,7 +527,7 @@ namespace WpfRaziLedgerApp
 
         private void txtGroup_LostFocus(object sender, RoutedEventArgs e)
         {
-            if (!isCancel)
+            if (!isCancel && !txtCol.IsReadOnly)
                 try
                 {
                     using var db = new wpfrazydbContext();

@@ -423,6 +423,8 @@ namespace WpfRaziLedgerApp
 
         private void TxtGroup_LostFocus(object sender, RoutedEventArgs e)
         {
+            if (txtCommodity.IsReadOnly)
+                return;
             if (txtCommodity.Text == "")
             {
                 txtCommodity.Text = string.Empty;
