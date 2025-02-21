@@ -1119,7 +1119,7 @@ namespace WpfRaziLedgerApp
                         return;
                     }
                     using var db = new wpfrazydbContext();
-                    var code = int.Parse(txtPreferential.Text);
+                    var code = int.Parse(textbox.Text);
                     var mu = db.Preferentials.FirstOrDefault(t => t.PreferentialCode == code);
                     Sf_textbox.Text = mu.PreferentialName;
                     switch (textbox.Name)
