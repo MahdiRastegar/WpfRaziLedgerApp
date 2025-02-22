@@ -348,6 +348,8 @@ namespace WpfRaziLedgerApp
 
                 entity.Property(e => e.Date).HasColumnType("datetime");
 
+                entity.Property(e => e.Fee).HasColumnType("decimal(18, 0)");
+
                 entity.Property(e => e.FkCommodityId).HasColumnName("fk_CommodityId");
 
                 entity.Property(e => e.FkPriceGroupId).HasColumnName("fk_PriceGroupId");

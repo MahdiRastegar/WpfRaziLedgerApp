@@ -143,6 +143,9 @@ FontFamily="{StaticResource IranSans}" Width="27"
             <Syncfusion:SfTextInputLayout IsHitTestVisible="False" x:Name="Sf_txtType" OutlineCornerRadius="8" Hint="تاریخ" Grid.Row="1"  VerticalAlignment="Center" Margin="20 0">
                 <Label Height="25" FontSize="18"/>
             </Syncfusion:SfTextInputLayout>
+            <Syncfusion:SfTextInputLayout  x:Name="Sf_txtInvoiceDiscount" OutlineCornerRadius="8" Grid.Row="1" Grid.Column="1" Hint="فی" VerticalAlignment="Center" Margin="20,10">
+                <TextBox x:Name="txtInvoiceDiscount" LostFocus="txtInvoiceDiscount_LostFocus" PreviewKeyDown="txtInvoiceDiscount_PreviewKeyDown" Text="0" TextChanged="txtInvoiceDiscount_TextChanged" MaxLength="50" VerticalContentAlignment="Center" PreviewTextInput="txtInvoiceDiscount_PreviewTextInput" Margin="0" FontSize="18"/>
+            </Syncfusion:SfTextInputLayout>
             <Syncfusion:SfTextInputLayout Name="Sf_txtCommodity" OutlineCornerRadius="8" Hint="کد کالا" Grid.Row="2"  VerticalAlignment="Center" Margin="30 0"  HorizontalAlignment="Stretch">
                 <TextBox Name="txtCommodity" LostFocus="TxtGroup_LostFocus" VerticalContentAlignment="Center" TextChanged="TxtGroup_TextChanged" IsEnabled="True" IsReadOnly="False" PreviewTextInput="txtCommodity_PreviewTextInput" Margin="0" FontSize="18"/>
             </Syncfusion:SfTextInputLayout>
@@ -284,6 +287,7 @@ FontFamily="{StaticResource IranSans}" Width="27"
                                 </DataTemplate>
                             </Syncfusion:GridDateTimeColumn.CellTemplate>
                         </Syncfusion:GridDateTimeColumn>
+                        <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="0" MinimumWidth="118" HeaderText="فی" MappingName="Fee" TextAlignment="Left"/>
                     </Syncfusion:SfDataGrid.Columns>
                 </Syncfusion:SfDataGrid>
                 <Syncfusion:SfDataPager x:Name="dataPager" FlowDirection="LeftToRight" VerticalAlignment="Bottom" Margin="0 -30" HorizontalAlignment="Center" UseOnDemandPaging="True"

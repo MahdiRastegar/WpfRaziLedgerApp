@@ -40,6 +40,11 @@ namespace WpfRaziLedgerApp
         public string Address { get; set; }
         public string Description { get; set; }
         public Guid? FkCityId { get; set; }
+        public string EconomicCode { get; set; }
+        public string NationalCode { get; set; }
+        public string RegistrationNumber { get; set; }
+        public string PostalCode { get; set; }
+        public byte? AccountType { get; set; }
 
         public virtual City FkCity { get; set; }
         public virtual TGroup FkGroup { get; set; }

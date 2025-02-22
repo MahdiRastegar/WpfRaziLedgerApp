@@ -103,6 +103,7 @@ namespace WpfRaziLedgerApp
                     Id = Guid.NewGuid(),
                     FkCommodity = commodity,
                     FkPriceGroup = priceGroup,
+                    Fee = decimal.Parse(txtInvoiceDiscount.Text.Replace(",", "")),
                     Date = pcw1.SelectedDate.ToDateTime()
                 };
                 db.CommodityPricingPanels.Add(e_add);
@@ -111,9 +112,11 @@ namespace WpfRaziLedgerApp
             else
             {                
                 var e_Edidet = CommodityPricingPanels.FirstOrDefault(a => a.Id == id);
+                var e_Edidet2 = db.CommodityPricingPanels.FirstOrDefault(a => a.Id == id);
                 e_Edidet.FkCommodity = commodity;
                 e_Edidet.FkPriceGroup = priceGroup;
-                e_Edidet.Date = pcw1.SelectedDate.ToDateTime();
+                e_Edidet2.Date = e_Edidet.Date = pcw1.SelectedDate.ToDateTime();
+                e_Edidet2.Fee = e_Edidet.Fee = decimal.Parse(txtInvoiceDiscount.Text.Replace(",", ""));
             }
             if (!db.SafeSaveChanges())  return;
             if (id == Guid.Empty)
@@ -292,9 +295,11 @@ namespace WpfRaziLedgerApp
             set
             {
                 _iscancel = value;
-
-                gridContainer.Opacity = .6;
-                gridContainer.IsEnabled = false;
+                if (gridContainer != null)
+                {
+                    gridContainer.Opacity = .6;
+                    gridContainer.IsEnabled = false;
+                }
             }
         }
 
@@ -313,6 +318,7 @@ namespace WpfRaziLedgerApp
             txtCommodity.IsReadOnly = false;
             txtCommodityName.Text = "";
             txtCommodity.Text = "";
+            txtInvoiceDiscount.Text = string.Empty;
             Sf_txtCommodityName.HasError = false;
             Sf_txtCommodity.HasError = false;
             Sf_txtCommodity.ErrorText = "";
@@ -357,6 +363,10 @@ namespace WpfRaziLedgerApp
                 txtPriceGroupName.Text = commodityPricingPanel.FkPriceGroup.GroupName.ToString();
                 pcw1.SelectedDate = new PersianCalendarWPF.PersianDate(commodityPricingPanel.Date);
                 txbCalender.Text = pcw1.SelectedDate.ToString();
+                if (commodityPricingPanel.Fee.HasValue)
+                    txtInvoiceDiscount.Text = commodityPricingPanel.Fee.Value.ToString();
+                else
+                    txtInvoiceDiscount.Text = "0";
 
                 gridDelete.Visibility = Visibility.Visible;
                 borderEdit.Visibility = Visibility.Visible;
@@ -651,6 +661,54 @@ namespace WpfRaziLedgerApp
         private void Pcw1_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             e.Handled = true;
+        }
+
+        private void txtInvoiceDiscount_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            isCancel = false;
+            var textbox = sender as TextBox;
+            decimal ds = 0;
+            if (decimal.TryParse(textbox.Text.Trim().Replace(",", ""), out ds) && ds >= 0)
+            {
+
+                int temp = textbox.SelectionStart;
+                textbox.TextChanged -= txtInvoiceDiscount_TextChanged;
+                textbox.Text = string.Format("{0:#,###}", ds);
+                if (textbox.SelectionStart != temp)
+                    textbox.SelectionStart = temp + 1;
+                if (textbox.Text == "")
+                    textbox.Text = "0";
+                textbox.TextChanged += txtInvoiceDiscount_TextChanged;
+            }
+        }
+        private void txtInvoiceDiscount_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            var txt = sender as TextBox;
+
+            if (e.Text == "\r")
+            {
+                txtCommodity.Focus();
+                return;
+            }
+            e.Handled = !IsTextAllowed(e.Text);
+            if (txt.Text == "")
+                txt.Text = "0";
+        }
+
+        private void txtInvoiceDiscount_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Space)
+            {
+                e.Handled = true;
+                return;
+            }
+        }
+
+        private void txtInvoiceDiscount_LostFocus(object sender, RoutedEventArgs e)
+        {
+            var txt = sender as TextBox;
+            if (txt.Text == "")
+                txt.Text = "0";            
         }
     }
 }

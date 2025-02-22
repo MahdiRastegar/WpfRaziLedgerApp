@@ -154,10 +154,17 @@ namespace WpfRaziLedgerApp
                     Phone3 = txtPhone3.Text,
                     WebSite = txtWebSite.Text,
                     Email = txtEmail.Text,
+
+                    EconomicCode = txtEcCode.Text,
+                    PostalCode = txtPostalCode.Text,
+                    RegistrationNumber = txtReNumber.Text,
+                    NationalCode = txtNaCode.Text,
                     Address = txtAddress.Text,
                     Description = txtDescription.Text,
                     FkCityId = (cmbCity.SelectedItem as City)?.Id
                 };
+                if (cmbAcType.SelectedIndex != -1)
+                    e_add.AccountType = (byte)cmbAcType.SelectedIndex;
                 db.Preferentials.Add(e_add);
                 Preferentials.Add(e_add);
             }
@@ -168,6 +175,13 @@ namespace WpfRaziLedgerApp
                 e_Edidet.PreferentialCode = preferential.PreferentialCode = i;
                 e_Edidet.PreferentialName = preferential.PreferentialName = txtPreferentialName.Text;
                 e_Edidet.FkGroup.GroupName = txtGroupName.Text;
+
+                e_Edidet.EconomicCode = preferential.EconomicCode = txtEcCode.Text;
+                e_Edidet.PostalCode = preferential.PostalCode = txtPostalCode.Text;
+                e_Edidet.RegistrationNumber = preferential.RegistrationNumber = txtReNumber.Text;
+                e_Edidet.NationalCode = preferential.NationalCode = txtNaCode.Text;
+                if (cmbAcType.SelectedIndex != -1)
+                    e_Edidet.AccountType = preferential.AccountType = (byte)cmbAcType.SelectedIndex;
 
                 e_Edidet.Mobile = preferential.Mobile = txtMobile.Text;
                 e_Edidet.Phone1 = preferential.Phone1 = txtPhone1.Text;
@@ -394,6 +408,12 @@ namespace WpfRaziLedgerApp
 
         private void ClearMore()
         {
+            txtEcCode.Text = "";
+            txtPostalCode.Text = "";
+            txtReNumber.Text = "";
+            txtNaCode.Text = "";
+            cmbAcType.SelectedIndex = -1;
+
             txtMobile.Text = "";
             txtPhone1.Text = "";
             txtPhone2.Text = "";
@@ -404,6 +424,11 @@ namespace WpfRaziLedgerApp
             txtDescription.Text = "";
             cmbCity.SelectedItem = null;
             cmbProvince.SelectedItem = null;
+
+            btnMorePhone.Visibility = Visibility.Visible;
+            Sf_Phone1.Hint = "تلفن";
+            Sf_Phone2.Visibility = Visibility.Collapsed;
+            Sf_Phone3.Visibility = Visibility.Collapsed;
         }
 
         private void datagrid_SelectionChanged(object sender, Syncfusion.UI.Xaml.Grid.GridSelectionChangedEventArgs e)
@@ -419,13 +444,47 @@ namespace WpfRaziLedgerApp
                 txtPreferentialName.Text = preferential.PreferentialName;
                 txtCodePreferential.Text = preferential.PreferentialCode.ToString();
 
+                if (preferential.Phone2 != "" || preferential.Phone3 != "")
+                {
+                    btnMorePhone.Visibility = Visibility.Collapsed;
+                    Sf_Phone1.Hint = "تلفن 1";
+                    Sf_Phone2.Visibility = Visibility.Visible;
+                    Sf_Phone3.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    btnMorePhone.Visibility = Visibility.Visible;
+                    Sf_Phone1.Hint = "تلفن";
+                    Sf_Phone2.Visibility = Visibility.Collapsed;
+                    Sf_Phone3.Visibility = Visibility.Collapsed;
+                }
+
                 txtMobile.Text = preferential.Mobile;
                 txtPhone1.Text = preferential.Phone1;
-                txtPhone2.Text = preferential.Phone2;
-                txtPhone3.Text = preferential.Phone3;
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    txtPhone2.TextChanged -= TxtCodePreferential_TextChanged;
+                    txtPhone3.TextChanged -= TxtCodePreferential_TextChanged;
+                    txtPhone2.Text = preferential.Phone2;
+                    txtPhone3.Text = preferential.Phone3;
+                    txtPhone2.TextChanged += TxtCodePreferential_TextChanged;
+                    txtPhone3.TextChanged += TxtCodePreferential_TextChanged;
+                }));
                 txtWebSite.Text = preferential.WebSite;
                 txtEmail.Text = preferential.Email;
                 txtAddress.Text = preferential.Address;
+
+                
+
+                txtEcCode.Text = preferential.EconomicCode;
+                txtPostalCode.Text = preferential.PostalCode;
+                txtReNumber.Text = preferential.RegistrationNumber;
+                txtNaCode.Text = preferential.NationalCode;
+                if (preferential.AccountType.HasValue)
+                    cmbAcType.SelectedIndex = preferential.AccountType.Value;
+                else
+                    cmbAcType.SelectedIndex = -1;
+
                 txtDescription.Text = preferential.Description;
                 if (preferential.FkCity != null)
                 {
@@ -736,6 +795,46 @@ namespace WpfRaziLedgerApp
             var cmb=sender as ComboBoxAdv;
             if (cmb.SelectedIndex == -1)
                 cmb.Text = "";
+        }
+
+        private void btnMorePhone_Click(object sender, RoutedEventArgs e)
+        {
+            btnMorePhone.Visibility = Visibility.Collapsed;
+            Sf_Phone1.Hint = "تلفن 1";
+            Sf_Phone2.Visibility = Visibility.Visible;
+            Sf_Phone3.Visibility = Visibility.Visible;
+        }
+
+        private void txtPhone1_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if (e.Text == "\r")
+            {
+                if (btnMorePhone.Visibility==Visibility.Visible)
+                {
+                    txtEcCode.Focus();
+                }
+                else
+                {
+                    TraversalRequest request = new TraversalRequest(FocusNavigationDirection.Next);
+                    request.Wrapped = true;
+                    (sender as TextBox).MoveFocus(request);
+                }
+                
+                return;
+            }
+            e.Handled = !IsTextAllowed(e.Text);
+        }
+
+        private void cmbAcType_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if (e.Text == "\r")
+            {
+                TraversalRequest request = new TraversalRequest(FocusNavigationDirection.Next);
+                request.Wrapped = true;
+                (sender as ComboBoxAdv).MoveFocus(request);
+
+                return;
+            }
         }
     }
 }
