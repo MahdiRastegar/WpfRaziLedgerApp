@@ -123,13 +123,13 @@
                 </Border.Triggers>
             </Border>
             <Syncfusion:SfTextInputLayout Name="Sf_txtGroup" OutlineCornerRadius="8" Hint="کد گروه قیمت" Grid.Row="1"  VerticalAlignment="Center" Margin="30 0"  HorizontalAlignment="Stretch">
-                <TextBox Name="txtGroup" LostFocus="TxtGroup_LostFocus" VerticalContentAlignment="Center" TextChanged="TxtGroup_TextChanged" IsEnabled="True" IsReadOnly="False" PreviewTextInput="txtGroup_PreviewTextInput" Margin="0" FontSize="18"/>
+                <TextBox Name="txtGroup" LostFocus="TxtGroup_LostFocus" VerticalContentAlignment="Center" TextChanged="TxtGroup_TextChanged" IsEnabled="True" IsReadOnly="False" PreviewTextInput="txtGroup_PreviewTextInput" Margin="0" FontSize="16"/>
             </Syncfusion:SfTextInputLayout>
             <Syncfusion:SfTextInputLayout Name="Sf_txtGroupName" OutlineCornerRadius="8" Hint="نام گروه" Grid.Row="1"  VerticalAlignment="Center" Margin="30 0" Grid.Column="1"  HorizontalAlignment="Stretch">
-                <TextBox Name="txtGroupName" VerticalContentAlignment="Center"  IsEnabled="True" IsReadOnly="True" Margin="0" FontSize="18"/>
+                <TextBox Name="txtGroupName" VerticalContentAlignment="Center"  IsEnabled="True" IsReadOnly="True" Margin="0" FontSize="16"/>
             </Syncfusion:SfTextInputLayout>
             <Syncfusion:SfTextInputLayout Name="Sf_txtCodeCustomerGroup"  OutlineCornerRadius="8" Hint="کد گروه مشتریان" Grid.Row="2"  VerticalAlignment="Center" Margin="30 0"  HorizontalAlignment="Stretch">
-                <TextBox Name="txtCodeCustomerGroup" TextChanged="TxtCodeCustomerGroup_TextChanged" VerticalContentAlignment="Center"  IsEnabled="True" IsReadOnly="False" PreviewTextInput="Txt_PreviewTextInput" Margin="0" FontSize="18"/>
+                <TextBox Name="txtCodeCustomerGroup" TextChanged="TxtCodeCustomerGroup_TextChanged" VerticalContentAlignment="Center"  IsEnabled="True" IsReadOnly="False" PreviewTextInput="Txt_PreviewTextInput" Margin="0" FontSize="16"/>
             </Syncfusion:SfTextInputLayout>
             <Syncfusion:SfTextInputLayout  Name="Sf_txtCustomerGroupName" OutlineCornerRadius="8" Grid.Row="2" Grid.Column="1" Hint="نام گروه مشتریان" VerticalAlignment="Center" Margin="30 0"  HorizontalAlignment="Stretch">
                 <TextBox Name="txtCustomerGroupName" Text="" TextChanged="txtCustomerGroupName_TextChanged" MaxLength="50" VerticalContentAlignment="Center"   PreviewTextInput="Txt_PreviewTextInput" Margin="0" FontSize="16"/>
@@ -204,7 +204,7 @@
                         </TextBox.Background>
 
                     </TextBox>
-                    <TextBlock IsHitTestVisible="False" Grid.Column="1" Text="جستجو..." Name="testsearch" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="18" Margin="10,0,0,0" Foreground="#FF9E9E9E">
+                    <TextBlock IsHitTestVisible="False" Grid.Column="1" Text="جستجو..." Name="testsearch" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="16" Margin="10,0,0,0" Foreground="#FF9E9E9E">
                         <TextBlock.Style>
                             <Style TargetType="{x:Type TextBlock}">
                                 <Setter Property="Visibility" Value="Collapsed"/>

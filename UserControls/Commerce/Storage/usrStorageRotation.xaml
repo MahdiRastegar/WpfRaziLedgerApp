@@ -446,7 +446,7 @@ FontFamily="{StaticResource IranSans}" Width="27"
                 </PersianCalendarWPF:PersianDatePicker.Background>
             </PersianCalendarWPF:PersianDatePicker>
             <Syncfusion:SfTextInputLayout IsHitTestVisible="False" x:Name="Sf_txtType" OutlineCornerRadius="8" Hint="تاریخ" Grid.Row="2"  VerticalAlignment="Center" Margin="20 0">
-                <Label Height="25" FontSize="18"/>
+                <Label Height="25" FontSize="16"/>
             </Syncfusion:SfTextInputLayout>
             <DockPanel VerticalAlignment="Center" Margin="20 0"  HorizontalAlignment="Stretch"  Grid.Row="3">
                 <Border Width="12.5" Height="54" Tag="id" Visibility="Collapsed" MouseLeave="border_MouseLeave" Name="border" Panel.ZIndex="1" MouseUp="border_MouseUp" MouseEnter="Border_MouseEnter" MouseDown="Border_MouseDown" BorderThickness=".9" CornerRadius="10 1 1 10" BorderBrush="Black" Margin="0 -14.5 -12.5 0">
@@ -461,10 +461,10 @@ FontFamily="{StaticResource IranSans}" Width="27"
                 </Border>
             </DockPanel>
             <Syncfusion:SfTextInputLayout  Name="Sf_Description"  OutlineCornerRadius="8" Hint="توضیحات" Grid.Row="3" VerticalAlignment="Center" Margin="20 0"  HorizontalAlignment="Stretch">
-                <TextBox Name="txtDescription" TextChanged="txtStorage_TextChanged" VerticalContentAlignment="Center" AcceptsReturn="True" IsEnabled="True" IsReadOnly="False" PreviewTextInput="txtDescription_PreviewTextInput" Margin="0" FontSize="18"/>
+                <TextBox Name="txtDescription" TextChanged="txtStorage_TextChanged" VerticalContentAlignment="Center" AcceptsReturn="True" IsEnabled="True" IsReadOnly="False" PreviewTextInput="txtDescription_PreviewTextInput" Margin="0" FontSize="16"/>
             </Syncfusion:SfTextInputLayout>
             <Syncfusion:SfTextInputLayout Visibility="Collapsed" Name="Sf_txtSerial" OutlineCornerRadius="8" Hint="سریال" Grid.Row="4"  VerticalAlignment="Center" Margin="20 0" Grid.Column="0"  HorizontalAlignment="Stretch">
-                <TextBox Name="txtSerial" VerticalContentAlignment="Center"  IsEnabled="True" IsReadOnly="True" Margin="0" FontSize="18"/>
+                <TextBox Name="txtSerial" VerticalContentAlignment="Center"  IsEnabled="True" IsReadOnly="True" Margin="0" FontSize="16"/>
             </Syncfusion:SfTextInputLayout>
             <DockPanel VerticalAlignment="Center" Grid.Row="2" Grid.Column="1" Margin="20 0"  HorizontalAlignment="Stretch"/>
             <DockPanel  Grid.Row="6" Grid.ColumnSpan="2" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="15 0 15 -15">
@@ -525,7 +525,7 @@ FontFamily="{StaticResource IranSans}" Width="27"
                         </TextBox.Background>
 
                     </TextBox>
-                    <TextBlock IsHitTestVisible="False" Grid.Column="1" Text="جستجو..." Name="testsearch" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="18" Margin="10,0,0,0" Foreground="#FF676767">
+                    <TextBlock IsHitTestVisible="False" Grid.Column="1" Text="جستجو..." Name="testsearch" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="16" Margin="10,0,0,0" Foreground="#FF676767">
                         <TextBlock.Style>
                             <Style TargetType="{x:Type TextBlock}">
                                 <Setter Property="Visibility" Value="Collapsed"/>

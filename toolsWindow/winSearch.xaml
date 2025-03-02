@@ -274,7 +274,7 @@
                 </ImageBrush>
             </Grid.Background>
             <TextBox BorderThickness="0" TextChanged="SearchTermTextBox_TextChanged" x:Name="SearchTermTextBox" Text="" Margin="50 0 0 0"
- FontSize="18" VerticalContentAlignment="Center" HorizontalContentAlignment="Left">
+ FontSize="16" VerticalContentAlignment="Center" HorizontalContentAlignment="Left">
                 
             </TextBox>
             <Image Source="/Images/ClearSearch.png" ToolTip="پاک کردن جستجو" Grid.Column="1" HorizontalAlignment="Right" Margin="0 3 14 0" Opacity=".65" Name="ClearSearch" MouseEnter="ClearSearch_MouseEnter" PreviewMouseDown="ClearSearch_PreviewMouseDown" MouseLeave="ClearSearch_MouseLeave" Width="32" Height="32">
@@ -289,7 +289,7 @@
                     </Style>
                 </Image.Style>
             </Image>
-            <TextBlock IsHitTestVisible="False" Text="جستجو..." VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="18" Margin="55,0,0,0" Foreground="DarkGray">
+            <TextBlock IsHitTestVisible="False" Text="جستجو..." VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="16" Margin="55,0,0,0" Foreground="DarkGray">
                 <TextBlock.Style>
                     <Style TargetType="{x:Type TextBlock}">
                         <Setter Property="Visibility" Value="Collapsed"/>

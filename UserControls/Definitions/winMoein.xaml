@@ -121,17 +121,17 @@
                 </Border.Triggers>
             </Border>
             <Syncfusion:SfTextInputLayout Name="Sf_txtCol" OutlineCornerRadius="8" Hint="کد کل" Grid.Row="1"  VerticalAlignment="Center" Margin="30 0"  HorizontalAlignment="Stretch">
-                <TextBox Name="txtCol" LostFocus="TxtCol_LostFocus" VerticalContentAlignment="Center" TextChanged="TxtCol_TextChanged" IsEnabled="True" IsReadOnly="False" PreviewTextInput="Txt_PreviewTextInput" Margin="0" FontSize="18"/>
+                <TextBox Name="txtCol" LostFocus="TxtCol_LostFocus" VerticalContentAlignment="Center" TextChanged="TxtCol_TextChanged" IsEnabled="True" IsReadOnly="False" PreviewTextInput="Txt_PreviewTextInput" Margin="0" FontSize="16"/>
             </Syncfusion:SfTextInputLayout>
             <Syncfusion:SfTextInputLayout Name="Sf_txtCodeMoein"  OutlineCornerRadius="8" Hint="کد معین" Grid.Row="2"  VerticalAlignment="Center" Margin="30 0"  HorizontalAlignment="Stretch">
-                <TextBox Name="txtCodeMoein" TextChanged="TxtCodeMoein_TextChanged" VerticalContentAlignment="Center"  IsEnabled="True" IsReadOnly="False" PreviewTextInput="Txt_PreviewTextInput" Margin="0" FontSize="18"/>
+                <TextBox Name="txtCodeMoein" TextChanged="TxtCodeMoein_TextChanged" VerticalContentAlignment="Center"  IsEnabled="True" IsReadOnly="False" PreviewTextInput="Txt_PreviewTextInput" Margin="0" FontSize="16"/>
             </Syncfusion:SfTextInputLayout>
            
             <Syncfusion:SfTextInputLayout  Name="Sf_txtMoeinName" OutlineCornerRadius="8" Grid.Row="2" Grid.Column="1" Hint="نام معین" VerticalAlignment="Center" Margin="30 0"  HorizontalAlignment="Stretch">
                 <TextBox Name="txtMoeinName" Text="" TextChanged="txtMoeinName_TextChanged" MaxLength="50" VerticalContentAlignment="Center"   PreviewTextInput="Txt_PreviewTextInput" Margin="0" FontSize="16"/>
             </Syncfusion:SfTextInputLayout>
             <Syncfusion:SfTextInputLayout Name="Sf_txtColName" OutlineCornerRadius="8" Hint="نام کل" Grid.Row="1"  VerticalAlignment="Center" Margin="30 0" Grid.Column="1"  HorizontalAlignment="Stretch">
-                <TextBox Name="txtColName" VerticalContentAlignment="Center"  IsEnabled="True" IsReadOnly="True" Margin="0" FontSize="18"/>
+                <TextBox Name="txtColName" VerticalContentAlignment="Center"  IsEnabled="True" IsReadOnly="True" Margin="0" FontSize="16"/>
             </Syncfusion:SfTextInputLayout>
             <Syncfusion:SfTextInputLayout Visibility="Collapsed" HintFloatMode="AlwaysFloat" Grid.RowSpan="2" VerticalAlignment="Top" Name="Sf_txtGroup1" OutlineCornerRadius="8" Grid.ColumnSpan="2"  Grid.Row="3" Grid.Column="0" Hint="گروه ها" Margin="30 30 30 0"  HorizontalAlignment="Left">
                 <Syncfusion:CheckListBox BorderThickness="0" x:Name="checkListBox1" DisplayMemberPath="GroupName" Height="180" Width="190">
@@ -213,7 +213,7 @@
                         </TextBox.Background>
 
                     </TextBox>
-                    <TextBlock IsHitTestVisible="False" Grid.Column="1" Text="جستجو..." Name="testsearch" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="18" Margin="10,0,0,0" Foreground="#FF9E9E9E">
+                    <TextBlock IsHitTestVisible="False" Grid.Column="1" Text="جستجو..." Name="testsearch" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="16" Margin="10,0,0,0" Foreground="#FF9E9E9E">
                         <TextBlock.Style>
                             <Style TargetType="{x:Type TextBlock}">
                                 <Setter Property="Visibility" Value="Collapsed"/>

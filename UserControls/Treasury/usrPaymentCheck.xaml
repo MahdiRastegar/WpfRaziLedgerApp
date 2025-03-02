@@ -437,10 +437,10 @@ FontFamily="{StaticResource IranSans}" Width="27"
                 </Syncfusion:SfTextInputLayout>
 
                 <Syncfusion:SfTextInputLayout Visibility="Visible" Name="Sf_txtCount" OutlineCornerRadius="8" Hint="جمع تعداد" Grid.Row="0"  VerticalAlignment="Top" Margin="20 0 20 0" Grid.Column="0"  HorizontalAlignment="Stretch">
-                    <TextBox Name="txtCount" VerticalContentAlignment="Center"  IsEnabled="True" IsReadOnly="True" Margin="0" FontSize="18"/>
+                    <TextBox Name="txtCount" VerticalContentAlignment="Center"  IsEnabled="True" IsReadOnly="True" Margin="0" FontSize="16"/>
                 </Syncfusion:SfTextInputLayout>
                 <Syncfusion:SfTextInputLayout Visibility="Visible" Name="Sf_txtSumPrice" OutlineCornerRadius="8" Hint="جمع مبلغ" Grid.Row="0" Grid.Column="1" VerticalAlignment="Top" Margin="20 0 20 0"  HorizontalAlignment="Stretch">
-                    <TextBox Name="txtSumPrice" VerticalContentAlignment="Center"  IsEnabled="True" IsReadOnly="True" Margin="0" FontSize="18"/>
+                    <TextBox Name="txtSumPrice" VerticalContentAlignment="Center"  IsEnabled="True" IsReadOnly="True" Margin="0" FontSize="16"/>
                 </Syncfusion:SfTextInputLayout>
             </Grid>
 
@@ -454,15 +454,15 @@ FontFamily="{StaticResource IranSans}" Width="27"
                 </TextBlock.Foreground>
             </TextBlock>-->
             <Syncfusion:SfTextInputLayout Name="Sf_txtMoein" OutlineCornerRadius="8" Hint="کل معین" Grid.Row="3"  VerticalAlignment="Center" Margin="20 20 20 20"  HorizontalAlignment="Stretch">
-                <TextBox Name="txtMoein" VerticalContentAlignment="Center" PreviewKeyDown="txtMoein_PreviewKeyDown" LostFocus="txtMoein_LostFocus" Tag="true" PreviewTextInput="Txt_PreviewTextInput" TextChanged="txtDescription_TextChanged" IsEnabled="True" Margin="0" FontSize="18"/>
+                <TextBox Name="txtMoein" VerticalContentAlignment="Center" PreviewKeyDown="txtMoein_PreviewKeyDown" LostFocus="txtMoein_LostFocus" Tag="true" PreviewTextInput="Txt_PreviewTextInput" TextChanged="txtDescription_TextChanged" IsEnabled="True" Margin="0" FontSize="16"/>
             </Syncfusion:SfTextInputLayout>
             <Syncfusion:SfTextInputLayout Name="Sf_txtPreferential" OutlineCornerRadius="8" Hint="تفضیلی" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Margin="20 20 20 20"  HorizontalAlignment="Stretch">
-                <TextBox Name="txtPreferential" LostFocus="txtPreferential_LostFocus" VerticalContentAlignment="Center" PreviewKeyDown="txtPreferential_PreviewKeyDown" PreviewTextInput="Txt_PreviewTextInput" Tag="true" IsEnabled="True" Margin="0" FontSize="18"/>
+                <TextBox Name="txtPreferential" LostFocus="txtPreferential_LostFocus" VerticalContentAlignment="Center" PreviewKeyDown="txtPreferential_PreviewKeyDown" PreviewTextInput="Txt_PreviewTextInput" Tag="true" IsEnabled="True" Margin="0" FontSize="16"/>
             </Syncfusion:SfTextInputLayout>
-            <TextBlock Name="txbMoein" Grid.Row="4" Margin="20 0" VerticalAlignment="Center"/>
-            <TextBlock Name="txbPreferential" Grid.Row="4" Grid.Column="1" Margin="20 0" VerticalAlignment="Center"/>
+            <TextBlock Name="txbMoein" Grid.Row="4" Margin="20 0" VerticalAlignment="Center" TextWrapping="Wrap"/>
+            <TextBlock Name="txbPreferential" Grid.Row="4" Grid.Column="1" Margin="20 0" VerticalAlignment="Center" TextWrapping="Wrap"/>
             <Syncfusion:SfTextInputLayout Name="Sf_Description"  OutlineCornerRadius="8" Hint="توضیحات" Grid.Row="5" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="20 0"  HorizontalAlignment="Stretch">
-                <TextBox Name="txtDescription" TextChanged="txtDescription_TextChanged" VerticalScrollBarVisibility="Auto" MaxHeight="167.5" VerticalContentAlignment="Center" IsEnabled="True" IsReadOnly="False" PreviewTextInput="Txt_PreviewTextInput" Margin="0" FontSize="18"/>
+                <TextBox Name="txtDescription" TextChanged="txtDescription_TextChanged" VerticalScrollBarVisibility="Auto" MaxHeight="167.5" VerticalContentAlignment="Center" IsEnabled="True" IsReadOnly="False" PreviewTextInput="Txt_PreviewTextInput" Margin="0" FontSize="16"/>
             </Syncfusion:SfTextInputLayout>
             <DockPanel VerticalAlignment="Center" Grid.Row="2" Grid.Column="1" Margin="20 0"  HorizontalAlignment="Stretch"/>
             <DockPanel  Grid.Row="6" Grid.ColumnSpan="3" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="15 0 15 -15">
@@ -535,7 +535,7 @@ FontFamily="{StaticResource IranSans}" Width="27"
                         </TextBox.Background>
 
                     </TextBox>
-                    <TextBlock IsHitTestVisible="False" Grid.Column="1" Text="جستجو..." Name="testsearch" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="18" Margin="10,0,0,0" Foreground="#FF676767">
+                    <TextBlock IsHitTestVisible="False" Grid.Column="1" Text="جستجو..." Name="testsearch" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="16" Margin="10,0,0,0" Foreground="#FF676767">
                         <TextBlock.Style>
                             <Style TargetType="{x:Type TextBlock}">
                                 <Setter Property="Visibility" Value="Collapsed"/>

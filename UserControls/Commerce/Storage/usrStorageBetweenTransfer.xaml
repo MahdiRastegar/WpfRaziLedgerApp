@@ -447,7 +447,7 @@ FontFamily="{StaticResource IranSans}" Width="27"
                 </PersianCalendarWPF:PersianDatePicker.Background>
             </PersianCalendarWPF:PersianDatePicker>
             <Syncfusion:SfTextInputLayout IsHitTestVisible="False" x:Name="Sf_txtType" OutlineCornerRadius="8" Hint="تاریخ" Grid.Row="2"  VerticalAlignment="Center" Margin="20 0">
-                <Label Height="25" FontSize="18"/>
+                <Label Height="25" FontSize="16"/>
             </Syncfusion:SfTextInputLayout>
             <DockPanel VerticalAlignment="Center" Margin="20 0"  HorizontalAlignment="Stretch"  Grid.Row="3">
                 <Border Width="12.5" Height="54" Tag="id" Visibility="Collapsed" MouseLeave="border_MouseLeave" Name="border" Panel.ZIndex="1" MouseUp="border_MouseUp" MouseEnter="Border_MouseEnter" MouseDown="Border_MouseDown" BorderThickness=".9" CornerRadius="10 1 1 10" BorderBrush="Black" Margin="0 -14.5 -12.5 0">
@@ -466,17 +466,17 @@ FontFamily="{StaticResource IranSans}" Width="27"
                 </Syncfusion:ComboBoxAdv>
             </Syncfusion:SfTextInputLayout>
             <Syncfusion:SfTextInputLayout Name="Sf_txtStorage" OutlineCornerRadius="8" Hint="کد انبار مبدا" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Margin="20 0"  HorizontalAlignment="Stretch">
-                <TextBox Name="txtStorage" LostFocus="txtStorage_LostFocus" PreviewKeyDown="txtStorage_PreviewKeyDown" VerticalContentAlignment="Center" TextChanged="txtStorage_TextChanged" IsEnabled="True" IsReadOnly="False" PreviewTextInput="txtStorage_PreviewTextInput" Margin="0" FontSize="18"/>
+                <TextBox Name="txtStorage" LostFocus="txtStorage_LostFocus" PreviewKeyDown="txtStorage_PreviewKeyDown" VerticalContentAlignment="Center" TextChanged="txtStorage_TextChanged" IsEnabled="True" IsReadOnly="False" PreviewTextInput="txtStorage_PreviewTextInput" Margin="0" FontSize="16"/>
             </Syncfusion:SfTextInputLayout>
             <Syncfusion:SfTextInputLayout Name="Sf_txtDoumentTypeT" OutlineCornerRadius="8" Hint="نوع حواله" Grid.Row="4"  VerticalAlignment="Center" Margin="20 0"  HorizontalAlignment="Stretch">
                 <Syncfusion:ComboBoxAdv AutoCompleteMode="Suggest" IsEditable="True" LostFocus="cmbTypeT_LostFocus" PreviewKeyDown="cmbTypeT_PreviewKeyDown" SelectionChanged="cmbTypeT_SelectionChanged" DisplayMemberPath="Name" Name="cmbTypeT" FlowDirection="RightToLeft">
                 </Syncfusion:ComboBoxAdv>
             </Syncfusion:SfTextInputLayout>
             <Syncfusion:SfTextInputLayout Name="Sf_txtStorageDestination" OutlineCornerRadius="8" Hint="کد انبار مقصد" Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" Margin="20 0"  HorizontalAlignment="Stretch">
-                <TextBox Name="txtStorageDestination" LostFocus="txtStorageDestination_LostFocus" PreviewKeyDown="txtStorage_PreviewKeyDown" VerticalContentAlignment="Center" TextChanged="txtStorage_TextChanged" IsEnabled="True" IsReadOnly="False" PreviewTextInput="txtStorageDestination_PreviewTextInput" Margin="0" FontSize="18"/>
+                <TextBox Name="txtStorageDestination" LostFocus="txtStorageDestination_LostFocus" PreviewKeyDown="txtStorage_PreviewKeyDown" VerticalContentAlignment="Center" TextChanged="txtStorage_TextChanged" IsEnabled="True" IsReadOnly="False" PreviewTextInput="txtStorageDestination_PreviewTextInput" Margin="0" FontSize="16"/>
             </Syncfusion:SfTextInputLayout>
             <Syncfusion:SfTextInputLayout  Name="Sf_Description" Grid.ColumnSpan="2" OutlineCornerRadius="8" Hint="توضیحات" Grid.Row="5" VerticalAlignment="Center" Margin="20 0"  HorizontalAlignment="Stretch">
-                <TextBox Name="txtDescription" TextChanged="txtStorage_TextChanged" VerticalContentAlignment="Center" IsEnabled="True" IsReadOnly="False" PreviewTextInput="txtDescription_PreviewTextInput" Margin="0" FontSize="18"/>
+                <TextBox Name="txtDescription" TextChanged="txtStorage_TextChanged" VerticalContentAlignment="Center" IsEnabled="True" IsReadOnly="False" PreviewTextInput="txtDescription_PreviewTextInput" Margin="0" FontSize="16"/>
             </Syncfusion:SfTextInputLayout>
             <DockPanel VerticalAlignment="Center" Grid.Row="2" Grid.Column="1" Margin="20 0"  HorizontalAlignment="Stretch"/>
             <DockPanel  Grid.Row="6" Grid.ColumnSpan="2" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="15 0 15 -15">
@@ -537,7 +537,7 @@ FontFamily="{StaticResource IranSans}" Width="27"
                         </TextBox.Background>
 
                     </TextBox>
-                    <TextBlock IsHitTestVisible="False" Grid.Column="1" Text="جستجو..." Name="testsearch" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="18" Margin="10,0,0,0" Foreground="#FF676767">
+                    <TextBlock IsHitTestVisible="False" Grid.Column="1" Text="جستجو..." Name="testsearch" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="16" Margin="10,0,0,0" Foreground="#FF676767">
                         <TextBlock.Style>
                             <Style TargetType="{x:Type TextBlock}">
                                 <Setter Property="Visibility" Value="Collapsed"/>

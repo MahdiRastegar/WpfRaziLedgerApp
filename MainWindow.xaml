@@ -49,6 +49,11 @@
                     <Syncfusion:RibbonButton Name="rbnPaymentCheck" Click="rbnPaymentCheck_Click" SizeForm="Large" Label="چک های پرداختی"/>
                 </Syncfusion:RibbonBar>
             </Syncfusion:RibbonTab>
+            <Syncfusion:RibbonTab Name="rbnSetting" Caption="تنظیمات">
+                <Syncfusion:RibbonBar Width="120" Header="تنظیمات برنامه">
+                    <Syncfusion:RibbonButton  Name="rbnConfiguration" Click="rbnConfiguration_Click" SizeForm="Large" Label="تنظیمات پیکربندی"/>
+                </Syncfusion:RibbonBar>
+            </Syncfusion:RibbonTab>
             <Syncfusion:Ribbon.ContextTabGroups>
                 <Syncfusion:ContextTabGroup Label="                            بـــازرگـــانی" Name="rbnCommerce" IsGroupVisible="True" BackColor="#FFC35F5F">
                     <Syncfusion:RibbonTab Name="rbnCommerce1" Caption="کالا و انبار">

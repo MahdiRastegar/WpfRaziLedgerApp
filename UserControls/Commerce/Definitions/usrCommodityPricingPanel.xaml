@@ -141,22 +141,22 @@ FontFamily="{StaticResource IranSans}" Width="27"
                 </PersianCalendarWPF:PersianDatePicker.Background>
             </PersianCalendarWPF:PersianDatePicker>
             <Syncfusion:SfTextInputLayout IsHitTestVisible="False" x:Name="Sf_txtType" OutlineCornerRadius="8" Hint="تاریخ" Grid.Row="1"  VerticalAlignment="Center" Margin="20 0">
-                <Label Height="25" FontSize="18"/>
+                <Label Height="25" FontSize="16"/>
             </Syncfusion:SfTextInputLayout>
             <Syncfusion:SfTextInputLayout  x:Name="Sf_txtInvoiceDiscount" OutlineCornerRadius="8" Grid.Row="1" Grid.Column="1" Hint="فی" VerticalAlignment="Center" Margin="20,10">
-                <TextBox x:Name="txtInvoiceDiscount" LostFocus="txtInvoiceDiscount_LostFocus" PreviewKeyDown="txtInvoiceDiscount_PreviewKeyDown" Text="0" TextChanged="txtInvoiceDiscount_TextChanged" MaxLength="50" VerticalContentAlignment="Center" PreviewTextInput="txtInvoiceDiscount_PreviewTextInput" Margin="0" FontSize="18"/>
+                <TextBox x:Name="txtInvoiceDiscount" LostFocus="txtInvoiceDiscount_LostFocus" PreviewKeyDown="txtInvoiceDiscount_PreviewKeyDown" Text="0" TextChanged="txtInvoiceDiscount_TextChanged" MaxLength="50" VerticalContentAlignment="Center" PreviewTextInput="txtInvoiceDiscount_PreviewTextInput" Margin="0" FontSize="16"/>
             </Syncfusion:SfTextInputLayout>
             <Syncfusion:SfTextInputLayout Name="Sf_txtCommodity" OutlineCornerRadius="8" Hint="کد کالا" Grid.Row="2"  VerticalAlignment="Center" Margin="30 0"  HorizontalAlignment="Stretch">
-                <TextBox Name="txtCommodity" LostFocus="TxtGroup_LostFocus" VerticalContentAlignment="Center" TextChanged="TxtGroup_TextChanged" IsEnabled="True" IsReadOnly="False" PreviewTextInput="txtCommodity_PreviewTextInput" Margin="0" FontSize="18"/>
+                <TextBox Name="txtCommodity" LostFocus="TxtGroup_LostFocus" VerticalContentAlignment="Center" TextChanged="TxtGroup_TextChanged" IsEnabled="True" IsReadOnly="False" PreviewTextInput="txtCommodity_PreviewTextInput" Margin="0" FontSize="16"/>
             </Syncfusion:SfTextInputLayout>
             <Syncfusion:SfTextInputLayout Name="Sf_txtCommodityName" OutlineCornerRadius="8" Hint="نام" Grid.Row="2"  VerticalAlignment="Center" Margin="30 0" Grid.Column="1"  HorizontalAlignment="Stretch">
-                <TextBox Name="txtCommodityName" VerticalContentAlignment="Center"  IsEnabled="True" IsReadOnly="True" Margin="0" FontSize="18"/>
+                <TextBox Name="txtCommodityName" VerticalContentAlignment="Center"  IsEnabled="True" IsReadOnly="True" Margin="0" FontSize="16"/>
             </Syncfusion:SfTextInputLayout>
             <Syncfusion:SfTextInputLayout Name="Sf_txtPriceGroup" OutlineCornerRadius="8" Hint="کد گروه قیمت" Grid.Row="3"  VerticalAlignment="Center" Margin="30 0"  HorizontalAlignment="Stretch">
-                <TextBox Name="txtPriceGroup" LostFocus="txtPriceGroup_LostFocus" VerticalContentAlignment="Center" TextChanged="TxtGroup_TextChanged" IsEnabled="True" IsReadOnly="False" PreviewTextInput="txtPriceGroup_PreviewTextInput" Margin="0" FontSize="18"/>
+                <TextBox Name="txtPriceGroup" LostFocus="txtPriceGroup_LostFocus" VerticalContentAlignment="Center" TextChanged="TxtGroup_TextChanged" IsEnabled="True" IsReadOnly="False" PreviewTextInput="txtPriceGroup_PreviewTextInput" Margin="0" FontSize="16"/>
             </Syncfusion:SfTextInputLayout>
             <Syncfusion:SfTextInputLayout Name="Sf_txtPriceGroupName" OutlineCornerRadius="8" Hint="نام گروه قیمت" Grid.Row="3"  VerticalAlignment="Center" Margin="30 0" Grid.Column="1"  HorizontalAlignment="Stretch">
-                <TextBox Name="txtPriceGroupName" VerticalContentAlignment="Center"  IsEnabled="True" IsReadOnly="True" Margin="0" FontSize="18"/>
+                <TextBox Name="txtPriceGroupName" VerticalContentAlignment="Center"  IsEnabled="True" IsReadOnly="True" Margin="0" FontSize="16"/>
             </Syncfusion:SfTextInputLayout>
             <DockPanel  Grid.Row="4" Grid.ColumnSpan="2" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="15 0 15 -15">
                 <Grid>
@@ -228,7 +228,7 @@ FontFamily="{StaticResource IranSans}" Width="27"
                         </TextBox.Background>
 
                     </TextBox>
-                    <TextBlock IsHitTestVisible="False" Grid.Column="1" Text="جستجو..." Name="testsearch" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="18" Margin="10,0,0,0" Foreground="#FF9E9E9E">
+                    <TextBlock IsHitTestVisible="False" Grid.Column="1" Text="جستجو..." Name="testsearch" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="16" Margin="10,0,0,0" Foreground="#FF9E9E9E">
                         <TextBlock.Style>
                             <Style TargetType="{x:Type TextBlock}">
                                 <Setter Property="Visibility" Value="Collapsed"/>

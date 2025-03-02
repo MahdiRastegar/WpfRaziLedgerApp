@@ -1,0 +1,36 @@
+﻿<UserControl x:Class="WpfRaziLedgerApp.usrSettingConfig"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" Name="winDC" Margin="-6 -6"
+             xmlns:local="clr-namespace:WpfRaziLedgerApp"  Background="#CCFFFFFF"
+             DataContext="{Binding ElementName=winDC}" xmlns:icc="clr-namespace:Syncfusion.UI.Xaml.Grid;assembly=Syncfusion.SfGrid.WPF"
+             xmlns:local2="clr-namespace:BcpBindingExtension" Loaded="UserControl_Loaded"
+             xmlns:global="clr-namespace:System.Globalization;assembly=mscorlib" FlowDirection="RightToLeft"
+             mc:Ignorable="d" PreviewKeyDown="Window_PreviewKeyDown" MinHeight="500"
+             Height="auto" Width="auto">
+    <Grid Margin="100">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="50"/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="80"/>
+            <ColumnDefinition Width="50"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="1*" MinHeight="90"/>
+            <RowDefinition Height="1*" MinHeight="90"/>
+            <RowDefinition Height="1*" MinHeight="90"/>
+            <RowDefinition Height="1*" MinHeight="90"/>
+            <RowDefinition Height="1*" MinHeight="90"/>
+            <RowDefinition Height="1*" MinHeight="90"/>
+            <RowDefinition Height="25"/>
+        </Grid.RowDefinitions>
+        <Image Name="imgReceive" Source="/Images/tick-icon-30.png" Grid.Row="1" Visibility="Collapsed"/>
+        <Button Width="310" Margin="10 10" Height="60" Name="btnReceive" Click="btnReceive_Click" HorizontalAlignment="Left" Content="پیکربندی دریافت وجه-چک های دریافتی" FontSize="18" Grid.Column="1" Grid.Row="1"/>
+        <Image Name="imgPayment" Source="/Images/tick-icon-30.png" Grid.Row="2" Visibility="Collapsed"/>
+        <Button Width="310" Margin="10 10" Click="btnPayment_Click" Height="60" Name="btnPayment" HorizontalAlignment="Left" Content="پیکربندی پرداخت وجه-چک های پرداختی" FontSize="18" Grid.Column="1" Grid.Row="2"/>
+        <Image Name="imgTaxPercent" Source="/Images/tick-icon-30.png" Grid.Row="3" Visibility="Collapsed"/>
+        <Button Width="140" Margin="10 10" Height="60" Click="btnTaxPercent_Click" Name="btnTaxPercent" HorizontalAlignment="Left" Content="درصد مالیات" FontSize="18" Grid.Column="1" Grid.Row="3"/>
+    </Grid>
+</UserControl>

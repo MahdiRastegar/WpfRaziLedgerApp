@@ -121,13 +121,13 @@
                 </Border.Triggers>
             </Border>
             <Syncfusion:SfTextInputLayout Name="Sf_txtGroup" OutlineCornerRadius="8" Hint="کد گروه تفضیلی" Grid.Row="1"  VerticalAlignment="Center" Margin="30 0"  HorizontalAlignment="Stretch">
-                <TextBox Name="txtGroup" LostFocus="TxtGroup_LostFocus" VerticalContentAlignment="Center" TextChanged="TxtGroup_TextChanged" IsEnabled="True" IsReadOnly="False" PreviewTextInput="txtGroup_PreviewTextInput" Margin="0" FontSize="18"/>
+                <TextBox Name="txtGroup" LostFocus="TxtGroup_LostFocus" VerticalContentAlignment="Center" TextChanged="TxtGroup_TextChanged" IsEnabled="True" IsReadOnly="False" PreviewTextInput="txtGroup_PreviewTextInput" Margin="0" FontSize="16"/>
             </Syncfusion:SfTextInputLayout>
             <Syncfusion:SfTextInputLayout Name="Sf_txtGroupName" OutlineCornerRadius="8" Hint="نام گروه" Grid.Row="1"  VerticalAlignment="Center" Margin="30 0" Grid.Column="1"  HorizontalAlignment="Stretch">
-                <TextBox Name="txtGroupName" VerticalContentAlignment="Center"  IsEnabled="True" IsReadOnly="True" Margin="0" FontSize="18"/>
+                <TextBox Name="txtGroupName" VerticalContentAlignment="Center"  IsEnabled="True" IsReadOnly="True" Margin="0" FontSize="16"/>
             </Syncfusion:SfTextInputLayout>
             <Syncfusion:SfTextInputLayout Name="Sf_txtCodePreferential"  OutlineCornerRadius="8" Hint="کد تفضیلی" Grid.Row="2"  VerticalAlignment="Center" Margin="30 0"  HorizontalAlignment="Stretch">
-                <TextBox Name="txtCodePreferential" TextChanged="TxtCodePreferential_TextChanged" VerticalContentAlignment="Center"  IsEnabled="True" IsReadOnly="False" PreviewTextInput="Txt_PreviewTextInput" Margin="0" FontSize="18"/>
+                <TextBox Name="txtCodePreferential" TextChanged="TxtCodePreferential_TextChanged" VerticalContentAlignment="Center"  IsEnabled="True" IsReadOnly="False" PreviewTextInput="Txt_PreviewTextInput" Margin="0" FontSize="16"/>
             </Syncfusion:SfTextInputLayout>
             <Syncfusion:SfTextInputLayout  Name="Sf_txtPreferentialName" OutlineCornerRadius="8" Grid.Row="2" Grid.Column="1" Hint="نام تفضیلی" VerticalAlignment="Center" Margin="30 0"  HorizontalAlignment="Stretch">
                 <TextBox Name="txtPreferentialName" Text="" TextChanged="txtPreferentialName_TextChanged" MaxLength="50" VerticalContentAlignment="Center"   PreviewTextInput="Txt_PreviewTextInput" Margin="0" FontSize="16"/>
@@ -138,10 +138,10 @@
                         <StackPanel>
                             <DockPanel>
                                 <Syncfusion:SfTextInputLayout  Width="150" Name="Sf_Mobile"  OutlineCornerRadius="8" Hint="تلفن همراه" Grid.Row="2"  VerticalAlignment="Center" Margin="10 0"  HorizontalAlignment="Left">
-                                    <TextBox Name="txtMobile" TextChanged="TxtCodePreferential_TextChanged" VerticalContentAlignment="Center"  IsEnabled="True" IsReadOnly="False" PreviewTextInput="Txt_PreviewTextInput" Margin="0" FontSize="18"/>
+                                    <TextBox Name="txtMobile" TextChanged="TxtCodePreferential_TextChanged" VerticalContentAlignment="Center"  IsEnabled="True" IsReadOnly="False" PreviewTextInput="Txt_PreviewTextInput" Margin="0" FontSize="16"/>
                                 </Syncfusion:SfTextInputLayout>
                                 <Syncfusion:SfTextInputLayout  Width="150" Name="Sf_PostalCode"  OutlineCornerRadius="8" Hint="کد پستی" Grid.Row="2"  VerticalAlignment="Center" Margin="10 0"  HorizontalAlignment="Left">
-                                    <TextBox Name="txtPostalCode" TextChanged="TxtCodePreferential_TextChanged" VerticalContentAlignment="Center"  IsEnabled="True" IsReadOnly="False" PreviewTextInput="Txt_PreviewTextInput" Margin="0" FontSize="18"/>
+                                    <TextBox Name="txtPostalCode" TextChanged="TxtCodePreferential_TextChanged" VerticalContentAlignment="Center"  IsEnabled="True" IsReadOnly="False" PreviewTextInput="Txt_PreviewTextInput" Margin="0" FontSize="16"/>
                                 </Syncfusion:SfTextInputLayout>
                             </DockPanel>
                             <DockPanel>
@@ -156,27 +156,27 @@
                             </DockPanel>
                             <DockPanel >
                                 <Syncfusion:SfTextInputLayout Width="120" Name="Sf_Phone1"  OutlineCornerRadius="8" Hint="تلفن" Grid.Row="2"  VerticalAlignment="Center" Margin="10 0"  HorizontalAlignment="Stretch">
-                                    <TextBox Name="txtPhone1" TextChanged="TxtCodePreferential_TextChanged" VerticalContentAlignment="Center"  IsEnabled="True" IsReadOnly="False" PreviewTextInput="txtPhone1_PreviewTextInput" Margin="0" FontSize="18"/>
+                                    <TextBox Name="txtPhone1" TextChanged="TxtCodePreferential_TextChanged" VerticalContentAlignment="Center"  IsEnabled="True" IsReadOnly="False" PreviewTextInput="txtPhone1_PreviewTextInput" Margin="0" FontSize="16"/>
                                 </Syncfusion:SfTextInputLayout>
                                 <Button Name="btnMorePhone" Content="  اضافه کردن شماره تلفن های بیشتر  " Click="btnMorePhone_Click" Height="35"/>
                                 <Syncfusion:SfTextInputLayout Visibility="Collapsed" Width="120" Name="Sf_Phone2"  OutlineCornerRadius="8" Hint="تلفن 2" Grid.Row="2"  VerticalAlignment="Center" Margin="20 0"  HorizontalAlignment="Stretch">
-                                    <TextBox Name="txtPhone2" TextChanged="TxtCodePreferential_TextChanged" VerticalContentAlignment="Center"  IsEnabled="True" IsReadOnly="False" PreviewTextInput="Txt_PreviewTextInput" Margin="0" FontSize="18"/>
+                                    <TextBox Name="txtPhone2" TextChanged="TxtCodePreferential_TextChanged" VerticalContentAlignment="Center"  IsEnabled="True" IsReadOnly="False" PreviewTextInput="Txt_PreviewTextInput" Margin="0" FontSize="16"/>
                                 </Syncfusion:SfTextInputLayout>
                                 <Syncfusion:SfTextInputLayout Visibility="Collapsed" Width="120" Name="Sf_Phone3"  OutlineCornerRadius="8" Hint="تلفن 3" Grid.Row="2"  VerticalAlignment="Center" Margin="0 0 20 0"  HorizontalAlignment="Stretch">
-                                    <TextBox Name="txtPhone3" TextChanged="TxtCodePreferential_TextChanged" VerticalContentAlignment="Center"  IsEnabled="True" IsReadOnly="False" PreviewTextInput="Txt_PreviewTextInput" Margin="0" FontSize="18"/>
+                                    <TextBox Name="txtPhone3" TextChanged="TxtCodePreferential_TextChanged" VerticalContentAlignment="Center"  IsEnabled="True" IsReadOnly="False" PreviewTextInput="Txt_PreviewTextInput" Margin="0" FontSize="16"/>
                                 </Syncfusion:SfTextInputLayout>
                             </DockPanel>
                             <DockPanel >
                                 <Syncfusion:SfTextInputLayout Width="205" Name="Sf_EcCode"  OutlineCornerRadius="8" Hint="شماره اقتصادی" Grid.Row="2"  VerticalAlignment="Center" Margin="10 0"  HorizontalAlignment="Stretch">
-                                    <TextBox Name="txtEcCode" TextChanged="TxtCodePreferential_TextChanged" VerticalContentAlignment="Center"  IsEnabled="True" IsReadOnly="False" PreviewTextInput="Txt_PreviewTextInput" Margin="0" FontSize="18"/>
+                                    <TextBox Name="txtEcCode" TextChanged="TxtCodePreferential_TextChanged" VerticalContentAlignment="Center"  IsEnabled="True" IsReadOnly="False" PreviewTextInput="Txt_PreviewTextInput" Margin="0" FontSize="16"/>
                                 </Syncfusion:SfTextInputLayout>
                                 <Syncfusion:SfTextInputLayout Width="205" Name="Sf_NaCode"  OutlineCornerRadius="8" Hint="کد ملی/شناسه ملی" Grid.Row="2"  VerticalAlignment="Center" Margin="10 0"  HorizontalAlignment="Stretch">
-                                    <TextBox Name="txtNaCode" TextChanged="TxtCodePreferential_TextChanged" VerticalContentAlignment="Center"  IsEnabled="True" IsReadOnly="False" PreviewTextInput="Txt_PreviewTextInput" Margin="0" FontSize="18"/>
+                                    <TextBox Name="txtNaCode" TextChanged="TxtCodePreferential_TextChanged" VerticalContentAlignment="Center"  IsEnabled="True" IsReadOnly="False" PreviewTextInput="Txt_PreviewTextInput" Margin="0" FontSize="16"/>
                                 </Syncfusion:SfTextInputLayout>
                             </DockPanel>
                             <DockPanel >
                                 <Syncfusion:SfTextInputLayout Width="200" Name="Sf_ReNumber"  OutlineCornerRadius="8" Hint="شماره ثبت" Grid.Row="2"  VerticalAlignment="Center" Margin="10 0 10 0"  HorizontalAlignment="Left">
-                                    <TextBox Name="txtReNumber" TextChanged="TxtCodePreferential_TextChanged" VerticalContentAlignment="Center"  IsEnabled="True" IsReadOnly="False" PreviewTextInput="Txt_PreviewTextInput" Margin="0" FontSize="18"/>
+                                    <TextBox Name="txtReNumber" TextChanged="TxtCodePreferential_TextChanged" VerticalContentAlignment="Center"  IsEnabled="True" IsReadOnly="False" PreviewTextInput="Txt_PreviewTextInput" Margin="0" FontSize="16"/>
                                 </Syncfusion:SfTextInputLayout>
                                 <Syncfusion:SfTextInputLayout  Name="Sf_AcType" OutlineCornerRadius="8" Hint="نوع طرف حساب" VerticalAlignment="Center" Margin="10 0 0 0"  HorizontalAlignment="Left" Width="160">
                                     <Syncfusion:ComboBoxAdv PreviewTextInput="cmbAcType_PreviewTextInput" Name="cmbAcType" FlowDirection="RightToLeft">
@@ -188,16 +188,16 @@
                                 </Syncfusion:SfTextInputLayout>
                             </DockPanel>
                             <Syncfusion:SfTextInputLayout  Width="300" Name="Sf_WebSite"  OutlineCornerRadius="8" Hint="آدرس سایت" Grid.Row="2"  VerticalAlignment="Center" Margin="10 0"  HorizontalAlignment="Left">
-                                <TextBox Name="txtWebSite" TextAlignment="Right" GotFocus="txtWebSite_GotFocus" TextChanged="TxtCodePreferential_TextChanged" VerticalContentAlignment="Center"  IsEnabled="True" IsReadOnly="False" PreviewTextInput="Txt_PreviewTextInput" Margin="0" FontSize="18"/>
+                                <TextBox Name="txtWebSite" TextAlignment="Right" GotFocus="txtWebSite_GotFocus" TextChanged="TxtCodePreferential_TextChanged" VerticalContentAlignment="Center"  IsEnabled="True" IsReadOnly="False" PreviewTextInput="Txt_PreviewTextInput" Margin="0" FontSize="16"/>
                             </Syncfusion:SfTextInputLayout>
                             <Syncfusion:SfTextInputLayout  Width="300" Name="Sf_Email"  OutlineCornerRadius="8" Hint="ایمیل" Grid.Row="2"  VerticalAlignment="Center" Margin="10 0"  HorizontalAlignment="Left">
-                                <TextBox Name="txtEmail" TextAlignment="Right" GotFocus="txtEmail_GotFocus" TextChanged="TxtCodePreferential_TextChanged" VerticalContentAlignment="Center"  IsEnabled="True" IsReadOnly="False" PreviewTextInput="Txt_PreviewTextInput" Margin="0" FontSize="18"/>
+                                <TextBox Name="txtEmail" TextAlignment="Right" GotFocus="txtEmail_GotFocus" TextChanged="TxtCodePreferential_TextChanged" VerticalContentAlignment="Center"  IsEnabled="True" IsReadOnly="False" PreviewTextInput="Txt_PreviewTextInput" Margin="0" FontSize="16"/>
                             </Syncfusion:SfTextInputLayout>
                             <Syncfusion:SfTextInputLayout Width="390" Name="Sf_Address"  OutlineCornerRadius="8" Hint="نشانی" Grid.Row="2"  VerticalAlignment="Center" Margin="10 0"  HorizontalAlignment="Left">
-                                <TextBox Name="txtAddress" TextChanged="TxtCodePreferential_TextChanged" VerticalContentAlignment="Center" AcceptsReturn="True" IsEnabled="True" IsReadOnly="False" PreviewTextInput="Txt_PreviewTextInput" Margin="0" FontSize="18"/>
+                                <TextBox Name="txtAddress" TextChanged="TxtCodePreferential_TextChanged" VerticalContentAlignment="Center" AcceptsReturn="True" IsEnabled="True" IsReadOnly="False" PreviewTextInput="Txt_PreviewTextInput" Margin="0" FontSize="16"/>
                             </Syncfusion:SfTextInputLayout>
                             <Syncfusion:SfTextInputLayout Width="390" Name="Sf_Description"  OutlineCornerRadius="8" Hint="توضیحات" Grid.Row="2"  VerticalAlignment="Center" Margin="10 0"  HorizontalAlignment="Left">
-                                <TextBox Name="txtDescription" TextChanged="TxtCodePreferential_TextChanged" VerticalContentAlignment="Center" AcceptsReturn="True" IsEnabled="True" IsReadOnly="False" PreviewTextInput="Txt_PreviewTextInput" Margin="0" FontSize="18"/>
+                                <TextBox Name="txtDescription" TextChanged="TxtCodePreferential_TextChanged" VerticalContentAlignment="Center" AcceptsReturn="True" IsEnabled="True" IsReadOnly="False" PreviewTextInput="Txt_PreviewTextInput" Margin="0" FontSize="16"/>
                             </Syncfusion:SfTextInputLayout>
                         </StackPanel>
                     </GroupBox>
@@ -273,7 +273,7 @@
                         </TextBox.Background>
 
                     </TextBox>
-                    <TextBlock IsHitTestVisible="False" Grid.Column="1" Text="جستجو..." Name="testsearch" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="18" Margin="10,0,0,0" Foreground="#FF9E9E9E">
+                    <TextBlock IsHitTestVisible="False" Grid.Column="1" Text="جستجو..." Name="testsearch" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="16" Margin="10,0,0,0" Foreground="#FF9E9E9E">
                         <TextBlock.Style>
                             <Style TargetType="{x:Type TextBlock}">
                                 <Setter Property="Visibility" Value="Collapsed"/>

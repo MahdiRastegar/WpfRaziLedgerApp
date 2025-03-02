@@ -122,7 +122,7 @@
                 </Border.Triggers>
             </Border>
             <Syncfusion:SfTextInputLayout Name="Sf_txtCommodityCode"  OutlineCornerRadius="8" Hint="کد کل" Grid.Row="2"  VerticalAlignment="Center" Margin="30 0"  HorizontalAlignment="Stretch">
-                <TextBox Name="txtCol" VerticalContentAlignment="Center"  IsEnabled="True" IsReadOnly="True" PreviewTextInput="Txt_PreviewTextInput" Margin="0" FontSize="18"/>
+                <TextBox Name="txtCol" VerticalContentAlignment="Center"  IsEnabled="True" IsReadOnly="True" PreviewTextInput="Txt_PreviewTextInput" Margin="0" FontSize="16"/>
             </Syncfusion:SfTextInputLayout>
             <Syncfusion:SfTextInputLayout  Name="Sf_txtName" OutlineCornerRadius="8" Hint="ماهیت" Grid.Row="3"  VerticalAlignment="Center" Margin="30 0"  HorizontalAlignment="Stretch">
                 <Syncfusion:ComboBoxAdv PreviewKeyDown="cmbType_PreviewKeyDown" SelectionChanged="cmbType_SelectionChanged"  Name="cmbType" FlowDirection="RightToLeft">
@@ -223,7 +223,7 @@
                         </TextBox.Background>
 
                     </TextBox>
-                    <TextBlock IsHitTestVisible="False" Grid.Column="1" Text="جستجو..." Name="testsearch" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="18" Margin="10,0,0,0" Foreground="#FF9E9E9E">
+                    <TextBlock IsHitTestVisible="False" Grid.Column="1" Text="جستجو..." Name="testsearch" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="16" Margin="10,0,0,0" Foreground="#FF9E9E9E">
                         <TextBlock.Style>
                             <Style TargetType="{x:Type TextBlock}">
                                 <Setter Property="Visibility" Value="Collapsed"/>
@@ -281,7 +281,7 @@
                 </Syncfusion:SfDataGrid>
             </Grid>
             <Syncfusion:SfTextInputLayout x:Name="Sf_txtGreoup"  OutlineCornerRadius="8" Hint="کد گروه حساب" Grid.Row="1"  VerticalAlignment="Center" Margin="30,0,30,0">
-                <TextBox x:Name="txtGroup" LostFocus="txtGroup_LostFocus" TextChanged="txtColName_TextChanged" VerticalContentAlignment="Center" IsEnabled="True" IsReadOnly="False" PreviewTextInput="txtGroup_PreviewTextInput" Margin="0" FontSize="18"/>
+                <TextBox x:Name="txtGroup" LostFocus="txtGroup_LostFocus" TextChanged="txtColName_TextChanged" VerticalContentAlignment="Center" IsEnabled="True" IsReadOnly="False" PreviewTextInput="txtGroup_PreviewTextInput" Margin="0" FontSize="16"/>
             </Syncfusion:SfTextInputLayout>
             <Syncfusion:SfTextInputLayout  x:Name="Sf_txtVra_Copy" OutlineCornerRadius="8" Grid.Row="1" Grid.Column="1" Hint="نام گروه" VerticalAlignment="Center" Margin="30,0,30,0">
                 <TextBox x:Name="txtGroupName" Text="" IsReadOnly="True" MaxLength="50" VerticalContentAlignment="Center"   PreviewTextInput="Txt_PreviewTextInput" Margin="0" FontSize="16"/>

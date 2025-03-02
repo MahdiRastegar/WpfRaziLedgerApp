@@ -682,5 +682,21 @@ namespace WpfRaziLedgerApp
                 tabcontrol.Items.Add(item);
             }
         }
+
+        private void rbnConfiguration_Click(object sender, RoutedEventArgs e)
+        {
+            var list = GetTabControlItems;
+            var item = list.FirstOrDefault(y => y.Header == "تنظیمات پیکربندی");
+            if (item != null)
+            {
+                tabcontrol.SelectedItem = item;
+            }
+            else
+            {
+                item = new TabItemExt() { Header = "تنظیمات پیکربندی" };
+                item.Content = new usrSettingConfig();
+                tabcontrol.Items.Add(item);
+            }
+        }
     }
 }

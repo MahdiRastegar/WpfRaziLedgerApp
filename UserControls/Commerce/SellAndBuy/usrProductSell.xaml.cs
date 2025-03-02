@@ -1466,7 +1466,13 @@ namespace WpfRaziLedgerApp
             {
                 var Y = ProductSell_Details.Sum(y => y.Sum);
                 txtSum.Text = Y.ToString();
-                txtSumDiscount.Text = (Y - decimal.Parse(txtInvoiceDiscount.Text.Replace(",", "")) + decimal.Parse(txtShippingCost.Text.Replace(",", ""))).ToString();
+                try
+                {
+                    if (txtShippingCost.Text == "")
+                        txtShippingCost.Text = "0";
+                    txtSumDiscount.Text = (Y - decimal.Parse(txtInvoiceDiscount.Text.Replace(",", "")) + decimal.Parse(txtShippingCost.Text.Replace(",", ""))).ToString();
+                }
+                catch { }
                 //return;
 
                 var t = datagrid.ItemsSource;

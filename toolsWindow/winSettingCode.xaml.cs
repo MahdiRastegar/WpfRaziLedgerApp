@@ -170,6 +170,7 @@ namespace WpfRaziLedgerApp
             }
             Mouse.OverrideCursor = null;
             Xceed.Wpf.Toolkit.MessageBox.Show("تنظیمات با موفقیت ثبت شد");
+            DialogResult = true;
             Close();
         }
 
