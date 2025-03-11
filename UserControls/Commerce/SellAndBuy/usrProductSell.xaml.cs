@@ -697,6 +697,13 @@ namespace WpfRaziLedgerApp
         bool isCancel = true;
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
+            if (morefields.Visibility == Visibility.Visible)
+            {
+                morefields.Visibility = Visibility.Collapsed;
+                column1.Width = new GridLength(225);
+                column2.Width = new GridLength(200);
+                column3.Width = new GridLength(200);
+            }
             if (AddedMode&&isCancel)
             {
                 return;
@@ -2034,6 +2041,25 @@ namespace WpfRaziLedgerApp
             e.Handled = !IsTextAllowed(e.Text);
             if (txt.Text == "")
                 txt.Text = "0";
+        }
+
+        private void btnMorefields_Click(object sender, RoutedEventArgs e)
+        {
+            morefields.Visibility = Visibility.Collapsed;
+            column1.Width = new GridLength(225);
+            column2.Width = new GridLength(200);
+            column3.Width = new GridLength(200);
+        }
+
+        private void datagrid_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (SystemParameters.PrimaryScreenWidth < 1500 && morefields.Visibility == Visibility.Collapsed)
+            {
+                column1.Width = new GridLength(50);
+                column2.Width = new GridLength(0);
+                column3.Width = new GridLength(0);
+                morefields.Visibility = Visibility.Visible;
+            }
         }
 
         private void persianCalendar_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)

@@ -55,7 +55,7 @@
                 </Syncfusion:RibbonBar>
             </Syncfusion:RibbonTab>
             <Syncfusion:Ribbon.ContextTabGroups>
-                <Syncfusion:ContextTabGroup Label="                            بـــازرگـــانی" Name="rbnCommerce" IsGroupVisible="True" BackColor="#FFC35F5F">
+                <Syncfusion:ContextTabGroup Label="                          بـــازرگـــانی" Name="rbnCommerce" IsGroupVisible="True" BackColor="#FFC35F5F">
                     <Syncfusion:RibbonTab Name="rbnCommerce1" Caption="کالا و انبار">
                         <Syncfusion:RibbonBar Name="barDefinitions" Width="215" Header="تعاریف ابتدایی">
                             <Syncfusion:RibbonButton  Name="rbnProvince" Click="rbnProvince_Click" SizeForm="Large" Label="استان"/>
