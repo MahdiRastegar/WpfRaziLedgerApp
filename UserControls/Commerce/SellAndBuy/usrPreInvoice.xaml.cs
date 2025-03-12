@@ -576,6 +576,12 @@ namespace WpfRaziLedgerApp
         bool isCancel = true;
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
+            if (morefields.Visibility == Visibility.Visible)
+            {
+                morefields.Visibility = Visibility.Collapsed;
+                column1.Width = new GridLength(225);
+                column2.Width = new GridLength(225);
+            }
             if (AddedMode&&isCancel)
             {
                 return;
@@ -904,49 +910,76 @@ namespace WpfRaziLedgerApp
 
         public void SetNull()
         {
-            if(window!=null&&(window as winSearch).ParentTextBox is PreInvoiceDetail storage)
+            if (window != null)
             {
-                var y = (window as winSearch).ParentTextBox as PreInvoiceDetail;
-                //((datagrid.SelectionController.CurrentCellManager.CurrentCell.Element as GridCell).Content as FrameworkElement).DataContext = null;
-                //((datagrid.SelectionController.CurrentCellManager.CurrentCell.Element as GridCell).Content as FrameworkElement).DataContext = y;
-                var detail = y;                
-                var v = datagrid.SelectionController.CurrentCellManager.CurrentCell;
-                if ((window as winSearch)?.MuText != null)
+                if ((window as winSearch).ParentTextBox is PreInvoiceDetail storage)
                 {
-                    using var db = new wpfrazydbContext();
-                    var jid = (window as winSearch)?.MuText.Id;
-                    storage.FkCommodity = db.Commodities.Include("FkUnit").First(j=>j.Id== jid);
-                    datagrid.Dispatcher.BeginInvoke(new Action(() =>
-                    {                        
-                        //MMM
-                        var th = new Thread(() =>
+                    var y = (window as winSearch).ParentTextBox as PreInvoiceDetail;
+                    //((datagrid.SelectionController.CurrentCellManager.CurrentCell.Element as GridCell).Content as FrameworkElement).DataContext = null;
+                    //((datagrid.SelectionController.CurrentCellManager.CurrentCell.Element as GridCell).Content as FrameworkElement).DataContext = y;
+                    var detail = y;
+                    var v = datagrid.SelectionController.CurrentCellManager.CurrentCell;
+                    if ((window as winSearch)?.MuText != null)
+                    {
+                        using var db = new wpfrazydbContext();
+                        var jid = (window as winSearch)?.MuText.Id;
+                        storage.FkCommodity = db.Commodities.Include("FkUnit").First(j => j.Id == jid);
+                        datagrid.Dispatcher.BeginInvoke(new Action(() =>
                         {
-                            Thread.Sleep(100);
-                            Dispatcher.Invoke(() =>
+                            //MMM
+                            var th = new Thread(() =>
                             {
-                                var i = 1;
-                                if (v.ColumnIndex == 0)
-                                    i++;
-                                if (datagrid.SelectedIndex == -1)
+                                Thread.Sleep(100);
+                                Dispatcher.Invoke(() =>
                                 {
-                                    datagrid.GetAddNewRowController().CommitAddNew();
-                                    datagrid.View.Refresh();
-                                    datagrid.SelectedIndex = datagrid.GetLastRowIndex() - 1;
-                                    if (datagrid.SelectedIndex != -1)
-                                        (this.datagrid.SelectionController as GridSelectionController).MoveCurrentCell(new RowColumnIndex(v.RowIndex - 1, v.ColumnIndex + i));
-                                }
-                                else
-                                {
-                                    datagrid.View.Refresh();
-                                    (this.datagrid.SelectionController as GridSelectionController).MoveCurrentCell(new RowColumnIndex(v.RowIndex, v.ColumnIndex + i));
-                                }
-                                //MMM
-                                datagrid.IsHitTestVisible = true;
+                                    var i = 1;
+                                    if (v.ColumnIndex == 0)
+                                        i++;
+                                    if (datagrid.SelectedIndex == -1)
+                                    {
+                                        datagrid.GetAddNewRowController().CommitAddNew();
+                                        datagrid.View.Refresh();
+                                        datagrid.SelectedIndex = datagrid.GetLastRowIndex() - 1;
+                                        if (datagrid.SelectedIndex != -1)
+                                            (this.datagrid.SelectionController as GridSelectionController).MoveCurrentCell(new RowColumnIndex(v.RowIndex - 1, v.ColumnIndex + i));
+                                    }
+                                    else
+                                    {
+                                        datagrid.View.Refresh();
+                                        (this.datagrid.SelectionController as GridSelectionController).MoveCurrentCell(new RowColumnIndex(v.RowIndex, v.ColumnIndex + i));
+                                    }
+                                    //MMM
+                                    datagrid.IsHitTestVisible = true;
+                                });
                             });
-                        });
-                        th.Start();
-                        //datagrid.SelectCells(datagrid.GetRecordAtRowIndex(datagrid.SelectedIndex-1), datagrid.Columns[1], datagrid.GetRecordAtRowIndex(datagrid.SelectedIndex), datagrid.Columns[2]);
-                    }));
+                            th.Start();
+                            //datagrid.SelectCells(datagrid.GetRecordAtRowIndex(datagrid.SelectedIndex-1), datagrid.Columns[1], datagrid.GetRecordAtRowIndex(datagrid.SelectedIndex), datagrid.Columns[2]);
+                        }));
+                    }
+                }
+                else if ((window as winSearch).ParentTextBox is TextBox textbox)
+                {
+                    var Sf_textbox = this.GetChildByName<TextBlock>(textbox.Name + "Name");
+                    if (textbox.Text == "")
+                    {
+                        textbox.Text = string.Empty;
+                        Sf_textbox.Text = string.Empty;
+                        return;
+                    }
+                    using var db = new wpfrazydbContext();
+                    var code = int.Parse(textbox.Text);
+                    var mu = db.Preferentials.FirstOrDefault(t => t.PreferentialCode == code);
+                    Sf_textbox.Text = mu.PreferentialName;
+                    switch (textbox.Name)
+                    {
+                        case "txtPreferential":
+                            Dispatcher.BeginInvoke(new Action(async () =>
+                            {
+                                await Task.Delay(50);
+                                txtDescription.Focus();
+                            }));
+                            break;                        
+                    }
                 }
             }
             window = null;
@@ -1704,6 +1737,23 @@ namespace WpfRaziLedgerApp
             stackPanel.Children.Add(textInputLayout);
 
             return groupBox;
+        }
+
+        private void btnMorefields_Click(object sender, RoutedEventArgs e)
+        {
+            morefields.Visibility = Visibility.Collapsed;
+            column1.Width = new GridLength(225);
+            column2.Width = new GridLength(225);
+        }
+
+        private void datagrid_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (SystemParameters.PrimaryScreenWidth <= 1600 && morefields.Visibility == Visibility.Collapsed)
+            {
+                column1.Width = new GridLength(50);
+                column2.Width = new GridLength(0);
+                morefields.Visibility = Visibility.Visible;
+            }
         }
 
         private void persianCalendar_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)

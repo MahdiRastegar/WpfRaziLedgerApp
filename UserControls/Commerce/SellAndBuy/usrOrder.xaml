@@ -370,7 +370,7 @@
         </GroupBox.Background>
         <Grid FlowDirection="RightToLeft">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="290" Name="column1"/>
+                <ColumnDefinition Width="272" Name="column1"/>
                 <ColumnDefinition Width="300"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
@@ -586,7 +586,7 @@ FontFamily="{StaticResource IranSans}" Width="27"
                 <Image Name="gifImage" Visibility="Collapsed" Width="144" Height="81" HorizontalAlignment="Right" Grid.Row="5" Grid.RowSpan="2" VerticalAlignment="Bottom" Margin="0,0,13,-65" Grid.Column="3"/>
                 <Syncfusion:SfDataGrid CurrentCellBeginEdit="datagrid_CurrentCellBeginEdit" AddNewRowInitiating="datagrid_AddNewRowInitiating" ItemsSource="{Binding Order_Details}" DataContext="{Binding  Source={StaticResource viewmodel}}" RowValidated="datagrid_RowValidated" RowValidating="datagrid_RowValidating"
                                        CurrentCellValueChanged="datagrid_CurrentCellValueChanged" Visibility="Visible" Grid.Row="1" AllowSorting="False" AddNewRowPosition="Bottom" AddNewRowText="حذف ردیف : Delete" GridValidationMode="InView"                                      
-                                       SelectionChanged="datagrid_SelectionChanged" AllowDeleting="True" CurrentCellEndEdit="datagrid_CurrentCellEndEdit" PreviewKeyDown="datagrid_PreviewKeyDown" FontSize="14" RowHeight="30" ShowRowHeader="False" AllowFiltering="False" AllowEditing="True" AllowResizingColumns="True" HeaderStyle="{StaticResource headerStyle}" Margin="20 5 15 15" Name="datagrid" HeaderRowHeight="40" HorizontalAlignment="Stretch" MinHeight="80" AutoGenerateColumns="False" FlowDirection="RightToLeft">
+                                       SelectionChanged="datagrid_SelectionChanged" AllowDeleting="True" CurrentCellEndEdit="datagrid_CurrentCellEndEdit" PreviewKeyDown="datagrid_PreviewKeyDown" FontSize="14" RowHeight="30" ShowRowHeader="False" AllowFiltering="False" AllowEditing="True" AllowResizingColumns="True" HeaderStyle="{StaticResource headerStyle}" Margin="-5 5 15 15" Name="datagrid" HeaderRowHeight="40" HorizontalAlignment="Stretch" MinHeight="80" AutoGenerateColumns="False" FlowDirection="RightToLeft">
                     <Syncfusion:SfDataGrid.CellStyle>
                         <Style TargetType="Syncfusion:GridCell">
                             <Setter Property="Background" Value="{Binding UpdateSourceTrigger=PropertyChanged,Converter={StaticResource DeleteRowStyleConverter},ConverterParameter=Background}"/>
@@ -600,13 +600,13 @@ FontFamily="{StaticResource IranSans}" Width="27"
                         </Syncfusion:SfDataGrid.AlternatingRowStyle>-->
                     <Syncfusion:SfDataGrid.Columns>
                         <Syncfusion:GridTextColumn MinimumWidth="97" Width="80" HeaderText="کد کالا" MappingName="CommodityCode"/>
-                        <Syncfusion:GridTextColumn MinimumWidth="170" HeaderText="نام" ColumnSizer="AutoWithLastColumnFill" IsReadOnly="True" MappingName="CommodityName"/>
-                        <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="3" MinimumWidth="118" HeaderText="مقدار" MaxValue="999999" MappingName="Value" TextAlignment="Left"/>
-                        <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="0" MinimumWidth="118" HeaderText="فی" MappingName="Fee" TextAlignment="Left"/>
-                        <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="0" MinimumWidth="118" HeaderText="تخفیف" MappingName="Discount" TextAlignment="Left"/>
-                        <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="0" MinimumWidth="118" HeaderText="مبلغ" MappingName="SumNextDiscount" TextAlignment="Left"/>
-                        <Syncfusion:GridNumericColumn NumberDecimalDigits="0" MinimumWidth="100" HeaderText="درصد مالیات" MaxValue="9999"  MappingName="TaxPercent2" TextAlignment="Left"/>
-                        <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="0" MinimumWidth="118" HeaderText="مبلغ مالیات" IsReadOnly="True" MappingName="Tax" TextAlignment="Left"/>
+                        <Syncfusion:GridTextColumn MinimumWidth="130" HeaderText="نام" ColumnSizer="AutoWithLastColumnFill" IsReadOnly="True" MappingName="CommodityName"/>
+                        <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="3" Width="95" MinimumWidth="85" HeaderText="مقدار" MaxValue="999999" MappingName="Value" TextAlignment="Left"/>
+                        <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="0" Width="105" MinimumWidth="95" HeaderText="فی" MappingName="Fee" TextAlignment="Left"/>
+                        <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="0" Width="90" MinimumWidth="80" HeaderText="تخفیف" MappingName="Discount" TextAlignment="Left"/>
+                        <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="0" Width="105" MinimumWidth="95" HeaderText="مبلغ" IsReadOnly="True" MappingName="SumNextDiscount" TextAlignment="Left"/>
+                        <Syncfusion:GridNumericColumn NumberDecimalDigits="0" Width="85" MinimumWidth="75" HeaderText="درصد مالیات" MaxValue="9999"  MappingName="TaxPercent2" TextAlignment="Left"/>
+                        <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="0" Width="95" MinimumWidth="85" HeaderText="مبلغ مالیات" IsReadOnly="True" MappingName="Tax" TextAlignment="Left"/>
                         <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="0" MinimumWidth="118" HeaderText="مبلغ کل" MappingName="Sum" TextAlignment="Left"/>
                     </Syncfusion:SfDataGrid.Columns>
                 </Syncfusion:SfDataGrid>

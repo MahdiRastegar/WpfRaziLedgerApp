@@ -386,6 +386,26 @@
                 <RowDefinition Height="1*" MinHeight="90"/>
                 <RowDefinition Height="25"/>
             </Grid.RowDefinitions>
+            <Border Visibility="Collapsed" Margin="0 0 -4 0" Name="morefields" Grid.Column="0" Grid.RowSpan="5" Grid.Row="1" Panel.ZIndex="10" Background="Transparent">
+                <Button Click="btnMorefields_Click" Name="btnMorefields" Margin="0 0 0 75" ToolTip="نمایش فیلدها">
+                    <TextBlock Text="►" FontSize="45" RenderTransformOrigin="0.5,0.5">
+                        <TextBlock.Foreground>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="White"/>
+                                <GradientStop Color="#FF567B9E" Offset="0.589"/>
+                            </LinearGradientBrush>
+                        </TextBlock.Foreground>
+                        <TextBlock.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform ScaleY="2"/>
+                                <SkewTransform/>
+                                <RotateTransform/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </TextBlock.RenderTransform>
+                    </TextBlock>
+                </Button>
+            </Border>
             <Border  Name="borderEdit" Visibility="Hidden" Grid.ColumnSpan="4" CornerRadius="5" Margin="4 -10 0 0" Grid.Row="1" Grid.RowSpan="6" BorderThickness="4">
                 <Border.Background>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -599,7 +619,7 @@ FontFamily="{StaticResource IranSans}" Width="27"
                 <Image Name="gifImage" Visibility="Collapsed" Width="144" Height="81" HorizontalAlignment="Right" Grid.Row="5" Grid.RowSpan="2" VerticalAlignment="Bottom" Margin="0,0,13,-65" Grid.Column="3"/>
                 <Syncfusion:SfDataGrid CurrentCellBeginEdit="datagrid_CurrentCellBeginEdit" AddNewRowInitiating="datagrid_AddNewRowInitiating" ItemsSource="{Binding paymentMoney_Details}" GotFocus="datagrid_GotFocus" LostFocus="datagrid_LostFocus" PreviewMouseDown="datagrid_PreviewMouseDown" DataContext="{Binding  Source={StaticResource viewmodel}}" RowValidated="datagrid_RowValidated" RowValidating="datagrid_RowValidating" GridValidationMode="InView"
                                        CurrentCellValueChanged="datagrid_CurrentCellValueChanged" Visibility="Visible" Grid.Row="1" AllowSorting="False" AddNewRowPosition="Bottom" AddNewRowText="حذف ردیف : Delete"                                       
-                                       SelectionChanged="datagrid_SelectionChanged" SelectionChanging="datagrid_SelectionChanging" AllowDeleting="True" CurrentCellEndEdit="datagrid_CurrentCellEndEdit" PreviewKeyDown="datagrid_PreviewKeyDown" FontSize="14" RowHeight="30" ShowRowHeader="False" AllowFiltering="False" AllowEditing="True" AllowResizingColumns="True" HeaderStyle="{StaticResource headerStyle}" Margin="20 5 15 15" Name="datagrid" HeaderRowHeight="40" HorizontalAlignment="Stretch" MinHeight="80" AutoGenerateColumns="False" FlowDirection="RightToLeft">
+                                       SelectionChanged="datagrid_SelectionChanged" SelectionChanging="datagrid_SelectionChanging" AllowDeleting="True" CurrentCellEndEdit="datagrid_CurrentCellEndEdit" PreviewKeyDown="datagrid_PreviewKeyDown" FontSize="14" RowHeight="30" ShowRowHeader="False" AllowFiltering="False" AllowEditing="True" AllowResizingColumns="True" HeaderStyle="{StaticResource headerStyle}"  Margin="9 5 5 15" Name="datagrid" HeaderRowHeight="40" HorizontalAlignment="Stretch" MinHeight="80" AutoGenerateColumns="False" FlowDirection="RightToLeft">
                     <Syncfusion:SfDataGrid.CellStyle>
                         <Style TargetType="Syncfusion:GridCell">
                             <Setter Property="Background" Value="{Binding UpdateSourceTrigger=PropertyChanged,Converter={StaticResource DeleteRowStyleConverter},ConverterParameter=Background}"/>
@@ -612,7 +632,7 @@ FontFamily="{StaticResource IranSans}" Width="27"
                             </Style>
                         </Syncfusion:SfDataGrid.AlternatingRowStyle>-->
                     <Syncfusion:SfDataGrid.Columns>
-                        <Syncfusion:GridTemplateColumn HeaderText="نوع وجه" Width="100" MappingName="MoneyType">
+                        <Syncfusion:GridTemplateColumn HeaderText="نوع وجه" Width="90" MappingName="MoneyType">
                             <Syncfusion:GridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <Syncfusion:ComboBoxAdv Loaded="ComboBoxAdv_Loaded" DropDownOpened="ComboBoxAdv_DropDownOpened" SelectionChanged="ComboBoxAdv_SelectionChanged" GotFocus="ComboBoxAdv_GotFocus" PreviewKeyDown="ComboBoxAdv_PreviewKeyDown">
@@ -624,17 +644,17 @@ FontFamily="{StaticResource IranSans}" Width="27"
                                 </DataTemplate>
                             </Syncfusion:GridTemplateColumn.CellTemplate>
                         </Syncfusion:GridTemplateColumn>
-                        <Syncfusion:GridTextColumn MinimumWidth="95" Width="80" HeaderText="کل معین" MappingName="ColeMoein"/>
-                        <Syncfusion:GridTextColumn MinimumWidth="97" Width="80" HeaderText="تفضیلی" MappingName="PreferentialCode"/>
-                        <Syncfusion:GridTextColumn MinimumWidth="170" ColumnSizer="AutoLastColumnFill" HeaderText="حساب پرداخت کننده" IsReadOnly="True" MappingName="Name"/>
-                        <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="0" MinimumWidth="118" HeaderText="مبلغ" MappingName="Price" TextAlignment="Left"/>
-                        <Syncfusion:GridTextColumn MinimumWidth="150" HeaderText="تاریخ سررسید چک" MappingName="DateString">
+                        <Syncfusion:GridTextColumn Width="70" HeaderText="کل معین" MappingName="ColeMoein"/>
+                        <Syncfusion:GridTextColumn Width="75" HeaderText="تفضیلی" MappingName="PreferentialCode"/>
+                        <Syncfusion:GridTextColumn Width="140" ColumnSizer="AutoLastColumnFill" HeaderText="حساب پرداخت کننده" IsReadOnly="True" MappingName="Name"/>
+                        <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="0" Width="100" HeaderText="مبلغ" MappingName="Price" TextAlignment="Left"/>
+                        <Syncfusion:GridTextColumn Width="120" HeaderText="تاریخ سررسید چک" MappingName="DateString">
                         </Syncfusion:GridTextColumn>
-                        <Syncfusion:GridTextColumn MinimumWidth="90" HeaderText="شماره" MappingName="Number"/>
-                        <Syncfusion:GridComboBoxColumn MinimumWidth="120" Width="120" HeaderText="نام بانک" ItemsSource="{Binding Banks}" DisplayMemberPath="Name" MappingName="FkBankNavigation"/>
-                        <Syncfusion:GridTextColumn MinimumWidth="120" Width="120" HeaderText="نام شعبه" MappingName="BranchName"/>
-                        <Syncfusion:GridTextColumn MinimumWidth="160" HeaderText="شماره صیادی" MappingName="SayadiNumber"/>
-                        <Syncfusion:GridCheckBoxColumn MinimumWidth="105" HeaderText="ثبت در سامانه" MappingName="Registered"/>
+                        <Syncfusion:GridTextColumn Width="110" HeaderText="شماره" MappingName="Number"/>
+                        <Syncfusion:GridComboBoxColumn Width="100" HeaderText="نام بانک" ItemsSource="{Binding Banks}" DisplayMemberPath="Name" MappingName="FkBankNavigation"/>
+                        <Syncfusion:GridTextColumn  MinimumWidth="120" Width="120" HeaderText="نام شعبه" MappingName="BranchName"/>
+                        <Syncfusion:GridTextColumn Width="140" HeaderText="شماره صیادی" MappingName="SayadiNumber"/>
+                        <Syncfusion:GridCheckBoxColumn Width="105" HeaderText="ثبت در سامانه" MappingName="Registered"/>
                     </Syncfusion:SfDataGrid.Columns>
                 </Syncfusion:SfDataGrid>
                 <Syncfusion:SfDataPager x:Name="dataPager" Visibility="Collapsed" FlowDirection="LeftToRight" VerticalAlignment="Bottom" Margin="0 -30" HorizontalAlignment="Center" UseOnDemandPaging="True" PageIndexChanged="dataPager_PageIndexChanged"

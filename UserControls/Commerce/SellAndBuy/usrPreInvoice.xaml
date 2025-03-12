@@ -385,6 +385,27 @@
                 <RowDefinition Height="1*" MinHeight="90"/>
                 <RowDefinition Height="25"/>
             </Grid.RowDefinitions>
+            <Border Visibility="Collapsed" Margin="10 0 -10 0" Name="morefields" Grid.Column="0" Grid.RowSpan="5" Grid.Row="1" Panel.ZIndex="10" Background="Transparent">
+                <Button Click="btnMorefields_Click" Name="btnMorefields" Margin="0 0 0 75" ToolTip="نمایش فیلدها">
+                    <TextBlock Text="►" FontSize="45" RenderTransformOrigin="0.5,0.5">
+                        <TextBlock.Foreground>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="White"/>
+                                <GradientStop Color="#FF567B9E" Offset="0.589"/>
+                            </LinearGradientBrush>
+                        </TextBlock.Foreground>
+                        <TextBlock.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform ScaleY="2"/>
+                                <SkewTransform/>
+                                <RotateTransform/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </TextBlock.RenderTransform>
+                    </TextBlock>
+                </Button>
+            </Border>
+
             <Border  Name="borderEdit" Visibility="Hidden" Grid.ColumnSpan="4" CornerRadius="5" Margin="4 -10 0 0" Grid.Row="1" Grid.RowSpan="9" BorderThickness="4">
                 <Border.Background>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -608,7 +629,7 @@ FontFamily="{StaticResource IranSans}" Width="27"
                 </Grid>
 
                 <Image Name="gifImage" Visibility="Collapsed" Width="144" Height="81" HorizontalAlignment="Right" Grid.Row="5" Grid.RowSpan="2" VerticalAlignment="Bottom" Margin="0,0,13,-65" Grid.Column="3"/>
-                <Syncfusion:SfDataGrid CurrentCellBeginEdit="datagrid_CurrentCellBeginEdit" AddNewRowInitiating="datagrid_AddNewRowInitiating" ItemsSource="{Binding PreInvoice_Details}" DataContext="{Binding  Source={StaticResource viewmodel}}" RowValidated="datagrid_RowValidated" RowValidating="datagrid_RowValidating"
+                <Syncfusion:SfDataGrid GotFocus="datagrid_GotFocus" CurrentCellBeginEdit="datagrid_CurrentCellBeginEdit" AddNewRowInitiating="datagrid_AddNewRowInitiating" ItemsSource="{Binding PreInvoice_Details}" DataContext="{Binding  Source={StaticResource viewmodel}}" RowValidated="datagrid_RowValidated" RowValidating="datagrid_RowValidating"
                                        CurrentCellValueChanged="datagrid_CurrentCellValueChanged" Visibility="Visible" Grid.Row="1" AllowSorting="False" AddNewRowPosition="Bottom" AddNewRowText="حذف ردیف : Delete" GridValidationMode="InView"                                      
                                        SelectionChanged="datagrid_SelectionChanged" AllowDeleting="True" CurrentCellEndEdit="datagrid_CurrentCellEndEdit" PreviewKeyDown="datagrid_PreviewKeyDown" FontSize="14" RowHeight="30" ShowRowHeader="False" AllowFiltering="False" AllowEditing="True" AllowResizingColumns="True" HeaderStyle="{StaticResource headerStyle}" Margin="20 5 15 15" Name="datagrid" HeaderRowHeight="40" HorizontalAlignment="Stretch" MinHeight="80" AutoGenerateColumns="False" FlowDirection="RightToLeft">
                     <Syncfusion:SfDataGrid.CellStyle>

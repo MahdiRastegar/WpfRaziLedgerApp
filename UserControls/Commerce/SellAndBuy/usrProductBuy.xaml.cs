@@ -609,6 +609,12 @@ namespace WpfRaziLedgerApp
         bool isCancel = true;
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
+            if (morefields.Visibility == Visibility.Visible)
+            {
+                morefields.Visibility = Visibility.Collapsed;
+                column1.Width = new GridLength(225);
+                column2.Width = new GridLength(225);
+            }
             if (AddedMode && isCancel)
             {
                 return;
@@ -1300,6 +1306,8 @@ namespace WpfRaziLedgerApp
             {
                 var Y = ProductBuy_Details.Sum(y => y.Sum);
                 txtSum.Text = Y.ToString();
+                if (txtShippingCost.Text == "")
+                    txtShippingCost.Text = "0";
                 txtSumDiscount.Text = (Y - decimal.Parse(txtInvoiceDiscount.Text.Replace(",", "")) + decimal.Parse(txtShippingCost.Text.Replace(",", ""))).ToString();
                 //return;
 
@@ -1741,6 +1749,23 @@ namespace WpfRaziLedgerApp
             e.Handled = !IsTextAllowed(e.Text);
             if (txt.Text == "")
                 txt.Text = "0";
+        }
+
+        private void btnMorefields_Click(object sender, RoutedEventArgs e)
+        {
+            morefields.Visibility = Visibility.Collapsed;
+            column1.Width = new GridLength(225);
+            column2.Width = new GridLength(225);
+        }
+
+        private void datagrid_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (SystemParameters.PrimaryScreenWidth <= 1600 && morefields.Visibility == Visibility.Collapsed)
+            {
+                column1.Width = new GridLength(50);
+                column2.Width = new GridLength(0);
+                morefields.Visibility = Visibility.Visible;
+            }
         }
 
         private void persianCalendar_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)

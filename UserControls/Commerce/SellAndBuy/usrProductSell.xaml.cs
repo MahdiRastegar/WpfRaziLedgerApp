@@ -703,6 +703,7 @@ namespace WpfRaziLedgerApp
                 column1.Width = new GridLength(225);
                 column2.Width = new GridLength(200);
                 column3.Width = new GridLength(200);
+                Sf_Description.Visibility = Visibility.Visible;
             }
             if (AddedMode&&isCancel)
             {
@@ -2049,16 +2050,18 @@ namespace WpfRaziLedgerApp
             column1.Width = new GridLength(225);
             column2.Width = new GridLength(200);
             column3.Width = new GridLength(200);
+            Sf_Description.Visibility = Visibility.Visible;
         }
 
         private void datagrid_GotFocus(object sender, RoutedEventArgs e)
         {
-            if (SystemParameters.PrimaryScreenWidth < 1500 && morefields.Visibility == Visibility.Collapsed)
+            if (SystemParameters.PrimaryScreenWidth <= 1600 && morefields.Visibility == Visibility.Collapsed)
             {
                 column1.Width = new GridLength(50);
                 column2.Width = new GridLength(0);
                 column3.Width = new GridLength(0);
                 morefields.Visibility = Visibility.Visible;
+                Sf_Description.Visibility = Visibility.Collapsed;
             }
         }
 

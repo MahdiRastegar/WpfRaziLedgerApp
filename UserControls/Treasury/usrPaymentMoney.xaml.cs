@@ -876,6 +876,12 @@ namespace WpfRaziLedgerApp
         bool isCancel = true;
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
+            if (morefields.Visibility == Visibility.Visible)
+            {
+                morefields.Visibility = Visibility.Collapsed;
+                column1.Width = new GridLength(170);
+                column2.Width = new GridLength(170);
+            }
             if (AddedMode && isCancel)
             {
                 return;
@@ -1335,6 +1341,12 @@ namespace WpfRaziLedgerApp
 
         private void searchImage_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
+            if (morefields.Visibility == Visibility.Visible)
+            {
+                morefields.Visibility = Visibility.Collapsed;
+                column1.Width = new GridLength(170);
+                column2.Width = new GridLength(170);
+            }
             if (searchImage.Opacity != .6)
             {
                 if (!AddedMode && (searchImage.Source as BitmapImage).UriSource.AbsoluteUri.Contains("dataedit.png"))
@@ -2440,11 +2452,24 @@ namespace WpfRaziLedgerApp
         private void datagrid_GotFocus(object sender, RoutedEventArgs e)
         {
             DataGridFocused = true;
+            if (SystemParameters.PrimaryScreenWidth <= 1600 && morefields.Visibility == Visibility.Collapsed)
+            {
+                column1.Width = new GridLength(50);
+                column2.Width = new GridLength(0);
+                morefields.Visibility = Visibility.Visible;
+            }
         }
 
         private void datagrid_LostFocus(object sender, RoutedEventArgs e)
         {
             DataGridFocused = false;
+        }
+
+        private void btnMorefields_Click(object sender, RoutedEventArgs e)
+        {
+            morefields.Visibility = Visibility.Collapsed;
+            column1.Width = new GridLength(170);
+            column2.Width = new GridLength(170);
         }
 
         private void persianCalendarE_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)

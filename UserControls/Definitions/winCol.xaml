@@ -270,12 +270,12 @@
                             </Style>
                         </Syncfusion:SfDataGrid.AlternatingRowStyle>-->
                     <Syncfusion:SfDataGrid.Columns>
-                        <Syncfusion:GridTextColumn MinimumWidth="70" HeaderText="کد کل" MappingName="ColCode"/>
-                        <Syncfusion:GridTextColumn MinimumWidth="145" HeaderText="نام کل" ColumnSizer="Star" MappingName="ColName" />
-                        <Syncfusion:GridTextColumn MinimumWidth="83" HeaderText="کد گروه" MappingName="FkGroup.GroupCode"/>
+                        <Syncfusion:GridTextColumn Width="70" HeaderText="کد کل" MappingName="ColCode"/>
+                        <Syncfusion:GridTextColumn MinimumWidth="171" HeaderText="نام کل" ColumnSizer="Star" MappingName="ColName" />
+                        <Syncfusion:GridTextColumn Width="83" HeaderText="کد گروه" MappingName="FkGroup.GroupCode"/>
                         <Syncfusion:GridTextColumn MinimumWidth="145" HeaderText="نام گروه" ColumnSizer="Star" MappingName="FkGroup.GroupName" />
-                        <Syncfusion:GridTextColumn MinimumWidth="80" HeaderText="ماهیت" MappingName="GetType2"/>
-                        <Syncfusion:GridTextColumn MinimumWidth="105" HeaderText="نوع عملکرد" MappingName="GetAction"/>
+                        <Syncfusion:GridTextColumn MinimumWidth="70" HeaderText="ماهیت" MappingName="GetType2"/>
+                        <Syncfusion:GridTextColumn MinimumWidth="82" HeaderText="نوع عملکرد" MappingName="GetAction"/>
                         <Syncfusion:GridCheckBoxColumn MinimumWidth="115" HeaderText="مجوز مشاهده" MappingName="PermissionView"/>
                     </Syncfusion:SfDataGrid.Columns>
                 </Syncfusion:SfDataGrid>

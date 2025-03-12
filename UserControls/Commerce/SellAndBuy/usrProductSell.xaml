@@ -388,7 +388,7 @@
                 <RowDefinition Height="1*" MinHeight="90"/>
                 <RowDefinition Height="25"/>
             </Grid.RowDefinitions>
-            <Border Visibility="Collapsed" Name="morefields" Grid.Column="0" Grid.RowSpan="7" Grid.Row="1" Panel.ZIndex="10" Background="White">
+            <Border Visibility="Collapsed" Margin="10 0 -10 0" Name="morefields" Grid.Column="0" Grid.RowSpan="7" Grid.Row="1" Panel.ZIndex="10" Background="Transparent">
                 <Button Click="btnMorefields_Click" Name="btnMorefields" Margin="0 0 0 75" ToolTip="نمایش فیلدها">
                     <TextBlock Text="►" FontSize="45" RenderTransformOrigin="0.5,0.5">
                         <TextBlock.Foreground>
@@ -561,7 +561,7 @@ AutoCompleteMode="Suggest" SuggestionsChanged="SfTextBoxExt_SuggestionsChanged" 
                     <TextBox Name="txtDescription" TextChanged="txtPreferential_TextChanged" VerticalContentAlignment="Center" IsEnabled="True" IsReadOnly="False" PreviewTextInput="Txt_PreviewTextInput" Margin="0" FontSize="16"/>
                 </Syncfusion:SfTextInputLayout>
             </Grid>
-            <Grid Grid.Row="7" Grid.ColumnSpan="2" Grid.Column="3" Height="100" Grid.RowSpan="2" x:Name="gridFactor">
+            <Grid Grid.Row="7" Margin="-10 0 10 0" Grid.ColumnSpan="2" Grid.Column="3" Height="100" Grid.RowSpan="2" x:Name="gridFactor">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition/>
