@@ -67,13 +67,14 @@
         </GroupBox.Background>
         <Grid FlowDirection="RightToLeft">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="228"/>
-                <ColumnDefinition Width="300"/>
+                <ColumnDefinition Width="248"/>
+                <ColumnDefinition Width="280"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"/>
                 <RowDefinition Height="1.2*" MinHeight="90"/>
+                <RowDefinition Height="1*" MinHeight="90"/>
                 <RowDefinition Height="1*" MinHeight="90"/>
                 <RowDefinition Height="1*" MinHeight="90"/>
                 <RowDefinition Height="1*" MinHeight="90"/>
@@ -124,8 +125,8 @@
                     </EventTrigger>
                 </Border.Triggers>
             </Border>
-            <TextBlock VerticalAlignment="Center" Name="txbCalender" HorizontalAlignment="Left" Margin="116 0 0 9" FontSize="17" Text="" Grid.Row="1"/>
-            <PersianCalendarWPF:PersianDatePicker Grid.Row="1" SelectedDateChanged="pcw1_SelectedDateChanged" BorderThickness="0" HorizontalAlignment="Left" Name="pcw1" FlowDirection="LeftToRight" Margin="85,29,0,35"
+            <TextBlock VerticalAlignment="Center" Name="txbCalender" HorizontalAlignment="Left" Margin="130 0 0 12" FontSize="17" Text="" Grid.Row="1"/>
+            <PersianCalendarWPF:PersianDatePicker Grid.Row="1" SelectedDateChanged="pcw1_SelectedDateChanged" BorderThickness="0" HorizontalAlignment="Left" Name="pcw1" FlowDirection="LeftToRight" Margin="95,20,0,35"
 PersianCalendarWPF:FontSize="13.5"
 PersianCalendarWPF:InfoElement.DateInRangeTextColor="Gray"
 PersianCalendarWPF:InfoElement.WeekNameColor="Blue"
@@ -140,10 +141,10 @@ FontFamily="{StaticResource IranSans}" Width="27"
                     <SolidColorBrush Color="Transparent"/>
                 </PersianCalendarWPF:PersianDatePicker.Background>
             </PersianCalendarWPF:PersianDatePicker>
-            <Syncfusion:SfTextInputLayout IsHitTestVisible="False" x:Name="Sf_txtType" OutlineCornerRadius="8" Hint="تاریخ" Grid.Row="1"  VerticalAlignment="Center" Margin="20 0">
+            <Syncfusion:SfTextInputLayout IsHitTestVisible="False" x:Name="Sf_txtType" OutlineCornerRadius="8" Hint="تاریخ اجرا" Grid.Row="1"  VerticalAlignment="Center" Margin="20 0">
                 <Label Height="25" FontSize="16"/>
             </Syncfusion:SfTextInputLayout>
-            <Syncfusion:SfTextInputLayout  x:Name="Sf_txtInvoiceDiscount" OutlineCornerRadius="8" Grid.Row="1" Grid.Column="1" Hint="فی" VerticalAlignment="Center" Margin="20,10">
+            <Syncfusion:SfTextInputLayout  x:Name="Sf_txtInvoiceDiscount" OutlineCornerRadius="8" Grid.Row="4" Grid.Column="1" Hint="فی" VerticalAlignment="Center" Margin="30,10">
                 <TextBox x:Name="txtInvoiceDiscount" LostFocus="txtInvoiceDiscount_LostFocus" PreviewKeyDown="txtInvoiceDiscount_PreviewKeyDown" Text="0" TextChanged="txtInvoiceDiscount_TextChanged" MaxLength="50" VerticalContentAlignment="Center" PreviewTextInput="txtInvoiceDiscount_PreviewTextInput" Margin="0" FontSize="16"/>
             </Syncfusion:SfTextInputLayout>
             <Syncfusion:SfTextInputLayout Name="Sf_txtCommodity" OutlineCornerRadius="8" Hint="کد کالا" Grid.Row="2"  VerticalAlignment="Center" Margin="30 0"  HorizontalAlignment="Stretch">
@@ -158,7 +159,7 @@ FontFamily="{StaticResource IranSans}" Width="27"
             <Syncfusion:SfTextInputLayout Name="Sf_txtPriceGroupName" OutlineCornerRadius="8" Hint="نام گروه قیمت" Grid.Row="3"  VerticalAlignment="Center" Margin="30 0" Grid.Column="1"  HorizontalAlignment="Stretch">
                 <TextBox Name="txtPriceGroupName" VerticalContentAlignment="Center"  IsEnabled="True" IsReadOnly="True" Margin="0" FontSize="16"/>
             </Syncfusion:SfTextInputLayout>
-            <DockPanel  Grid.Row="4" Grid.ColumnSpan="2" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="15 0 15 -15">
+            <DockPanel  Grid.Row="5" Grid.ColumnSpan="2" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="15 0 15 -15">
                 <Grid>
                     <Button Style="{StaticResource CustomButtonStyle}" ToolTip="ذخیره (Ctrl+S)" x:Name="btnConfirm" Width="60" Content="" Click="btnConfirm_Click" FontSize="20" Height="45">
                         <Button.Background>
@@ -196,7 +197,7 @@ FontFamily="{StaticResource IranSans}" Width="27"
                     <Image Source="/Images/Delete.png" IsHitTestVisible="False" Width="37.5" Stretch="Fill" Height="39" Margin="0 0 0 2"/>
                 </Grid>
             </DockPanel>
-            <Grid  Grid.Row="1" Grid.RowSpan="4" Grid.Column="2" Name="gridContainer">
+            <Grid  Grid.Row="1" Grid.RowSpan="5" Grid.Column="2" Name="gridContainer">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="80"/>
                     <RowDefinition/>
@@ -291,7 +292,7 @@ FontFamily="{StaticResource IranSans}" Width="27"
                     </Syncfusion:SfDataGrid.Columns>
                 </Syncfusion:SfDataGrid>
                 <Syncfusion:SfDataPager x:Name="dataPager" FlowDirection="LeftToRight" VerticalAlignment="Bottom" Margin="0 -30" HorizontalAlignment="Center" UseOnDemandPaging="True"
-    Grid.Row="3" NumericButtonCount="3"
+    Grid.Row="4" NumericButtonCount="3"
 PageSize="12"
 Source="{Binding Moeins}"/>
             </Grid>

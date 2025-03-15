@@ -318,7 +318,7 @@ namespace WpfRaziLedgerApp
             txtCommodity.IsReadOnly = false;
             txtCommodityName.Text = "";
             txtCommodity.Text = "";
-            txtInvoiceDiscount.Text = string.Empty;
+            txtInvoiceDiscount.Text = "0";
             Sf_txtCommodityName.HasError = false;
             Sf_txtCommodity.HasError = false;
             Sf_txtCommodity.ErrorText = "";
@@ -648,7 +648,8 @@ namespace WpfRaziLedgerApp
                 txtPriceGroupName.Text = mu.GroupName;
                 Dispatcher.BeginInvoke(new Action(() =>
                 {
-                    btnConfirm.Focus();
+                    txtInvoiceDiscount.Focus();
+                    txtInvoiceDiscount.SelectAll();
                 }));
             }
         }
@@ -687,7 +688,7 @@ namespace WpfRaziLedgerApp
 
             if (e.Text == "\r")
             {
-                txtCommodity.Focus();
+                btnConfirm.Focus();
                 return;
             }
             e.Handled = !IsTextAllowed(e.Text);

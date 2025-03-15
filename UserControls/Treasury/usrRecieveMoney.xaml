@@ -647,7 +647,7 @@ FontFamily="{StaticResource IranSans}" Width="27"
                         </Syncfusion:GridTemplateColumn>
                         <Syncfusion:GridTextColumn  Width="70" HeaderText="کل معین" MappingName="ColeMoein"/>
                         <Syncfusion:GridTextColumn  Width="75" HeaderText="تفضیلی" MappingName="PreferentialCode"/>
-                        <Syncfusion:GridTextColumn Width="140" ColumnSizer="AutoLastColumnFill" HeaderText="حساب دریافت کننده" IsReadOnly="True" MappingName="Name"/>
+                        <Syncfusion:GridTextColumn MinimumWidth="140" ColumnSizer="AutoLastColumnFill" HeaderText="حساب دریافت کننده" IsReadOnly="True" MappingName="Name"/>
                         <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="0" Width="100" HeaderText="مبلغ" MappingName="Price" TextAlignment="Left"/>
                         <Syncfusion:GridTextColumn Width="120" HeaderText="تاریخ سررسید چک" MappingName="DateString">
                         </Syncfusion:GridTextColumn>

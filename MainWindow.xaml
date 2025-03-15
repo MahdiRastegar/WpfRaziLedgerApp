@@ -75,16 +75,14 @@
                             <Syncfusion:RibbonButton  Name="rbnDefinitionCommodity" Click="rbnDefinitionCommodity_Click" SizeForm="Large" Label="کالا"/>
                             <Syncfusion:RibbonButton  Name="rbnCommodityPricingPanel" Click="rbnCommodityPricingPanel_Click" SizeForm="Large" Label="پنل قیمت گذاری کالا"/>
                         </Syncfusion:RibbonBar>
-                        <Syncfusion:RibbonBar Name="barStorage" Width="335" Header="انبار">
+                        <Syncfusion:RibbonBar Name="barStorage" Width="275" Header="انبار">
                             <Syncfusion:RibbonButton  Name="rbnCodingReceiptTypes" Click="rbnCodingReceiptTypes_Click" SizeForm="Large" Label="کدینگ انواع رسید"/>
                             <Syncfusion:RibbonButton  Name="rbnCodingTypesTransfer" Click="rbnCodingTypesTransfer_Click" SizeForm="Large" Label="کدینگ انواع حواله"/>
                             <Syncfusion:RibbonSeparator/>
                             <Syncfusion:RibbonButton  Name="rbnStorageReceipt" Click="rbnStorageReceipt_Click" SizeForm="Large" Label="رسید انبار"/>
                             <Syncfusion:RibbonButton  Name="rbnStorageTransfer" Click="rbnStorageTransfer_Click" SizeForm="Large" Label="حواله انبار"/>
                             <Syncfusion:RibbonButton  Name="rbnStorageBetweenTransfer" Click="rbnStorageBetweenTransfer_Click" SizeForm="Large" Label="حواله بین انبار"/>
-                            <Syncfusion:RibbonSeparator/>
                             <Syncfusion:RibbonButton  Name="rbnStorageRotation" Click="rbnStorageRotation_Click" SizeForm="Large" Label="انبارگردانی"/>
-                            <Syncfusion:RibbonButton  Name="rbnNPStorage" Click="rbnNPStorage_Click" SizeForm="Large" Label="کسر و اضافات انبار"/>
                         </Syncfusion:RibbonBar>
                     </Syncfusion:RibbonTab>
                     <Syncfusion:RibbonTab Name="rbnCommerce2" Caption="خرید و فروش">
