@@ -518,19 +518,30 @@ namespace WpfRaziLedgerApp
         private void TxtCol_LostFocus(object sender, RoutedEventArgs e)
         {
             if (!isCancel && (!txtCodeMoein.IsReadOnly || borderEdit.Visibility != Visibility.Visible))
+            {
+                using var db = new wpfrazydbContext();
+                var g = 0;
                 try
                 {
-                    using var db = new wpfrazydbContext();
-                    var g = int.Parse(txtCol.Text);
+                    g = int.Parse(txtCol.Text);
 
                     txtColName.Text = db.Cols.FirstOrDefault(gs => gs.ColCode == g).ColName;
+                }
+                catch
+                {
+                    txtCodeMoein.Text = "";
+                    txtColName.Text = "";
+                    return;
+                }
+                try
+                {
                     txtCodeMoein.Text = (db.Moeins.Include("FkCol").Where(u => u.FkCol.ColCode == g).Max(y => y.MoeinCode) + 1).ToString();
                 }
                 catch
                 {
                     txtCodeMoein.Text = "1";
-                    txtColName.Text = "";
                 }
+            }
         }
 
         private void DataPager_PageIndexChanging(object sender, Syncfusion.UI.Xaml.Controls.DataPager.PageIndexChangingEventArgs e)
