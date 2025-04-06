@@ -618,7 +618,7 @@ namespace WpfRaziLedgerApp
                         }
                         else
                         {
-                            var moein = db.Moeins.Find((mu.AdditionalEntity as AccountSearchClass).Id);
+                            var moein = db.Moeins.Include("FkCol").Where(h => h.Id == (mu.AdditionalEntity as AccountSearchClass).Id).First();
                             AcDocumentDetail.FkMoein = moein;
                         }
                     }
