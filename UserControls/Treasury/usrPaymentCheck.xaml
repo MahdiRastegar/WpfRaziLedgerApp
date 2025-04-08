@@ -711,9 +711,9 @@ BeginTime="0:0:0" />-->
                                     </Syncfusion:GridDateTimeColumn.CellTemplate>
                                 </Syncfusion:GridDateTimeColumn>
                                 <Syncfusion:GridTextColumn MinimumWidth="90" HeaderText="شماره چک" MappingName="FkDetai.Number"/>
-                                <Syncfusion:GridTextColumn MinimumWidth="170" Width="100" HeaderText="نام بانک" MappingName="FkDetai.FkBankNavigation.Name"/>
+                                <Syncfusion:GridTextColumn MinimumWidth="170" IsHidden="True" Width="100" HeaderText="نام بانک" MappingName="FkDetai.FkBankNavigation.Name"/>
                                 <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="0" MinimumWidth="118" HeaderText="مبلغ" MappingName="FkDetai.Price" TextAlignment="Left"/>
-                                <Syncfusion:GridTextColumn MinimumWidth="160" HeaderText="نام شعبه" MappingName="FkDetai.BranchName"/>
+                                <Syncfusion:GridTextColumn MinimumWidth="160" IsHidden="True" HeaderText="نام شعبه" MappingName="FkDetai.BranchName"/>
                                 <Syncfusion:GridTextColumn MinimumWidth="160" HeaderText="شماره صیادی" MappingName="FkDetai.SayadiNumber"/>
                                 <Syncfusion:GridCheckBoxColumn MinimumWidth="105" HeaderText="ثبت در سامانه" MappingName="FkDetai.Registered"/>
                             </Syncfusion:SfDataGrid.Columns>

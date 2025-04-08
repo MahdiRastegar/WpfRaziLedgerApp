@@ -702,8 +702,7 @@ namespace WpfRaziLedgerApp
         int tempSelectedIndex = -1;
         public void SetEnterToNextCell(RowColumnIndex? rowColumn = null)
         {
-            //StateLoadView = true;
-            datagrid.CurrentCellEndEdit -= datagrid_CurrentCellEndEdit;
+            //StateLoadView = true;            
 
             var dataGrid = datagrid;
 
@@ -713,7 +712,8 @@ namespace WpfRaziLedgerApp
             {
                 int currentRowIndex = rowColumn == null ? currentCell.RowIndex : rowColumn.Value.RowIndex;
                 int currentColumnIndex = rowColumn == null ? currentCell.ColumnIndex : rowColumn.Value.ColumnIndex;
-
+                if (currentColumnIndex > 2)
+                    datagrid.CurrentCellEndEdit -= datagrid_CurrentCellEndEdit;
                 // افزایش اندیس ستون
                 currentColumnIndex++;
 
@@ -814,7 +814,7 @@ namespace WpfRaziLedgerApp
                         }
                         else
                         {
-                            var moein = db.Moeins.Find((mu.AdditionalEntity as AccountSearchClass).Id);
+                            var moein = db.Moeins.Include("FkCol").First(g => g.Id == (mu.AdditionalEntity as AccountSearchClass).Id);
                             acDocument_Detail.FkMoein = moein;
                         }
                     }
