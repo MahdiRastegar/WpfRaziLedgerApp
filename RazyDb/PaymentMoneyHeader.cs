@@ -18,7 +18,9 @@ namespace WpfRaziLedgerApp
         public Guid? FkPreferentialId { get; set; }
         public Guid? FkMoeinId { get; set; }
         public string Description { get; set; }
+        public Guid? FkAcDocument { get; set; }
 
+        public virtual AcDocumentHeader FkAcDocumentNavigation { get; set; }
         public virtual Moein FkMoein { get; set; }
         public virtual Preferential FkPreferential { get; set; }
         public virtual ICollection<PaymentMoneyDetail> PaymentMoneyDetails { get; set; }

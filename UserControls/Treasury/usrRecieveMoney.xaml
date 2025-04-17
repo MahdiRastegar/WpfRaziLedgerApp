@@ -386,8 +386,8 @@
                 <RowDefinition Height="1*" MinHeight="90"/>
                 <RowDefinition Height="25"/>
             </Grid.RowDefinitions>
-            <Border Visibility="Collapsed" Margin="0 0 -4 0" Name="morefields" Grid.Column="0" Grid.RowSpan="5" Grid.Row="1" Panel.ZIndex="10" Background="Transparent">
-                <Button Click="btnMorefields_Click" Name="btnMorefields" Margin="0 0 0 75" ToolTip="نمایش فیلدها">
+            <Border  Visibility="Collapsed" Margin="0 -40 -4 55" Name="morefields" Grid.Column="0" Grid.RowSpan="5" Grid.Row="1" Panel.ZIndex="10" Background="Transparent">
+                <Button Click="btnMorefields_Click" Name="btnMorefields" Margin="0 35 0 0" ToolTip="نمایش فیلدها">
                     <TextBlock Text="►" FontSize="45" RenderTransformOrigin="0.5,0.5">
                         <TextBlock.Foreground>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -633,7 +633,7 @@ FontFamily="{StaticResource IranSans}" Width="27"
                             </Style>
                         </Syncfusion:SfDataGrid.AlternatingRowStyle>-->
                     <Syncfusion:SfDataGrid.Columns>
-                        <Syncfusion:GridTemplateColumn HeaderText="نوع وجه" Width="90" MappingName="MoneyType">
+                        <Syncfusion:GridTemplateColumn HeaderText="نوع وجه" Width="80" MappingName="MoneyType">
                             <Syncfusion:GridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <Syncfusion:ComboBoxAdv Loaded="ComboBoxAdv_Loaded" DropDownOpened="ComboBoxAdv_DropDownOpened" SelectionChanged="ComboBoxAdv_SelectionChanged" GotFocus="ComboBoxAdv_GotFocus" PreviewKeyDown="ComboBoxAdv_PreviewKeyDown">
@@ -651,11 +651,11 @@ FontFamily="{StaticResource IranSans}" Width="27"
                         <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="0" Width="100" HeaderText="مبلغ" MappingName="Price" TextAlignment="Left"/>
                         <Syncfusion:GridTextColumn Width="120" HeaderText="تاریخ سررسید چک" MappingName="DateString">
                         </Syncfusion:GridTextColumn>
-                        <Syncfusion:GridTextColumn Width="110" HeaderText="شماره" MappingName="Number"/>
+                        <Syncfusion:GridTextColumn Width="105" HeaderText="شماره" MappingName="Number"/>
                         <Syncfusion:GridComboBoxColumn Width="100" HeaderText="نام بانک" ItemsSource="{Binding Banks}" DisplayMemberPath="Name" MappingName="FkBankNavigation"/>
-                        <Syncfusion:GridTextColumn  MinimumWidth="120" Width="120" HeaderText="نام شعبه" MappingName="BranchName"/>
-                        <Syncfusion:GridTextColumn Width="140" HeaderText="شماره صیادی" MappingName="SayadiNumber"/>
-                        <Syncfusion:GridCheckBoxColumn Width="105" HeaderText="ثبت در سامانه" MappingName="Registered"/>
+                        <Syncfusion:GridTextColumn  MinimumWidth="115" Width="110" HeaderText="نام شعبه" MappingName="BranchName"/>
+                        <Syncfusion:GridTextColumn Width="135" HeaderText="شماره صیادی" MappingName="SayadiNumber"/>
+                        <Syncfusion:GridCheckBoxColumn Width="95" HeaderText="ثبت در سامانه" MappingName="Registered"/>
                     </Syncfusion:SfDataGrid.Columns>
                 </Syncfusion:SfDataGrid>
                 <Syncfusion:SfDataPager x:Name="dataPager" Visibility="Collapsed" FlowDirection="LeftToRight" VerticalAlignment="Bottom" Margin="0 -30" HorizontalAlignment="Center" UseOnDemandPaging="True" PageIndexChanged="dataPager_PageIndexChanged"

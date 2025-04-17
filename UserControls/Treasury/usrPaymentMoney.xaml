@@ -386,8 +386,8 @@
                 <RowDefinition Height="1*" MinHeight="90"/>
                 <RowDefinition Height="25"/>
             </Grid.RowDefinitions>
-            <Border Visibility="Collapsed" Margin="0 0 -4 0" Name="morefields" Grid.Column="0" Grid.RowSpan="5" Grid.Row="1" Panel.ZIndex="10" Background="Transparent">
-                <Button Click="btnMorefields_Click" Name="btnMorefields" Margin="0 0 0 75" ToolTip="نمایش فیلدها">
+            <Border Visibility="Collapsed" Margin="0 -40 -4 55" Name="morefields" Grid.Column="0" Grid.RowSpan="5" Grid.Row="1" Panel.ZIndex="10" Background="Transparent">
+                <Button Click="btnMorefields_Click" Name="btnMorefields" Margin="0 35 0 0" ToolTip="نمایش فیلدها">
                     <TextBlock Text="►" FontSize="45" RenderTransformOrigin="0.5,0.5">
                         <TextBlock.Foreground>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">

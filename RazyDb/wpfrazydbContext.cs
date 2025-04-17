@@ -75,7 +75,7 @@ namespace WpfRaziLedgerApp
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasAnnotation("Relational:Collation", "Persian_100_CI_AS_SC_UTF8");
+            modelBuilder.HasAnnotation("Relational:Collation", "Persian_100_CI_AI_SC_UTF8");
 
             modelBuilder.Entity<AcDocumentDetail>(entity =>
             {
@@ -581,9 +581,16 @@ namespace WpfRaziLedgerApp
 
                 entity.Property(e => e.Date).HasColumnType("date");
 
+                entity.Property(e => e.FkAcDocument).HasColumnName("fkAcDocument");
+
                 entity.Property(e => e.FkMoeinId).HasColumnName("fk_MoeinId");
 
                 entity.Property(e => e.FkPreferentialId).HasColumnName("fk_PreferentialId");
+
+                entity.HasOne(d => d.FkAcDocumentNavigation)
+                    .WithMany(p => p.PaymentMoneyHeaders)
+                    .HasForeignKey(d => d.FkAcDocument)
+                    .HasConstraintName("FK_PaymentMoneyHeader_AcDocument");
 
                 entity.HasOne(d => d.FkMoein)
                     .WithMany(p => p.PaymentMoneyHeaders)
@@ -872,9 +879,16 @@ namespace WpfRaziLedgerApp
 
                 entity.Property(e => e.Date).HasColumnType("date");
 
+                entity.Property(e => e.FkAcDocument).HasColumnName("fkAcDocument");
+
                 entity.Property(e => e.FkMoeinId).HasColumnName("fk_MoeinId");
 
                 entity.Property(e => e.FkPreferentialId).HasColumnName("fk_PreferentialId");
+
+                entity.HasOne(d => d.FkAcDocumentNavigation)
+                    .WithMany(p => p.RecieveMoneyHeaders)
+                    .HasForeignKey(d => d.FkAcDocument)
+                    .HasConstraintName("FK_RecieveMoneyHeader_AcDocument");
 
                 entity.HasOne(d => d.FkMoein)
                     .WithMany(p => p.RecieveMoneyHeaders)

@@ -1748,7 +1748,7 @@ namespace WpfRaziLedgerApp
 
         private void datagrid_GotFocus(object sender, RoutedEventArgs e)
         {
-            if (SystemParameters.PrimaryScreenWidth <= 1600 && morefields.Visibility == Visibility.Collapsed)
+            if (SystemParameters.PrimaryScreenWidth <= 1500 && morefields.Visibility == Visibility.Collapsed)
             {
                 column1.Width = new GridLength(50);
                 column2.Width = new GridLength(0);

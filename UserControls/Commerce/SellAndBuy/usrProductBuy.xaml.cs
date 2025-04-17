@@ -700,7 +700,7 @@ namespace WpfRaziLedgerApp
             dataPager.Visibility = Visibility.Collapsed;
             gridDelete.Visibility = Visibility.Hidden;
             borderEdit.Visibility = Visibility.Hidden;
-            Grid.SetRowSpan(gridContainer, 7);
+            Grid.SetRowSpan(gridContainer, 6);
             gridFactor.Visibility = Visibility.Visible;
             txtSerial.Text = "";
             datagrid.BorderBrush = new System.Windows.Media.SolidColorBrush((System.Windows.Media.Color)ColorConverter.ConvertFromString("#FF808080"));
@@ -1097,7 +1097,7 @@ namespace WpfRaziLedgerApp
                     datagrid.Visibility = Visibility.Visible;
                     dataPager.Visibility = Visibility.Collapsed;
                     testsearch.Text = "جستجو...";
-                    Grid.SetRowSpan(gridContainer, 7);
+                    Grid.SetRowSpan(gridContainer, 6);
                     gridFactor.Visibility = Visibility.Visible;
                     datagrid.SearchHelper.ClearSearch();
                     SearchTermTextBox.TextChanged -= SearchTermTextBox_TextChanged;
@@ -1756,15 +1756,17 @@ namespace WpfRaziLedgerApp
             morefields.Visibility = Visibility.Collapsed;
             column1.Width = new GridLength(225);
             column2.Width = new GridLength(225);
+            Sf_Description.Visibility = Visibility.Visible;
         }
 
         private void datagrid_GotFocus(object sender, RoutedEventArgs e)
         {
-            if (SystemParameters.PrimaryScreenWidth <= 1600 && morefields.Visibility == Visibility.Collapsed)
+            if (SystemParameters.PrimaryScreenWidth <= 1500 && morefields.Visibility == Visibility.Collapsed)
             {
                 column1.Width = new GridLength(50);
                 column2.Width = new GridLength(0);
                 morefields.Visibility = Visibility.Visible;
+                Sf_Description.Visibility = Visibility.Collapsed;
             }
         }
 

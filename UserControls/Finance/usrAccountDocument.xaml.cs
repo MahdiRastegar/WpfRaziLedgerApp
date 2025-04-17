@@ -777,10 +777,16 @@ namespace WpfRaziLedgerApp
         {
             if (id == Guid.Empty)
                 return;
+            var header = datagridSearch.SelectedItem as AcDocumentHeader;
+            if (header?.FkDocumentType.Name != "عمومی")
+            {
+                Xceed.Wpf.Toolkit.MessageBox.Show("این سند سیستمی زده شده و قابل حذف نیست!");
+                return;
+            }
             if (Xceed.Wpf.Toolkit.MessageBox.Show("آیا می خواهید این اطلاعات پاک شود؟", "حذف", MessageBoxButton.YesNo, MessageBoxImage.Warning) != MessageBoxResult.Yes)
             {
                 return;
-            }
+            }            
             using var db = new wpfrazydbContext();
             foreach (var item in db.AcDocumentDetails.Where(u => u.FkAcDocHeaderId == id))
             {
@@ -1070,6 +1076,12 @@ namespace WpfRaziLedgerApp
                 {
                     if (datagridSearch.SelectedItem == null)
                         return;
+                    var header = datagridSearch.SelectedItem as AcDocumentHeader;
+                    if(header.FkDocumentType.Name!="عمومی")
+                    {
+                        Xceed.Wpf.Toolkit.MessageBox.Show("این سند سیستمی زده شده و قابل ویرایش نیست!");
+                        return;
+                    }
                     searchImage.Visibility = Visibility.Visible;
                     searchImage.Source = new BitmapImage(new Uri("pack://application:,,,/Images/Data.png"));
                     searchImage.ToolTip = "جستجو";
@@ -1083,7 +1095,6 @@ namespace WpfRaziLedgerApp
                     searchImage.Opacity = 1;
                     gridDelete.Visibility = Visibility.Collapsed;
                     AcDocumentDetails.Clear();
-                    var header = datagridSearch.SelectedItem as AcDocumentHeader;
                     id = header.Id;
                     header.AcDocumentDetails.ForEach(t => AcDocumentDetails.Add(t));
                     cmbType.SelectedItem = (cmbType.ItemsSource as List<DocumentType>).First(u => u.Id == header.FkDocumentType.Id);
@@ -1201,7 +1212,7 @@ namespace WpfRaziLedgerApp
             }
         }
 
-        bool LoadedFill = false;
+        public bool LoadedFill = false;
         private void FillHeaders()
         {
             if (!LoadedFill)
