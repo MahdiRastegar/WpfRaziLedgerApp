@@ -1254,7 +1254,34 @@ namespace WpfRaziLedgerApp
                 }
                 db.RecieveMoneyDetails.Remove(item);
             }
-            db.RecieveMoneyHeaders.Remove(db.RecieveMoneyHeaders.Find(id));
+            var recieveMoneyHeader = db.RecieveMoneyHeaders.Find(id);
+            //حذف سند حسابداری
+            if (recieveMoneyHeader.FkAcDocument is Guid acDocument)
+            {
+                foreach (var item in db.AcDocumentDetails.Where(u => u.FkAcDocHeaderId == acDocument))
+                {
+                    db.AcDocumentDetails.Remove(item);
+                }
+                db.AcDocumentHeaders.Remove(db.AcDocumentHeaders.Find(acDocument));
+                foreach (var item in MainWindow.Current.tabcontrol.Items)
+                {
+                    if (item is TabItemExt tabItemExt)
+                    {
+                        if (tabItemExt.Header.ToString() == "سند حسابداری")
+                        {
+                            if (tabItemExt.Content is usrAccountDocument usrAccountDocument)
+                            {
+                                if (usrAccountDocument.LoadedFill)
+                                {
+                                    usrAccountDocument.AcDocumentHeaders.Remove(usrAccountDocument.AcDocumentHeaders.First(y => y.Id == acDocument));
+                                }
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+            db.RecieveMoneyHeaders.Remove(recieveMoneyHeader);
             if (!db.SafeSaveChanges())  return;
             try
             {
