@@ -25,7 +25,9 @@ namespace WpfRaziLedgerApp
         public decimal? ShippingCost { get; set; }
         public string Description { get; set; }
         public decimal SumDiscount { get; set; }
+        public Guid? FkAcDocument { get; set; }
 
+        public virtual AcDocumentHeader FkAcDocumentNavigation { get; set; }
         public virtual Preferential FkPreferential { get; set; }
         public virtual ICollection<ProductBuyDetail> ProductBuyDetails { get; set; }
     }

@@ -636,8 +636,7 @@ AutoCompleteMode="Suggest" SuggestionsChanged="SfTextBoxExt_SuggestionsChanged" 
                         <Image Source="/Images/filter_8365477.png" IsHitTestVisible="False" Width="48" />
                     </Grid>
                 </Grid>
-
-                <Image Name="gifImage" Visibility="Collapsed" Width="144" Height="81" HorizontalAlignment="Right" Grid.Row="5" Grid.RowSpan="2" VerticalAlignment="Bottom" Margin="0,0,13,-65" Grid.Column="3"/>
+                
                 <Syncfusion:SfDataGrid GotFocus="datagrid_GotFocus" CurrentCellBeginEdit="datagrid_CurrentCellBeginEdit" AddNewRowInitiating="datagrid_AddNewRowInitiating" ItemsSource="{Binding ProductBuy_Details}" DataContext="{Binding  Source={StaticResource viewmodel}}" RowValidated="datagrid_RowValidated" RowValidating="datagrid_RowValidating"
                                        CurrentCellValueChanged="datagrid_CurrentCellValueChanged" Visibility="Visible" Grid.Row="1" AllowSorting="False" AddNewRowPosition="Bottom" AddNewRowText="حذف ردیف : Delete" GridValidationMode="InView"                                      
                                        SelectionChanged="datagrid_SelectionChanged" AllowDeleting="True" CurrentCellEndEdit="datagrid_CurrentCellEndEdit" PreviewKeyDown="datagrid_PreviewKeyDown" FontSize="14" RowHeight="30" ShowRowHeader="False" AllowFiltering="False" AllowEditing="True" AllowResizingColumns="True" HeaderStyle="{StaticResource headerStyle}" Margin="20 5 15 15" Name="datagrid" HeaderRowHeight="40" HorizontalAlignment="Stretch" MinHeight="80" AutoGenerateColumns="False" FlowDirection="RightToLeft">
@@ -767,6 +766,8 @@ Source="{Binding acDocument_Headers}"/>
                 </Grid>
                 <Image Name="searchImage" ToolTip="جستجو" PreviewMouseDown="searchImage_PreviewMouseDown" Visibility="Visible"  Height="55" Cursor="Hand" Source="/Images/Data.png"/>
             </DockPanel>
+            <Image Name="gifImage" Visibility="Collapsed" Width="144" Height="81" Panel.ZIndex="100" HorizontalAlignment="Right" Grid.Row="7" Grid.RowSpan="2" VerticalAlignment="Bottom" Margin="0,0,10,0" Grid.Column="4"/>
+
             <Popup Name="MyPopupS" Visibility="Collapsed" Placement="Mouse" StaysOpen="False" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="2">
                 <persianDateControls:PersianCalendar2  Name="persianCalendar" PreviewMouseRightButtonDown="persianCalendar_PreviewMouseRightButtonDown" PreviewMouseLeftButtonDown="persianCalendar_PreviewMouseLeftButtonDown" SelectedDateChanged="persianCalendar_SelectedDateChanged"
                                        DisplayDate="{Binding SelectedDate, RelativeSource={RelativeSource Self}}" Background="{x:Static SystemColors.ControlLightLightBrush}" TabIndex="1" VerticalAlignment="Top" HorizontalAlignment="Center"  Width="180" Height="165" FontFamily="B Homa"  FontSize="11.4"  />

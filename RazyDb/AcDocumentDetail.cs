@@ -13,8 +13,8 @@ namespace WpfRaziLedgerApp
         public decimal? Debtor { get; set; }
         public decimal? Creditor { get; set; }
         public Guid FkAcDocHeaderId { get; set; }
-        public Guid FkPreferentialId { get; set; }
-        public Guid FkMoeinId { get; set; }
+        public Guid? FkPreferentialId { get; set; }
+        public Guid? FkMoeinId { get; set; }
 
         public virtual AcDocumentHeader FkAcDocHeader { get; set; }
         public virtual Moein FkMoein { get; set; }

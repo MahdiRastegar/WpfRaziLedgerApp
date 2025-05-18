@@ -251,8 +251,90 @@ namespace WpfRaziLedgerApp
                 en.FkPreferential = db.Preferentials.Find(en.FkPreferentialId);
                 en.FkMoein = db.Moeins.Find(en.FkMoeinId);
             }
+            
+            //سند حسابداری
+            try
+            {
+                var documentType = db.DocumentTypes.Where(y => y.Name == "وضعیت چک").First();
+                var yx = db.AcDocumentHeaders.OrderByDescending(k => k.Serial).FirstOrDefault();
+                string serial2 = "1", NoDoument = "1";
+                if (yx != null)
+                {
+                    serial2 = (yx.Serial + 1).ToString();
+                    NoDoument = (yx.NoDoument + 1).ToString();
+                }
+                var e_addHeader2 = new AcDocumentHeader()
+                {
+                    Id = Guid.NewGuid(),
+                    Date = pcw1.SelectedDate.ToDateTime(),
+                    NoDoument = long.Parse(NoDoument),
+                    Serial = long.Parse(serial2),
+                    FkDocumentType = documentType
+                };
+                DbSet<AcDocumentDetail> details2 = null;
+                int index2 = 0;
+                foreach (CheckRecieveEvent item in datagrid.SelectedItems)
+                {                    
+                    index2++;
+                    
+                    var enx = new AcDocumentDetail()
+                    {                         
+                        FkMoeinId = mus1.Find(t => (t.AdditionalEntity as AccountSearchClass).ColMoein == txtMoein.Text).Id,
+                        FkPreferentialId = mus2.Find(t => t.Value == txtPreferential.Text).Id,
+                        FkAcDocHeader = e_addHeader2,
+                        Debtor = item.FkDetai.Price,
+                        Creditor = 0,
+                        Description = $"{cmbChangeState.Text} شماره {item.FkDetai.Number} تاریخ {item.FkDetai.Date?.Date.ToShortDateString()} {item.FkDetai.FkBankNavigation?.Name} {mus2.Find(t => t.Id == item.FkDetai.FkPreferentialId).Name} {txtDescription.Text}",
+                        Indexer = index2,
+                        //AccountName = item.AccountName,
+                        Id = Guid.NewGuid()
+                    };
+                    db.AcDocumentDetails.Add(enx);
+                }
+                foreach (CheckRecieveEvent item in datagrid.SelectedItems)
+                {
+                    index2++;
+
+                    var enx = new AcDocumentDetail()
+                    {
+                        FkMoeinId = item.FkDetai.FkMoeinId,
+                        FkPreferentialId = item.FkDetai.FkPreferentialId,
+                        FkAcDocHeader = e_addHeader2,
+                        Debtor = 0,
+                        Creditor = item.FkDetai.Price,
+                        Description = $"{cmbChangeState.Text} شماره {item.FkDetai.Number} تاریخ {item.FkDetai.Date?.Date.ToShortDateString()} {item.FkDetai.FkBankNavigation?.Name} {mus2.Find(t => t.Id == item.FkDetai.FkPreferentialId).Name} {txtDescription.Text}",
+                        Indexer = index2,
+                        //AccountName = item.AccountName,
+                        Id = Guid.NewGuid()
+                    };
+                    db.AcDocumentDetails.Add(enx);
+                }
+                db.AcDocumentHeaders.Add(e_addHeader2);
+
+                foreach (var item in MainWindow.Current.tabcontrol.Items)
+                {
+                    if (item is TabItemExt tabItemExt)
+                    {
+                        if (tabItemExt.Header.ToString() == "سند حسابداری")
+                        {
+                            if (tabItemExt.Content is usrAccountDocument usrAccountDocument)
+                            {
+                                if (usrAccountDocument.LoadedFill)
+                                    usrAccountDocument.AcDocumentHeaders.Add(e_addHeader2);
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "خطا در ایجاد سند حسابداری");
+            }
+
             foreach (CheckRecieveEvent item in x)
                 checkRecieveEvents.Remove(item);
+
             if (!db.SafeSaveChanges())  return;
             en = db.CheckRecieveEvents.Include(u => u.FkChEvent)
 .Include(d => d.FkPreferential)

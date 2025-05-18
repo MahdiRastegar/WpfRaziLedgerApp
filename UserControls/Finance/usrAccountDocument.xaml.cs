@@ -146,7 +146,7 @@ namespace WpfRaziLedgerApp
                     Name2 = item.FkGroup.GroupName
                 });
             }
-            cmbType.SelectedIndex = 0;
+            cmbType.SelectedItem = (cmbType.ItemsSource as List<DocumentType>).Where(y => y.Name == "عمومی").FirstOrDefault();
             if (temp > 0)
                 cmbType.SelectedIndex = temp;
             if (AddedMode)

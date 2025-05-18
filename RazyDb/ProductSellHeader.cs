@@ -29,7 +29,9 @@ namespace WpfRaziLedgerApp
         public Guid? FkPreferentialIdFreight { get; set; }
         public Guid? FkPreferentialIdDriver { get; set; }
         public Guid? FkPreferentialIdPersonnel { get; set; }
+        public Guid? FkAcDocument { get; set; }
 
+        public virtual AcDocumentHeader FkAcDocumentNavigation { get; set; }
         public virtual Preferential FkPreferential { get; set; }
         public virtual Preferential FkPreferentialIdDriverNavigation { get; set; }
         public virtual Preferential FkPreferentialIdFreightNavigation { get; set; }

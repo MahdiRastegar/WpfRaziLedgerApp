@@ -13,6 +13,8 @@ namespace WpfRaziLedgerApp
             CheckPaymentEvents = new HashSet<CheckPaymentEvent>();
             CheckRecieveEvents = new HashSet<CheckRecieveEvent>();
             PaymentMoneyHeaders = new HashSet<PaymentMoneyHeader>();
+            ProductBuyHeaders = new HashSet<ProductBuyHeader>();
+            ProductSellHeaders = new HashSet<ProductSellHeader>();
             RecieveMoneyHeaders = new HashSet<RecieveMoneyHeader>();
         }
 
@@ -27,6 +29,8 @@ namespace WpfRaziLedgerApp
         public virtual ICollection<CheckPaymentEvent> CheckPaymentEvents { get; set; }
         public virtual ICollection<CheckRecieveEvent> CheckRecieveEvents { get; set; }
         public virtual ICollection<PaymentMoneyHeader> PaymentMoneyHeaders { get; set; }
+        public virtual ICollection<ProductBuyHeader> ProductBuyHeaders { get; set; }
+        public virtual ICollection<ProductSellHeader> ProductSellHeaders { get; set; }
         public virtual ICollection<RecieveMoneyHeader> RecieveMoneyHeaders { get; set; }
     }
 }

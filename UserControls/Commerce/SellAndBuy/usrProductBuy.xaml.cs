@@ -7,6 +7,7 @@ using Syncfusion.UI.Xaml.Grid.Helpers;
 using Syncfusion.UI.Xaml.ScrollAxis;
 using Syncfusion.Windows.Controls.Input;
 using Syncfusion.Windows.Shared;
+using Syncfusion.Windows.Tools.Controls;
 using Syncfusion.XlsIO.Parser.Biff_Records;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
+using System.Numerics;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -255,6 +257,129 @@ namespace WpfRaziLedgerApp
                 db.ProductBuyHeaders.Add(e_addHeader);
                 if (LoadedFill)
                     ProductBuyHeaders.Add(e_addHeader);
+                //سند حسابداری
+                try
+                {
+                    var documentType = db.DocumentTypes.Where(y => y.Name == "خرید").First();
+                    var yx2 = db.AcDocumentHeaders.OrderByDescending(k => k.Serial).FirstOrDefault();
+                    string serial2 = "1", NoDoument = "1";
+                    if (yx2 != null)
+                    {
+                        serial2 = (yx2.Serial + 1).ToString();
+                        NoDoument = (yx2.NoDoument + 1).ToString();
+                    }
+                    var e_addHeader2 = new AcDocumentHeader()
+                    {
+                        Id = Guid.NewGuid(),
+                        Date = pcw1.SelectedDate.ToDateTime(),
+                        NoDoument = long.Parse(NoDoument),
+                        Serial = long.Parse(serial2),
+                        FkDocumentType = documentType
+                    };
+                    DbSet<AcDocumentDetail> details2 = null;
+                    int index2 = 0;                    
+                    var moeinHeader = db.Moeins.Include(m => m.FkCol).FirstOrDefault(f => f.MoeinName == "خرید").Id;
+                    var moeinTax = db.Moeins.Include(m => m.FkCol).FirstOrDefault(f => f.MoeinName == "مالیات برارزش افزوده").Id;
+                    var p2 = db.Preferentials.FirstOrDefault(f => f.PreferentialName == "خرید").Id;
+                    index2++;
+                    var parts = new List<string?>
+                            {
+                                e_addHeader.Date.ToShortDateString(),
+                                $"شماره فاکتور : {txtInvoiceNumber.Text}" ,
+                                $"نام تفضیلی : {e_addHeader.FkPreferential.PreferentialName}" ,
+                                e_addHeader.OrderNumber ==null ? null :
+                                    $"شماره سفارش : {e_addHeader.OrderNumber}",
+                                e_addHeader.WayBillNumber =="" ? null :
+                                    $"شماره بارنامه : {e_addHeader.WayBillNumber}",
+                                e_addHeader.CarPlate =="" ? null :
+                                    $"پلاک ماشین : {e_addHeader.CarPlate}",
+                                e_addHeader.CarType =="" ? null :
+                                    $"نوع ماشین : {e_addHeader.CarType}",                                
+                                e_addHeader.Description =="" ? null :
+                                    $"توضیحات : {e_addHeader.Description}"
+                            };
+                    var enx = new AcDocumentDetail()
+                    {
+                        FkMoeinId = moeinHeader,
+                        FkPreferentialId = p2,
+                        FkAcDocHeader = e_addHeader2,
+                        Creditor = 0,
+                        Debtor = ProductBuy_Details.Sum(y => y.SumNextDiscount),
+                        Description = string.Join(",", parts.Where(s => !string.IsNullOrWhiteSpace(s))),
+                        Indexer = index2,
+                        //AccountName = item.AccountName,
+                        Id = Guid.NewGuid()
+                    };
+                    db.AcDocumentDetails.Add(enx);
+                    if (ProductBuy_Details.Sum(y => y.Tax) > 0)
+                    {
+                        index2++;
+                        enx = new AcDocumentDetail()
+                        {
+                            FkMoeinId = moeinTax,
+                            FkPreferentialId = p2,
+                            FkAcDocHeader = e_addHeader2,
+                            Creditor = 0,
+                            Debtor = ProductBuy_Details.Sum(y => y.Tax),
+                            Description = string.Join(",", parts.Where(s => !string.IsNullOrWhiteSpace(s))),
+                            Indexer = index2,
+                            //AccountName = item.AccountName,
+                            Id = Guid.NewGuid()
+                        };
+                        db.AcDocumentDetails.Add(enx);
+                    }
+                    index2++;
+                    parts = new List<string?>
+                            {
+                                e_addHeader.Date.ToShortDateString(),
+                                $"شماره فاکتور : {txtInvoiceNumber.Text}" ,
+                                $"نام تفضیلی : {e_addHeader.FkPreferential.PreferentialName}" ,
+                                e_addHeader.OrderNumber ==null ? null :
+                                    $"شماره سفارش : {e_addHeader.OrderNumber}",
+                                e_addHeader.WayBillNumber =="" ? null :
+                                    $"شماره بارنامه : {e_addHeader.WayBillNumber}",
+                                e_addHeader.CarPlate =="" ? null :
+                                    $"پلاک ماشین : {e_addHeader.CarPlate}",
+                                e_addHeader.CarType =="" ? null :
+                                    $"نوع ماشین : {e_addHeader.CarType}",
+                                e_addHeader.Description =="" ? null :
+                                    $"توضیحات : {e_addHeader.Description}"
+                            };
+                    enx = new AcDocumentDetail()
+                    {
+                        FkMoeinId = moeinHeader,
+                        FkPreferentialId = e_addHeader.FkPreferentialId,
+                        FkAcDocHeader = e_addHeader2,
+                        Creditor = ProductBuy_Details.Sum(y => y.Sum),
+                        Debtor = 0,
+                        Description = string.Join(",", parts.Where(s => !string.IsNullOrWhiteSpace(s))),
+                        Indexer = index2,
+                        //AccountName = item.AccountName,
+                        Id = Guid.NewGuid()
+                    };
+                    db.AcDocumentDetails.Add(enx);
+                    db.AcDocumentHeaders.Add(e_addHeader2);
+                    e_addHeader.FkAcDocumentNavigation = e_addHeader2;
+                    foreach (var item in MainWindow.Current.tabcontrol.Items)
+                    {
+                        if (item is TabItemExt tabItemExt)
+                        {
+                            if (tabItemExt.Header.ToString() == "سند حسابداری")
+                            {
+                                if (tabItemExt.Content is usrAccountDocument usrAccountDocument)
+                                {
+                                    if (usrAccountDocument.LoadedFill)
+                                        usrAccountDocument.AcDocumentHeaders.Add(e_addHeader2);
+                                }
+                                break;
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "خطا در ایجاد سند حسابداری");
+                }
             }
             else
             {
@@ -303,6 +428,137 @@ namespace WpfRaziLedgerApp
                 }
                 //e_Edidet.FkGroupId = ProductBuyDetail.FkGroupId = col.Id;
                 //e_Edidet.ProductBuy_DetailName = ProductBuyDetail.ProductBuy_DetailName = txtInvoiceNumber.Text;
+
+                //ویرایش سند حسابداری
+                try
+                {
+                    if (db.AcDocumentHeaders.Find(e_Edidet.FkAcDocument) is AcDocumentHeader ac)
+                    {
+                        ac.Date = pcw1.SelectedDate.ToDateTime();
+                        int index2 = 0;
+                        foreach (var item in db.AcDocumentDetails.Where(u => u.FkAcDocHeaderId == ac.Id))
+                        {
+                            db.AcDocumentDetails.Remove(item);
+                        }
+                        var list2 = new List<AcDocumentDetail>();
+                        var moeinHeader = db.Moeins.Include(m => m.FkCol).FirstOrDefault(f => f.MoeinName == "خرید").Id;
+                        var moeinTax = db.Moeins.Include(m => m.FkCol).FirstOrDefault(f => f.MoeinName == "مالیات برارزش افزوده").Id;
+                        var p2 = db.Preferentials.FirstOrDefault(f => f.PreferentialName == "خرید").Id;
+                        index2++;
+                        var parts = new List<string?>
+                            {
+                                e_Edidet.Date.ToShortDateString(),
+                                $"شماره فاکتور : {txtInvoiceNumber.Text}" ,
+                                $"نام تفضیلی : {e_Edidet.FkPreferential.PreferentialName}" ,
+                                e_Edidet.OrderNumber ==null ? null :
+                                    $"شماره سفارش : {e_Edidet.OrderNumber}",
+                                e_Edidet.WayBillNumber =="" ? null :
+                                    $"شماره بارنامه : {e_Edidet.WayBillNumber}",
+                                e_Edidet.CarPlate =="" ? null :
+                                    $"پلاک ماشین : {e_Edidet.CarPlate}",
+                                e_Edidet.CarType =="" ? null :
+                                    $"نوع ماشین : {e_Edidet.CarType}",
+                                e_Edidet.Description =="" ? null :
+                                    $"توضیحات : {e_Edidet.Description}"
+                            };
+                        var enx = new AcDocumentDetail()
+                        {
+                            FkMoeinId = moeinHeader,
+                            FkPreferentialId = p2,
+                            FkAcDocHeader = ac,
+                            Creditor = 0,
+                            Debtor = ProductBuy_Details.Sum(y => y.SumNextDiscount),
+                            Description = string.Join(",", parts.Where(s => !string.IsNullOrWhiteSpace(s))),
+                            Indexer = index2,
+                            //AccountName = item.AccountName,
+                            Id = Guid.NewGuid()
+                        };
+                        db.AcDocumentDetails.Add(enx);
+                        list2.Add(enx);
+                        if (ProductBuy_Details.Sum(y => y.Tax) > 0)
+                        {
+                            index2++;
+                            enx = new AcDocumentDetail()
+                            {
+                                FkMoeinId = moeinTax,
+                                FkPreferentialId = p2,
+                                FkAcDocHeader = ac,
+                                Creditor = 0,
+                                Debtor = ProductBuy_Details.Sum(y => y.Tax),
+                                Description = string.Join(",", parts.Where(s => !string.IsNullOrWhiteSpace(s))),
+                                Indexer = index2,
+                                //AccountName = item.AccountName,
+                                Id = Guid.NewGuid()
+                            };
+                            db.AcDocumentDetails.Add(enx);
+                            list2.Add(enx);
+                        }
+                        index2++;
+                        parts = new List<string?>
+                            {
+                                e_Edidet.Date.ToShortDateString(),
+                                $"شماره فاکتور : {txtInvoiceNumber.Text}" ,
+                                $"نام تفضیلی : {e_Edidet.FkPreferential.PreferentialName}" ,
+                                e_Edidet.OrderNumber ==null ? null :
+                                    $"شماره سفارش : {e_Edidet.OrderNumber}",
+                                e_Edidet.WayBillNumber =="" ? null :
+                                    $"شماره بارنامه : {e_Edidet.WayBillNumber}",
+                                e_Edidet.CarPlate =="" ? null :
+                                    $"پلاک ماشین : {e_Edidet.CarPlate}",
+                                e_Edidet.CarType =="" ? null :
+                                    $"نوع ماشین : {e_Edidet.CarType}",
+                                e_Edidet.Description =="" ? null :
+                                    $"توضیحات : {e_Edidet.Description}"
+                            };
+                        enx = new AcDocumentDetail()
+                        {
+                            FkMoeinId = moeinHeader,
+                            FkPreferentialId = e_Edidet.FkPreferentialId,
+                            FkAcDocHeader = ac,
+                            Creditor = ProductBuy_Details.Sum(y => y.Sum),
+                            Debtor = 0,
+                            Description = string.Join(",", parts.Where(s => !string.IsNullOrWhiteSpace(s))),
+                            Indexer = index2,
+                            //AccountName = item.AccountName,
+                            Id = Guid.NewGuid()
+                        };
+                        db.AcDocumentDetails.Add(enx);
+                        list2.Add(enx);
+                        foreach (var item in MainWindow.Current.tabcontrol.Items)
+                        {
+                            if (item is TabItemExt tabItemExt)
+                            {
+                                if (tabItemExt.Header.ToString() == "سند حسابداری")
+                                {
+                                    if (tabItemExt.Content is usrAccountDocument usrAccountDocument)
+                                    {
+                                        if (usrAccountDocument.LoadedFill)
+                                        {
+                                            var r = usrAccountDocument.AcDocumentHeaders.FirstOrDefault(a => a.Id == ac.Id);
+                                            if (r != null)
+                                            {
+                                                //var kk = usrAccountDocument.AcDocumentHeaders.IndexOf(r);
+                                                r.Date = ac.Date;
+                                                r.Serial = ac.Serial;
+                                                r.NoDoument = ac.NoDoument;
+                                                r.RefreshSumColumns();
+                                                r.AcDocumentDetails = list2;
+                                                usrAccountDocument.datagridSearch.View.Refresh();
+                                                //usrAccountDocument.AcDocumentHeaders.Remove(r);
+                                                //usrAccountDocument.AcDocumentHeaders.Insert(kk, r);
+                                            }
+                                        }
+                                    }
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "خطا در ویرایش سند حسابداری");
+                }
             }
             if (!db.SafeSaveChanges()) return;
             if (header != null)
@@ -755,7 +1011,34 @@ namespace WpfRaziLedgerApp
             {
                 db.ProductBuyDetails.Remove(item);
             }
-            db.ProductBuyHeaders.Remove(db.ProductBuyHeaders.Find(id));
+            var productBuyHeader = db.ProductBuyHeaders.Find(id);
+            //حذف سند حسابداری
+            if (productBuyHeader.FkAcDocument is Guid acDocument)
+            {
+                foreach (var item in db.AcDocumentDetails.Where(u => u.FkAcDocHeaderId == acDocument))
+                {
+                    db.AcDocumentDetails.Remove(item);
+                }
+                db.AcDocumentHeaders.Remove(db.AcDocumentHeaders.Find(acDocument));
+                foreach (var item in MainWindow.Current.tabcontrol.Items)
+                {
+                    if (item is TabItemExt tabItemExt)
+                    {
+                        if (tabItemExt.Header.ToString() == "سند حسابداری")
+                        {
+                            if (tabItemExt.Content is usrAccountDocument usrAccountDocument)
+                            {
+                                if (usrAccountDocument.LoadedFill)
+                                {
+                                    usrAccountDocument.AcDocumentHeaders.Remove(usrAccountDocument.AcDocumentHeaders.First(y => y.Id == acDocument));
+                                }
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+            db.ProductBuyHeaders.Remove(productBuyHeader);
             if (!db.SafeSaveChanges()) return;
             try
             {

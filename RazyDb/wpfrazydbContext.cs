@@ -75,7 +75,7 @@ namespace WpfRaziLedgerApp
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasAnnotation("Relational:Collation", "Persian_100_CI_AI_SC_UTF8");
+            modelBuilder.HasAnnotation("Relational:Collation", "Arabic_CI_AS");
 
             modelBuilder.Entity<AcDocumentDetail>(entity =>
             {
@@ -102,13 +102,11 @@ namespace WpfRaziLedgerApp
                 entity.HasOne(d => d.FkMoein)
                     .WithMany(p => p.AcDocumentDetails)
                     .HasForeignKey(d => d.FkMoeinId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_AcDocument_Detail_Moein");
 
                 entity.HasOne(d => d.FkPreferential)
                     .WithMany(p => p.AcDocumentDetails)
                     .HasForeignKey(d => d.FkPreferentialId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_AcDocument_Detail_Preferential");
             });
 
@@ -723,6 +721,8 @@ namespace WpfRaziLedgerApp
 
                 entity.Property(e => e.Date).HasColumnType("date");
 
+                entity.Property(e => e.FkAcDocument).HasColumnName("fkAcDocument");
+
                 entity.Property(e => e.FkPreferentialId).HasColumnName("fk_PreferentialId");
 
                 entity.Property(e => e.InvoiceDiscount).HasColumnType("decimal(18, 0)");
@@ -730,6 +730,11 @@ namespace WpfRaziLedgerApp
                 entity.Property(e => e.ShippingCost).HasColumnType("decimal(18, 0)");
 
                 entity.Property(e => e.SumDiscount).HasColumnType("decimal(18, 0)");
+
+                entity.HasOne(d => d.FkAcDocumentNavigation)
+                    .WithMany(p => p.ProductBuyHeaders)
+                    .HasForeignKey(d => d.FkAcDocument)
+                    .HasConstraintName("FK_ProductBuyHeader_AcDocument");
 
                 entity.HasOne(d => d.FkPreferential)
                     .WithMany(p => p.ProductBuyHeaders)
@@ -777,6 +782,8 @@ namespace WpfRaziLedgerApp
 
                 entity.Property(e => e.Date).HasColumnType("date");
 
+                entity.Property(e => e.FkAcDocument).HasColumnName("fkAcDocument");
+
                 entity.Property(e => e.FkPreferentialId).HasColumnName("fk_PreferentialId");
 
                 entity.Property(e => e.FkPreferentialIdDriver).HasColumnName("fk_PreferentialId_driver");
@@ -792,6 +799,11 @@ namespace WpfRaziLedgerApp
                 entity.Property(e => e.ShippingCost).HasColumnType("decimal(18, 0)");
 
                 entity.Property(e => e.SumDiscount).HasColumnType("decimal(18, 0)");
+
+                entity.HasOne(d => d.FkAcDocumentNavigation)
+                    .WithMany(p => p.ProductSellHeaders)
+                    .HasForeignKey(d => d.FkAcDocument)
+                    .HasConstraintName("FK_ProductSellHeader_AcDocument");
 
                 entity.HasOne(d => d.FkPreferential)
                     .WithMany(p => p.ProductSellHeaderFkPreferentials)
