@@ -651,8 +651,8 @@ FontFamily="{StaticResource IranSans}" Width="27"
                         <Syncfusion:GridTextColumn Width="120" HeaderText="تاریخ سررسید چک" MappingName="DateString">
                         </Syncfusion:GridTextColumn>
                         <Syncfusion:GridTextColumn Width="110" HeaderText="شماره" MappingName="Number"/>
-                        <Syncfusion:GridComboBoxColumn Width="100" IsHidden="True" HeaderText="نام بانک" ItemsSource="{Binding Banks}" DisplayMemberPath="Name" MappingName="FkBankNavigation"/>
-                        <Syncfusion:GridTextColumn  MinimumWidth="120" IsHidden="True" Width="120" HeaderText="نام شعبه" MappingName="BranchName"/>
+                        <!--<Syncfusion:GridComboBoxColumn Width="100" IsHidden="True" HeaderText="نام بانک" ItemsSource="{Binding Banks}" DisplayMemberPath="Name" MappingName="FkBankNavigation"/>-->
+                        <!--<Syncfusion:GridTextColumn  MinimumWidth="120" IsHidden="True" Width="120" HeaderText="نام شعبه" MappingName="BranchName"/>-->
                         <Syncfusion:GridTextColumn Width="140" HeaderText="شماره صیادی" MappingName="SayadiNumber"/>
                         <Syncfusion:GridCheckBoxColumn Width="105" HeaderText="ثبت در سامانه" MappingName="Registered"/>
                     </Syncfusion:SfDataGrid.Columns>

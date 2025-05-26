@@ -244,6 +244,7 @@ namespace WpfRaziLedgerApp
                 var yb = db.RecieveMoneyHeaders.OrderByDescending(k => k.ReceiptNumber).FirstOrDefault();
                 serial = (xy.ReceiptNumber + 1).ToString();
             }
+            List<Thread> threads = new List<Thread>();
             if (id == Guid.Empty)
             {
                 e_addHeader = new RecieveMoneyHeader()
@@ -324,7 +325,7 @@ namespace WpfRaziLedgerApp
                                 $"شماره رسید : {serial}" ,
                                 $"نام حساب : {e_addHeader.FkPreferential.PreferentialName}" ,
                                 item.GetMoneyType.Split('-')[1],
-                                item.Date?.Date.ToShortDateString(),
+                                item.Date?.ToPersianDateString(),
                                 item.Number == ""||item.Number==null ? null :
                                     $"شماره : {item.Number}",
                                 item.FkBankNavigation?.Name,
@@ -346,6 +347,11 @@ namespace WpfRaziLedgerApp
                             //AccountName = item.AccountName,
                             Id = Guid.NewGuid()
                         };
+                        threads.Add( new Thread(() =>
+                        {
+                            en.FkMoein = item.FkMoein;
+                            en.FkPreferential = item.FkPreferential;
+                        }));
                         db.AcDocumentDetails.Add(en);
                     }
                     foreach (var item in recieveMoney_Details)
@@ -355,7 +361,7 @@ namespace WpfRaziLedgerApp
                             {
                                 $"شماره رسید : {serial}" ,
                                 item.GetMoneyType.Split('-')[1],
-                                item.Date?.Date.ToShortDateString(),
+                                item.Date?.ToPersianDateString(),
                                 item.Number == ""||item.Number==null ? null :
                                     $"شماره : {item.Number}",
                                 item.FkBankNavigation?.Name,
@@ -503,7 +509,7 @@ namespace WpfRaziLedgerApp
                                 $"شماره رسید : {serial}" ,
                                 $"نام حساب : {e_Edidet.FkPreferential.PreferentialName}" ,
                                 item.GetMoneyType.Split('-')[1],
-                                item.Date?.Date.ToShortDateString(),
+                                item.Date?.ToPersianDateString(),
                                 item.Number == ""||item.Number==null ? null :
                                     $"شماره : {item.Number}",
                                 item.FkBankNavigation?.Name,
@@ -525,6 +531,11 @@ namespace WpfRaziLedgerApp
                                 //AccountName = item.AccountName,
                                 Id = Guid.NewGuid()
                             };
+                            threads.Add( new Thread(() =>
+                            {
+                                en.FkMoein = item.FkMoein;
+                                en.FkPreferential = item.FkPreferential;
+                            }));
                             db.AcDocumentDetails.Add(en);
                             list.Add(en);
                         }
@@ -535,7 +546,7 @@ namespace WpfRaziLedgerApp
                             {
                                 $"شماره رسید : {serial}" ,
                                 item.GetMoneyType.Split('-')[1],
-                                item.Date?.Date.ToShortDateString(),
+                                item.Date?.ToPersianDateString(),
                                 item.Number == ""||item.Number==null ? null :
                                     $"شماره : {item.Number}",
                                 item.FkBankNavigation?.Name,
@@ -601,7 +612,7 @@ namespace WpfRaziLedgerApp
                 }            
             }
             if (!db.SafeSaveChanges())
-            {                        
+            {                                        
                 RefreshHeader();
                 recieveMoney_Details.Clear();
                 header.RecieveMoneyDetails.ToList().ForEach(t => recieveMoney_Details.Add(t));
@@ -615,6 +626,10 @@ namespace WpfRaziLedgerApp
                 }), DispatcherPriority.Render);
                 return;
             }
+            //ادامه سند حسابداری
+            foreach (var item in threads)
+                item.Start();
+
             if (header != null)
             {
                 int i = 0;

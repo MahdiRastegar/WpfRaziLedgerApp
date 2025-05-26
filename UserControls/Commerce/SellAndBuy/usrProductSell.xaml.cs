@@ -241,6 +241,8 @@ namespace WpfRaziLedgerApp
                         PreferentialCode = z.PreferentialCode
                     })
                     .ToList();
+
+            List<Thread> threads = new List<Thread>();
             if (id == Guid.Empty)
             {
                 e_addHeader = new ProductSellHeader()
@@ -334,11 +336,11 @@ namespace WpfRaziLedgerApp
                     };
                     DbSet<AcDocumentDetail> details2 = null;
                     int index2 = 0;
-                    var moeinHeader = db.Moeins.Include(m => m.FkCol).FirstOrDefault(f=>f.MoeinName == "فروش").Id;
+                    var moeinHeader = db.Moeins.Include(m => m.FkCol).FirstOrDefault(f=>f.MoeinName == "فروش");
                     index2++;
                     var parts = new List<string?>
                             {
-                                e_addHeader.Date.ToShortDateString(),
+                                e_addHeader.Date.ToPersianDateString(),
                                 $"شماره فاکتور : {txtInvoiceNumber.Text}" ,
                                 $"نام تفضیلی : {e_addHeader.FkPreferential.PreferentialName}" ,
                                 e_addHeader.OrderNumber ==null ? null :
@@ -362,7 +364,7 @@ namespace WpfRaziLedgerApp
                             };
                     var enx = new AcDocumentDetail()
                     {
-                        FkMoeinId = moeinHeader,
+                        FkMoeinId = moeinHeader.Id,
                         FkPreferentialId = e_addHeader.FkPreferentialId,
                         FkAcDocHeader = e_addHeader2,
                         Debtor = ProductSell_Details.Sum(y => y.Sum),
@@ -372,13 +374,18 @@ namespace WpfRaziLedgerApp
                         //AccountName = item.AccountName,
                         Id = Guid.NewGuid()
                     };
+                    threads.Add(new Thread(() =>
+                    {
+                        enx.FkMoein = moeinHeader;
+                        enx.FkPreferential = e_addHeader.FkPreferential;
+                    }));
                     db.AcDocumentDetails.Add(enx);
-                    var moeinTax = db.Moeins.Include(m => m.FkCol).FirstOrDefault(f => f.MoeinName == "مالیات برارزش افزوده").Id;
-                    var p2 = db.Preferentials.FirstOrDefault(f => f.PreferentialName == "فروش").Id;
+                    var moeinTax = db.Moeins.Include(m => m.FkCol).FirstOrDefault(f => f.MoeinName == "مالیات برارزش افزوده");
+                    var p2 = db.Preferentials.FirstOrDefault(f => f.PreferentialName == "فروش");
                     index2++;
                     parts = new List<string?>
                             {
-                                e_addHeader.Date.ToShortDateString(),
+                                e_addHeader.Date.ToPersianDateString(),
                                 $"شماره فاکتور : {txtInvoiceNumber.Text}" ,
                                 $"نام تفضیلی : {e_addHeader.FkPreferential.PreferentialName}" ,
                                 e_addHeader.OrderNumber ==null ? null :
@@ -402,8 +409,8 @@ namespace WpfRaziLedgerApp
                             };
                     enx = new AcDocumentDetail()
                     {
-                        FkMoeinId = moeinHeader,
-                        FkPreferentialId = p2,
+                        FkMoeinId = moeinHeader.Id,
+                        FkPreferentialId = p2.Id,
                         FkAcDocHeader = e_addHeader2,
                         Debtor = 0,
                         Creditor = ProductSell_Details.Sum(y => y.SumNextDiscount),
@@ -412,14 +419,19 @@ namespace WpfRaziLedgerApp
                         //AccountName = item.AccountName,
                         Id = Guid.NewGuid()
                     };
+                    threads.Add(new Thread(() =>
+                    {
+                        enx.FkMoein = moeinHeader;
+                        enx.FkPreferential = p2;
+                    }));
                     db.AcDocumentDetails.Add(enx);
                     if (ProductSell_Details.Sum(y => y.Tax) > 0)
                     {
                         index2++;
                         enx = new AcDocumentDetail()
                         {
-                            FkMoeinId = moeinTax,
-                            FkPreferentialId = p2,
+                            FkMoeinId = moeinTax.Id,
+                            FkPreferentialId = p2.Id,
                             FkAcDocHeader = e_addHeader2,
                             Debtor = 0,
                             Creditor = ProductSell_Details.Sum(y => y.Tax),
@@ -428,6 +440,11 @@ namespace WpfRaziLedgerApp
                             //AccountName = item.AccountName,
                             Id = Guid.NewGuid()
                         };
+                        threads.Add(new Thread(() =>
+                        {
+                            enx.FkMoein = moeinTax;
+                            enx.FkPreferential = p2;
+                        }));
                         db.AcDocumentDetails.Add(enx);
                     }
                     db.AcDocumentHeaders.Add(e_addHeader2);
@@ -544,11 +561,11 @@ namespace WpfRaziLedgerApp
                             db.AcDocumentDetails.Remove(item);
                         }
                         var list2 = new List<AcDocumentDetail>();
-                        var moeinHeader = db.Moeins.Include(m => m.FkCol).FirstOrDefault(f => f.MoeinName == "فروش").Id;
+                        var moeinHeader = db.Moeins.Include(m => m.FkCol).FirstOrDefault(f => f.MoeinName == "فروش");
                         index2++;
                         var parts = new List<string?>
                             {
-                                e_Edidet.Date.ToShortDateString(),
+                                e_Edidet.Date.ToPersianDateString(),
                                 $"شماره فاکتور : {txtInvoiceNumber.Text}" ,
                                 $"نام تفضیلی : {e_Edidet.FkPreferential.PreferentialName}" ,
                                 e_Edidet.OrderNumber ==null ? null :
@@ -572,7 +589,7 @@ namespace WpfRaziLedgerApp
                             };
                         var enx = new AcDocumentDetail()
                         {
-                            FkMoeinId = moeinHeader,
+                            FkMoeinId = moeinHeader.Id,
                             FkPreferentialId = e_Edidet.FkPreferentialId,
                             FkAcDocHeader = ac,
                             Debtor = ProductSell_Details.Sum(y => y.Sum),
@@ -582,14 +599,19 @@ namespace WpfRaziLedgerApp
                             //AccountName = item.AccountName,
                             Id = Guid.NewGuid()
                         };
+                        threads.Add(new Thread(() =>
+                        {
+                            enx.FkMoein = moeinHeader;
+                            enx.FkPreferential = e_Edidet.FkPreferential;
+                        }));
                         db.AcDocumentDetails.Add(enx);
                         list2.Add(enx);
-                        var moeinTax = db.Moeins.Include(m => m.FkCol).FirstOrDefault(f => f.MoeinName == "مالیات برارزش افزوده").Id;
-                        var p2 = db.Preferentials.FirstOrDefault(f => f.PreferentialName == "فروش").Id;
+                        var moeinTax = db.Moeins.Include(m => m.FkCol).FirstOrDefault(f => f.MoeinName == "مالیات برارزش افزوده");
+                        var p2 = db.Preferentials.FirstOrDefault(f => f.PreferentialName == "فروش");
                         index2++;
                         parts = new List<string?>
                             {
-                                e_Edidet.Date.ToShortDateString(),
+                                e_Edidet.Date.ToPersianDateString(),
                                 $"شماره فاکتور : {txtInvoiceNumber.Text}" ,
                                 $"نام تفضیلی : {e_Edidet.FkPreferential.PreferentialName}" ,
                                 e_Edidet.OrderNumber ==null ? null :
@@ -613,8 +635,8 @@ namespace WpfRaziLedgerApp
                             };
                         enx = new AcDocumentDetail()
                         {
-                            FkMoeinId = moeinHeader,
-                            FkPreferentialId = p2,
+                            FkMoeinId = moeinHeader.Id,
+                            FkPreferentialId = p2.Id,
                             FkAcDocHeader = ac,
                             Debtor = 0,
                             Creditor = ProductSell_Details.Sum(y => y.SumNextDiscount),
@@ -623,6 +645,11 @@ namespace WpfRaziLedgerApp
                             //AccountName = item.AccountName,
                             Id = Guid.NewGuid()
                         };
+                        threads.Add(new Thread(() =>
+                        {
+                            enx.FkMoein = moeinHeader;
+                            enx.FkPreferential = p2;
+                        }));
                         db.AcDocumentDetails.Add(enx);
                         list2.Add(enx);
                         if (ProductSell_Details.Sum(y => y.Tax) > 0)
@@ -630,8 +657,8 @@ namespace WpfRaziLedgerApp
                             index2++;
                             enx = new AcDocumentDetail()
                             {
-                                FkMoeinId = moeinTax,
-                                FkPreferentialId = p2,
+                                FkMoeinId = moeinTax.Id,
+                                FkPreferentialId = p2.Id,
                                 FkAcDocHeader = ac,
                                 Debtor = 0,
                                 Creditor = ProductSell_Details.Sum(y => y.Tax),
@@ -640,6 +667,11 @@ namespace WpfRaziLedgerApp
                                 //AccountName = item.AccountName,
                                 Id = Guid.NewGuid()
                             };
+                            threads.Add(new Thread(() =>
+                            {
+                                enx.FkMoein = moeinTax;
+                                enx.FkPreferential = p2;
+                            }));
                             db.AcDocumentDetails.Add(enx);
                             list2.Add(enx);
                         }
@@ -681,6 +713,9 @@ namespace WpfRaziLedgerApp
             }
             list.Clear();
             if (!db.SafeSaveChanges())  return;
+            //ادامه سند حسابداری
+            foreach (var item in threads)
+                item.Start();
             if (header != null)
             {
                 int i = 0;

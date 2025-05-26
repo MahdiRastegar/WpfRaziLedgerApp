@@ -243,6 +243,7 @@ namespace WpfRaziLedgerApp
                 var yb = db.PaymentMoneyHeaders.OrderByDescending(k => k.ReceiptNumber).FirstOrDefault();
                 serial = (xy.ReceiptNumber + 1).ToString();
             }
+            List<Thread> threads = new List<Thread>();
             if (id == Guid.Empty)
             {
                 e_addHeader = new PaymentMoneyHeader()
@@ -322,7 +323,7 @@ namespace WpfRaziLedgerApp
                             {
                                 $"شماره رسید : {serial}" ,
                                 item.GetMoneyType.Split('-')[1],
-                                item.Date?.Date.ToShortDateString(),
+                                item.Date?.ToPersianDateString(),
                                 item.Number == ""||item.Number==null ? null :
                                     $"شماره : {item.Number}",
                                 item.FkBankNavigation?.Name,
@@ -354,7 +355,7 @@ namespace WpfRaziLedgerApp
                                 $"شماره رسید : {serial}" ,
                                 $"نام حساب : {e_addHeader.FkPreferential.PreferentialName}" ,
                                 item.GetMoneyType.Split('-')[1],
-                                item.Date?.Date.ToShortDateString(),
+                                item.Date?.ToPersianDateString(),
                                 item.Number == ""||item.Number==null ? null :
                                     $"شماره : {item.Number}",
                                 item.FkBankNavigation?.Name,
@@ -376,6 +377,11 @@ namespace WpfRaziLedgerApp
                             //AccountName = item.AccountName,
                             Id = Guid.NewGuid()
                         };
+                        threads.Add( new Thread(() =>
+                        {
+                            en.FkMoein = item.FkMoein;
+                            en.FkPreferential = item.FkPreferential;
+                        }));
                         db.AcDocumentDetails.Add(en);
                     }
                     db.AcDocumentHeaders.Add(e_addHeader2);
@@ -502,7 +508,7 @@ namespace WpfRaziLedgerApp
                             {
                                 $"شماره رسید : {serial}" ,
                                 item.GetMoneyType.Split('-')[1],
-                                item.Date?.Date.ToShortDateString(),
+                                item.Date?.ToPersianDateString(),
                                 item.Number == ""||item.Number==null ? null :
                                     $"شماره : {item.Number}",
                                 item.FkBankNavigation?.Name,
@@ -535,7 +541,7 @@ namespace WpfRaziLedgerApp
                                 $"شماره رسید : {serial}" ,
                                 $"نام حساب : {e_Edidet.FkPreferential.PreferentialName}" ,
                                 item.GetMoneyType.Split('-')[1],
-                                item.Date?.Date.ToShortDateString(),
+                                item.Date?.ToPersianDateString(),
                                 item.Number == ""||item.Number==null ? null :
                                     $"شماره : {item.Number}",
                                 item.FkBankNavigation?.Name,
@@ -557,6 +563,11 @@ namespace WpfRaziLedgerApp
                                 //AccountName = item.AccountName,
                                 Id = Guid.NewGuid()
                             };
+                            threads.Add( new Thread(() =>
+                            {
+                                en.FkMoein = item.FkMoein;
+                                en.FkPreferential = item.FkPreferential;
+                            }));
                             db.AcDocumentDetails.Add(en);
                             list.Add(en);
                         }
@@ -616,6 +627,9 @@ namespace WpfRaziLedgerApp
                 }), DispatcherPriority.Render);
                 return;
             }
+            //ادامه سند حسابداری
+            foreach (var item in threads)
+                item.Start();
             if (header != null)
             {
                 int i = 0;

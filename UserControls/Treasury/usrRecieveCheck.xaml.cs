@@ -251,7 +251,7 @@ namespace WpfRaziLedgerApp
                 en.FkPreferential = db.Preferentials.Find(en.FkPreferentialId);
                 en.FkMoein = db.Moeins.Find(en.FkMoeinId);
             }
-            
+
             //سند حسابداری
             try
             {
@@ -273,41 +273,85 @@ namespace WpfRaziLedgerApp
                 };
                 DbSet<AcDocumentDetail> details2 = null;
                 int index2 = 0;
-                foreach (CheckRecieveEvent item in datagrid.SelectedItems)
-                {                    
-                    index2++;
-                    
-                    var enx = new AcDocumentDetail()
-                    {                         
-                        FkMoeinId = mus1.Find(t => (t.AdditionalEntity as AccountSearchClass).ColMoein == txtMoein.Text).Id,
-                        FkPreferentialId = mus2.Find(t => t.Value == txtPreferential.Text).Id,
-                        FkAcDocHeader = e_addHeader2,
-                        Debtor = item.FkDetai.Price,
-                        Creditor = 0,
-                        Description = $"{cmbChangeState.Text} شماره {item.FkDetai.Number} تاریخ {item.FkDetai.Date?.Date.ToShortDateString()} {item.FkDetai.FkBankNavigation?.Name} {mus2.Find(t => t.Id == item.FkDetai.FkPreferentialId).Name} {txtDescription.Text}",
-                        Indexer = index2,
-                        //AccountName = item.AccountName,
-                        Id = Guid.NewGuid()
-                    };
-                    db.AcDocumentDetails.Add(enx);
-                }
-                foreach (CheckRecieveEvent item in datagrid.SelectedItems)
+                if (cmbChangeState.SelectedIndex == 0)
                 {
-                    index2++;
-
-                    var enx = new AcDocumentDetail()
+                    foreach (CheckRecieveEvent item in datagrid.SelectedItems)
                     {
-                        FkMoeinId = item.FkDetai.FkMoeinId,
-                        FkPreferentialId = item.FkDetai.FkPreferentialId,
-                        FkAcDocHeader = e_addHeader2,
-                        Debtor = 0,
-                        Creditor = item.FkDetai.Price,
-                        Description = $"{cmbChangeState.Text} شماره {item.FkDetai.Number} تاریخ {item.FkDetai.Date?.Date.ToShortDateString()} {item.FkDetai.FkBankNavigation?.Name} {mus2.Find(t => t.Id == item.FkDetai.FkPreferentialId).Name} {txtDescription.Text}",
-                        Indexer = index2,
-                        //AccountName = item.AccountName,
-                        Id = Guid.NewGuid()
-                    };
-                    db.AcDocumentDetails.Add(enx);
+                        index2++;
+
+                        var enx = new AcDocumentDetail()
+                        {
+                            FkMoeinId = item.FkDetai.FkMoeinId,
+                            FkPreferentialId = item.FkDetai.FkPreferentialId,
+                            FkAcDocHeader = e_addHeader2,
+                            Creditor = 0,
+                            Debtor = item.FkDetai.Price,
+                            Description = $"{cmbChangeState.Text.Replace("نشده","نشدن").Replace("شده","شدن").Replace("واگذاری","واگذار شدن")} چک شماره {item.FkDetai.Number} تاریخ {item.FkDetai.Date?.ToPersianDateString()} بانک {item.FkDetai.FkBankNavigation?.Name} ،{mus2.Find(t => t.Id == item.FkDetai.FkPreferentialId).Name} {txtDescription.Text}",
+                            Indexer = index2,
+                            //AccountName = item.AccountName,
+                            Id = Guid.NewGuid()
+                        };
+                        db.AcDocumentDetails.Add(enx);
+                    }
+                    foreach (CheckRecieveEvent item in datagrid.SelectedItems)
+                    {
+                        index2++;
+
+                        var enx = new AcDocumentDetail()
+                        {                            
+                            FkAcDocHeader = e_addHeader2,
+                            Creditor = item.FkDetai.Price,
+                            Debtor = 0,
+                            Description = $"{cmbChangeState.Text.Replace("نشده", "نشدن").Replace("شده", "شدن").Replace("واگذاری", "واگذار شدن")} چک شماره {item.FkDetai.Number} تاریخ {item.FkDetai.Date?.ToPersianDateString()} بانک {item.FkDetai.FkBankNavigation?.Name} ،{mus2.Find(t => t.Id == item.FkDetai.FkPreferentialId).Name} {txtDescription.Text}",
+                            Indexer = index2,
+                            //AccountName = item.AccountName,
+                            Id = Guid.NewGuid()
+                        };
+                        if (txtMoein.Text != "")
+                            enx.FkMoeinId = mus1.Find(t => (t.AdditionalEntity as AccountSearchClass).ColMoein == txtMoein.Text).Id;
+                        if (txtPreferential.Text != "")
+                            enx.FkPreferentialId = mus2.Find(t => t.Value == txtPreferential.Text).Id;
+                        db.AcDocumentDetails.Add(enx);
+                    }
+                }
+                else
+                {
+                    foreach (CheckRecieveEvent item in datagrid.SelectedItems)
+                    {
+                        index2++;
+
+                        var enx = new AcDocumentDetail()
+                        {
+                            FkMoeinId = mus1.Find(t => (t.AdditionalEntity as AccountSearchClass).ColMoein == txtMoein.Text).Id,
+                            FkPreferentialId = mus2.Find(t => t.Value == txtPreferential.Text).Id,
+                            FkAcDocHeader = e_addHeader2,
+                            Debtor = item.FkDetai.Price,
+                            Creditor = 0,
+                            Description = $"{cmbChangeState.Text.Replace("نشده", "نشدن").Replace("شده", "شدن").Replace("واگذاری", "واگذار شدن")} چک شماره {item.FkDetai.Number} تاریخ {item.FkDetai.Date?.ToPersianDateString()} بانک {item.FkDetai.FkBankNavigation?.Name} ،{mus2.Find(t => t.Id == item.FkDetai.FkPreferentialId).Name} {txtDescription.Text}",
+                            Indexer = index2,
+                            //AccountName = item.AccountName,
+                            Id = Guid.NewGuid()
+                        };
+                        db.AcDocumentDetails.Add(enx);
+                    }
+                    foreach (CheckRecieveEvent item in datagrid.SelectedItems)
+                    {
+                        index2++;
+
+                        var enx = new AcDocumentDetail()
+                        {
+                            FkMoeinId = item.FkDetai.FkMoeinId,
+                            FkPreferentialId = item.FkDetai.FkPreferentialId,
+                            FkAcDocHeader = e_addHeader2,
+                            Debtor = 0,
+                            Creditor = item.FkDetai.Price,
+                            Description = $"{cmbChangeState.Text.Replace("نشده", "نشدن").Replace("شده", "شدن").Replace("واگذاری", "واگذار شدن")} چک شماره {item.FkDetai.Number} تاریخ {item.FkDetai.Date?.ToPersianDateString()} بانک {item.FkDetai.FkBankNavigation?.Name} ،{mus2.Find(t => t.Id == item.FkDetai.FkPreferentialId).Name} {txtDescription.Text}",
+                            Indexer = index2,
+                            //AccountName = item.AccountName,
+                            Id = Guid.NewGuid()
+                        };
+                        db.AcDocumentDetails.Add(enx);
+                    }
                 }
                 db.AcDocumentHeaders.Add(e_addHeader2);
 
