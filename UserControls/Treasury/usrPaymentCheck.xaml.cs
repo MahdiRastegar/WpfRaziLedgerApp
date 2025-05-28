@@ -177,6 +177,7 @@ namespace WpfRaziLedgerApp
             using var db=new wpfrazydbContext();
             var x = new List<CheckPaymentEvent>();
             CheckPaymentEvent en = null;
+            List<Thread> threads = new List<Thread>();
             foreach (CheckPaymentEvent item in datagrid.SelectedItems)
             {
                 en = new CheckPaymentEvent()
@@ -248,6 +249,7 @@ namespace WpfRaziLedgerApp
 
                         var enx = new AcDocumentDetail()
                         {
+                            FkPreferentialId = item.FkDetai.FkPreferentialId,
                             FkAcDocHeader = e_addHeader2,
                             Creditor = 0,
                             Debtor = item.FkDetai.Price,
@@ -256,10 +258,14 @@ namespace WpfRaziLedgerApp
                             //AccountName = item.AccountName,
                             Id = Guid.NewGuid()
                         };
-                        if (txtMoein.Text != null && txtMoein.Text != "")
+                        threads.Add(new Thread(() =>
                         {
-                            enx.FkMoeinId = mus1.Find(t => (t.AdditionalEntity as AccountSearchClass).ColMoein == txtMoein.Text).Id;
-                        }
+                            enx.FkPreferential = item.FkDetai.FkPreferential;
+                        }));
+                        //if (txtMoein.Text != null && txtMoein.Text != "")
+                        //{
+                        //    enx.FkMoeinId = mus1.Find(t => (t.AdditionalEntity as AccountSearchClass).ColMoein == txtMoein.Text).Id;
+                        //}
                         db.AcDocumentDetails.Add(enx);
                     }
                     foreach (CheckPaymentEvent item in datagrid.SelectedItems)
@@ -269,7 +275,6 @@ namespace WpfRaziLedgerApp
                         var enx = new AcDocumentDetail()
                         {
                             FkMoeinId = item.FkDetai.FkMoeinId,
-                            FkPreferentialId = item.FkDetai.FkPreferentialId,
                             FkAcDocHeader = e_addHeader2,
                             Creditor = item.FkDetai.Price,
                             Debtor = 0,
@@ -278,6 +283,10 @@ namespace WpfRaziLedgerApp
                             //AccountName = item.AccountName,
                             Id = Guid.NewGuid()
                         };
+                        threads.Add(new Thread(() =>
+                        {
+                            enx.FkMoein = item.FkDetai.FkMoein;
+                        }));
                         db.AcDocumentDetails.Add(enx);
                     }
                 }
@@ -290,7 +299,7 @@ namespace WpfRaziLedgerApp
                         var enx = new AcDocumentDetail()
                         {
                             FkMoeinId = item.FkDetai.FkMoeinId,
-                            FkPreferentialId = item.FkDetai.FkPreferentialId,
+                            //FkPreferentialId = item.FkDetai.FkPreferentialId,
                             FkAcDocHeader = e_addHeader2,
                             Debtor = item.FkDetai.Price,
                             Creditor = 0,
@@ -299,27 +308,68 @@ namespace WpfRaziLedgerApp
                             //AccountName = item.AccountName,
                             Id = Guid.NewGuid()
                         };
+                        threads.Add(new Thread(() =>
+                        {
+                            enx.FkMoein = item.FkDetai.FkMoein;
+                        }));
                         db.AcDocumentDetails.Add(enx);
                     }
-                    foreach (CheckPaymentEvent item in datagrid.SelectedItems)
+                    if (cmbChangeState.SelectedIndex == 0)
                     {
-                        index2++;
+                        var moein = db.Moeins.FirstOrDefault(f => f.MoeinName == "حسابهای پرداختنی تجاری");
+                        foreach (CheckPaymentEvent item in datagrid.SelectedItems)
+                        {
+                            index2++;
 
-                        var enx = new AcDocumentDetail()
-                        {
-                            FkAcDocHeader = e_addHeader2,
-                            Debtor = 0,
-                            Creditor = item.FkDetai.Price,
-                            Description = $"{cmbChangeState.Text.Replace("نشده", "نشدن").Replace("شده", "شدن")} چک شماره {item.FkDetai.Number} تاریخ {item.FkDetai.Date?.ToPersianDateString()} ، {mus2.Find(t => t.Id == item.FkDetai.FkPreferentialId).Name} {txtDescription.Text}",
-                            Indexer = index2,
-                            //AccountName = item.AccountName,
-                            Id = Guid.NewGuid()
-                        };
-                        if (txtMoein.Text != null && txtMoein.Text != "")
-                        {
-                            enx.FkMoeinId = mus1.Find(t => (t.AdditionalEntity as AccountSearchClass).ColMoein == txtMoein.Text).Id;
+                            var enx = new AcDocumentDetail()
+                            {
+                                FkAcDocHeader = e_addHeader2,
+                                FkMoeinId = moein.Id,
+                                Debtor = 0,
+                                Creditor = item.FkDetai.Price,
+                                Description = $"{cmbChangeState.Text.Replace("عودتی", "عودت")} چک شماره {item.FkDetai.Number} تاریخ {item.FkDetai.Date?.ToPersianDateString()} ، {mus2.Find(t => t.Id == item.FkDetai.FkPreferentialId).Name} {txtDescription.Text}",
+                                Indexer = index2,
+                                //AccountName = item.AccountName,
+                                Id = Guid.NewGuid()
+                            };
+                            //if (txtMoein.Text != null && txtMoein.Text != "")
+                            //{
+                            //    enx.FkMoeinId = mus1.Find(t => (t.AdditionalEntity as AccountSearchClass).ColMoein == txtMoein.Text).Id;
+                            //}
+                            db.AcDocumentDetails.Add(enx);
+                            threads.Add(new Thread(() =>
+                            {
+                                enx.FkMoein = moein;
+                            }));
                         }
-                        db.AcDocumentDetails.Add(enx);
+                    }
+                    else
+                    {
+                        foreach (CheckPaymentEvent item in datagrid.SelectedItems)
+                        {
+                            index2++;
+
+                            var enx = new AcDocumentDetail()
+                            {
+                                FkAcDocHeader = e_addHeader2,
+                                FkPreferentialId = item.FkDetai.FkPreferentialId,
+                                Debtor = 0,
+                                Creditor = item.FkDetai.Price,
+                                Description = $"{cmbChangeState.Text.Replace("نشده", "نشدن").Replace("شده", "شدن")} چک شماره {item.FkDetai.Number} تاریخ {item.FkDetai.Date?.ToPersianDateString()} ، {mus2.Find(t => t.Id == item.FkDetai.FkPreferentialId).Name} {txtDescription.Text}",
+                                Indexer = index2,
+                                //AccountName = item.AccountName,
+                                Id = Guid.NewGuid()
+                            };
+                            //if (txtMoein.Text != null && txtMoein.Text != "")
+                            //{
+                            //    enx.FkMoeinId = mus1.Find(t => (t.AdditionalEntity as AccountSearchClass).ColMoein == txtMoein.Text).Id;
+                            //}
+                            db.AcDocumentDetails.Add(enx);
+                            threads.Add(new Thread(() =>
+                            {
+                                enx.FkPreferential = item.FkDetai.FkPreferential;
+                            }));
+                        }
                     }
                 }
                 db.AcDocumentHeaders.Add(e_addHeader2);
@@ -348,6 +398,9 @@ namespace WpfRaziLedgerApp
             foreach (CheckPaymentEvent item in x)
                 checkPaymentEvents.Remove(item);
             if (!db.SafeSaveChanges())  return;
+            //ادامه سند حسابداری
+            foreach (var item in threads)
+                item.Start();
             en = db.CheckPaymentEvents.Include(u => u.FkChEvent)
 .Include(d => d.FkPreferential)
 .Include(d => d.FkMoein)

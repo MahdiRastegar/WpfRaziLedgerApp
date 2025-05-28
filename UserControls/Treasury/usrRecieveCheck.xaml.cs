@@ -173,6 +173,7 @@ namespace WpfRaziLedgerApp
             using var db=new wpfrazydbContext();
             var x = new List<CheckRecieveEvent>();
             CheckRecieveEvent en = null;
+            List<Thread> threads = new List<Thread>();
             foreach (CheckRecieveEvent item in datagrid.SelectedItems)
             {
                 en = new CheckRecieveEvent()
@@ -279,10 +280,10 @@ namespace WpfRaziLedgerApp
                     {
                         index2++;
 
+                        var preferential = db.Preferentials.Find(item.FkDetai.FkPreferentialId);
                         var enx = new AcDocumentDetail()
                         {
-                            FkMoeinId = item.FkDetai.FkMoeinId,
-                            FkPreferentialId = item.FkDetai.FkPreferentialId,
+                            FkPreferentialId = preferential.Id,
                             FkAcDocHeader = e_addHeader2,
                             Creditor = 0,
                             Debtor = item.FkDetai.Price,
@@ -292,13 +293,19 @@ namespace WpfRaziLedgerApp
                             Id = Guid.NewGuid()
                         };
                         db.AcDocumentDetails.Add(enx);
+                        threads.Add(new Thread(() =>
+                        {
+                            enx.FkPreferential = preferential;
+                        }));
                     }
                     foreach (CheckRecieveEvent item in datagrid.SelectedItems)
                     {
                         index2++;
 
+                        var moein = db.Moeins.Find(item.FkDetai.FkMoeinId);
                         var enx = new AcDocumentDetail()
                         {                            
+                            FkMoeinId = moein.Id,
                             FkAcDocHeader = e_addHeader2,
                             Creditor = item.FkDetai.Price,
                             Debtor = 0,
@@ -307,11 +314,15 @@ namespace WpfRaziLedgerApp
                             //AccountName = item.AccountName,
                             Id = Guid.NewGuid()
                         };
-                        if (txtMoein.Text != "")
-                            enx.FkMoeinId = mus1.Find(t => (t.AdditionalEntity as AccountSearchClass).ColMoein == txtMoein.Text).Id;
-                        if (txtPreferential.Text != "")
-                            enx.FkPreferentialId = mus2.Find(t => t.Value == txtPreferential.Text).Id;
+                        //if (txtMoein.Text != "")
+                        //    enx.FkMoeinId = mus1.Find(t => (t.AdditionalEntity as AccountSearchClass).ColMoein == txtMoein.Text).Id;
+                        //if (txtPreferential.Text != "")
+                        //    enx.FkPreferentialId = mus2.Find(t => t.Value == txtPreferential.Text).Id;
                         db.AcDocumentDetails.Add(enx);
+                        threads.Add(new Thread(() =>
+                        {
+                            enx.FkMoein = moein;
+                        }));
                     }
                 }
                 else
@@ -333,15 +344,24 @@ namespace WpfRaziLedgerApp
                             Id = Guid.NewGuid()
                         };
                         db.AcDocumentDetails.Add(enx);
+                        threads.Add(new Thread(() =>
+                        {
+                            var moein = db.Moeins.Find(enx.FkMoeinId);
+                            var preferential = db.Preferentials.Find(enx.FkPreferentialId);
+                            enx.FkPreferential = preferential;
+                            enx.FkMoein = moein;
+                        }));
                     }
                     foreach (CheckRecieveEvent item in datagrid.SelectedItems)
                     {
                         index2++;
 
+                        var moein = db.Moeins.Find(item.FkDetai.FkMoeinId);
+                        var preferential = db.Preferentials.Find(item.FkDetai.FkPreferentialId);
                         var enx = new AcDocumentDetail()
                         {
-                            FkMoeinId = item.FkDetai.FkMoeinId,
-                            FkPreferentialId = item.FkDetai.FkPreferentialId,
+                            FkMoeinId = moein.Id,
+                            FkPreferentialId = preferential.Id,
                             FkAcDocHeader = e_addHeader2,
                             Debtor = 0,
                             Creditor = item.FkDetai.Price,
@@ -351,6 +371,11 @@ namespace WpfRaziLedgerApp
                             Id = Guid.NewGuid()
                         };
                         db.AcDocumentDetails.Add(enx);
+                        threads.Add(new Thread(() =>
+                        {
+                            enx.FkPreferential = preferential;
+                            enx.FkMoein = moein;
+                        }));
                     }
                 }
                 db.AcDocumentHeaders.Add(e_addHeader2);
@@ -380,6 +405,9 @@ namespace WpfRaziLedgerApp
                 checkRecieveEvents.Remove(item);
 
             if (!db.SafeSaveChanges())  return;
+            //ادامه سند حسابداری
+            foreach (var item in threads)
+                item.Start();
             en = db.CheckRecieveEvents.Include(u => u.FkChEvent)
 .Include(d => d.FkPreferential)
 .Include(d => d.FkMoein)

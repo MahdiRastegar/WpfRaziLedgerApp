@@ -15,12 +15,16 @@ namespace WpfRaziLedgerApp
         { 
             get
             {
-                if (FkPreferential == null || FkMoein == null)
+                if (FkPreferential == null && FkMoein == null)
                 {
                     _Name = null;
                     return _Name;
                 }
-                _Name = $"{FkPreferential.PreferentialName}-{FkMoein.MoeinName}";
+                _Name = $"{FkPreferential?.PreferentialName}-{FkMoein?.MoeinName}";
+                if(_Name.StartsWith("-"))
+                    _Name = _Name.Substring(1);
+                if(_Name.EndsWith("-"))
+                    _Name=_Name.Substring(0, _Name.Length - 2);
                 return _Name;
             }
             set { _Name = value; }

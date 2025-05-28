@@ -336,7 +336,7 @@ namespace WpfRaziLedgerApp
                     };
                     DbSet<AcDocumentDetail> details2 = null;
                     int index2 = 0;
-                    var moeinHeader = db.Moeins.Include(m => m.FkCol).FirstOrDefault(f=>f.MoeinName == "فروش");
+                    var moeinHeader = db.Moeins.Include(m => m.FkCol).FirstOrDefault(f=>f.MoeinName == "حسابهای دریافتنی تجاری");
                     index2++;
                     var parts = new List<string?>
                             {
@@ -367,7 +367,7 @@ namespace WpfRaziLedgerApp
                         FkMoeinId = moeinHeader.Id,
                         FkPreferentialId = e_addHeader.FkPreferentialId,
                         FkAcDocHeader = e_addHeader2,
-                        Debtor = ProductSell_Details.Sum(y => y.Sum),
+                        Debtor = ProductSell_Details.Sum(y => y.Sum-y.Discount),
                         Creditor = 0,
                         Description = string.Join(",", parts.Where(s => !string.IsNullOrWhiteSpace(s))),
                         Indexer = index2,
@@ -380,8 +380,34 @@ namespace WpfRaziLedgerApp
                         enx.FkPreferential = e_addHeader.FkPreferential;
                     }));
                     db.AcDocumentDetails.Add(enx);
-                    var moeinTax = db.Moeins.Include(m => m.FkCol).FirstOrDefault(f => f.MoeinName == "مالیات برارزش افزوده");
+                    if (ProductSell_Details.Sum(y => y.Discount) > 0)
+                    {
+                        index2++;
+                        var moeinD = db.Moeins.Include(m => m.FkCol).FirstOrDefault(f => f.MoeinName == "تخفیفات فروش");
+                        var pD = db.Preferentials.FirstOrDefault(f => f.PreferentialName == "تخفیفات فروش");
+                        enx = new AcDocumentDetail()
+                        {
+                            FkMoeinId = moeinD.Id,
+                            FkPreferentialId = pD.Id,
+                            FkAcDocHeader = e_addHeader2,
+                            Creditor = 0,
+                            Debtor = ProductSell_Details.Sum(y => y.Discount),
+                            Description = string.Join(",", parts.Where(s => !string.IsNullOrWhiteSpace(s))),
+                            Indexer = index2,
+                            //AccountName = item.AccountName,
+                            Id = Guid.NewGuid()
+                        };
+                        threads.Add(new Thread(() =>
+                        {
+                            enx.FkMoein = moeinD;
+                            enx.FkPreferential = pD;
+                        }));
+                        db.AcDocumentDetails.Add(enx);
+                    }
+                    var moeinTax = db.Moeins.Include(m => m.FkCol).FirstOrDefault(f => f.MoeinName == "مالیات برارزش افزوده" || f.MoeinName == "مالیات بر ارزش افزوده");
+                    var moeinHeader2 = db.Moeins.Include(m => m.FkCol).FirstOrDefault(f=>f.MoeinName == "فروش");
                     var p2 = db.Preferentials.FirstOrDefault(f => f.PreferentialName == "فروش");
+                    var pT = db.Preferentials.FirstOrDefault(f => f.PreferentialName == "مالیات برارزش افزوده فروش"|| f.PreferentialName == "مالیات بر ارزش افزوده فروش");
                     index2++;
                     parts = new List<string?>
                             {
@@ -409,7 +435,7 @@ namespace WpfRaziLedgerApp
                             };
                     enx = new AcDocumentDetail()
                     {
-                        FkMoeinId = moeinHeader.Id,
+                        FkMoeinId = moeinHeader2.Id,
                         FkPreferentialId = p2.Id,
                         FkAcDocHeader = e_addHeader2,
                         Debtor = 0,
@@ -421,7 +447,7 @@ namespace WpfRaziLedgerApp
                     };
                     threads.Add(new Thread(() =>
                     {
-                        enx.FkMoein = moeinHeader;
+                        enx.FkMoein = moeinHeader2;
                         enx.FkPreferential = p2;
                     }));
                     db.AcDocumentDetails.Add(enx);
@@ -431,7 +457,7 @@ namespace WpfRaziLedgerApp
                         enx = new AcDocumentDetail()
                         {
                             FkMoeinId = moeinTax.Id,
-                            FkPreferentialId = p2.Id,
+                            FkPreferentialId = pT.Id,
                             FkAcDocHeader = e_addHeader2,
                             Debtor = 0,
                             Creditor = ProductSell_Details.Sum(y => y.Tax),
@@ -443,7 +469,7 @@ namespace WpfRaziLedgerApp
                         threads.Add(new Thread(() =>
                         {
                             enx.FkMoein = moeinTax;
-                            enx.FkPreferential = p2;
+                            enx.FkPreferential = pT;
                         }));
                         db.AcDocumentDetails.Add(enx);
                     }
@@ -561,7 +587,7 @@ namespace WpfRaziLedgerApp
                             db.AcDocumentDetails.Remove(item);
                         }
                         var list2 = new List<AcDocumentDetail>();
-                        var moeinHeader = db.Moeins.Include(m => m.FkCol).FirstOrDefault(f => f.MoeinName == "فروش");
+                        var moeinHeader = db.Moeins.Include(m => m.FkCol).FirstOrDefault(f => f.MoeinName == "حسابهای دریافتنی تجاری");
                         index2++;
                         var parts = new List<string?>
                             {
@@ -592,7 +618,7 @@ namespace WpfRaziLedgerApp
                             FkMoeinId = moeinHeader.Id,
                             FkPreferentialId = e_Edidet.FkPreferentialId,
                             FkAcDocHeader = ac,
-                            Debtor = ProductSell_Details.Sum(y => y.Sum),
+                            Debtor = ProductSell_Details.Sum(y => y.Sum - y.Discount),
                             Creditor = 0,
                             Description = string.Join(",", parts.Where(s => !string.IsNullOrWhiteSpace(s))),
                             Indexer = index2,
@@ -606,8 +632,35 @@ namespace WpfRaziLedgerApp
                         }));
                         db.AcDocumentDetails.Add(enx);
                         list2.Add(enx);
-                        var moeinTax = db.Moeins.Include(m => m.FkCol).FirstOrDefault(f => f.MoeinName == "مالیات برارزش افزوده");
+                        if (ProductSell_Details.Sum(y => y.Discount) > 0)
+                        {
+                            index2++;
+                            var moeinD = db.Moeins.Include(m => m.FkCol).FirstOrDefault(f => f.MoeinName == "تخفیفات فروش");
+                            var pD = db.Preferentials.FirstOrDefault(f => f.PreferentialName == "تخفیفات فروش");
+                            enx = new AcDocumentDetail()
+                            {
+                                FkMoeinId = moeinD.Id,
+                                FkPreferentialId = pD.Id,
+                                FkAcDocHeader = ac,
+                                Creditor = 0,
+                                Debtor = ProductSell_Details.Sum(y => y.Discount),
+                                Description = string.Join(",", parts.Where(s => !string.IsNullOrWhiteSpace(s))),
+                                Indexer = index2,
+                                //AccountName = item.AccountName,
+                                Id = Guid.NewGuid()
+                            };
+                            threads.Add(new Thread(() =>
+                            {
+                                enx.FkMoein = moeinD;
+                                enx.FkPreferential = pD;
+                            }));
+                            db.AcDocumentDetails.Add(enx);
+                            list2.Add(enx);
+                        }
+                        var moeinTax = db.Moeins.Include(m => m.FkCol).FirstOrDefault(f => f.MoeinName == "مالیات برارزش افزوده" || f.MoeinName == "مالیات بر ارزش افزوده");
+                        var moeinHeader2 = db.Moeins.Include(m => m.FkCol).FirstOrDefault(f => f.MoeinName == "فروش");
                         var p2 = db.Preferentials.FirstOrDefault(f => f.PreferentialName == "فروش");
+                        var pT = db.Preferentials.FirstOrDefault(f => f.PreferentialName == "مالیات برارزش افزوده فروش"|| f.PreferentialName == "مالیات بر ارزش افزوده فروش");
                         index2++;
                         parts = new List<string?>
                             {
@@ -635,7 +688,7 @@ namespace WpfRaziLedgerApp
                             };
                         enx = new AcDocumentDetail()
                         {
-                            FkMoeinId = moeinHeader.Id,
+                            FkMoeinId = moeinHeader2.Id,
                             FkPreferentialId = p2.Id,
                             FkAcDocHeader = ac,
                             Debtor = 0,
@@ -647,7 +700,7 @@ namespace WpfRaziLedgerApp
                         };
                         threads.Add(new Thread(() =>
                         {
-                            enx.FkMoein = moeinHeader;
+                            enx.FkMoein = moeinHeader2;
                             enx.FkPreferential = p2;
                         }));
                         db.AcDocumentDetails.Add(enx);
@@ -658,7 +711,7 @@ namespace WpfRaziLedgerApp
                             enx = new AcDocumentDetail()
                             {
                                 FkMoeinId = moeinTax.Id,
-                                FkPreferentialId = p2.Id,
+                                FkPreferentialId = pT.Id,
                                 FkAcDocHeader = ac,
                                 Debtor = 0,
                                 Creditor = ProductSell_Details.Sum(y => y.Tax),
@@ -670,7 +723,7 @@ namespace WpfRaziLedgerApp
                             threads.Add(new Thread(() =>
                             {
                                 enx.FkMoein = moeinTax;
-                                enx.FkPreferential = p2;
+                                enx.FkPreferential = pT;
                             }));
                             db.AcDocumentDetails.Add(enx);
                             list2.Add(enx);
