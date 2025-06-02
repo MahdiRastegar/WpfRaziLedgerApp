@@ -170,7 +170,7 @@ namespace WpfRaziLedgerApp
 
             if (haserror)
                 return;
-            using var db=new wpfrazydbContext();
+            using var db = new wpfrazydbContext();
             var x = new List<CheckRecieveEvent>();
             CheckRecieveEvent en = null;
             List<Thread> threads = new List<Thread>();
@@ -180,7 +180,7 @@ namespace WpfRaziLedgerApp
                 {
                     FkChEvent = db.ChEvents.First(t => t.ChEventCode == cmbChangeState.SelectedIndex),
                     FkAcId = item.FkAc?.Id,
-                    EventDate = pcw1.SelectedDate.ToDateTime(),                    
+                    EventDate = pcw1.SelectedDate.ToDateTime(),
                     FkDetaiId = item.FkDetaiId,
                     Description = txtDescription.Text,
                     Id = Guid.NewGuid()
@@ -238,7 +238,7 @@ namespace WpfRaziLedgerApp
                         {
                             en.FkPreferentialId = checkRecieve_Not.FkPreferentialId;
                             en.FkMoeinId = checkRecieve_Not.FkMoeinId;
-                        }                        
+                        }
                         else
                         {
                             en.FkPreferentialId = item.FkPreferentialId;
@@ -291,7 +291,7 @@ namespace WpfRaziLedgerApp
                             FkAcDocHeader = e_addHeader2,
                             Creditor = 0,
                             Debtor = item.FkDetai.Price,
-                            Description = $"{cmbChangeState.Text.Replace("نشده","نشدن").Replace("شده","شدن").Replace("واگذاری","واگذار شدن")} چک شماره {item.FkDetai.Number} تاریخ {item.FkDetai.Date?.ToPersianDateString()} بانک {item.FkDetai.FkBankNavigation?.Name} ،{mus2.Find(t => t.Id == item.FkDetai.FkPreferentialId).Name} {txtDescription.Text}",
+                            Description = $"{cmbChangeState.Text.Replace("نشده", "نشدن").Replace("شده", "شدن").Replace("واگذاری", "واگذار شدن")} چک شماره {item.FkDetai.Number} تاریخ {item.FkDetai.Date?.ToPersianDateString()} بانک {item.FkDetai.FkBankNavigation?.Name} ،{mus2.Find(t => t.Id == item.FkDetai.FkPreferentialId).Name} {txtDescription.Text}",
                             Indexer = index2,
                             //AccountName = item.AccountName,
                             Id = Guid.NewGuid()
@@ -310,7 +310,7 @@ namespace WpfRaziLedgerApp
                         db.Entry(moein).Reference(m => m.FkCol).Load();
 
                         var enx = new AcDocumentDetail()
-                        {                            
+                        {
                             FkMoeinId = moein.Id,
                             FkAcDocHeader = e_addHeader2,
                             Creditor = item.FkDetai.Price,
@@ -342,7 +342,7 @@ namespace WpfRaziLedgerApp
                             FkAcDocHeader = e_addHeader2,
                             Debtor = item.FkDetai.Price,
                             Creditor = 0,
-                            Description = $"{cmbChangeState.Text.Replace("نشده", "نشدن").Replace("شده", "شدن").Replace("واگذاری", "واگذار شدن").Replace("برگشتی","برگشت").Replace("عودتی","عودت")} چک شماره {item.FkDetai.Number} تاریخ {item.FkDetai.Date?.ToPersianDateString()} بانک {item.FkDetai.FkBankNavigation?.Name} ،{mus2.Find(t => t.Id == item.FkDetai.FkPreferentialId).Name} {txtDescription.Text}",
+                            Description = $"{cmbChangeState.Text.Replace("نشده", "نشدن").Replace("شده", "شدن").Replace("واگذاری", "واگذار شدن").Replace("برگشتی", "برگشت").Replace("عودتی", "عودت")} چک شماره {item.FkDetai.Number} تاریخ {item.FkDetai.Date?.ToPersianDateString()} بانک {item.FkDetai.FkBankNavigation?.Name} ،{mus2.Find(t => t.Id == item.FkDetai.FkPreferentialId).Name} {txtDescription.Text}",
                             Indexer = index2,
                             //AccountName = item.AccountName,
                             Id = Guid.NewGuid()
@@ -357,23 +357,23 @@ namespace WpfRaziLedgerApp
                                 enx.FkPreferentialId = item.FkDetai.FkPreferentialId;
                             }
                         }
-                        else if(control.SelectedItem.ToString().Contains("برگشتی"))
+                        else if (control.SelectedItem.ToString().Contains("برگشتی"))
                         {
-                            if(cmbChangeState.SelectedIndex == 5)
+                            if (cmbChangeState.SelectedIndex == 5)
                             {
                                 enx.FkMoeinId = db.Moeins.FirstOrDefault(q => q.MoeinName == "حسابهای دریافتنی تجاری").Id;
                             }
                         }
                         else if (control.SelectedItem.ToString().Contains("خرج شده"))
                         {
-                            enx.FkMoeinId = item.FkDetai.FkMoeinId;                                                    
+                            enx.FkMoeinId = item.FkDetai.FkMoeinId;
                         }
                         else
                         {
-                            if (control.SelectedItem.ToString().Contains("وصول شده") && cmbChangeState.SelectedIndex == 1&& txtPreferential.Text=="")
+                            if (control.SelectedItem.ToString().Contains("وصول شده") && cmbChangeState.SelectedIndex == 1 && txtPreferential.Text == "")
                             {
                                 enx.FkPreferentialId = item.FkDetai.FkHeader.FkPreferentialId;
-                            }                            
+                            }
                         }
                         if (enx.FkMoeinId == null && txtMoein.Text != "")
                             enx.FkMoeinId = mus1.Find(t => (t.AdditionalEntity as AccountSearchClass).ColMoein == txtMoein.Text).Id;
@@ -405,7 +405,7 @@ namespace WpfRaziLedgerApp
                             FkAcDocHeader = e_addHeader2,
                             Debtor = 0,
                             Creditor = item.FkDetai.Price,
-                            Description = $"{cmbChangeState.Text.Replace("نشده", "نشدن").Replace("شده", "شدن").Replace("واگذاری", "واگذار شدن").Replace("برگشتی","برگشت").Replace("عودتی","عودت")} چک شماره {item.FkDetai.Number} تاریخ {item.FkDetai.Date?.ToPersianDateString()} بانک {item.FkDetai.FkBankNavigation?.Name} ،{mus2.Find(t => t.Id == item.FkDetai.FkPreferentialId).Name} {txtDescription.Text}",
+                            Description = $"{cmbChangeState.Text.Replace("نشده", "نشدن").Replace("شده", "شدن").Replace("واگذاری", "واگذار شدن").Replace("برگشتی", "برگشت").Replace("عودتی", "عودت")} چک شماره {item.FkDetai.Number} تاریخ {item.FkDetai.Date?.ToPersianDateString()} بانک {item.FkDetai.FkBankNavigation?.Name} ،{mus2.Find(t => t.Id == item.FkDetai.FkPreferentialId).Name} {txtDescription.Text}",
                             Indexer = index2,
                             //AccountName = item.AccountName,
                             Id = Guid.NewGuid()
@@ -476,10 +476,13 @@ namespace WpfRaziLedgerApp
             foreach (CheckRecieveEvent item in x)
                 checkRecieveEvents.Remove(item);
 
-            if (!db.SafeSaveChanges())  return;
+            if (!db.SafeSaveChanges()) return;
             //ادامه سند حسابداری
             foreach (var item in threads)
+            {
                 item.Start();
+                item.Join();
+            }
             Thread.Sleep(50);
             en = db.CheckRecieveEvents.Include(u => u.FkChEvent)
 .Include(d => d.FkPreferential)

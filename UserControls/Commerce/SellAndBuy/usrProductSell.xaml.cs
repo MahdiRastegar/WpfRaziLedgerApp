@@ -768,7 +768,10 @@ namespace WpfRaziLedgerApp
             if (!db.SafeSaveChanges())  return;
             //ادامه سند حسابداری
             foreach (var item in threads)
+            {
                 item.Start();
+                item.Join();
+            }
             if (header != null)
             {
                 int i = 0;

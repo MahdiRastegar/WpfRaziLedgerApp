@@ -449,7 +449,10 @@ namespace WpfRaziLedgerApp
             if (!db.SafeSaveChanges())  return;
             //ادامه سند حسابداری
             foreach (var item in threads)
+            {
                 item.Start();
+                item.Join();
+            }
             Thread.Sleep(50);
             en = db.CheckPaymentEvents.Include(u => u.FkChEvent)
 .Include(d => d.FkPreferential)
