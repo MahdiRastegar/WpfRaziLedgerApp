@@ -281,7 +281,7 @@ namespace WpfRaziLedgerApp
                     int index2 = 0;                    
                     var moeinHeader = db.Moeins.Include(m => m.FkCol).FirstOrDefault(f => f.MoeinName == "حسابهای پرداختنی تجاری");
                     var moeinHeader2 = db.Moeins.Include(m => m.FkCol).FirstOrDefault(f => f.MoeinName == "خرید");
-                    var moeinTax = db.Moeins.Include(m => m.FkCol).FirstOrDefault(f => f.MoeinName == "مالیات برارزش افزوده" || f.MoeinName == "مالیات بر ارزش افزوده");
+                    var moeinTax = db.Moeins.Include(m => m.FkCol).FirstOrDefault(f => (f.MoeinName == "مالیات برارزش افزوده" || f.MoeinName == "مالیات بر ارزش افزوده") && f.FkCol.ColName == "سایر حسابها و اسناد دریافتنی");
                     var p2 = db.Preferentials.FirstOrDefault(f => f.PreferentialName == "خرید");
                     var pT = db.Preferentials.FirstOrDefault(f => f.PreferentialName == "مالیات برارزش افزوده خرید"|| f.PreferentialName == "مالیات بر ارزش افزوده خرید");
                     index2++;
@@ -307,7 +307,7 @@ namespace WpfRaziLedgerApp
                         FkPreferentialId = p2.Id,
                         FkAcDocHeader = e_addHeader2,
                         Creditor = 0,
-                        Debtor = ProductBuy_Details.Sum(y => y.SumNextDiscount),
+                        Debtor = ProductBuy_Details.Sum(y => y.Value * y.Fee),
                         Description = string.Join(",", parts.Where(s => !string.IsNullOrWhiteSpace(s))),
                         Indexer = index2,
                         //AccountName = item.AccountName,
@@ -363,7 +363,7 @@ namespace WpfRaziLedgerApp
                         FkMoeinId = moeinHeader.Id,
                         FkPreferentialId = e_addHeader.FkPreferentialId,
                         FkAcDocHeader = e_addHeader2,
-                        Creditor = ProductBuy_Details.Sum(y => y.Sum-y.Discount),
+                        Creditor = ProductBuy_Details.Sum(y => y.Sum),
                         Debtor = 0,
                         Description = string.Join(",", parts.Where(s => !string.IsNullOrWhiteSpace(s))),
                         Indexer = index2,
@@ -485,8 +485,9 @@ namespace WpfRaziLedgerApp
                         var list2 = new List<AcDocumentDetail>();
                         var moeinHeader2 = db.Moeins.Include(m => m.FkCol).FirstOrDefault(f => f.MoeinName == "حسابهای پرداختنی تجاری");
                         var moeinHeader = db.Moeins.Include(m => m.FkCol).FirstOrDefault(f => f.MoeinName == "خرید");
-                        var moeinTax = db.Moeins.Include(m => m.FkCol).FirstOrDefault(f => f.MoeinName == "مالیات برارزش افزوده" || f.MoeinName == "مالیات بر ارزش افزوده");
+                        var moeinTax = db.Moeins.Include(m => m.FkCol).FirstOrDefault(f => (f.MoeinName == "مالیات برارزش افزوده" || f.MoeinName == "مالیات بر ارزش افزوده") && f.FkCol.ColName == "سایر حسابها و اسناد دریافتنی");
                         var p2 = db.Preferentials.FirstOrDefault(f => f.PreferentialName == "خرید");
+                        var pT = db.Preferentials.FirstOrDefault(f => f.PreferentialName == "مالیات برارزش افزوده خرید" || f.PreferentialName == "مالیات بر ارزش افزوده خرید");
                         index2++;
                         var parts = new List<string?>
                             {
@@ -510,7 +511,7 @@ namespace WpfRaziLedgerApp
                             FkPreferentialId = p2.Id,
                             FkAcDocHeader = ac,
                             Creditor = 0,
-                            Debtor = ProductBuy_Details.Sum(y => y.SumNextDiscount),
+                            Debtor = ProductBuy_Details.Sum(y => y.Value * y.Fee),
                             Description = string.Join(",", parts.Where(s => !string.IsNullOrWhiteSpace(s))),
                             Indexer = index2,
                             //AccountName = item.AccountName,
@@ -529,7 +530,7 @@ namespace WpfRaziLedgerApp
                             enx = new AcDocumentDetail()
                             {
                                 FkMoeinId = moeinTax.Id,
-                                FkPreferentialId = p2.Id,
+                                FkPreferentialId = pT.Id,
                                 FkAcDocHeader = ac,
                                 Creditor = 0,
                                 Debtor = ProductBuy_Details.Sum(y => y.Tax),
@@ -541,7 +542,7 @@ namespace WpfRaziLedgerApp
                             threads.Add(new Thread(() =>
                             {
                                 enx.FkMoein = moeinTax;
-                                enx.FkPreferential = p2;
+                                enx.FkPreferential = pT;
                             }));
                             db.AcDocumentDetails.Add(enx);
                             list2.Add(enx);
@@ -568,7 +569,7 @@ namespace WpfRaziLedgerApp
                             FkMoeinId = moeinHeader2.Id,
                             FkPreferentialId = e_Edidet.FkPreferentialId,
                             FkAcDocHeader = ac,
-                            Creditor = ProductBuy_Details.Sum(y => y.Sum-y.Discount),
+                            Creditor = ProductBuy_Details.Sum(y => y.Sum),
                             Debtor = 0,
                             Description = string.Join(",", parts.Where(s => !string.IsNullOrWhiteSpace(s))),
                             Indexer = index2,

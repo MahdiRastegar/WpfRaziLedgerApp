@@ -367,7 +367,7 @@ namespace WpfRaziLedgerApp
                         FkMoeinId = moeinHeader.Id,
                         FkPreferentialId = e_addHeader.FkPreferentialId,
                         FkAcDocHeader = e_addHeader2,
-                        Debtor = ProductSell_Details.Sum(y => y.Sum-y.Discount),
+                        Debtor = ProductSell_Details.Sum(y => y.Sum),
                         Creditor = 0,
                         Description = string.Join(",", parts.Where(s => !string.IsNullOrWhiteSpace(s))),
                         Indexer = index2,
@@ -404,7 +404,7 @@ namespace WpfRaziLedgerApp
                         }));
                         db.AcDocumentDetails.Add(enx);
                     }
-                    var moeinTax = db.Moeins.Include(m => m.FkCol).FirstOrDefault(f => f.MoeinName == "مالیات برارزش افزوده" || f.MoeinName == "مالیات بر ارزش افزوده");
+                    var moeinTax = db.Moeins.Include(m => m.FkCol).FirstOrDefault(f => (f.MoeinName == "مالیات برارزش افزوده" || f.MoeinName == "مالیات بر ارزش افزوده") && f.FkCol.ColName == "سایر حسابها و اسناد پرداختنی");
                     var moeinHeader2 = db.Moeins.Include(m => m.FkCol).FirstOrDefault(f=>f.MoeinName == "فروش");
                     var p2 = db.Preferentials.FirstOrDefault(f => f.PreferentialName == "فروش");
                     var pT = db.Preferentials.FirstOrDefault(f => f.PreferentialName == "مالیات برارزش افزوده فروش"|| f.PreferentialName == "مالیات بر ارزش افزوده فروش");
@@ -439,7 +439,7 @@ namespace WpfRaziLedgerApp
                         FkPreferentialId = p2.Id,
                         FkAcDocHeader = e_addHeader2,
                         Debtor = 0,
-                        Creditor = ProductSell_Details.Sum(y => y.SumNextDiscount),
+                        Creditor = ProductSell_Details.Sum(y => y.Value * y.Fee),
                         Description = string.Join(",", parts.Where(s => !string.IsNullOrWhiteSpace(s))),
                         Indexer = index2,
                         //AccountName = item.AccountName,
@@ -618,7 +618,7 @@ namespace WpfRaziLedgerApp
                             FkMoeinId = moeinHeader.Id,
                             FkPreferentialId = e_Edidet.FkPreferentialId,
                             FkAcDocHeader = ac,
-                            Debtor = ProductSell_Details.Sum(y => y.Sum - y.Discount),
+                            Debtor = ProductSell_Details.Sum(y => y.Sum),
                             Creditor = 0,
                             Description = string.Join(",", parts.Where(s => !string.IsNullOrWhiteSpace(s))),
                             Indexer = index2,
@@ -657,7 +657,7 @@ namespace WpfRaziLedgerApp
                             db.AcDocumentDetails.Add(enx);
                             list2.Add(enx);
                         }
-                        var moeinTax = db.Moeins.Include(m => m.FkCol).FirstOrDefault(f => f.MoeinName == "مالیات برارزش افزوده" || f.MoeinName == "مالیات بر ارزش افزوده");
+                        var moeinTax = db.Moeins.Include(m => m.FkCol).FirstOrDefault(f => (f.MoeinName == "مالیات برارزش افزوده" || f.MoeinName == "مالیات بر ارزش افزوده") && f.FkCol.ColName == "سایر حسابها و اسناد پرداختنی");
                         var moeinHeader2 = db.Moeins.Include(m => m.FkCol).FirstOrDefault(f => f.MoeinName == "فروش");
                         var p2 = db.Preferentials.FirstOrDefault(f => f.PreferentialName == "فروش");
                         var pT = db.Preferentials.FirstOrDefault(f => f.PreferentialName == "مالیات برارزش افزوده فروش"|| f.PreferentialName == "مالیات بر ارزش افزوده فروش");
@@ -692,7 +692,7 @@ namespace WpfRaziLedgerApp
                             FkPreferentialId = p2.Id,
                             FkAcDocHeader = ac,
                             Debtor = 0,
-                            Creditor = ProductSell_Details.Sum(y => y.SumNextDiscount),
+                            Creditor = ProductSell_Details.Sum(y => y.Value * y.Fee),
                             Description = string.Join(",", parts.Where(s => !string.IsNullOrWhiteSpace(s))),
                             Indexer = index2,
                             //AccountName = item.AccountName,
