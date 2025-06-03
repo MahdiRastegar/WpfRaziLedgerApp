@@ -353,7 +353,8 @@ namespace WpfRaziLedgerApp
                                 enx.FkPreferentialId = item.FkDetai.FkPreferentialId;
                             else if (cmbChangeState.SelectedIndex == 4)
                             {
-                                enx.FkMoeinId = db.Moeins.FirstOrDefault(q => q.MoeinName == "اسناد واخواست شده").Id;
+                                //enx.FkMoeinId = db.Moeins.FirstOrDefault(q => q.MoeinName == "اسناد واخواست شده").Id;
+                                enx.FkMoeinId = item.FkDetai.FkMoeinId;
                                 enx.FkPreferentialId = item.FkDetai.FkPreferentialId;
                             }
                         }
@@ -367,6 +368,7 @@ namespace WpfRaziLedgerApp
                         else if (control.SelectedItem.ToString().Contains("خرج شده"))
                         {
                             enx.FkMoeinId = item.FkDetai.FkMoeinId;
+                            enx.FkPreferentialId = item.FkDetai.FkPreferentialId;
                         }
                         else
                         {
@@ -433,8 +435,10 @@ namespace WpfRaziLedgerApp
                         {
                             if (cmbChangeState.SelectedIndex == 5)
                             {
-                                moein = db.Moeins.Include("FkCol").FirstOrDefault(q => q.MoeinName == "اسناد واخواست شده");
-                                enx.FkMoeinId = moein.Id;
+                                //moein = db.Moeins.Include("FkCol").FirstOrDefault(q => q.MoeinName == "اسناد واخواست شده");
+                                //enx.FkMoeinId = moein.Id;
+                                moein = item.FkDetai.FkMoein;
+                                enx.FkMoeinId = item.FkDetai.FkMoeinId;
                             }
                         }
                         else if (control.SelectedItem.ToString().Contains("خرج شده"))
