@@ -363,6 +363,7 @@ namespace WpfRaziLedgerApp
                             if (cmbChangeState.SelectedIndex == 5)
                             {
                                 enx.FkMoeinId = db.Moeins.FirstOrDefault(q => q.MoeinName == "حسابهای دریافتنی تجاری").Id;
+                                enx.FkPreferentialId = item.FkDetai.FkHeader.FkPreferentialId;
                             }
                         }
                         else if (control.SelectedItem.ToString().Contains("خرج شده"))
@@ -445,6 +446,8 @@ namespace WpfRaziLedgerApp
                         {
                             moein = db.Moeins.Include("FkCol").FirstOrDefault(q => q.MoeinName == "حسابهای پرداختنی تجاری");
                             enx.FkMoeinId = moein.Id;
+                            preferential = item.FkPreferential;
+                            enx.FkPreferentialId = preferential.Id;
                         }
                         db.AcDocumentDetails.Add(enx);
                         threads.Add(new Thread(() =>
