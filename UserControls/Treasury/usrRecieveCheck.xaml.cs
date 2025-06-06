@@ -284,7 +284,7 @@ namespace WpfRaziLedgerApp
                     {
                         index2++;
 
-                        var preferential = db.Preferentials.Find(item.FkDetai.FkPreferentialId);
+                        var preferential = db.Preferentials.Find(item.FkPreferentialId);
                         var enx = new AcDocumentDetail()
                         {
                             FkPreferentialId = preferential.Id,
@@ -306,7 +306,7 @@ namespace WpfRaziLedgerApp
                     {
                         index2++;
 
-                        var moein = db.Moeins.Find(item.FkDetai.FkMoeinId);
+                        var moein = db.Moeins.Find(item.FkMoeinId);
                         db.Entry(moein).Reference(m => m.FkCol).Load();
 
                         var enx = new AcDocumentDetail()
@@ -350,12 +350,12 @@ namespace WpfRaziLedgerApp
                         if (control.SelectedItem.ToString().Contains("واگذاری به بانک"))
                         {
                             if (cmbChangeState.SelectedIndex == 2)
-                                enx.FkPreferentialId = item.FkDetai.FkPreferentialId;
+                                enx.FkPreferentialId = item.FkPreferentialId;
                             else if (cmbChangeState.SelectedIndex == 4)
                             {
                                 //enx.FkMoeinId = db.Moeins.FirstOrDefault(q => q.MoeinName == "اسناد واخواست شده").Id;
-                                enx.FkMoeinId = item.FkDetai.FkMoeinId;
-                                enx.FkPreferentialId = item.FkDetai.FkPreferentialId;
+                                enx.FkMoeinId = item.FkMoeinId;
+                                enx.FkPreferentialId = item.FkPreferentialId;
                             }
                         }
                         else if (control.SelectedItem.ToString().Contains("برگشتی"))
@@ -363,12 +363,13 @@ namespace WpfRaziLedgerApp
                             if (cmbChangeState.SelectedIndex == 5)
                             {
                                 enx.FkMoeinId = db.Moeins.FirstOrDefault(q => q.MoeinName == "حسابهای دریافتنی تجاری").Id;
+                                enx.FkPreferentialId = item.FkDetai.FkHeader.FkPreferentialId;
                             }
                         }
                         else if (control.SelectedItem.ToString().Contains("خرج شده"))
                         {
-                            enx.FkMoeinId = item.FkDetai.FkMoeinId;
-                            enx.FkPreferentialId = item.FkDetai.FkPreferentialId;
+                            enx.FkMoeinId = item.FkMoeinId;
+                            enx.FkPreferentialId = item.FkPreferentialId;
                         }
                         else
                         {
@@ -397,9 +398,9 @@ namespace WpfRaziLedgerApp
                     {
                         index2++;
 
-                        var moein = db.Moeins.Find(item.FkDetai.FkMoeinId);
+                        var moein = db.Moeins.Find(item.FkMoeinId);
                         db.Entry(moein).Reference(m => m.FkCol).Load();
-                        var preferential = db.Preferentials.Find(item.FkDetai.FkPreferentialId);
+                        var preferential = db.Preferentials.Find(item.FkPreferentialId);
                         var enx = new AcDocumentDetail()
                         {
                             FkMoeinId = moein.Id,
@@ -437,14 +438,15 @@ namespace WpfRaziLedgerApp
                             {
                                 //moein = db.Moeins.Include("FkCol").FirstOrDefault(q => q.MoeinName == "اسناد واخواست شده");
                                 //enx.FkMoeinId = moein.Id;
-                                moein = item.FkDetai.FkMoein;
-                                enx.FkMoeinId = item.FkDetai.FkMoeinId;
+                                moein = item.FkMoein;
+                                enx.FkMoeinId = item.FkMoeinId;
                             }
                         }
                         else if (control.SelectedItem.ToString().Contains("خرج شده"))
                         {
                             moein = db.Moeins.Include("FkCol").FirstOrDefault(q => q.MoeinName == "حسابهای پرداختنی تجاری");
                             enx.FkMoeinId = moein.Id;
+                            enx.FkPreferentialId = preferential.Id;
                         }
                         db.AcDocumentDetails.Add(enx);
                         threads.Add(new Thread(() =>

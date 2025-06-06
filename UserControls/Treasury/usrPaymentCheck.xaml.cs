@@ -255,7 +255,7 @@ namespace WpfRaziLedgerApp
                         {
                             FkMoeinId = moein.Id,
                             FkAcDocHeader = e_addHeader2,
-                            FkPreferentialId = item.FkDetai.FkPreferentialId,
+                            FkPreferentialId = item.FkPreferentialId,
                             Creditor = 0,
                             Debtor = item.FkDetai.Price,
                             Description = $"{cmbChangeState.Text.Replace("نشده", "نشدن").Replace("شده", "شدن")} چک شماره {item.FkDetai.Number} تاریخ {item.FkDetai.Date?.ToPersianDateString()} ، {mus2.Find(t => t.Id == item.FkDetai.FkPreferentialId).Name} {txtDescription.Text}",
@@ -281,8 +281,8 @@ namespace WpfRaziLedgerApp
 
                         var enx = new AcDocumentDetail()
                         {
-                            FkMoeinId = item.FkDetai.FkMoeinId,
-                            FkPreferentialId = item.FkDetai.FkPreferentialId,
+                            FkMoeinId = item.FkMoeinId,
+                            FkPreferentialId = item.FkPreferentialId,
                             FkAcDocHeader = e_addHeader2,
                             Creditor = item.FkDetai.Price,
                             Debtor = 0,
@@ -311,8 +311,8 @@ namespace WpfRaziLedgerApp
 
                         var enx = new AcDocumentDetail()
                         {
-                            FkMoeinId = item.FkDetai.FkMoeinId,
-                            FkPreferentialId = item.FkDetai.FkPreferentialId,
+                            FkMoeinId = item.FkMoeinId,
+                            FkPreferentialId = item.FkPreferentialId,
                             FkAcDocHeader = e_addHeader2,
                             Debtor = item.FkDetai.Price,
                             Creditor = 0,
@@ -344,7 +344,7 @@ namespace WpfRaziLedgerApp
                         {
                             FkMoeinId = moein.Id,
                             FkAcDocHeader = e_addHeader2,
-                            FkPreferentialId = item.FkDetai.FkPreferentialId,
+                            FkPreferentialId = item.FkPreferentialId,
                             Debtor = 0,
                             Creditor = item.FkDetai.Price,
                             Description = $"{cmbChangeState.Text.Replace("نشده", "نشدن").Replace("شده", "شدن")} چک شماره {item.FkDetai.Number} تاریخ {item.FkDetai.Date?.ToPersianDateString()} ، {mus2.Find(t => t.Id == item.FkDetai.FkPreferentialId).Name} {txtDescription.Text}",
@@ -373,8 +373,8 @@ namespace WpfRaziLedgerApp
 
                         var enx = new AcDocumentDetail()
                         {
-                            FkMoeinId = item.FkDetai.FkMoeinId,
-                            FkPreferentialId = item.FkDetai.FkPreferentialId,
+                            FkMoeinId = item.FkMoeinId,
+                            FkPreferentialId = item.FkPreferentialId,
                             FkAcDocHeader = e_addHeader2,
                             Debtor = item.FkDetai.Price,
                             Creditor = 0,
