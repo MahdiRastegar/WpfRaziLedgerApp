@@ -957,7 +957,7 @@ namespace WpfRaziLedgerApp
         }
         public bool CloseForm()
         {
-            if (Xceed.Wpf.Toolkit.MessageBox.Show("آیا می خواهید از این فرم خارج شوید؟", "خروج", MessageBoxButton.YesNo, MessageBoxImage.Warning) != MessageBoxResult.Yes)
+            if (!isCancel && Xceed.Wpf.Toolkit.MessageBox.Show("آیا می خواهید از این فرم خارج شوید؟", "خروج", MessageBoxButton.YesNo, MessageBoxImage.Warning) != MessageBoxResult.Yes)
             {
                 return false;
             }
@@ -1072,6 +1072,7 @@ namespace WpfRaziLedgerApp
         {
             if (searchImage.Opacity != .6)
             {
+                isCancel = true;
                 if (!AddedMode && (searchImage.Source as BitmapImage).UriSource.AbsoluteUri.Contains("dataedit.png"))
                 {
                     if (datagridSearch.SelectedItem == null)

@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" FontFamily="{StaticResource NewFont}"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" PreviewKeyDown="Window_PreviewKeyDown"
         xmlns:local="clr-namespace:WpfRaziLedgerApp" xmlns:Syncfusion="http://schemas.syncfusion.com/wpf"
-        mc:Ignorable="d" Loaded="Window_Loaded" SizeChanged="Window_SizeChanged"
+        mc:Ignorable="d" Loaded="Window_Loaded" SizeChanged="Window_SizeChanged" Closing="Window_Closing"
         Title="صفحه اصلی" Height="450" Width="1150"  MinHeight="815" MinWidth="1130">
     <Grid>
         <Grid.RowDefinitions>

@@ -698,5 +698,13 @@ namespace WpfRaziLedgerApp
                 tabcontrol.Items.Add(item);
             }
         }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (Xceed.Wpf.Toolkit.MessageBox.Show("آیا می خواهید از برنامه خارج شوید؟", "خروج", MessageBoxButton.YesNo, MessageBoxImage.Warning) != MessageBoxResult.Yes)
+            {
+                e.Cancel = true;
+            }
+        }
     }
 }

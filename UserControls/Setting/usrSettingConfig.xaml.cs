@@ -43,10 +43,10 @@ namespace WpfRaziLedgerApp
         }
         public bool CloseForm()
         {
-            if (Xceed.Wpf.Toolkit.MessageBox.Show("آیا می خواهید از این فرم خارج شوید؟", "خروج", MessageBoxButton.YesNo, MessageBoxImage.Warning) != MessageBoxResult.Yes)
-            {
-                return false;
-            }
+            //if (Xceed.Wpf.Toolkit.MessageBox.Show("آیا می خواهید از این فرم خارج شوید؟", "خروج", MessageBoxButton.YesNo, MessageBoxImage.Warning) != MessageBoxResult.Yes)
+            //{
+            //    return false;
+            //}
             var list = MainWindow.Current.GetTabControlItems;
             var item = list.FirstOrDefault(u => u.Header == "تنظیمات پیکربندی");
             MainWindow.Current.tabcontrol.Items.Remove(item);            
