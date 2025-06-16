@@ -1493,6 +1493,7 @@ namespace WpfRaziLedgerApp
                         {
                             return;
                         }
+                        isCancel = true;
                     }
                     FillHeaders();
                     if (!AddedMode)
