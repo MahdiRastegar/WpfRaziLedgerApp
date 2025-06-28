@@ -1,4 +1,5 @@
-﻿using Syncfusion.Linq;
+﻿using Stimulsoft.Report;
+using Syncfusion.Linq;
 using Syncfusion.Windows.Tools.Controls;
 using System;
 using System.Collections.Generic;
@@ -705,6 +706,33 @@ namespace WpfRaziLedgerApp
             {
                 e.Cancel = true;
             }
+        }
+
+        private void rbnBrowseAccounts_Click(object sender, RoutedEventArgs e)
+        {
+            var list = GetTabControlItems;
+            var item = list.FirstOrDefault(y => y.Header == "مرور حساب ها");
+            if (item != null)
+            {
+                tabcontrol.SelectedItem = item;
+            }
+            else
+            {
+                item = new TabItemExt() { Header = "مرور حساب ها" };
+                item.Content = new usrBrowseAccounts();
+                tabcontrol.Items.Add(item);
+            }
+
+            //var report = new StiReport();
+            //report.Load("Report.mrt");
+
+            //// فرض بر اینکه ItemsSource گرید از نوع ObservableCollection<Customer> باشد
+            //var data = dataGrid.ItemsSource as IEnumerable<Customer>;
+            //report.RegBusinessObject("CustomerData", data);  // "CustomerData" باید با نام منبع داده در .mrt مطابقت داشته باشد
+
+            //report.Compile();
+            //report.Render();
+            //report.ShowWithWpf(); // یا: report.Print(); یا report.ExportDocument(StiExportFormat.Pdf, ...);
         }
     }
 }

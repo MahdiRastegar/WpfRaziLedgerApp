@@ -49,6 +49,11 @@
                     <Syncfusion:RibbonButton Name="rbnPaymentCheck" Click="rbnPaymentCheck_Click" SizeForm="Large" Label="چک های پرداختی" LargeIcon="/Images/Definitions/recieveCheck copy.png"/>
                 </Syncfusion:RibbonBar>
             </Syncfusion:RibbonTab>
+            <Syncfusion:RibbonTab Name="rbnReports" Caption="گزارشات">
+                <Syncfusion:RibbonBar Name="barReports" Width="137" Header="مرور حساب ها">
+                    <Syncfusion:RibbonButton  Name="rbnBrowseAccounts" Click="rbnBrowseAccounts_Click" SizeForm="Large" Label="مرور حساب ها" LargeIcon="/Images/Definitions/bank copy.png"/>
+                </Syncfusion:RibbonBar>
+            </Syncfusion:RibbonTab>
             <Syncfusion:RibbonTab Name="rbnSetting" Caption="تنظیمات">
                 <Syncfusion:RibbonBar Width="120" Header="تنظیمات برنامه">
                     <Syncfusion:RibbonButton  Name="rbnConfiguration" Click="rbnConfiguration_Click" SizeForm="Large" Label="تنظیمات پیکربندی" LargeIcon="/Images/Definitions/configuration.png"/>
@@ -87,7 +92,7 @@
                     </Syncfusion:RibbonTab>
                     <Syncfusion:RibbonTab Name="rbnCommerce2" Caption="خرید و فروش">
                         <Syncfusion:RibbonBar Name="barOperation2" Width="182" Header="عملیات">
-                            <Syncfusion:RibbonButton  Name="rbnOrder" Click="rbnOrder_Click" SizeForm="Large" Label="سفارش"/>
+                            <Syncfusion:RibbonButton  Name="rbnOrder" Click="rbnOrder_Click" SizeForm="Large" Label="سفارش" LargeIcon="/Images/Commerce2/order.jpg"/>
                             <Syncfusion:RibbonButton  Name="rbnPurchaseInvoice" Click="rbnPurchaseInvoice_Click" SizeForm="Large" Label="فاکتور خرید" LargeIcon="/Images/Commerce2/purchaseInvoice.jpg"/>
                             <Syncfusion:RibbonButton Name="rbnSalesInvoice" Click="rbnSalesInvoice_Click" SizeForm="Large" Label="فاکتور فروش" LargeIcon="/Images/Commerce2/salesInvoice.jpg"/>
                             <Syncfusion:RibbonButton Name="rbnSalesProforma" Click="rbnSalesProforma_Click" SizeForm="Large" Label="پیش فاکتور فروش" LargeIcon="/Images/Commerce2/salesProforma.jpg"/>
