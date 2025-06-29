@@ -31,7 +31,10 @@
     <Relations isList="true" count="0" />
     <Report isRef="0" />
     <Resources isList="true" count="0" />
-    <Variables isList="true" count="0" />
+    <Variables isList="true" count="2">
+      <value>,FromDate,FromDate,,System.String,,False,False,False,False,,cf60d749cb744f2f8cbfc1f60f3d141a</value>
+      <value>,ToDate,ToDate,,System.String,,False,False,False,False</value>
+    </Variables>
   </Dictionary>
   <EngineVersion>EngineV2</EngineVersion>
   <GlobalizationStrings isList="true" count="0" />
@@ -41,15 +44,15 @@
     <Page1 Ref="4" type="Page" isKey="true">
       <Border>None;Black;2;Solid;False;4;Black</Border>
       <Brush>Transparent</Brush>
-      <Components isList="true" count="4">
+      <Components isList="true" count="6">
         <ReportTitle Ref="5" type="ReportTitleBand" isKey="true">
           <Brush>Transparent</Brush>
-          <ClientRectangle>0,0.4,19,1.4</ClientRectangle>
-          <Components isList="true" count="1">
+          <ClientRectangle>0,0.4,19,1</ClientRectangle>
+          <Components isList="true" count="2">
             <ReportTitleText Ref="6" type="Text" isKey="true">
               <Border>None;[0:31:53];1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>0,0,19,1.4</ClientRectangle>
+              <ClientRectangle>0.2,0.2,18.8,1.2</ClientRectangle>
               <ComponentStyle>Moray_Report_Title1</ComponentStyle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
@@ -64,6 +67,21 @@
               <TextBrush>[3:81:103]</TextBrush>
               <VertAlignment>Center</VertAlignment>
             </ReportTitleText>
+            <Shape1 Ref="7" type="Shape" isKey="true">
+              <BackgroundColor>Transparent</BackgroundColor>
+              <BorderColor>Black</BorderColor>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0,0.4,19,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <ForeColor>Black</ForeColor>
+              <Margins>0,0,0,0</Margins>
+              <Name>Shape1</Name>
+              <Page isRef="4" />
+              <Parent isRef="5" />
+              <ShapeType Ref="8" type="Stimulsoft.Report.Components.ShapeTypes.StiRectangleShapeType" isKey="true" />
+            </Shape1>
           </Components>
           <Conditions isList="true" count="0" />
           <Expressions isList="true" count="0" />
@@ -71,11 +89,106 @@
           <Page isRef="4" />
           <Parent isRef="4" />
         </ReportTitle>
-        <Header Ref="7" type="HeaderBand" isKey="true">
+        <HeaderBand1 Ref="9" type="HeaderBand" isKey="true">
           <Brush>Transparent</Brush>
-          <ClientRectangle>0,2.6,19,0.6</ClientRectangle>
+          <ClientRectangle>0,2.2,19,1</ClientRectangle>
           <Components isList="true" count="6">
-            <HeaderText1 Ref="8" type="Text" isKey="true">
+            <Text1 Ref="10" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>18,0.2,0.8,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text1</Name>
+              <Page isRef="4" />
+              <Parent isRef="9" />
+              <Text>از تاریخ</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text1>
+            <Text2 Ref="11" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>14.8,0.2,0.8,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text2</Name>
+              <Page isRef="4" />
+              <Parent isRef="9" />
+              <Text>تا تاریخ</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text2>
+            <Text3 Ref="12" type="Text" isKey="true">
+              <Border>None;[0:31:53];1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>16,0.2,2,0.4</ClientRectangle>
+              <ComponentStyle>Moray_Data1</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text3</Name>
+              <Page isRef="4" />
+              <Parent isRef="9" />
+              <Text>{FromDate}</Text>
+              <TextBrush>[0:0:0]</TextBrush>
+              <TextQuality>Wysiwyg</TextQuality>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text3>
+            <Text4 Ref="13" type="Text" isKey="true">
+              <Border>None;[0:31:53];1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>13,0.2,1.8,0.4</ClientRectangle>
+              <ComponentStyle>Moray_Data1</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text4</Name>
+              <Page isRef="4" />
+              <Parent isRef="9" />
+              <Text>{ToDate}</Text>
+              <TextBrush>[0:0:0]</TextBrush>
+              <TextQuality>Wysiwyg</TextQuality>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text4>
+            <StartPointPrimitive1 Ref="14" type="Stimulsoft.Report.Components.StiStartPointPrimitive" isKey="true">
+              <ClientRectangle>0,0,0,0</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Name>StartPointPrimitive1</Name>
+              <Page isRef="4" />
+              <Parent isRef="9" />
+              <ReferenceToGuid>c46258ccd2f64e92a99b33d080d86787</ReferenceToGuid>
+            </StartPointPrimitive1>
+            <EndPointPrimitive1 Ref="15" type="Stimulsoft.Report.Components.StiEndPointPrimitive" isKey="true">
+              <ClientRectangle>19,0.8,0,0</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Name>EndPointPrimitive1</Name>
+              <Page isRef="4" />
+              <Parent isRef="9" />
+              <ReferenceToGuid>c46258ccd2f64e92a99b33d080d86787</ReferenceToGuid>
+            </EndPointPrimitive1>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Name>HeaderBand1</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+        </HeaderBand1>
+        <Header Ref="16" type="HeaderBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>0,4,19,0.6</ClientRectangle>
+          <Components isList="true" count="6">
+            <HeaderText1 Ref="17" type="Text" isKey="true">
               <Border>None;[0:31:53];1;Solid;False;4;Black;True</Border>
               <Brush>[3:81:103]</Brush>
               <CanGrow>True</CanGrow>
@@ -89,13 +202,13 @@
               <Margins>0,0,0,0</Margins>
               <Name>HeaderText1</Name>
               <Page isRef="4" />
-              <Parent isRef="7" />
+              <Parent isRef="16" />
               <Text>گروه حساب</Text>
               <TextBrush>White</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <VertAlignment>Center</VertAlignment>
             </HeaderText1>
-            <HeaderText2 Ref="9" type="Text" isKey="true">
+            <HeaderText2 Ref="18" type="Text" isKey="true">
               <Border>None;[0:31:53];1;Solid;False;4;Black;True</Border>
               <Brush>[3:81:103]</Brush>
               <CanGrow>True</CanGrow>
@@ -109,13 +222,13 @@
               <Margins>0,0,0,0</Margins>
               <Name>HeaderText2</Name>
               <Page isRef="4" />
-              <Parent isRef="7" />
+              <Parent isRef="16" />
               <Text>نام گروه حساب</Text>
               <TextBrush>White</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <VertAlignment>Center</VertAlignment>
             </HeaderText2>
-            <HeaderText3 Ref="10" type="Text" isKey="true">
+            <HeaderText3 Ref="19" type="Text" isKey="true">
               <Border>None;[0:31:53];1;Solid;False;4;Black;True</Border>
               <Brush>[3:81:103]</Brush>
               <CanGrow>True</CanGrow>
@@ -129,13 +242,13 @@
               <Margins>0,0,0,0</Margins>
               <Name>HeaderText3</Name>
               <Page isRef="4" />
-              <Parent isRef="7" />
+              <Parent isRef="16" />
               <Text>جمع بدهکار</Text>
               <TextBrush>White</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <VertAlignment>Center</VertAlignment>
             </HeaderText3>
-            <HeaderText4 Ref="11" type="Text" isKey="true">
+            <HeaderText4 Ref="20" type="Text" isKey="true">
               <Border>None;[0:31:53];1;Solid;False;4;Black;True</Border>
               <Brush>[3:81:103]</Brush>
               <CanGrow>True</CanGrow>
@@ -149,13 +262,13 @@
               <Margins>0,0,0,0</Margins>
               <Name>HeaderText4</Name>
               <Page isRef="4" />
-              <Parent isRef="7" />
+              <Parent isRef="16" />
               <Text>جمع بستانکار</Text>
               <TextBrush>White</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <VertAlignment>Center</VertAlignment>
             </HeaderText4>
-            <HeaderText5 Ref="12" type="Text" isKey="true">
+            <HeaderText5 Ref="21" type="Text" isKey="true">
               <Border>None;[0:31:53];1;Solid;False;4;Black;True</Border>
               <Brush>[3:81:103]</Brush>
               <CanGrow>True</CanGrow>
@@ -169,13 +282,13 @@
               <Margins>0,0,0,0</Margins>
               <Name>HeaderText5</Name>
               <Page isRef="4" />
-              <Parent isRef="7" />
+              <Parent isRef="16" />
               <Text>مانده بدهکار</Text>
               <TextBrush>White</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <VertAlignment>Center</VertAlignment>
             </HeaderText5>
-            <HeaderText6 Ref="13" type="Text" isKey="true">
+            <HeaderText6 Ref="22" type="Text" isKey="true">
               <Border>None;[0:31:53];1;Solid;False;4;Black;True</Border>
               <Brush>[3:81:103]</Brush>
               <CanGrow>True</CanGrow>
@@ -189,7 +302,7 @@
               <Margins>0,0,0,0</Margins>
               <Name>HeaderText6</Name>
               <Page isRef="4" />
-              <Parent isRef="7" />
+              <Parent isRef="16" />
               <Text>مانده بستانکار</Text>
               <TextBrush>White</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
@@ -202,12 +315,12 @@
           <Page isRef="4" />
           <Parent isRef="4" />
         </Header>
-        <Data Ref="14" type="DataBand" isKey="true">
+        <Data Ref="23" type="DataBand" isKey="true">
           <Brush>Transparent</Brush>
           <BusinessObjectGuid isNull="true" />
-          <ClientRectangle>0,4,19,0.6</ClientRectangle>
+          <ClientRectangle>0,5.4,19,0.6</ClientRectangle>
           <Components isList="true" count="6">
-            <DataText1 Ref="15" type="Text" isKey="true">
+            <DataText1 Ref="24" type="Text" isKey="true">
               <Border>None;[0:31:53];1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
@@ -221,14 +334,14 @@
               <Margins>0,0,0,0</Margins>
               <Name>DataText1</Name>
               <Page isRef="4" />
-              <Parent isRef="14" />
+              <Parent isRef="23" />
               <Text>{root.GroupCode}</Text>
               <TextBrush>[0:0:0]</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <TextQuality>Wysiwyg</TextQuality>
               <VertAlignment>Center</VertAlignment>
             </DataText1>
-            <DataText2 Ref="16" type="Text" isKey="true">
+            <DataText2 Ref="25" type="Text" isKey="true">
               <Border>None;[0:31:53];1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
@@ -242,14 +355,14 @@
               <Margins>0,0,0,0</Margins>
               <Name>DataText2</Name>
               <Page isRef="4" />
-              <Parent isRef="14" />
+              <Parent isRef="23" />
               <Text>{root.GroupName}</Text>
               <TextBrush>[0:0:0]</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <TextQuality>Wysiwyg</TextQuality>
               <VertAlignment>Center</VertAlignment>
             </DataText2>
-            <DataText3 Ref="17" type="Text" isKey="true">
+            <DataText3 Ref="26" type="Text" isKey="true">
               <Border>None;[0:31:53];1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
@@ -263,14 +376,14 @@
               <Margins>0,0,0,0</Margins>
               <Name>DataText3</Name>
               <Page isRef="4" />
-              <Parent isRef="14" />
+              <Parent isRef="23" />
               <Text>{root.SumDebtor.ToString("#,0")}</Text>
               <TextBrush>[0:0:0]</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <TextQuality>Wysiwyg</TextQuality>
               <VertAlignment>Center</VertAlignment>
             </DataText3>
-            <DataText4 Ref="18" type="Text" isKey="true">
+            <DataText4 Ref="27" type="Text" isKey="true">
               <Border>None;[0:31:53];1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
@@ -284,14 +397,14 @@
               <Margins>0,0,0,0</Margins>
               <Name>DataText4</Name>
               <Page isRef="4" />
-              <Parent isRef="14" />
+              <Parent isRef="23" />
               <Text>{root.SumCreditor.ToString("#,0")}</Text>
               <TextBrush>[0:0:0]</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <TextQuality>Wysiwyg</TextQuality>
               <VertAlignment>Center</VertAlignment>
             </DataText4>
-            <DataText5 Ref="19" type="Text" isKey="true">
+            <DataText5 Ref="28" type="Text" isKey="true">
               <Border>None;[0:31:53];1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
@@ -305,14 +418,14 @@
               <Margins>0,0,0,0</Margins>
               <Name>DataText5</Name>
               <Page isRef="4" />
-              <Parent isRef="14" />
+              <Parent isRef="23" />
               <Text>{root.RemainingDebtor.ToString("#,0")}</Text>
               <TextBrush>[0:0:0]</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <TextQuality>Wysiwyg</TextQuality>
               <VertAlignment>Center</VertAlignment>
             </DataText5>
-            <DataText6 Ref="20" type="Text" isKey="true">
+            <DataText6 Ref="29" type="Text" isKey="true">
               <Border>None;[0:31:53];1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
@@ -326,7 +439,7 @@
               <Margins>0,0,0,0</Margins>
               <Name>DataText6</Name>
               <Page isRef="4" />
-              <Parent isRef="14" />
+              <Parent isRef="23" />
               <Text>{root.RemainingCreditor.ToString("#,0")}</Text>
               <TextBrush>[0:0:0]</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
@@ -346,9 +459,9 @@
           <Parent isRef="4" />
           <Sort isList="true" count="0" />
         </Data>
-        <Footer Ref="21" type="FooterBand" isKey="true">
+        <Footer Ref="30" type="FooterBand" isKey="true">
           <Brush>Transparent</Brush>
-          <ClientRectangle>0,5.4,19,0.6</ClientRectangle>
+          <ClientRectangle>0,6.8,19,0.6</ClientRectangle>
           <Components isList="true" count="0" />
           <Conditions isList="true" count="0" />
           <Expressions isList="true" count="0" />
@@ -356,6 +469,16 @@
           <Page isRef="4" />
           <Parent isRef="4" />
         </Footer>
+        <RectanglePrimitive1 Ref="31" type="RectanglePrimitive" isKey="true">
+          <ClientRectangle>0,2.2,19,0.8</ClientRectangle>
+          <Color>Black</Color>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Guid>c46258ccd2f64e92a99b33d080d86787</Guid>
+          <Name>RectanglePrimitive1</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+        </RectanglePrimitive1>
       </Components>
       <Conditions isList="true" count="0" />
       <Expressions isList="true" count="0" />
@@ -378,10 +501,10 @@
     <value>Stimulsoft.Report.Dll</value>
   </ReferencedAssemblies>
   <ReportAlias>Report</ReportAlias>
-  <ReportChanged>6/28/2025 11:40:59 PM</ReportChanged>
+  <ReportChanged>6/29/2025 3:49:49 AM</ReportChanged>
   <ReportCreated>6/28/2025 10:31:40 PM</ReportCreated>
   <ReportFile>D:\WpfRaziLedgerApp\Reports\MRT\Report.mrt</ReportFile>
-  <ReportGuid>a7c33d97122a4d9196bea191b890687d</ReportGuid>
+  <ReportGuid>0e5f93db116a43c7a488b072d39c2b0c</ReportGuid>
   <ReportName>Report</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
   <ReportVersion>2023.1.1.0</ReportVersion>
@@ -410,197 +533,197 @@ namespace Reports
 </Script>
   <ScriptLanguage>CSharp</ScriptLanguage>
   <Styles isList="true" count="12">
-    <Moray_Report_Title1 Ref="22" type="Stimulsoft.Report.StiStyle" isKey="true">
+    <Moray_Report_Title1 Ref="32" type="Stimulsoft.Report.StiStyle" isKey="true">
       <Border>None;[0:31:53];1;Solid;False;4;Black</Border>
       <Brush>Transparent</Brush>
       <CollectionName>Moray</CollectionName>
       <Conditions isList="true" count="1">
-        <Item22 Ref="23" type="Stimulsoft.Report.StiStyleCondition" isKey="true">
+        <Item31 Ref="33" type="Stimulsoft.Report.StiStyleCondition" isKey="true">
           <ComponentType>Text, Primitive, Image</ComponentType>
           <Placement>ReportTitle</Placement>
           <Type>ComponentType, Placement, PlacementNestedLevel</Type>
-        </Item22>
+        </Item31>
       </Conditions>
       <Font>Arial,14,Bold</Font>
       <Name>Moray_Report_Title1</Name>
       <NegativeTextBrush>Red</NegativeTextBrush>
       <TextBrush>[3:81:103]</TextBrush>
     </Moray_Report_Title1>
-    <Moray_Report_Title2 Ref="24" type="Stimulsoft.Report.StiStyle" isKey="true">
+    <Moray_Report_Title2 Ref="34" type="Stimulsoft.Report.StiStyle" isKey="true">
       <Border>None;[0:31:53];1;Solid;False;4;Black</Border>
       <Brush>Transparent</Brush>
       <CollectionName>Moray</CollectionName>
       <Conditions isList="true" count="1">
-        <Item24 Ref="25" type="Stimulsoft.Report.StiStyleCondition" isKey="true">
+        <Item33 Ref="35" type="Stimulsoft.Report.StiStyleCondition" isKey="true">
           <ComponentType>Text, Primitive, Image</ComponentType>
           <OperationPlacementNestedLevel>GreaterThanOrEqualTo</OperationPlacementNestedLevel>
           <Placement>ReportTitle</Placement>
           <PlacementNestedLevel>2</PlacementNestedLevel>
           <Type>ComponentType, Placement, PlacementNestedLevel</Type>
-        </Item24>
+        </Item33>
       </Conditions>
       <Font>Arial,10,Bold</Font>
       <Name>Moray_Report_Title2</Name>
       <NegativeTextBrush>Red</NegativeTextBrush>
       <TextBrush>[3:81:103]</TextBrush>
     </Moray_Report_Title2>
-    <Moray_Report_Summary Ref="26" type="Stimulsoft.Report.StiStyle" isKey="true">
+    <Moray_Report_Summary Ref="36" type="Stimulsoft.Report.StiStyle" isKey="true">
       <Border>None;[0:31:53];1;Solid;False;4;Black</Border>
       <Brush>Transparent</Brush>
       <CollectionName>Moray</CollectionName>
       <Conditions isList="true" count="1">
-        <Item26 Ref="27" type="Stimulsoft.Report.StiStyleCondition" isKey="true">
+        <Item35 Ref="37" type="Stimulsoft.Report.StiStyleCondition" isKey="true">
           <ComponentType>Text, Primitive, Image</ComponentType>
           <Placement>ReportSummary</Placement>
           <Type>ComponentType, Placement</Type>
-        </Item26>
+        </Item35>
       </Conditions>
       <Font>Arial,10,Bold</Font>
       <Name>Moray_Report_Summary</Name>
       <NegativeTextBrush>Red</NegativeTextBrush>
       <TextBrush>[3:81:103]</TextBrush>
     </Moray_Report_Summary>
-    <Moray_Page_Header Ref="28" type="Stimulsoft.Report.StiStyle" isKey="true">
+    <Moray_Page_Header Ref="38" type="Stimulsoft.Report.StiStyle" isKey="true">
       <Border>None;[0:31:53];1;Solid;False;4;Black</Border>
       <Brush>Transparent</Brush>
       <CollectionName>Moray</CollectionName>
       <Conditions isList="true" count="1">
-        <Item28 Ref="29" type="Stimulsoft.Report.StiStyleCondition" isKey="true">
+        <Item37 Ref="39" type="Stimulsoft.Report.StiStyleCondition" isKey="true">
           <ComponentType>Text, Primitive, Image</ComponentType>
           <Placement>PageHeader</Placement>
           <Type>ComponentType, Placement</Type>
-        </Item28>
+        </Item37>
       </Conditions>
       <Font>Arial,10</Font>
       <Name>Moray_Page_Header</Name>
       <NegativeTextBrush>Red</NegativeTextBrush>
       <TextBrush>[3:81:103]</TextBrush>
     </Moray_Page_Header>
-    <Moray_Page_Footer Ref="30" type="Stimulsoft.Report.StiStyle" isKey="true">
+    <Moray_Page_Footer Ref="40" type="Stimulsoft.Report.StiStyle" isKey="true">
       <Border>None;[0:31:53];1;Solid;False;4;Black</Border>
       <Brush>Transparent</Brush>
       <CollectionName>Moray</CollectionName>
       <Conditions isList="true" count="1">
-        <Item30 Ref="31" type="Stimulsoft.Report.StiStyleCondition" isKey="true">
+        <Item39 Ref="41" type="Stimulsoft.Report.StiStyleCondition" isKey="true">
           <ComponentType>Text, Primitive, Image</ComponentType>
           <Placement>PageFooter</Placement>
           <Type>ComponentType, Placement</Type>
-        </Item30>
+        </Item39>
       </Conditions>
       <Font>Arial,10</Font>
       <Name>Moray_Page_Footer</Name>
       <NegativeTextBrush>Red</NegativeTextBrush>
       <TextBrush>[3:81:103]</TextBrush>
     </Moray_Page_Footer>
-    <Moray_Group_Header1 Ref="32" type="Stimulsoft.Report.StiStyle" isKey="true">
+    <Moray_Group_Header1 Ref="42" type="Stimulsoft.Report.StiStyle" isKey="true">
       <Border>None;[0:31:53];1;Solid;False;4;Black</Border>
       <Brush>Transparent</Brush>
       <CollectionName>Moray</CollectionName>
       <Conditions isList="true" count="1">
-        <Item32 Ref="33" type="Stimulsoft.Report.StiStyleCondition" isKey="true">
+        <Item41 Ref="43" type="Stimulsoft.Report.StiStyleCondition" isKey="true">
           <ComponentType>Text, Primitive, Image</ComponentType>
           <OperationPlacementNestedLevel>GreaterThanOrEqualTo</OperationPlacementNestedLevel>
           <Placement>GroupHeader</Placement>
           <Type>ComponentType, Placement, PlacementNestedLevel</Type>
-        </Item32>
+        </Item41>
       </Conditions>
       <Font>Arial,13,Bold</Font>
       <Name>Moray_Group_Header1</Name>
       <NegativeTextBrush>Red</NegativeTextBrush>
       <TextBrush>[3:81:103]</TextBrush>
     </Moray_Group_Header1>
-    <Moray_Group_Footer1 Ref="34" type="Stimulsoft.Report.StiStyle" isKey="true">
+    <Moray_Group_Footer1 Ref="44" type="Stimulsoft.Report.StiStyle" isKey="true">
       <Border>None;[0:31:53];1;Solid;False;4;Black</Border>
       <Brush>Transparent</Brush>
       <CollectionName>Moray</CollectionName>
       <Conditions isList="true" count="1">
-        <Item34 Ref="35" type="Stimulsoft.Report.StiStyleCondition" isKey="true">
+        <Item43 Ref="45" type="Stimulsoft.Report.StiStyleCondition" isKey="true">
           <ComponentType>Text, Primitive, Image</ComponentType>
           <Placement>GroupFooter</Placement>
           <Type>ComponentType, Placement, PlacementNestedLevel</Type>
-        </Item34>
+        </Item43>
       </Conditions>
       <Font>Arial,13,Bold</Font>
       <Name>Moray_Group_Footer1</Name>
       <NegativeTextBrush>Red</NegativeTextBrush>
       <TextBrush>[3:81:103]</TextBrush>
     </Moray_Group_Footer1>
-    <Moray_Header1 Ref="36" type="Stimulsoft.Report.StiStyle" isKey="true">
+    <Moray_Header1 Ref="46" type="Stimulsoft.Report.StiStyle" isKey="true">
       <Border>None;[0:31:53];1;Solid;False;4;Black;True</Border>
       <Brush>[3:81:103]</Brush>
       <CollectionName>Moray</CollectionName>
       <Conditions isList="true" count="1">
-        <Item36 Ref="37" type="Stimulsoft.Report.StiStyleCondition" isKey="true">
+        <Item45 Ref="47" type="Stimulsoft.Report.StiStyleCondition" isKey="true">
           <ComponentType>Text, Primitive, Image</ComponentType>
           <OperationPlacementNestedLevel>GreaterThanOrEqualTo</OperationPlacementNestedLevel>
           <Placement>Header</Placement>
           <Type>ComponentType, Placement, PlacementNestedLevel</Type>
-        </Item36>
+        </Item45>
       </Conditions>
       <Font>Arial,8,Bold</Font>
       <Name>Moray_Header1</Name>
       <NegativeTextBrush>Red</NegativeTextBrush>
       <TextBrush>White</TextBrush>
     </Moray_Header1>
-    <Moray_Data1 Ref="38" type="Stimulsoft.Report.StiStyle" isKey="true">
+    <Moray_Data1 Ref="48" type="Stimulsoft.Report.StiStyle" isKey="true">
       <Border>None;[0:31:53];1;Solid;False;4;Black</Border>
       <Brush>Transparent</Brush>
       <CollectionName>Moray</CollectionName>
       <Conditions isList="true" count="1">
-        <Item38 Ref="39" type="Stimulsoft.Report.StiStyleCondition" isKey="true">
+        <Item47 Ref="49" type="Stimulsoft.Report.StiStyleCondition" isKey="true">
           <ComponentType>Text, Primitive, Image, CheckBox</ComponentType>
           <OperationPlacementNestedLevel>GreaterThanOrEqualTo</OperationPlacementNestedLevel>
           <Placement>Data</Placement>
           <Type>ComponentType, Placement, PlacementNestedLevel</Type>
-        </Item38>
+        </Item47>
       </Conditions>
       <Font>Arial,8</Font>
       <Name>Moray_Data1</Name>
       <NegativeTextBrush>Red</NegativeTextBrush>
       <TextBrush>[0:0:0]</TextBrush>
     </Moray_Data1>
-    <Moray_Data1_Odd_x0020_Style Ref="40" type="Stimulsoft.Report.StiStyle" isKey="true">
+    <Moray_Data1_Odd_x0020_Style Ref="50" type="Stimulsoft.Report.StiStyle" isKey="true">
       <Border>None;[0:31:53];1;Solid;False;4;Black</Border>
       <Brush>[219:245:249]</Brush>
       <CollectionName>Moray</CollectionName>
       <Conditions isList="true" count="1">
-        <Item40 Ref="41" type="Stimulsoft.Report.StiStyleCondition" isKey="true">
+        <Item49 Ref="51" type="Stimulsoft.Report.StiStyleCondition" isKey="true">
           <OperationPlacementNestedLevel>GreaterThanOrEqualTo</OperationPlacementNestedLevel>
           <Placement>DataOddStyle</Placement>
           <Type>Placement, PlacementNestedLevel</Type>
-        </Item40>
+        </Item49>
       </Conditions>
       <Font>Arial,8</Font>
       <Name>Moray_Data1_Odd Style</Name>
       <NegativeTextBrush>Red</NegativeTextBrush>
       <TextBrush>[0:0:0]</TextBrush>
     </Moray_Data1_Odd_x0020_Style>
-    <Moray_Data1_Even_x0020_Style Ref="42" type="Stimulsoft.Report.StiStyle" isKey="true">
+    <Moray_Data1_Even_x0020_Style Ref="52" type="Stimulsoft.Report.StiStyle" isKey="true">
       <Border>None;[0:31:53];1;Solid;False;4;Black</Border>
       <Brush>[120:219:230]</Brush>
       <CollectionName>Moray</CollectionName>
       <Conditions isList="true" count="1">
-        <Item42 Ref="43" type="Stimulsoft.Report.StiStyleCondition" isKey="true">
+        <Item51 Ref="53" type="Stimulsoft.Report.StiStyleCondition" isKey="true">
           <OperationPlacementNestedLevel>GreaterThanOrEqualTo</OperationPlacementNestedLevel>
           <Placement>DataEvenStyle</Placement>
           <Type>Placement, PlacementNestedLevel</Type>
-        </Item42>
+        </Item51>
       </Conditions>
       <Font>Arial,8</Font>
       <Name>Moray_Data1_Even Style</Name>
       <NegativeTextBrush>Red</NegativeTextBrush>
       <TextBrush>[0:0:0]</TextBrush>
     </Moray_Data1_Even_x0020_Style>
-    <Moray_Footer1 Ref="44" type="Stimulsoft.Report.StiStyle" isKey="true">
+    <Moray_Footer1 Ref="54" type="Stimulsoft.Report.StiStyle" isKey="true">
       <Border>Top;[0:31:53];3;Solid;False;4;Black</Border>
       <Brush>[219:245:249]</Brush>
       <CollectionName>Moray</CollectionName>
       <Conditions isList="true" count="1">
-        <Item44 Ref="45" type="Stimulsoft.Report.StiStyleCondition" isKey="true">
+        <Item53 Ref="55" type="Stimulsoft.Report.StiStyleCondition" isKey="true">
           <ComponentType>Text, Primitive, Image</ComponentType>
           <Placement>Footer</Placement>
           <Type>ComponentType, Placement, PlacementNestedLevel</Type>
-        </Item44>
+        </Item53>
       </Conditions>
       <Font>Arial,8</Font>
       <Name>Moray_Footer1</Name>

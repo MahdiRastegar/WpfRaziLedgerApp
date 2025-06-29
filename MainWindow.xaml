@@ -51,7 +51,7 @@
             </Syncfusion:RibbonTab>
             <Syncfusion:RibbonTab Name="rbnReports" Caption="گزارشات">
                 <Syncfusion:RibbonBar Name="barReports" Width="137" Header="مرور حساب ها">
-                    <Syncfusion:RibbonButton  Name="rbnBrowseAccounts" Click="rbnBrowseAccounts_Click" SizeForm="Large" Label="مرور حساب ها" LargeIcon="/Images/Definitions/bank copy.png"/>
+                    <Syncfusion:RibbonButton  Name="rbnBrowseAccounts" Click="rbnBrowseAccounts_Click" SizeForm="Large" Label="مرور حساب ها"/>
                 </Syncfusion:RibbonBar>
             </Syncfusion:RibbonTab>
             <Syncfusion:RibbonTab Name="rbnSetting" Caption="تنظیمات">

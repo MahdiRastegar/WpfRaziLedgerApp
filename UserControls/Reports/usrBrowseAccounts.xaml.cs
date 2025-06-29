@@ -41,6 +41,9 @@ namespace WpfRaziLedgerApp
                 var report = new StiReport();
                 report.Load(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Reports","MRT","Report.mrt")); // قالب
                 report.RegBusinessObject("GAcClass", BrowseAccountsEntities); // اتصال داده‌ها
+                                                                              // مقداردهی به متغیرها
+                report.Dictionary.Variables["FromDate"].Value = txbCalender.Text==""?"ابتدای دوره": txbCalender.Text;
+                report.Dictionary.Variables["ToDate"].Value = txbCalender2.Text ==""? "انتهای دوره": txbCalender2.Text;
                 report.Render();
                 report.ShowWithWpf();
                 Mouse.OverrideCursor = null;
