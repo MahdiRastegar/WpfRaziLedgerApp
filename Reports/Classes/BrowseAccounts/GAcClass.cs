@@ -8,7 +8,7 @@ namespace WpfRaziLedgerApp
 {
     public class GAcClass
     {      
-        public Guid Id { get; set; }
+        public Guid Id { get; set; }        
         public int GroupCode { get; set; }
         public string GroupName { get; set; }
         public decimal? SumDebtor { get; set; }

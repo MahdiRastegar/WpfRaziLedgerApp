@@ -10,6 +10,9 @@
       xmlns:local2="clr-namespace:BcpBindingExtension"     
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="1200">
+    <!--<Syncfusion:SfSkinManager.VisualStyle>
+        <Syncfusion:VisualStyles>Office2010Black</Syncfusion:VisualStyles>
+    </Syncfusion:SfSkinManager.VisualStyle>-->
     <UserControl.Resources>
         <ResourceDictionary>
             <local2:SampleConverter x:Key="sampleConverter" />
@@ -276,23 +279,120 @@ FontFamily="{StaticResource IranSans}" Width="27"
                         <Image Source="/Images/filter_8365477.png" IsHitTestVisible="False" Width="48" />
                     </Grid>
                 </Grid>
-
-                <Syncfusion:SfDataGrid Grid.Row="1" SizeChanged="datagrid_SizeChanged" ItemsSource="{Binding ElementName=dataPager,Path=PagedSource}" PreviewKeyDown="datagrid_PreviewKeyDown" FontSize="14" RowHeight="30" ShowRowHeader="True" AllowFiltering="False" AllowEditing="False" AllowResizingColumns="True" HeaderStyle="{StaticResource headerStyle}" Margin="30 5 30 15" Name="datagrid" HeaderRowHeight="40" HorizontalAlignment="Stretch" MinHeight="80" AutoGenerateColumns="False" FlowDirection="RightToLeft">
-                    <!--<Syncfusion:SfDataGrid.AlternatingRowStyle>
+                <Syncfusion:TabControlExt Grid.Row="1" Name="control" SelectionChanged="control_SelectionChanged" Margin="0 0 0 13" DefaultContextMenuItemVisibility="Collapsed" Grid.RowSpan="20" EnableLabelEdit="False" CloseButtonType="Hide" AllowDragDrop="False">
+                    <Syncfusion:TabItemExt Header="گروه حساب">
+                        <Syncfusion:TabItemExt.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FF7EC8B9" Offset="1"/>
+                                <GradientStop Color="#FFA6CCBC" Offset="0.526"/>
+                                <GradientStop Color="#FFB2F3CB" Offset="0.474"/>
+                                <GradientStop Color="#FFB7ECBC" Offset="0"/>
+                            </LinearGradientBrush>
+                        </Syncfusion:TabItemExt.Background>
+                        <Syncfusion:SfDataGrid  SizeChanged="datagrid_SizeChanged" ItemsSource="{Binding ElementName=dataPager,Path=PagedSource}" PreviewKeyDown="datagrid_PreviewKeyDown" FontSize="14" RowHeight="30" ShowRowHeader="True" AllowFiltering="False" AllowEditing="False" AllowResizingColumns="True" HeaderStyle="{StaticResource headerStyle}"  Name="datagrid" HeaderRowHeight="40" MinHeight="80" AutoGenerateColumns="False" FlowDirection="RightToLeft">
+                            <!--<Syncfusion:SfDataGrid.AlternatingRowStyle>
                             <Style TargetType="Syncfusion:VirtualizingCellsControl">
                                 <Setter Property="Background" Value="#FFE6D9C9"/>
                                 <Setter Property="Foreground" Value="{Binding UpdateSourceTrigger=PropertyChanged,Converter={StaticResource DeleteRowStyleConverter},ConverterParameter=Foreground}" />
                             </Style>
                         </Syncfusion:SfDataGrid.AlternatingRowStyle>-->
-                    <Syncfusion:SfDataGrid.Columns>
-                        <Syncfusion:GridTextColumn MinimumWidth="80" Width="80" HeaderText="گروه حساب" MappingName="GroupCode"/>
-                        <Syncfusion:GridTextColumn MinimumWidth="100" HeaderText="نام گروه حساب" ColumnSizer="Star" MappingName="GroupName" />
-                        <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="0" MinimumWidth="118" HeaderText="جمع کل بدهکار" MappingName="SumDebtor" TextAlignment="Left"/>
-                        <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="0" MinimumWidth="118" HeaderText="جمع کل بستانکار" MappingName="SumCreditor" TextAlignment="Left"/>
-                        <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="0" MinimumWidth="118" HeaderText="مانده بدهکار" MappingName="RemainingDebtor" TextAlignment="Left"/>
-                        <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="0" MinimumWidth="118" HeaderText="مانده بستانکار" MappingName="RemainingCreditor" TextAlignment="Left"/>
-                    </Syncfusion:SfDataGrid.Columns>
-                </Syncfusion:SfDataGrid>
+                            <Syncfusion:SfDataGrid.Columns>
+                                <Syncfusion:GridTextColumn MinimumWidth="95" Width="95" HeaderText="گروه حساب" MappingName="GroupCode"/>
+                                <Syncfusion:GridTextColumn MinimumWidth="100" HeaderText="نام گروه حساب" ColumnSizer="Star" MappingName="GroupName" />
+                                <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="0" MinimumWidth="118" HeaderText="جمع کل بدهکار" MappingName="SumDebtor" TextAlignment="Left"/>
+                                <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="0" MinimumWidth="118" HeaderText="جمع کل بستانکار" MappingName="SumCreditor" TextAlignment="Left"/>
+                                <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="0" MinimumWidth="118" HeaderText="مانده بدهکار" MappingName="RemainingDebtor" TextAlignment="Left"/>
+                                <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="0" MinimumWidth="118" HeaderText="مانده بستانکار" MappingName="RemainingCreditor" TextAlignment="Left"/>
+                            </Syncfusion:SfDataGrid.Columns>
+                        </Syncfusion:SfDataGrid>
+
+                    </Syncfusion:TabItemExt>
+                    <Syncfusion:TabItemExt Header="کل">
+                        <Syncfusion:TabItemExt.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FF7EC8B9" Offset="1"/>
+                                <GradientStop Color="#FFA6CCBC" Offset="0.526"/>
+                                <GradientStop Color="#FFB2F3CB" Offset="0.474"/>
+                                <GradientStop Color="#FFB7ECBC" Offset="0"/>
+                            </LinearGradientBrush>
+                        </Syncfusion:TabItemExt.Background>
+                        <Syncfusion:SfDataGrid  SizeChanged="datagrid_SizeChanged" ItemsSource="{Binding ElementName=dataPager,Path=PagedSource}" PreviewKeyDown="datagrid_PreviewKeyDown" FontSize="14" RowHeight="30" ShowRowHeader="True" AllowFiltering="False" AllowEditing="False" AllowResizingColumns="True" HeaderStyle="{StaticResource headerStyle}"  Name="datagridCol" HeaderRowHeight="40" MinHeight="80" AutoGenerateColumns="False" FlowDirection="RightToLeft">
+                            <!--<Syncfusion:SfDataGrid.AlternatingRowStyle>
+    <Style TargetType="Syncfusion:VirtualizingCellsControl">
+        <Setter Property="Background" Value="#FFE6D9C9"/>
+        <Setter Property="Foreground" Value="{Binding UpdateSourceTrigger=PropertyChanged,Converter={StaticResource DeleteRowStyleConverter},ConverterParameter=Foreground}" />
+    </Style>
+</Syncfusion:SfDataGrid.AlternatingRowStyle>-->
+                            <Syncfusion:SfDataGrid.Columns>
+                                <Syncfusion:GridTextColumn MinimumWidth="95" Width="95" HeaderText="کل" MappingName="ColCode"/>
+                                <Syncfusion:GridTextColumn MinimumWidth="100" HeaderText="نام کل" ColumnSizer="Star" MappingName="ColName" />
+                                <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="0" MinimumWidth="118" HeaderText="مانده از قبل بدهکار" MappingName="BeforeDebtor" TextAlignment="Left"/>
+                                <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="0" MinimumWidth="118" HeaderText="مانده از قبل بستانکار" MappingName="BeforeCreditor" TextAlignment="Left"/>
+                                <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="0" MinimumWidth="118" HeaderText="جمع کل بدهکار" MappingName="SumDebtor" TextAlignment="Left"/>
+                                <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="0" MinimumWidth="118" HeaderText="جمع کل بستانکار" MappingName="SumCreditor" TextAlignment="Left"/>
+                                <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="0" MinimumWidth="118" HeaderText="مانده بدهکار" MappingName="RemainingDebtor" TextAlignment="Left"/>
+                                <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="0" MinimumWidth="118" HeaderText="مانده بستانکار" MappingName="RemainingCreditor" TextAlignment="Left"/>
+                            </Syncfusion:SfDataGrid.Columns>
+                        </Syncfusion:SfDataGrid>
+                    </Syncfusion:TabItemExt>
+                    <Syncfusion:TabItemExt Header="معین">
+                        <Syncfusion:TabItemExt.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FF7EC8B9" Offset="1"/>
+                                <GradientStop Color="#FFA6CCBC" Offset="0.526"/>
+                                <GradientStop Color="#FFB2F3CB" Offset="0.474"/>
+                                <GradientStop Color="#FFB7ECBC" Offset="0"/>
+                            </LinearGradientBrush>
+                        </Syncfusion:TabItemExt.Background>
+                        <Syncfusion:SfDataGrid  SizeChanged="datagrid_SizeChanged" ItemsSource="{Binding ElementName=dataPager,Path=PagedSource}" PreviewKeyDown="datagrid_PreviewKeyDown" FontSize="14" RowHeight="30" ShowRowHeader="True" AllowFiltering="False" AllowEditing="False" AllowResizingColumns="True" HeaderStyle="{StaticResource headerStyle}"  Name="datagridMoein" HeaderRowHeight="40" MinHeight="80" AutoGenerateColumns="False" FlowDirection="RightToLeft">
+                            <Syncfusion:SfDataGrid.Columns>
+                                <Syncfusion:GridTextColumn MinimumWidth="95" Width="95" HeaderText="کل" MappingName="ColCode"/>
+                                <Syncfusion:GridTextColumn Width="170" HeaderText="نام کل" MappingName="ColName" />
+                                <Syncfusion:GridTextColumn MinimumWidth="95" Width="95" HeaderText="معین" MappingName="MoeinCode"/>
+                                <Syncfusion:GridTextColumn MinimumWidth="100" HeaderText="نام معین" ColumnSizer="Star" MappingName="MoeinName" />
+                                <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="0" MinimumWidth="118" HeaderText="مانده از قبل بدهکار" MappingName="BeforeDebtor" TextAlignment="Left"/>
+                                <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="0" MinimumWidth="118" HeaderText="مانده از قبل بستانکار" MappingName="BeforeCreditor" TextAlignment="Left"/>
+                                <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="0" MinimumWidth="118" HeaderText="جمع کل بدهکار" MappingName="SumDebtor" TextAlignment="Left"/>
+                                <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="0" MinimumWidth="118" HeaderText="جمع کل بستانکار" MappingName="SumCreditor" TextAlignment="Left"/>
+                                <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="0" MinimumWidth="118" HeaderText="مانده بدهکار" MappingName="RemainingDebtor" TextAlignment="Left"/>
+                                <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="0" MinimumWidth="118" HeaderText="مانده بستانکار" MappingName="RemainingCreditor" TextAlignment="Left"/>
+                            </Syncfusion:SfDataGrid.Columns>
+                        </Syncfusion:SfDataGrid>
+                    </Syncfusion:TabItemExt>
+                    <Syncfusion:TabItemExt Header="تفضیلی">
+                        <Syncfusion:TabItemExt.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FF7EC8B9" Offset="1"/>
+                                <GradientStop Color="#FFA6CCBC" Offset="0.526"/>
+                                <GradientStop Color="#FFB2F3CB" Offset="0.474"/>
+                                <GradientStop Color="#FFB7ECBC" Offset="0"/>
+                            </LinearGradientBrush>
+                        </Syncfusion:TabItemExt.Background>
+                        <Syncfusion:SfDataGrid  SizeChanged="datagrid_SizeChanged" ItemsSource="{Binding ElementName=dataPager,Path=PagedSource}" PreviewKeyDown="datagrid_PreviewKeyDown" FontSize="14" RowHeight="30" ShowRowHeader="True" AllowFiltering="False" AllowEditing="False" AllowResizingColumns="True" HeaderStyle="{StaticResource headerStyle}"  Name="datagridPreferential" HeaderRowHeight="40" MinHeight="80" AutoGenerateColumns="False" FlowDirection="RightToLeft">
+                            <Syncfusion:SfDataGrid.Columns>
+                                <Syncfusion:GridTextColumn MinimumWidth="95" Width="80" HeaderText="کل معین" MappingName="ColeMoein"/>
+                                <Syncfusion:GridTextColumn MinimumWidth="97" Width="80" HeaderText="تفضیلی" MappingName="PreferentialCode"/>
+                                <Syncfusion:GridTextColumn MinimumWidth="150" HeaderText="نام" ColumnSizer="Star" IsReadOnly="True" MappingName="Name"/>
+                                <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="0" MinimumWidth="122" HeaderText="مانده از قبل بدهکار" MappingName="BeforeDebtor" TextAlignment="Left"/>
+                                <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="0" MinimumWidth="129" HeaderText="مانده از قبل بستانکار" MappingName="BeforeCreditor" TextAlignment="Left"/>
+                                <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="0" MinimumWidth="118" HeaderText="جمع کل بدهکار" MappingName="SumDebtor" TextAlignment="Left"/>
+                                <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="0" MinimumWidth="118" HeaderText="جمع کل بستانکار" MappingName="SumCreditor" TextAlignment="Left"/>
+                                <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="0" MinimumWidth="118" HeaderText="مانده بدهکار" MappingName="RemainingDebtor" TextAlignment="Left"/>
+                                <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="0" MinimumWidth="118" HeaderText="مانده بستانکار" MappingName="RemainingCreditor" TextAlignment="Left"/>
+                            </Syncfusion:SfDataGrid.Columns>
+                        </Syncfusion:SfDataGrid>
+                    </Syncfusion:TabItemExt>
+                    <Syncfusion:TabItemExt Header="ریز گردش">
+                        <Syncfusion:TabItemExt.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FF7EC8B9" Offset="1"/>
+                                <GradientStop Color="#FFA6CCBC" Offset="0.526"/>
+                                <GradientStop Color="#FFB2F3CB" Offset="0.474"/>
+                                <GradientStop Color="#FFB7ECBC" Offset="0"/>
+                            </LinearGradientBrush>
+                        </Syncfusion:TabItemExt.Background>
+                    </Syncfusion:TabItemExt>
+                </Syncfusion:TabControlExt>
                 <Syncfusion:SfDataPager x:Name="dataPager" FlowDirection="LeftToRight" VerticalAlignment="Bottom" Margin="0 -30" HorizontalAlignment="Center" UseOnDemandPaging="True"
     Grid.Row="3" NumericButtonCount="3"
 PageSize="12"
