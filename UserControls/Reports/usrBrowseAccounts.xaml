@@ -290,7 +290,8 @@ FontFamily="{StaticResource IranSans}" Width="27"
                                 <GradientStop Color="#FFB7ECBC" Offset="0"/>
                             </LinearGradientBrush>
                         </Syncfusion:TabItemExt.Background>
-                        <Syncfusion:SfDataGrid  SizeChanged="datagrid_SizeChanged" MouseDoubleClick="datagrid_MouseDoubleClick" Loaded="datagridCol_Loaded" PreviewKeyDown="datagrid_PreviewKeyDown" FontSize="14" RowHeight="30" ShowRowHeader="True" AllowFiltering="False" AllowEditing="False" AllowResizingColumns="True" HeaderStyle="{StaticResource headerStyle}"  Name="datagrid" HeaderRowHeight="40" MinHeight="80" AutoGenerateColumns="False" FlowDirection="RightToLeft">
+                        <Syncfusion:SfDataGrid  ItemsSource="{Binding ElementName=dataPager,Path=PagedSource}"
+                            SizeChanged="datagrid_SizeChanged" MouseDoubleClick="datagrid_MouseDoubleClick" Loaded="datagridCol_Loaded" PreviewKeyDown="datagrid_PreviewKeyDown" FontSize="14" RowHeight="30" ShowRowHeader="True" AllowFiltering="False" AllowEditing="False" AllowResizingColumns="True" HeaderStyle="{StaticResource headerStyle}"  Name="datagrid" HeaderRowHeight="40" MinHeight="80" AutoGenerateColumns="False" FlowDirection="RightToLeft">
                             <!--<Syncfusion:SfDataGrid.AlternatingRowStyle>
                             <Style TargetType="Syncfusion:VirtualizingCellsControl">
                                 <Setter Property="Background" Value="#FFE6D9C9"/>
@@ -369,7 +370,8 @@ SummaryType="DoubleAggregate" >
                                 <GradientStop Color="#FFB7ECBC" Offset="0"/>
                             </LinearGradientBrush>
                         </Syncfusion:TabItemExt.Background>
-                        <Syncfusion:SfDataGrid  SizeChanged="datagrid_SizeChanged" MouseDoubleClick="datagrid_MouseDoubleClick" Loaded="datagridCol_Loaded" PreviewKeyDown="datagrid_PreviewKeyDown" FontSize="14" RowHeight="30" ShowRowHeader="True" AllowFiltering="False" AllowEditing="False" AllowResizingColumns="True" HeaderStyle="{StaticResource headerStyle}"  Name="datagridCol" HeaderRowHeight="40" MinHeight="80" AutoGenerateColumns="False" FlowDirection="RightToLeft">
+                        <Syncfusion:SfDataGrid  ItemsSource="{Binding ElementName=dataPager2,Path=PagedSource}"
+                            SizeChanged="datagrid_SizeChanged" MouseDoubleClick="datagrid_MouseDoubleClick" Loaded="datagridCol_Loaded" PreviewKeyDown="datagrid_PreviewKeyDown" FontSize="14" RowHeight="30" ShowRowHeader="True" AllowFiltering="False" AllowEditing="False" AllowResizingColumns="True" HeaderStyle="{StaticResource headerStyle}"  Name="datagridCol" HeaderRowHeight="40" MinHeight="80" AutoGenerateColumns="False" FlowDirection="RightToLeft">
                             <Syncfusion:SfDataGrid.Columns>
                                 <Syncfusion:GridTextColumn MinimumWidth="95" Width="95" HeaderText="کل" MappingName="ColCode"/>
                                 <Syncfusion:GridTextColumn MinimumWidth="100" HeaderText="نام کل" ColumnSizer="Star" MappingName="ColName" />
@@ -464,7 +466,8 @@ SummaryType="DoubleAggregate" >
                                 <GradientStop Color="#FFB7ECBC" Offset="0"/>
                             </LinearGradientBrush>
                         </Syncfusion:TabItemExt.Background>
-                        <Syncfusion:SfDataGrid  MouseDoubleClick="datagrid_MouseDoubleClick" SizeChanged="datagrid_SizeChanged" Loaded="datagridCol_Loaded" PreviewKeyDown="datagrid_PreviewKeyDown" FontSize="14" RowHeight="30" ShowRowHeader="True" AllowFiltering="False" AllowEditing="False" AllowResizingColumns="True" HeaderStyle="{StaticResource headerStyle}"  Name="datagridMoein" HeaderRowHeight="40" MinHeight="80" AutoGenerateColumns="False" FlowDirection="RightToLeft">
+                        <Syncfusion:SfDataGrid  ItemsSource="{Binding ElementName=dataPager3,Path=PagedSource}"
+                            MouseDoubleClick="datagrid_MouseDoubleClick" SizeChanged="datagrid_SizeChanged" Loaded="datagridCol_Loaded" PreviewKeyDown="datagrid_PreviewKeyDown" FontSize="14" RowHeight="30" ShowRowHeader="True" AllowFiltering="False" AllowEditing="False" AllowResizingColumns="True" HeaderStyle="{StaticResource headerStyle}"  Name="datagridMoein" HeaderRowHeight="40" MinHeight="80" AutoGenerateColumns="False" FlowDirection="RightToLeft">
                             <Syncfusion:SfDataGrid.Columns>
                                 <Syncfusion:GridTextColumn MinimumWidth="95" Width="95" HeaderText="کل" MappingName="ColCode"/>
                                 <Syncfusion:GridTextColumn Width="170" HeaderText="نام کل" MappingName="ColName" />
@@ -561,7 +564,8 @@ SummaryType="DoubleAggregate" >
                                 <GradientStop Color="#FFB7ECBC" Offset="0"/>
                             </LinearGradientBrush>
                         </Syncfusion:TabItemExt.Background>
-                        <Syncfusion:SfDataGrid MouseDoubleClick="datagrid_MouseDoubleClick" SizeChanged="datagrid_SizeChanged" Loaded="datagridCol_Loaded" PreviewKeyDown="datagrid_PreviewKeyDown" FontSize="14" RowHeight="30" ShowRowHeader="True" AllowFiltering="False" AllowEditing="False" AllowResizingColumns="True" HeaderStyle="{StaticResource headerStyle}"  Name="datagridPreferential" HeaderRowHeight="40" MinHeight="80" AutoGenerateColumns="False" FlowDirection="RightToLeft">
+                        <Syncfusion:SfDataGrid ItemsSource="{Binding ElementName=dataPager4,Path=PagedSource}"
+                            MouseDoubleClick="datagrid_MouseDoubleClick" SizeChanged="datagrid_SizeChanged" Loaded="datagridCol_Loaded" PreviewKeyDown="datagrid_PreviewKeyDown" FontSize="14" RowHeight="30" ShowRowHeader="True" AllowFiltering="False" AllowEditing="False" AllowResizingColumns="True" HeaderStyle="{StaticResource headerStyle}"  Name="datagridPreferential" HeaderRowHeight="40" MinHeight="80" AutoGenerateColumns="False" FlowDirection="RightToLeft">
                             <Syncfusion:SfDataGrid.Columns>
                                 <Syncfusion:GridTextColumn MinimumWidth="95" Width="80" HeaderText="کل معین" MappingName="ColeMoein"/>
                                 <Syncfusion:GridTextColumn MinimumWidth="97" Width="80" HeaderText="تفضیلی" MappingName="PreferentialCode"/>
@@ -657,7 +661,8 @@ SummaryType="DoubleAggregate" >
                                 <GradientStop Color="#FFB7ECBC" Offset="0"/>
                             </LinearGradientBrush>
                         </Syncfusion:TabItemExt.Background>
-                        <Syncfusion:SfDataGrid  SizeChanged="datagrid_SizeChanged" Loaded="datagridCol_Loaded" PreviewKeyDown="datagrid_PreviewKeyDown" FontSize="14" RowHeight="30" ShowRowHeader="True" AllowFiltering="False" AllowEditing="False" AllowResizingColumns="True" HeaderStyle="{StaticResource headerStyle}"  Name="datagridِDetails" HeaderRowHeight="40" MinHeight="80" AutoGenerateColumns="False" FlowDirection="RightToLeft">
+                        <Syncfusion:SfDataGrid  ItemsSource="{Binding ElementName=dataPager5,Path=PagedSource}"
+                            SizeChanged="datagrid_SizeChanged" Loaded="datagridCol_Loaded" PreviewKeyDown="datagrid_PreviewKeyDown" FontSize="14" RowHeight="30" ShowRowHeader="True" AllowFiltering="False" AllowEditing="False" AllowResizingColumns="True" HeaderStyle="{StaticResource headerStyle}"  Name="datagridِDetails" HeaderRowHeight="40" MinHeight="80" AutoGenerateColumns="False" FlowDirection="RightToLeft">
                             <Syncfusion:SfDataGrid.Columns>
                                 <Syncfusion:GridNumericColumn NumberDecimalDigits="0" MinimumWidth="110" Width="80" HeaderText="شماره سند" MappingName="FkAcDocHeader.NoDoument" TextAlignment="Left"/>
                                 <Syncfusion:GridDateTimeColumn MinimumWidth="140" HeaderText="تاریخ" MappingName="FkAcDocHeader.Date"/>
@@ -705,9 +710,23 @@ SummaryType="DoubleAggregate" >
                         </Syncfusion:SfDataGrid>
                     </Syncfusion:TabItemExt>
                 </Syncfusion:TabControlExt>
-                <Syncfusion:SfDataPager x:Name="dataPager" FlowDirection="LeftToRight" VerticalAlignment="Bottom" Margin="0 -30" HorizontalAlignment="Center" UseOnDemandPaging="True"
-    Grid.Row="3" NumericButtonCount="3"
+                <StackPanel Name="PanelPager" VerticalAlignment="Bottom"  HorizontalAlignment="Center" Grid.Row="3" Margin="0 -30">
+                    <Syncfusion:SfDataPager x:Name="dataPager" FlowDirection="LeftToRight"    UseOnDemandPaging="True"
+NumericButtonCount="3"
 PageSize="12"/>
+                    <Syncfusion:SfDataPager x:Name="dataPager2" Visibility="Collapsed" FlowDirection="LeftToRight"    UseOnDemandPaging="True"
+NumericButtonCount="3"
+PageSize="12"/>
+                    <Syncfusion:SfDataPager x:Name="dataPager3" Visibility="Collapsed" FlowDirection="LeftToRight"    UseOnDemandPaging="True"
+NumericButtonCount="3"
+PageSize="12"/>
+                    <Syncfusion:SfDataPager x:Name="dataPager4" Visibility="Collapsed" FlowDirection="LeftToRight"    UseOnDemandPaging="True"
+NumericButtonCount="3"
+PageSize="12"/>
+                    <Syncfusion:SfDataPager x:Name="dataPager5" Visibility="Collapsed" FlowDirection="LeftToRight"    UseOnDemandPaging="True"
+NumericButtonCount="3"
+PageSize="12"/>
+                </StackPanel>
             </Grid>
         </Grid>
     </GroupBox>

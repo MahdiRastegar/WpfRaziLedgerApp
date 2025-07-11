@@ -152,9 +152,9 @@ namespace WpfRaziLedgerApp
                     }
                     break;                    
                 case 4:
-                    if (datagridِDetails.ItemsSource is ObservableCollection<AcDocumentDetail> Entities)
+                    if (datagridِDetails.ItemsSource is Syncfusion.UI.Xaml.Grid.GridPagedCollectionViewWrapper fas)
                     {
-                        if (Entities.Count > 0)
+                        if (fas.SourceCollection is ObservableCollection <AcDocumentDetail> Entities&& Entities.Count > 0)
                         {
                             Mouse.OverrideCursor = Cursors.Wait;
                             //switch (GAcClassEntities[0].GetType())
@@ -277,7 +277,7 @@ namespace WpfRaziLedgerApp
                     dataPager.Source = GAcClassEntities;
                 }
                 catch (Exception ex) { }
-                datagrid.ItemsSource=dataPager.Source;
+                //datagrid.ItemsSource=dataPager.Source;
             }
             //var options = new JsonSerializerOptions
             //{
@@ -391,20 +391,20 @@ namespace WpfRaziLedgerApp
                 datagridCol.SearchHelper.AllowFiltering = true;
                 try
                 {
-                    dataPager.Source = null;
+                    dataPager2.Source = null;
                 }
                 catch { }
                 try
                 {
-                    dataPager.Source = new ObservableCollection<ColAcReport>();
+                    dataPager2.Source = new ObservableCollection<ColAcReport>();
                 }
                 catch (Exception ex) { }
                 try
                 {
-                    dataPager.Source = ColAcReportEntities;
+                    dataPager2.Source = ColAcReportEntities;
                 }
                 catch (Exception ex) { }
-                datagridCol.ItemsSource=dataPager.Source;
+                //datagridCol.ItemsSource=dataPager.Source;
             }
 
             if (MoeinAcReportEntities != null)
@@ -520,20 +520,20 @@ namespace WpfRaziLedgerApp
                 datagridMoein.SearchHelper.AllowFiltering = true;
                 try
                 {
-                    dataPager.Source = null;
+                    dataPager3.Source = null;
                 }
                 catch { }
                 try
                 {
-                    dataPager.Source = new ObservableCollection<MoeinAcReport>();
+                    dataPager3.Source = new ObservableCollection<MoeinAcReport>();
                 }
                 catch (Exception ex) { }
                 try
                 {
-                    dataPager.Source = MoeinAcReportEntities;
+                    dataPager3.Source = MoeinAcReportEntities;
                 }
                 catch (Exception ex) { }
-                datagridMoein.ItemsSource=dataPager.Source;
+                //datagridMoein.ItemsSource=dataPager.Source;
             }
 
 
@@ -646,21 +646,21 @@ namespace WpfRaziLedgerApp
                 datagridPreferential.SearchHelper.AllowFiltering = true;
                 try
                 {
-                    dataPager.Source = null;
+                    dataPager4.Source = null;
                 }
                 catch { }
 
                 try
                 {
-                    dataPager.Source = new ObservableCollection<PreferentialAcReport>();
+                    dataPager4.Source = new ObservableCollection<PreferentialAcReport>();
                 }
                 catch (Exception ex) { }
                 try
                 {
-                    dataPager.Source = PreferentialAcReportEntities;
+                    dataPager4.Source = PreferentialAcReportEntities;
                 }
                 catch (Exception ex) { }
-                datagridPreferential.ItemsSource=dataPager.Source;
+                //datagridPreferential.ItemsSource=dataPager.Source;
             }
 
             System.IO.File.WriteAllLines(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WpfSimReport", "reportOption.txt"), new string[] 
@@ -712,14 +712,15 @@ namespace WpfRaziLedgerApp
             // تنظیم PageSize بر اساس تعداد سطرهای محاسبه شده
             if (visibleRows > 0)
             {
-                dataPager.PageSize = visibleRows - 2;
-                var g = dataPager.Source;
+                var sfData = PanelPager.Children.ToList<Syncfusion.UI.Xaml.Controls.DataPager.SfDataPager>().FirstOrDefault(a => a.Visibility == Visibility.Visible);
+                sfData.PageSize = visibleRows - 3;
+                var g = sfData.Source;
                 try
                 {
-                    dataPager.Source = null;
+                    sfData.Source = null;
                 }
                 catch { }
-                dataPager.Source = g;
+                sfData.Source = g;
             }
         }
 
@@ -801,9 +802,14 @@ namespace WpfRaziLedgerApp
 
         private void control_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            switch (control.SelectedIndex) 
+            switch (control.SelectedIndex)
             {
                 case 0:
+                    dataPager5.Visibility = Visibility.Collapsed;
+                    dataPager4.Visibility = Visibility.Collapsed;
+                    dataPager2.Visibility = Visibility.Collapsed;
+                    dataPager3.Visibility = Visibility.Collapsed;
+                    dataPager.Visibility = Visibility.Visible;
                     datagrid.SearchHelper.AllowFiltering = true;
                     try
                     {
@@ -817,51 +823,71 @@ namespace WpfRaziLedgerApp
                     catch { }
                     break;
                 case 1:
+                    dataPager5.Visibility = Visibility.Collapsed;
+                    dataPager4.Visibility = Visibility.Collapsed;
+                    dataPager.Visibility = Visibility.Collapsed;
+                    dataPager3.Visibility = Visibility.Collapsed;
+                    dataPager2.Visibility = Visibility.Visible;
                     datagridCol.SearchHelper.AllowFiltering = true;
                     try
                     {
-                        dataPager.Source = null;
+                        dataPager2.Source = null;
                     }
                     catch { }
                     try
                     {
-                        dataPager.Source = ColAcReportEntities;
+                        dataPager2.Source = ColAcReportEntities;
                     }
                     catch { }
                     break;
                 case 2:
+                    dataPager5.Visibility = Visibility.Collapsed;
+                    dataPager4.Visibility = Visibility.Collapsed;
+                    dataPager.Visibility = Visibility.Collapsed;
+                    dataPager2.Visibility = Visibility.Collapsed;
+                    dataPager3.Visibility = Visibility.Visible;
                     datagridMoein.SearchHelper.AllowFiltering = true;
                     try
                     {
-                        dataPager.Source = null;
+                        dataPager3.Source = null;
                     }
                     catch { }
                     try
                     {
-                        dataPager.Source = MoeinAcReportEntities;
+                        dataPager3.Source = MoeinAcReportEntities;
                     }
                     catch { }
                     break;
                 case 3:
+                    dataPager5.Visibility = Visibility.Collapsed;
+                    dataPager3.Visibility = Visibility.Collapsed;
+                    dataPager.Visibility = Visibility.Collapsed;
+                    dataPager2.Visibility = Visibility.Collapsed;
+                    dataPager4.Visibility = Visibility.Visible;
                     datagridPreferential.SearchHelper.AllowFiltering = true;
                     try
                     {
-                        dataPager.Source = null;
+                        dataPager4.Source = null;
                     }
                     catch { }
                     try
                     {
-                        dataPager.Source = PreferentialAcReportEntities;
+                        dataPager4.Source = PreferentialAcReportEntities;
                     }
                     catch { }
                     break;
-                    case 4:
+                case 4:
+                    dataPager4.Visibility = Visibility.Collapsed;
+                    dataPager3.Visibility = Visibility.Collapsed;
+                    dataPager.Visibility = Visibility.Collapsed;
+                    dataPager2.Visibility = Visibility.Collapsed;
+                    dataPager5.Visibility = Visibility.Visible;
                     //if (datagridِDetails.ItemsSource is Syncfusion.UI.Xaml.Grid.GridPagedCollectionViewWrapper gridPagedCollectionView)
                     //{
                     //    if(gridPagedCollectionView.Records.Count>0&& !(gridPagedCollectionView.Records[0] is AcDocumentDetail)&& !(dataPager.Source is ObservableCollection<AcDocumentDetail>))
                     //        try
                     //        {
-                                dataPager.Source = null;
+                    dataPager5.Source = null;
                     //        }
                     //        catch { }
                     //}
@@ -877,25 +903,31 @@ namespace WpfRaziLedgerApp
                 datagridF.SearchHelper.AllowFiltering = true;
                 try
                 {
-                    dataPager.Source = null;
+                    dataPager5.Source = null;
                 }
                 catch { }
                 try
                 {
-                    dataPager.Source = baseBrowseAccounts.acDocumentDetails;
+                    dataPager5.Source = baseBrowseAccounts.acDocumentDetails;
                 }
                 catch { }
                 control.SelectionChanged -= control_SelectionChanged;
                 control.SelectedIndex = 4;
+                dataPager4.Visibility = Visibility.Collapsed;
+                dataPager3.Visibility = Visibility.Collapsed;
+                dataPager.Visibility = Visibility.Collapsed;
+                dataPager2.Visibility = Visibility.Collapsed;
+                dataPager5.Visibility = Visibility.Visible;
                 control.SelectionChanged += control_SelectionChanged;
             }
         }
 
         private void datagridCol_Loaded(object sender, RoutedEventArgs e)
         {
+            /*
             var datagridF = control.SelectedContent as Syncfusion.UI.Xaml.Grid.SfDataGrid;
             if (datagridF != null)
-                datagridF.ItemsSource = dataPager.Source;
+                datagridF.ItemsSource = dataPager.Source;*/
         }
     }
 }
