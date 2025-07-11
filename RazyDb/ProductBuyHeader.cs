@@ -26,6 +26,7 @@ namespace WpfRaziLedgerApp
         public string Description { get; set; }
         public decimal SumDiscount { get; set; }
         public Guid? FkAcDocument { get; set; }
+        public long? BuyRemittanceNumber { get; set; }
 
         public virtual AcDocumentHeader FkAcDocumentNavigation { get; set; }
         public virtual Preferential FkPreferential { get; set; }

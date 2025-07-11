@@ -25,7 +25,7 @@ namespace WpfRaziLedgerApp
                     var item = summaryItems.FirstOrDefault(s => s.Name == summaryCol.Name);
                     if (item != null)
                     {
-                        if (columnName == "Creditor")
+                        if (columnName.Contains("Creditor"))
                         {
                             if (!parameter.ToString().Contains("1"))
                             {
@@ -37,7 +37,7 @@ namespace WpfRaziLedgerApp
                                 return $"{string.Format("{0:#,###}", a-b)}";
                             }
                         }
-                        if (columnName == "Debtor")
+                        if (columnName.Contains("Debtor"))
                         {
                             if (!parameter.ToString().Contains("1"))
                             {

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
@@ -64,25 +63,13 @@ namespace WpfRaziLedgerApp
         public virtual DbSet<StorageTransferHeader> StorageTransferHeaders { get; set; }
         public virtual DbSet<TGroup> TGroups { get; set; }
         public virtual DbSet<Unit> Units { get; set; }
-        public static string cs="";
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                var str = "";
-                if (cs == "")
-                    try
-                    {
-                        str = File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "cs.txt"));
-                        cs = str;
-                    }
-                    catch
-                    { }
-                if (cs != "")
-                    optionsBuilder.UseSqlServer(cs);
-                else
-                    optionsBuilder.UseSqlServer("Server=.;Database=wpfrazydb;Trusted_Connection=False;User Id=sa;Password=123456;");
+                optionsBuilder.UseSqlServer("Server=.;Database=wpfrazydb;Trusted_Connection=False;User Id=sa;Password=123456;");
             }
         }
 

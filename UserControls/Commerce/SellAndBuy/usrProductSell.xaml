@@ -471,6 +471,9 @@ FontFamily="{StaticResource IranSans}" Width="27"
             <Syncfusion:SfTextInputLayout IsHitTestVisible="False" x:Name="Sf_txtType" OutlineCornerRadius="8" Hint="تاریخ" Grid.Row="1" Grid.Column="0"  VerticalAlignment="Center" Margin="20 0">
                 <Label Height="25" FontSize="16"/>
             </Syncfusion:SfTextInputLayout>
+            <Syncfusion:SfTextInputLayout  Name="Sf_txtBuyRemittanceNumber" OutlineCornerRadius="8" Grid.Row="1" Grid.Column="1" Hint="شماره حواله خرید" VerticalAlignment="Center" Margin="20 0"  HorizontalAlignment="Stretch">
+                <TextBox Name="txtBuyRemittanceNumber" Text="" LostFocus="txtBuyRemittanceNumber_LostFocus" TextChanged="txtInvoiceNumber_TextChanged" MaxLength="10" VerticalContentAlignment="Center"   PreviewTextInput="Txt_PreviewTextInput" Margin="0" FontSize="16"/>
+            </Syncfusion:SfTextInputLayout>
             <Syncfusion:SfTextInputLayout Name="Sf_txtPreferential" OutlineCornerRadius="8" Hint="کد تفضیلی" Grid.Row="2"  VerticalAlignment="Center" Margin="20 0" Grid.Column="1" HorizontalAlignment="Stretch">
                 <TextBox Name="txtPreferential" LostFocus="txtPreferential_LostFocus" PreviewKeyDown="txtPreferential_PreviewKeyDown" VerticalContentAlignment="Center" TextChanged="txtPreferential_TextChanged" IsEnabled="True" IsReadOnly="False" PreviewTextInput="txtPreferential_PreviewTextInput" Margin="0" FontSize="16"/>
             </Syncfusion:SfTextInputLayout>

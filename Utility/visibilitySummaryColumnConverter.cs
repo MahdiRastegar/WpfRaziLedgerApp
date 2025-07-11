@@ -17,11 +17,11 @@ namespace WpfRaziLedgerApp
 
             var columnName = parameter.ToString();
 
-            if (columnName == "Creditor"&& CaptionSummaryColumnConverter.a > CaptionSummaryColumnConverter.b)
+            if (columnName.Contains("Creditor")&& CaptionSummaryColumnConverter.a > CaptionSummaryColumnConverter.b)
             {
                 return Visibility.Visible;
             }
-            if (columnName == "Debtor" && CaptionSummaryColumnConverter.b > CaptionSummaryColumnConverter.a)
+            if (columnName.Contains("Debtor") && CaptionSummaryColumnConverter.b > CaptionSummaryColumnConverter.a)
             {
                 return Visibility.Visible;
 

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
+using WpfRaziLedgerApp;
 
 #nullable disable
 
@@ -15,9 +17,11 @@ namespace WpfRaziLedgerApp
         public Guid FkAcDocHeaderId { get; set; }
         public Guid? FkPreferentialId { get; set; }
         public Guid? FkMoeinId { get; set; }
-
+        [JsonIgnore]
         public virtual AcDocumentHeader FkAcDocHeader { get; set; }
+        [JsonIgnore]
         public virtual Moein FkMoein { get; set; }
+        [JsonIgnore]
         public virtual Preferential FkPreferential { get; set; }
     }
 }

@@ -245,6 +245,29 @@ namespace WpfRaziLedgerApp
             List<Thread> threads = new List<Thread>();
             if (id == Guid.Empty)
             {
+                if(txtBuyRemittanceNumber.Text!="")
+                {
+                    var number = long.Parse(txtBuyRemittanceNumber.Text);
+                    foreach (var item in ProductSell_Details)
+                    {                     
+                        var sumB = db.ProductBuyDetails
+    .Where(d => d.FkHeader.BuyRemittanceNumber == number
+             && d.FkCommodityId == item.FkCommodity.Id)
+    .Sum(d => (decimal?)d.Value) ?? 0;
+
+                        var sumS = db.ProductSellDetails
+    .Where(d => d.FkHeader.BuyRemittanceNumber == number
+             && d.FkCommodityId == item.FkCommodity.Id)
+    .Sum(d => (decimal?)d.Value) ?? 0;
+
+                        if (sumS + item.Value > sumB)
+                        {
+                            Xceed.Wpf.Toolkit.MessageBox.Show($"مقدار کالای {item.FkCommodity.Name} بیشتر از حد مجاز برای این حواله خرید هست!", "خطا");
+
+                            return;
+                        }
+                    }
+                }
                 e_addHeader = new ProductSellHeader()
                 {
                     Id = Guid.NewGuid(),
@@ -263,6 +286,8 @@ namespace WpfRaziLedgerApp
                     FkPreferentialIdDriverNavigation = list.FirstOrDefault(t => t.PreferentialCode == (int.TryParse(txtDriver.Text, out code) ? code : -1)),
                     FkPreferentialIdPersonnelNavigation = list.FirstOrDefault(t => t.PreferentialCode == (int.TryParse(txtPersonnel.Text, out code) ? code : -1))
                 };
+                if (txtBuyRemittanceNumber.Text != "")
+                    e_addHeader.BuyRemittanceNumber = long.Parse(txtBuyRemittanceNumber.Text);
                 try
                 {
                     if (e_addHeader.FkPreferentialIdReceiverNavigation != null)
@@ -1147,6 +1172,7 @@ namespace WpfRaziLedgerApp
             Sf_txtPreferential.HasError = false;
             txtPersonnelName.Text = "";
             txtPreferentialName.Text = "";
+            txtBuyRemittanceNumber.Text = "";
 
             txtReciever.Text = string.Empty;
             txtFreight.Text = string.Empty;
@@ -2473,6 +2499,20 @@ namespace WpfRaziLedgerApp
                 morefields.Visibility = Visibility.Visible;
                 Sf_Description.Visibility = Visibility.Collapsed;
                 Sf_txtCarType.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private void txtBuyRemittanceNumber_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (txtBuyRemittanceNumber.Text != "")
+            {
+                using var db = new wpfrazydbContext();
+                var number = long.Parse(txtBuyRemittanceNumber.Text);
+                if (!db.ProductBuyHeaders.Any(t => t.BuyRemittanceNumber == number))
+                {
+                    Xceed.Wpf.Toolkit.MessageBox.Show("این شماره حواله یافت نشد!");
+                    txtBuyRemittanceNumber.Text = "";
+                }
             }
         }
 

@@ -1,17 +1,18 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Stimulsoft.Report;
 using Syncfusion.Data.Extensions;
 using Syncfusion.Windows.Controls;
 using Syncfusion.XlsIO.Parser.Biff_Records;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -37,7 +38,7 @@ namespace WpfRaziLedgerApp
         }
 
         private void btnPrint_Click(object sender, RoutedEventArgs e)
-        {
+        {            
             switch (control.SelectedIndex)
             {
                 case 0:
@@ -46,106 +47,138 @@ namespace WpfRaziLedgerApp
                         Mouse.OverrideCursor = Cursors.Wait;
                         //switch (GAcClassEntities[0].GetType())
                         //{
-                        //    case Type t when t == typeof(GAcClass):
-                        var report = new StiReport();
-                        report.Load(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Reports", "MRT", "Report.mrt")); // قالب
-                                                                                                                                    // پاک کردن دیتابیس‌ها و دیتای قبلی
-                        report.Dictionary.Databases.Clear();
-                        report.Dictionary.DataSources.Clear(); // اضافه‌تر
+                        //    case Type t when t == typeof(GAcClass):                        
 
-                        // مهم: ساختار تو در تو بساز
-                        report.RegBusinessObject("output", GAcClassEntities);
-                        // مقداردهی به متغیرها
-                        report.Dictionary.Variables["FromAcDoc"].Value = txtFromDoc.Text == "" ? "اول" : txtFromDoc.Text;
-                        report.Dictionary.Variables["ToAcDoc"].Value = txtToDoc.Text == "" ? "آخر" : txtToDoc.Text;
-                        report.Dictionary.Variables["FromDate"].Value = txbCalender.Text == "" ? "ابتدای دوره" : txbCalender.Text;
-                        report.Dictionary.Variables["ToDate"].Value = txbCalender2.Text == "" ? "انتهای دوره" : txbCalender2.Text;
-                        var pc = new PersianCalendar();
-                        report.Dictionary.Variables["Year"].Value = pc.GetYear(DateTime.Now).ToString();
-                        report.Render();
-                        report.ShowWithWpf();
-                        Mouse.OverrideCursor = null;
+                        System.IO.Directory.Delete(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WpfSimReport", "JSON"),true);
+                        Thread.Sleep(50);
+                        System.IO.Directory.CreateDirectory(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WpfSimReport", "JSON"));
+
+                        var options = new JsonSerializerOptions
+                        {
+                            Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                            WriteIndented = true
+                        };
+                        string jsonString = JsonSerializer.Serialize(GAcClassEntities, options);
+                        System.IO.File.WriteAllText(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WpfSimReport", "JSON", "GAcClass.json"), jsonString);
+                        Mouse.OverrideCursor = null;                        
+
+                        Process process = new Process();
+                        process.StartInfo.FileName = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WpfSimReport", "WpfAppEmpty.exe");
+                        //process.StartInfo.Arguments = $"\"{reportPath}\" \"{outputPdf}\"";
+                        process.StartInfo.UseShellExecute = false;
+                        process.Start();
                     }
-                    break;
+                    break;                    
                 case 1:
                     if (ColAcReportEntities?.Count > 0)
                     {
                         Mouse.OverrideCursor = Cursors.Wait;
                         //switch (GAcClassEntities[0].GetType())
                         //{
-                        //    case Type t when t == typeof(GAcClass):
-                        var report = new StiReport();
-                        report.Load(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Reports", "MRT", "ReportCol.mrt")); // قالب
-                                                                                                                                    // پاک کردن دیتابیس‌ها و دیتای قبلی
-                        report.Dictionary.Databases.Clear();
-                        report.Dictionary.DataSources.Clear(); // اضافه‌تر
+                        //    case Type t when t == typeof(GAcClass):                        
 
-                        // مهم: ساختار تو در تو بساز
-                        report.RegBusinessObject("output", ColAcReportEntities);
-                        // مقداردهی به متغیرها
-                        report.Dictionary.Variables["FromAcDoc"].Value = txtFromDoc.Text == "" ? "اول" : txtFromDoc.Text;
-                        report.Dictionary.Variables["ToAcDoc"].Value = txtToDoc.Text == "" ? "آخر" : txtToDoc.Text;
-                        report.Dictionary.Variables["FromDate"].Value = txbCalender.Text == "" ? "ابتدای دوره" : txbCalender.Text;
-                        report.Dictionary.Variables["ToDate"].Value = txbCalender2.Text == "" ? "انتهای دوره" : txbCalender2.Text;
-                        var pc = new PersianCalendar();
-                        report.Dictionary.Variables["Year"].Value = pc.GetYear(DateTime.Now).ToString();
-                        report.Render();
-                        report.ShowWithWpf();
+                        System.IO.Directory.Delete(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WpfSimReport", "JSON"), true);
+                        Thread.Sleep(50);
+                        System.IO.Directory.CreateDirectory(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WpfSimReport", "JSON"));
+
+                        var options = new JsonSerializerOptions
+                        {
+                            Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                            WriteIndented = true
+                        };
+                        string jsonString = JsonSerializer.Serialize(ColAcReportEntities, options);
+                        System.IO.File.WriteAllText(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WpfSimReport", "JSON", "ColAcReport.json"), jsonString);
                         Mouse.OverrideCursor = null;
+                        
+                        Process process = new Process();
+                        process.StartInfo.FileName = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WpfSimReport", "WpfAppEmpty.exe");
+                        //process.StartInfo.Arguments = $"\"{reportPath}\" \"{outputPdf}\"";
+                        process.StartInfo.UseShellExecute = false;
+                        process.Start();
                     }
-                    break;
+                    break;                    
                 case 2:
                     if (MoeinAcReportEntities?.Count > 0)
                     {
                         Mouse.OverrideCursor = Cursors.Wait;
                         //switch (GAcClassEntities[0].GetType())
                         //{
-                        //    case Type t when t == typeof(GAcClass):
-                        var report = new StiReport();
-                        report.Load(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Reports", "MRT", "ReportMoein.mrt")); // قالب
-                                                                                                                                       // پاک کردن دیتابیس‌ها و دیتای قبلی
-                        report.Dictionary.Databases.Clear();
-                        report.Dictionary.DataSources.Clear(); // اضافه‌تر
+                        //    case Type t when t == typeof(GAcClass):                        
 
-                        // مهم: ساختار تو در تو بساز
-                        report.RegBusinessObject("output", MoeinAcReportEntities);
-                        // مقداردهی به متغیرها
-                        report.Dictionary.Variables["FromAcDoc"].Value = txtFromDoc.Text == "" ? "اول" : txtFromDoc.Text;
-                        report.Dictionary.Variables["ToAcDoc"].Value = txtToDoc.Text == "" ? "آخر" : txtToDoc.Text;
-                        report.Dictionary.Variables["FromDate"].Value = txbCalender.Text == "" ? "ابتدای دوره" : txbCalender.Text;
-                        report.Dictionary.Variables["ToDate"].Value = txbCalender2.Text == "" ? "انتهای دوره" : txbCalender2.Text;
-                        var pc = new PersianCalendar();
-                        report.Dictionary.Variables["Year"].Value = pc.GetYear(DateTime.Now).ToString();
-                        report.Render();
-                        report.ShowWithWpf();
+                        System.IO.Directory.Delete(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WpfSimReport", "JSON"), true);
+                        Thread.Sleep(50);
+                        System.IO.Directory.CreateDirectory(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WpfSimReport", "JSON"));
+
+                        var options = new JsonSerializerOptions
+                        {
+                            Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                            WriteIndented = true
+                        };
+                        string jsonString = JsonSerializer.Serialize(MoeinAcReportEntities, options);
+                        System.IO.File.WriteAllText(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WpfSimReport", "JSON", "MoeinAcReport.json"), jsonString);
                         Mouse.OverrideCursor = null;
+                        Process process = new Process();
+                        process.StartInfo.FileName = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WpfSimReport", "WpfAppEmpty.exe");
+                        //process.StartInfo.Arguments = $"\"{reportPath}\" \"{outputPdf}\"";
+                        process.StartInfo.UseShellExecute = false;
+                        process.Start();
                     }
-                    break;
+                    break;                    
                 case 3:
                     if (PreferentialAcReportEntities?.Count > 0)
                     {
                         Mouse.OverrideCursor = Cursors.Wait;
                         //switch (GAcClassEntities[0].GetType())
                         //{
-                        //    case Type t when t == typeof(GAcClass):
-                        var report = new StiReport();
-                        report.Load(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Reports", "MRT", "ReportPreferential.mrt")); // قالب
-                                                                                                                                         // پاک کردن دیتابیس‌ها و دیتای قبلی
-                        report.Dictionary.Databases.Clear();
-                        report.Dictionary.DataSources.Clear(); // اضافه‌تر
+                        //    case Type t when t == typeof(GAcClass):                        
 
-                        // مهم: ساختار تو در تو بساز
-                        report.RegBusinessObject("output", PreferentialAcReportEntities);
-                        // مقداردهی به متغیرها
-                        report.Dictionary.Variables["FromAcDoc"].Value = txtFromDoc.Text == "" ? "اول" : txtFromDoc.Text;
-                        report.Dictionary.Variables["ToAcDoc"].Value = txtToDoc.Text == "" ? "آخر" : txtToDoc.Text;
-                        report.Dictionary.Variables["FromDate"].Value = txbCalender.Text == "" ? "ابتدای دوره" : txbCalender.Text;
-                        report.Dictionary.Variables["ToDate"].Value = txbCalender2.Text == "" ? "انتهای دوره" : txbCalender2.Text;
-                        var pc = new PersianCalendar();
-                        report.Dictionary.Variables["Year"].Value = pc.GetYear(DateTime.Now).ToString();
-                        report.Render();
-                        report.ShowWithWpf();
+                        System.IO.Directory.Delete(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WpfSimReport", "JSON"), true);
+                        Thread.Sleep(50);
+                        System.IO.Directory.CreateDirectory(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WpfSimReport", "JSON"));
+
+                        var options = new JsonSerializerOptions
+                        {
+                            Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                            WriteIndented = true
+                        };
+                        string jsonString = JsonSerializer.Serialize(PreferentialAcReportEntities, options);
+                        System.IO.File.WriteAllText(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WpfSimReport", "JSON", "PreferentialAcReport.json"), jsonString);
                         Mouse.OverrideCursor = null;
+                        Process process = new Process();
+                        process.StartInfo.FileName = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WpfSimReport", "WpfAppEmpty.exe");
+                        //process.StartInfo.Arguments = $"\"{reportPath}\" \"{outputPdf}\"";
+                        process.StartInfo.UseShellExecute = false;
+                        process.Start();
+                    }
+                    break;                    
+                case 4:
+                    if (datagridِDetails.ItemsSource is ObservableCollection<AcDocumentDetail> Entities)
+                    {
+                        if (Entities.Count > 0)
+                        {
+                            Mouse.OverrideCursor = Cursors.Wait;
+                            //switch (GAcClassEntities[0].GetType())
+                            //{
+                            //    case Type t when t == typeof(GAcClass):                        
+
+                            System.IO.Directory.Delete(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WpfSimReport", "JSON"), true);
+                            Thread.Sleep(50);
+                            System.IO.Directory.CreateDirectory(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WpfSimReport", "JSON"));
+
+                            var options = new JsonSerializerOptions
+                            {
+                                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                                WriteIndented = true
+                            };
+                            string jsonString = JsonSerializer.Serialize(Entities, options);
+                            System.IO.File.WriteAllText(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WpfSimReport", "JSON", "AcDocumentDetail.json"), jsonString);
+                            Mouse.OverrideCursor = null;
+                            Process process = new Process();
+                            process.StartInfo.FileName = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WpfSimReport", "WpfAppEmpty.exe");
+                            //process.StartInfo.Arguments = $"\"{reportPath}\" \"{outputPdf}\"";
+                            process.StartInfo.UseShellExecute = false;
+                            process.Start();
+                        }
                     }
                     break;
             }
@@ -168,6 +201,8 @@ namespace WpfRaziLedgerApp
             if (txtFromDoc.Text == "" && txtToDoc.Text == "" && txbCalender.Text == "" && txbCalender2.Text == "")
             {
                 data = db.AcDocumentDetails
+                    .Include(x => x.FkAcDocHeader)
+                    .Include(x => x.FkPreferential)
     .Include(u => u.FkMoein)
         .ThenInclude(w => w.FkCol)
         .ThenInclude(w => w.FkGroup)
@@ -191,6 +226,8 @@ namespace WpfRaziLedgerApp
                     max = pcw2.SelectedDate.ToDateTime();
 
                 data = db.AcDocumentDetails.Include(u => u.FkAcDocHeader).Where(t => t.FkAcDocHeader.NoDoument >= fr && t.FkAcDocHeader.NoDoument <= to && t.FkAcDocHeader.Date <= max && t.FkAcDocHeader.Date >= minx)
+                    .Include(x => x.FkAcDocHeader)
+                    .Include(x => x.FkPreferential)
    .Include(u => u.FkMoein)
        .ThenInclude(w => w.FkCol)
        .ThenInclude(w => w.FkGroup)
@@ -219,7 +256,8 @@ namespace WpfRaziLedgerApp
                     GroupCode = u.First().FkMoein.FkCol.FkGroup.GroupCode,
                     GroupName = u.First().FkMoein.FkCol.FkGroup.GroupName,
                     SumDebtor = u.Sum(w => w.Debtor),
-                    SumCreditor = u.Sum(w => w.Creditor)
+                    SumCreditor = u.Sum(w => w.Creditor),
+                    //acDocumentDetails = u.ToObservableCollection()
                 }));
             if (control.SelectedIndex == 0)
             {
@@ -234,7 +272,12 @@ namespace WpfRaziLedgerApp
                     dataPager.Source = new ObservableCollection<GAcClass>();
                 }
                 catch (Exception ex) { }
-                dataPager.Source = GAcClassEntities;
+                try
+                {
+                    dataPager.Source = GAcClassEntities;
+                }
+                catch (Exception ex) { }
+                datagrid.ItemsSource=dataPager.Source;
             }
             //var options = new JsonSerializerOptions
             //{
@@ -251,6 +294,8 @@ namespace WpfRaziLedgerApp
             if (txtFromDoc.Text == "" && txtToDoc.Text == "" && txbCalender.Text == "" && txbCalender2.Text == "")
             {
                 data = db.AcDocumentDetails
+                    .Include(x => x.FkAcDocHeader)
+                    .Include(x => x.FkPreferential)
     .Include(u => u.FkMoein)
         .ThenInclude(w => w.FkCol)
     .AsNoTracking()
@@ -273,7 +318,8 @@ namespace WpfRaziLedgerApp
 
                 // جمع داده‌ها طبق شرایط کاربر
                 data = db.AcDocumentDetails
-                    .Include(u => u.FkAcDocHeader)
+                    .Include(x => x.FkAcDocHeader)
+                    .Include(x => x.FkPreferential)
                     .Where(t => t.FkAcDocHeader.NoDoument >= fr &&
                                 t.FkAcDocHeader.NoDoument <= to &&
                                 t.FkAcDocHeader.Date <= max &&
@@ -336,7 +382,8 @@ namespace WpfRaziLedgerApp
                     ColName = colName,
                     SumDebtor = sumDebtor,
                     SumCreditor = sumCreditor,
-                    BeforeSum = beforeSum
+                    BeforeSum = beforeSum,
+                    //acDocumentDetails = grouped[colId].ToObservableCollection()
                 });
             }
             if (control.SelectedIndex == 1)
@@ -352,7 +399,12 @@ namespace WpfRaziLedgerApp
                     dataPager.Source = new ObservableCollection<ColAcReport>();
                 }
                 catch (Exception ex) { }
-                dataPager.Source = ColAcReportEntities;
+                try
+                {
+                    dataPager.Source = ColAcReportEntities;
+                }
+                catch (Exception ex) { }
+                datagridCol.ItemsSource=dataPager.Source;
             }
 
             if (MoeinAcReportEntities != null)
@@ -361,6 +413,8 @@ namespace WpfRaziLedgerApp
             if (txtFromDoc.Text == "" && txtToDoc.Text == "" && txbCalender.Text == "" && txbCalender2.Text == "")
             {
                 data = db.AcDocumentDetails
+                    .Include(x => x.FkAcDocHeader)
+                    .Include(x => x.FkPreferential)
     .Include(u => u.FkMoein)
         .ThenInclude(w => w.FkCol)
     .AsNoTracking()
@@ -384,6 +438,7 @@ namespace WpfRaziLedgerApp
                 // داده اصلی
                 data = db.AcDocumentDetails
                     .Include(x => x.FkAcDocHeader)
+                    .Include(x => x.FkPreferential)
                     .Include(x => x.FkMoein)
                         .ThenInclude(m => m.FkCol)
                     .Where(t => t.FkAcDocHeader.NoDoument >= fr &&
@@ -456,12 +511,13 @@ namespace WpfRaziLedgerApp
                     ColName = colName,
                     SumDebtor = sumDebtor,
                     SumCreditor = sumCreditor,
-                    BeforeSum = beforeSum
+                    BeforeSum = beforeSum,
+                    //acDocumentDetails = grouped[moeinId].ToObservableCollection()
                 });
             }
             if (control.SelectedIndex == 2)
             {
-                datagrid.SearchHelper.AllowFiltering = true;
+                datagridMoein.SearchHelper.AllowFiltering = true;
                 try
                 {
                     dataPager.Source = null;
@@ -472,7 +528,12 @@ namespace WpfRaziLedgerApp
                     dataPager.Source = new ObservableCollection<MoeinAcReport>();
                 }
                 catch (Exception ex) { }
-                dataPager.Source = MoeinAcReportEntities;
+                try
+                {
+                    dataPager.Source = MoeinAcReportEntities;
+                }
+                catch (Exception ex) { }
+                datagridMoein.ItemsSource=dataPager.Source;
             }
 
 
@@ -565,21 +626,24 @@ namespace WpfRaziLedgerApp
                 var beforeSum = beforeGroupedY.ContainsKey(key)
                     ? beforeGroupedY[key].Sum(x => x.Debtor - x.Creditor)
                     : 0;
-
-                PreferentialAcReportEntities.Add(new PreferentialAcReport
+                var preferential = new PreferentialAcReport
                 {
                     Id = Guid.NewGuid(),
                     FkMoein = anyRecord.FkMoein,
                     FkPreferential = anyRecord.FkPreferential,
                     SumDebtor = sumDebtor,
                     SumCreditor = sumCreditor,
-                    BeforeSum = beforeSum
-                });
+                    BeforeSum = beforeSum                    
+                };
+                if (groupedY.ContainsKey(key))
+                    preferential.acDocumentDetails = groupedY[key].ToObservableCollection();
+
+                PreferentialAcReportEntities.Add(preferential);
             }
 
             if (control.SelectedIndex == 3)
             {
-                datagrid.SearchHelper.AllowFiltering = true;
+                datagridPreferential.SearchHelper.AllowFiltering = true;
                 try
                 {
                     dataPager.Source = null;
@@ -591,8 +655,21 @@ namespace WpfRaziLedgerApp
                     dataPager.Source = new ObservableCollection<PreferentialAcReport>();
                 }
                 catch (Exception ex) { }
-                dataPager.Source = PreferentialAcReportEntities;
+                try
+                {
+                    dataPager.Source = PreferentialAcReportEntities;
+                }
+                catch (Exception ex) { }
+                datagridPreferential.ItemsSource=dataPager.Source;
             }
+
+            System.IO.File.WriteAllLines(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WpfSimReport", "reportOption.txt"), new string[] 
+            {
+                txtFromDoc.Text == "" ? "اول" : txtFromDoc.Text,
+            txtToDoc.Text == "" ? "آخر" : txtToDoc.Text,
+             txbCalender.Text == "" ? "ابتدای دوره" : txbCalender.Text,
+            txbCalender2.Text == "" ? "انتهای دوره" : txbCalender2.Text
+        });
 
             Mouse.OverrideCursor = null;
         }
@@ -616,7 +693,7 @@ namespace WpfRaziLedgerApp
 
         private void btnFilter_Click(object sender, RoutedEventArgs e)
         {
-            var datagridF=control.SelectedContent as Syncfusion.UI.Xaml.Grid.SfDataGrid;
+            var datagridF = control.SelectedContent as Syncfusion.UI.Xaml.Grid.SfDataGrid;
             datagridF.AllowFiltering = !datagridF.AllowFiltering;
             if (!datagridF.AllowFiltering)
                 datagridF.ClearFilters();
@@ -753,7 +830,7 @@ namespace WpfRaziLedgerApp
                     catch { }
                     break;
                 case 2:
-                    datagridCol.SearchHelper.AllowFiltering = true;
+                    datagridMoein.SearchHelper.AllowFiltering = true;
                     try
                     {
                         dataPager.Source = null;
@@ -766,7 +843,7 @@ namespace WpfRaziLedgerApp
                     catch { }
                     break;
                 case 3:
-                    datagridCol.SearchHelper.AllowFiltering = true;
+                    datagridPreferential.SearchHelper.AllowFiltering = true;
                     try
                     {
                         dataPager.Source = null;
@@ -778,7 +855,47 @@ namespace WpfRaziLedgerApp
                     }
                     catch { }
                     break;
+                    case 4:
+                    //if (datagridِDetails.ItemsSource is Syncfusion.UI.Xaml.Grid.GridPagedCollectionViewWrapper gridPagedCollectionView)
+                    //{
+                    //    if(gridPagedCollectionView.Records.Count>0&& !(gridPagedCollectionView.Records[0] is AcDocumentDetail)&& !(dataPager.Source is ObservableCollection<AcDocumentDetail>))
+                    //        try
+                    //        {
+                                dataPager.Source = null;
+                    //        }
+                    //        catch { }
+                    //}
+                    break;
             }
+        }
+
+        private void datagrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var datagridF = control.SelectedContent as Syncfusion.UI.Xaml.Grid.SfDataGrid;
+            if (datagridF.SelectedItem is PreferentialAcReport baseBrowseAccounts)
+            {
+                datagridF.SearchHelper.AllowFiltering = true;
+                try
+                {
+                    dataPager.Source = null;
+                }
+                catch { }
+                try
+                {
+                    dataPager.Source = baseBrowseAccounts.acDocumentDetails;
+                }
+                catch { }
+                control.SelectionChanged -= control_SelectionChanged;
+                control.SelectedIndex = 4;
+                control.SelectionChanged += control_SelectionChanged;
+            }
+        }
+
+        private void datagridCol_Loaded(object sender, RoutedEventArgs e)
+        {
+            var datagridF = control.SelectedContent as Syncfusion.UI.Xaml.Grid.SfDataGrid;
+            if (datagridF != null)
+                datagridF.ItemsSource = dataPager.Source;
         }
     }
 }

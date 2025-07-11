@@ -1,5 +1,4 @@
-﻿using Stimulsoft.Report;
-using Syncfusion.Linq;
+﻿using Syncfusion.Linq;
 using Syncfusion.Windows.Tools.Controls;
 using System;
 using System.Collections.Generic;

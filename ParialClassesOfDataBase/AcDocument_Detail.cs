@@ -84,5 +84,19 @@ namespace WpfRaziLedgerApp
             }
             set { }
         }
+        public string HeaderDate
+        {
+            get
+            {
+                return FkAcDocHeader.Date.ToPersianDateString();
+            }
+        }
+        public long HeaderNoDoument
+        {
+            get
+            {
+                return FkAcDocHeader.NoDoument;
+            }
+        }
     }
 }

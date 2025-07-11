@@ -1,16 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace WpfRaziLedgerApp
 {
     public class PreferentialAcReport
     {
+        [JsonIgnore]
+        public ObservableCollection<AcDocumentDetail> acDocumentDetails { get; set; }
+
         public Guid Id { get; set; }
+        [JsonIgnore]
         public Moein FkMoein { get; set; }
+        [JsonIgnore]
         public Preferential FkPreferential { get; set; }
         private string _Name;
         public string Name

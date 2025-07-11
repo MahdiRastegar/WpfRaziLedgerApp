@@ -233,6 +233,8 @@ namespace WpfRaziLedgerApp
                     SumDiscount = decimal.Parse(txtSumDiscount.Text.Replace(",", "")),
                     InvoiceDiscount = decimal.Parse(txtInvoiceDiscount.Text)
                 };
+                if(txtBuyRemittanceNumber.Text!="")
+                    e_addHeader.BuyRemittanceNumber = long.Parse(txtBuyRemittanceNumber.Text);
                 if (txtOrderNumber.Text != "")
                     e_addHeader.OrderNumber = long.Parse(txtOrderNumber.Text);
                 if (txtShippingCost.Text != "")
@@ -1012,6 +1014,7 @@ namespace WpfRaziLedgerApp
             txtPreferential.Text = string.Empty;
             Sf_txtPreferential.HasError = false;
             txtPreferentialName.Text = "";
+            txtBuyRemittanceNumber.Text = "";
 
             txtOrderNumber.Text = string.Empty;
             Sf_txtOrderNumber.HasError = false;
@@ -1455,6 +1458,8 @@ namespace WpfRaziLedgerApp
                     txtCarPlate.Text = header.CarPlate;
 
                     txtCarType.Text = header.CarType;
+
+                    txtBuyRemittanceNumber.Text = header.BuyRemittanceNumber.ToString();
 
                     txtShippingCost.Text = header.ShippingCost.ToString();
 
@@ -2141,6 +2146,19 @@ namespace WpfRaziLedgerApp
                 column2.Width = new GridLength(0);
                 morefields.Visibility = Visibility.Visible;
                 Sf_Description.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private void txtBuyRemittanceNumber_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (txtBuyRemittanceNumber.Text != "")
+            {
+                using var db = new wpfrazydbContext();
+                var number = long.Parse(txtBuyRemittanceNumber.Text);
+                if (db.ProductBuyHeaders.Any(t => t.BuyRemittanceNumber == number))
+                {
+                    Xceed.Wpf.Toolkit.MessageBox.Show("این شماره حواله تکراریست!");
+                }
             }
         }
 
