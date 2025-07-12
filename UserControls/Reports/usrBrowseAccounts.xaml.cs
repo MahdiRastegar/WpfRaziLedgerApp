@@ -190,488 +190,496 @@ namespace WpfRaziLedgerApp
         public ObservableCollection<ColAcReport> ColAcReportEntities { get; set; }
         private void btnConfirm_Click(object sender, RoutedEventArgs e)
         {
-            Mouse.OverrideCursor = Cursors.Wait;
-            using var db = new wpfrazydbContext();
-
-            List<AcDocumentDetail> data = null;
-
-            if (GAcClassEntities != null)
-                GAcClassEntities.Clear();
-            GAcClassEntities = new ObservableCollection<GAcClass>();
-            if (txtFromDoc.Text == "" && txtToDoc.Text == "" && txbCalender.Text == "" && txbCalender2.Text == "")
+            try
             {
-                data = db.AcDocumentDetails
-                    .Include(x => x.FkAcDocHeader)
-                    .Include(x => x.FkPreferential)
-    .Include(u => u.FkMoein)
-        .ThenInclude(w => w.FkCol)
-        .ThenInclude(w => w.FkGroup)
-    .AsNoTracking()
-    .ToList();
-            }
-            else
-            {
-                long fr = 0;
-                long to = long.MaxValue;
-                DateTime minx = DateTime.MinValue;
-                DateTime max = DateTime.MaxValue;
+                Mouse.OverrideCursor = Cursors.Wait;
+                using var db = new wpfrazydbContext();
 
-                if (txtFromDoc.Text != "")
-                    fr = long.Parse(txtFromDoc.Text);
-                if (txtToDoc.Text != "")
-                    to = long.Parse(txtToDoc.Text);
-                if (txbCalender.Text != "")
-                    minx = pcw1.SelectedDate.ToDateTime();
-                if (txbCalender2.Text != "")
-                    max = pcw2.SelectedDate.ToDateTime();
+                List<AcDocumentDetail> data = null;
 
-                data = db.AcDocumentDetails.Include(u => u.FkAcDocHeader).Where(t => t.FkAcDocHeader.NoDoument >= fr && t.FkAcDocHeader.NoDoument <= to && t.FkAcDocHeader.Date <= max && t.FkAcDocHeader.Date >= minx)
-                    .Include(x => x.FkAcDocHeader)
-                    .Include(x => x.FkPreferential)
-   .Include(u => u.FkMoein)
-       .ThenInclude(w => w.FkCol)
-       .ThenInclude(w => w.FkGroup)
-   .AsNoTracking()
-   .ToList();
-            }
-
-            var groupedX = data
-    .Where(y => y.FkMoein != null &&
-                y.FkMoein.FkCol != null &&
-                y.FkMoein.FkCol.FkGroup != null)
-     .GroupBy(y => y.FkMoein.FkCol.FkGroup.Id)
-    .ToList();
-            //var h = db.Moeins.Take(10).ToList();
-            //if(count>10)
-            //{
-            //    for (int i = 0; i < count-10; i++)
-            //    {
-            //        h.Add(null);
-            //    }
-            //}
-            groupedX.ForEach(u => GAcClassEntities.Add(
-                new GAcClass()
+                if (GAcClassEntities != null)
+                    GAcClassEntities.Clear();
+                GAcClassEntities = new ObservableCollection<GAcClass>();
+                if (txtFromDoc.Text == "" && txtToDoc.Text == "" && txbCalender.Text == "" && txbCalender2.Text == "")
                 {
-                    Id = Guid.NewGuid(),
-                    GroupCode = u.First().FkMoein.FkCol.FkGroup.GroupCode,
-                    GroupName = u.First().FkMoein.FkCol.FkGroup.GroupName,
-                    SumDebtor = u.Sum(w => w.Debtor),
-                    SumCreditor = u.Sum(w => w.Creditor),
-                    //acDocumentDetails = u.ToObservableCollection()
-                }));
-            if (control.SelectedIndex == 0)
-            {
-                datagrid.SearchHelper.AllowFiltering = true;
-                try
-                {
-                    dataPager.Source = null;
+                    data = db.AcDocumentDetails
+                        .Include(x => x.FkAcDocHeader)
+                        .Include(x => x.FkPreferential)
+        .Include(u => u.FkMoein)
+            .ThenInclude(w => w.FkCol)
+            .ThenInclude(w => w.FkGroup)
+        .AsNoTracking()
+        .ToList();
                 }
-                catch { }
-                try
+                else
                 {
-                    dataPager.Source = new ObservableCollection<GAcClass>();
-                }
-                catch (Exception ex) { }
-                try
-                {
-                    dataPager.Source = GAcClassEntities;
-                }
-                catch (Exception ex) { }
-                //datagrid.ItemsSource=dataPager.Source;
-            }
-            //var options = new JsonSerializerOptions
-            //{
-            //    Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-            //    WriteIndented = true
-            //};
-            //string jsonString = JsonSerializer.Serialize(BrowseAccountsEntities, options);
-            //System.IO.File.WriteAllText(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "output.json"), jsonString);
+                    long fr = 0;
+                    long to = long.MaxValue;
+                    DateTime minx = DateTime.MinValue;
+                    DateTime max = DateTime.MaxValue;
 
-            DateTime min = DateTime.MinValue;
-            if (ColAcReportEntities != null)
+                    if (txtFromDoc.Text != "")
+                        fr = long.Parse(txtFromDoc.Text);
+                    if (txtToDoc.Text != "")
+                        to = long.Parse(txtToDoc.Text);
+                    if (txbCalender.Text != "")
+                        minx = pcw1.SelectedDate.ToDateTime();
+                    if (txbCalender2.Text != "")
+                        max = pcw2.SelectedDate.ToDateTime();
+
+                    data = db.AcDocumentDetails.Include(u => u.FkAcDocHeader).Where(t => t.FkAcDocHeader.NoDoument >= fr && t.FkAcDocHeader.NoDoument <= to && t.FkAcDocHeader.Date <= max && t.FkAcDocHeader.Date >= minx)
+                        .Include(x => x.FkAcDocHeader)
+                        .Include(x => x.FkPreferential)
+       .Include(u => u.FkMoein)
+           .ThenInclude(w => w.FkCol)
+           .ThenInclude(w => w.FkGroup)
+       .AsNoTracking()
+       .ToList();
+                }
+
+                var groupedX = data
+        .Where(y => y.FkMoein != null &&
+                    y.FkMoein.FkCol != null &&
+                    y.FkMoein.FkCol.FkGroup != null)
+         .GroupBy(y => y.FkMoein.FkCol.FkGroup.Id)
+        .ToList();
+                //var h = db.Moeins.Take(10).ToList();
+                //if(count>10)
+                //{
+                //    for (int i = 0; i < count-10; i++)
+                //    {
+                //        h.Add(null);
+                //    }
+                //}
+                groupedX.ForEach(u => GAcClassEntities.Add(
+                    new GAcClass()
+                    {
+                        Id = Guid.NewGuid(),
+                        GroupCode = u.First().FkMoein.FkCol.FkGroup.GroupCode,
+                        GroupName = u.First().FkMoein.FkCol.FkGroup.GroupName,
+                        SumDebtor = u.Sum(w => w.Debtor),
+                        SumCreditor = u.Sum(w => w.Creditor),
+                        //acDocumentDetails = u.ToObservableCollection()
+                    }));
+                if (control.SelectedIndex == 0)
+                {
+                    datagrid.SearchHelper.AllowFiltering = true;
+                    try
+                    {
+                        dataPager.Source = null;
+                    }
+                    catch { }
+                    try
+                    {
+                        dataPager.Source = new ObservableCollection<GAcClass>();
+                    }
+                    catch (Exception ex) { }
+                    try
+                    {
+                        dataPager.Source = GAcClassEntities;
+                    }
+                    catch (Exception ex) { }
+                    //datagrid.ItemsSource=dataPager.Source;
+                }
+                //var options = new JsonSerializerOptions
+                //{
+                //    Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                //    WriteIndented = true
+                //};
+                //string jsonString = JsonSerializer.Serialize(BrowseAccountsEntities, options);
+                //System.IO.File.WriteAllText(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "output.json"), jsonString);
+
+                DateTime min = DateTime.MinValue;
+                if (ColAcReportEntities != null)
+                    ColAcReportEntities.Clear();
+                ColAcReportEntities = new ObservableCollection<ColAcReport>();
+                if (txtFromDoc.Text == "" && txtToDoc.Text == "" && txbCalender.Text == "" && txbCalender2.Text == "")
+                {
+                    data = db.AcDocumentDetails
+                        .Include(x => x.FkAcDocHeader)
+                        .Include(x => x.FkPreferential)
+        .Include(u => u.FkMoein)
+            .ThenInclude(w => w.FkCol)
+        .AsNoTracking()
+        .ToList();
+                }
+                else
+                {
+                    long fr = 0;
+                    long to = long.MaxValue;
+                    DateTime max = DateTime.MaxValue;
+
+                    if (txtFromDoc.Text != "")
+                        fr = long.Parse(txtFromDoc.Text);
+                    if (txtToDoc.Text != "")
+                        to = long.Parse(txtToDoc.Text);
+                    if (txbCalender.Text != "")
+                        min = pcw1.SelectedDate.ToDateTime();
+                    if (txbCalender2.Text != "")
+                        max = pcw2.SelectedDate.ToDateTime();
+
+                    // جمع داده‌ها طبق شرایط کاربر
+                    data = db.AcDocumentDetails
+                        .Include(x => x.FkAcDocHeader)
+                        .Include(x => x.FkPreferential)
+                        .Where(t => t.FkAcDocHeader.NoDoument >= fr &&
+                                    t.FkAcDocHeader.NoDoument <= to &&
+                                    t.FkAcDocHeader.Date <= max &&
+                                    t.FkAcDocHeader.Date >= min)
+                        .Include(u => u.FkMoein)
+                            .ThenInclude(w => w.FkCol)
+                        .AsNoTracking()
+                        .ToList();
+                }
+                // داده‌های قبل از min
+                List<AcDocumentDetail> beforeData = new();
+                if (min != DateTime.MinValue)
+                {
+                    beforeData = db.AcDocumentDetails
+                        .Include(t => t.FkAcDocHeader)
+                        .Include(t => t.FkMoein)
+                            .ThenInclude(w => w.FkCol)
+                        .Where(t => t.FkAcDocHeader.Date < min)
+                        .AsNoTracking()
+                        .ToList();
+                }
+
+                // گروه‌بندی داده‌ها
+                var grouped = data
+                    .Where(y => y.FkMoein != null && y.FkMoein.FkCol != null)
+                    .GroupBy(y => y.FkMoein.FkCol.Id)
+                    .ToDictionary(g => g.Key, g => g.ToList());
+
+                var beforeGrouped = beforeData
+                    .Where(y => y.FkMoein != null && y.FkMoein.FkCol != null)
+                    .GroupBy(y => y.FkMoein.FkCol.Id)
+                    .ToDictionary(g => g.Key, g => g.ToList());
+
+                // مجموع همه کلیدهای موجود
+                var allKeys = grouped.Keys
+                    .Union(beforeGrouped.Keys)
+                    .Distinct()
+                    .ToList();
+
+                // تولید گزارش نهایی
                 ColAcReportEntities.Clear();
-            ColAcReportEntities = new ObservableCollection<ColAcReport>();
-            if (txtFromDoc.Text == "" && txtToDoc.Text == "" && txbCalender.Text == "" && txbCalender2.Text == "")
-            {
-                data = db.AcDocumentDetails
-                    .Include(x => x.FkAcDocHeader)
-                    .Include(x => x.FkPreferential)
-    .Include(u => u.FkMoein)
-        .ThenInclude(w => w.FkCol)
-    .AsNoTracking()
-    .ToList();
-            }
-            else
-            {
-                long fr = 0;
-                long to = long.MaxValue;
-                DateTime max = DateTime.MaxValue;
 
-                if (txtFromDoc.Text != "")
-                    fr = long.Parse(txtFromDoc.Text);
-                if (txtToDoc.Text != "")
-                    to = long.Parse(txtToDoc.Text);
-                if (txbCalender.Text != "")
-                    min = pcw1.SelectedDate.ToDateTime();
-                if (txbCalender2.Text != "")
-                    max = pcw2.SelectedDate.ToDateTime();
+                foreach (var colId in allKeys)
+                {
+                    var anyRecord = grouped.ContainsKey(colId) ? grouped[colId].First() :
+                                    beforeGrouped[colId].First();
 
-                // جمع داده‌ها طبق شرایط کاربر
-                data = db.AcDocumentDetails
-                    .Include(x => x.FkAcDocHeader)
-                    .Include(x => x.FkPreferential)
-                    .Where(t => t.FkAcDocHeader.NoDoument >= fr &&
-                                t.FkAcDocHeader.NoDoument <= to &&
-                                t.FkAcDocHeader.Date <= max &&
-                                t.FkAcDocHeader.Date >= min)
-                    .Include(u => u.FkMoein)
-                        .ThenInclude(w => w.FkCol)
-                    .AsNoTracking()
+                    var colCode = anyRecord.FkMoein.FkCol.ColCode;
+                    var colName = anyRecord.FkMoein.FkCol.ColName;
+
+                    decimal? sumDebtor = grouped.ContainsKey(colId) ? grouped[colId].Sum(x => x.Debtor) : 0;
+                    decimal? sumCreditor = grouped.ContainsKey(colId) ? grouped[colId].Sum(x => x.Creditor) : 0;
+                    decimal? beforeSum = beforeGrouped.ContainsKey(colId) ?
+                                     beforeGrouped[colId].Sum(x => x.Debtor - x.Creditor) : 0;
+
+                    ColAcReportEntities.Add(new ColAcReport
+                    {
+                        Id = Guid.NewGuid(),
+                        ColCode = colCode,
+                        ColName = colName,
+                        SumDebtor = sumDebtor,
+                        SumCreditor = sumCreditor,
+                        BeforeSum = beforeSum,
+                        //acDocumentDetails = grouped[colId].ToObservableCollection()
+                    });
+                }
+                if (control.SelectedIndex == 1)
+                {
+                    datagridCol.SearchHelper.AllowFiltering = true;
+                    try
+                    {
+                        dataPager2.Source = null;
+                    }
+                    catch { }
+                    try
+                    {
+                        dataPager2.Source = new ObservableCollection<ColAcReport>();
+                    }
+                    catch (Exception ex) { }
+                    try
+                    {
+                        dataPager2.Source = ColAcReportEntities;
+                    }
+                    catch (Exception ex) { }
+                    //datagridCol.ItemsSource=dataPager.Source;
+                }
+
+                if (MoeinAcReportEntities != null)
+                    MoeinAcReportEntities.Clear();
+                MoeinAcReportEntities = new ObservableCollection<MoeinAcReport>();
+                if (txtFromDoc.Text == "" && txtToDoc.Text == "" && txbCalender.Text == "" && txbCalender2.Text == "")
+                {
+                    data = db.AcDocumentDetails
+                        .Include(x => x.FkAcDocHeader)
+                        .Include(x => x.FkPreferential)
+        .Include(u => u.FkMoein)
+            .ThenInclude(w => w.FkCol)
+        .AsNoTracking()
+        .ToList();
+                }
+                else
+                {
+                    long fr = 0;
+                    long to = long.MaxValue;
+                    DateTime max = DateTime.MaxValue;
+
+                    if (txtFromDoc.Text != "")
+                        fr = long.Parse(txtFromDoc.Text);
+                    if (txtToDoc.Text != "")
+                        to = long.Parse(txtToDoc.Text);
+                    if (txbCalender.Text != "")
+                        min = pcw1.SelectedDate.ToDateTime();
+                    if (txbCalender2.Text != "")
+                        max = pcw2.SelectedDate.ToDateTime();
+
+                    // داده اصلی
+                    data = db.AcDocumentDetails
+                        .Include(x => x.FkAcDocHeader)
+                        .Include(x => x.FkPreferential)
+                        .Include(x => x.FkMoein)
+                            .ThenInclude(m => m.FkCol)
+                        .Where(t => t.FkAcDocHeader.NoDoument >= fr &&
+                                    t.FkAcDocHeader.NoDoument <= to &&
+                                    t.FkAcDocHeader.Date <= max &&
+                                    t.FkAcDocHeader.Date >= min)
+                        .AsNoTracking()
+                        .ToList();
+                }
+
+                // داده‌های قبل از بازه برای مانده اول
+                beforeData = new();
+                if (min != DateTime.MinValue)
+                {
+                    beforeData = db.AcDocumentDetails
+                        .Include(x => x.FkAcDocHeader)
+                        .Include(x => x.FkMoein)
+                            .ThenInclude(m => m.FkCol)
+                        .Where(t => t.FkAcDocHeader.Date < min)
+                        .AsNoTracking()
+                        .ToList();
+                }
+
+                // گروه‌بندی داده‌ها بر اساس MoeinId
+                grouped = data
+                    .Where(y => y.FkMoein != null && y.FkMoein.FkCol != null)
+                    .GroupBy(y => y.FkMoein.Id)
+                    .ToDictionary(g => g.Key, g => g.ToList());
+
+                beforeGrouped = beforeData
+                    .Where(y => y.FkMoein != null && y.FkMoein.FkCol != null)
+                    .GroupBy(y => y.FkMoein.Id)
+                    .ToDictionary(g => g.Key, g => g.ToList());
+
+                // کلیدهای یکتا از هر دو
+                allKeys = grouped.Keys
+                    .Union(beforeGrouped.Keys)
+                    .Distinct()
                     .ToList();
-            }
-            // داده‌های قبل از min
-            List<AcDocumentDetail> beforeData = new();
-            if (min != DateTime.MinValue)
-            {
-                beforeData = db.AcDocumentDetails
-                    .Include(t => t.FkAcDocHeader)
-                    .Include(t => t.FkMoein)
-                        .ThenInclude(w => w.FkCol)
-                    .Where(t => t.FkAcDocHeader.Date < min)
-                    .AsNoTracking()
+
+                foreach (var moeinId in allKeys)
+                {
+                    var anyRecord = grouped.ContainsKey(moeinId)
+                        ? grouped[moeinId].First()
+                        : beforeGrouped[moeinId].First();
+
+                    var moeinCode = anyRecord.FkMoein.MoeinCode;
+                    var moeinName = anyRecord.FkMoein.MoeinName;
+                    var colCode = anyRecord.FkMoein.FkCol.ColCode;
+                    var colName = anyRecord.FkMoein.FkCol.ColName;
+
+                    var sumDebtor = grouped.ContainsKey(moeinId)
+                        ? grouped[moeinId].Sum(x => x.Debtor)
+                        : 0;
+
+                    var sumCreditor = grouped.ContainsKey(moeinId)
+                        ? grouped[moeinId].Sum(x => x.Creditor)
+                        : 0;
+
+                    var beforeSum = beforeGrouped.ContainsKey(moeinId)
+                        ? beforeGrouped[moeinId].Sum(x => x.Debtor - x.Creditor)
+                        : 0;
+
+                    MoeinAcReportEntities.Add(new MoeinAcReport
+                    {
+                        Id = Guid.NewGuid(),
+                        MoeinCode = moeinCode,
+                        MoeinName = moeinName,
+                        ColCode = colCode,
+                        ColName = colName,
+                        SumDebtor = sumDebtor,
+                        SumCreditor = sumCreditor,
+                        BeforeSum = beforeSum,
+                        //acDocumentDetails = grouped[moeinId].ToObservableCollection()
+                    });
+                }
+                if (control.SelectedIndex == 2)
+                {
+                    datagridMoein.SearchHelper.AllowFiltering = true;
+                    try
+                    {
+                        dataPager3.Source = null;
+                    }
+                    catch { }
+                    try
+                    {
+                        dataPager3.Source = new ObservableCollection<MoeinAcReport>();
+                    }
+                    catch (Exception ex) { }
+                    try
+                    {
+                        dataPager3.Source = MoeinAcReportEntities;
+                    }
+                    catch (Exception ex) { }
+                    //datagridMoein.ItemsSource=dataPager.Source;
+                }
+
+
+                if (PreferentialAcReportEntities != null)
+                    PreferentialAcReportEntities.Clear();
+                PreferentialAcReportEntities = new ObservableCollection<PreferentialAcReport>();
+                if (txtFromDoc.Text == "" && txtToDoc.Text == "" && txbCalender.Text == "" && txbCalender2.Text == "")
+                {
+                    data = db.AcDocumentDetails
+        .Include(x => x.FkAcDocHeader)
+        .Include(x => x.FkPreferential)
+        .Include(x => x.FkMoein)
+            .ThenInclude(m => m.FkCol)
+        .AsNoTracking()
+        .ToList();
+                }
+                else
+                {
+                    long fr = 0;
+                    long to = long.MaxValue;
+                    DateTime max = DateTime.MaxValue;
+
+                    if (txtFromDoc.Text != "")
+                        fr = long.Parse(txtFromDoc.Text);
+                    if (txtToDoc.Text != "")
+                        to = long.Parse(txtToDoc.Text);
+                    if (txbCalender.Text != "")
+                        min = pcw1.SelectedDate.ToDateTime();
+                    if (txbCalender2.Text != "")
+                        max = pcw2.SelectedDate.ToDateTime();
+
+                    // داده اصلی
+                    data = db.AcDocumentDetails
+        .Include(x => x.FkAcDocHeader)
+        .Include(x => x.FkPreferential)
+        .Include(x => x.FkMoein)
+            .ThenInclude(m => m.FkCol)
+        .Where(t => t.FkAcDocHeader.NoDoument >= fr &&
+                    t.FkAcDocHeader.NoDoument <= to &&
+                    t.FkAcDocHeader.Date <= max &&
+                    t.FkAcDocHeader.Date >= min)
+        .AsNoTracking()
+        .ToList();
+                }
+                // داده‌های قبل از min برای مانده اول
+                beforeData = new();
+                if (min != DateTime.MinValue)
+                {
+                    beforeData = db.AcDocumentDetails
+                        .Include(x => x.FkAcDocHeader)
+                        .Include(x => x.FkPreferential)
+                        .Include(x => x.FkMoein)
+                            .ThenInclude(m => m.FkCol)
+                        .Where(t => t.FkAcDocHeader.Date < min)
+                        .AsNoTracking()
+                        .ToList();
+                }
+
+                // گروه‌بندی: بر اساس ترکیب Preferential و Moein
+                var groupedY = data
+                    .Where(x => x.FkPreferential != null && x.FkMoein != null)
+                    .GroupBy(x => new { PrefId = x.FkPreferential.Id, MoeinId = x.FkMoein.Id })
+                    .ToDictionary(g => g.Key, g => g.ToList());
+
+                var beforeGroupedY = beforeData
+                    .Where(x => x.FkPreferential != null && x.FkMoein != null)
+                    .GroupBy(x => new { PrefId = x.FkPreferential.Id, MoeinId = x.FkMoein.Id })
+                    .ToDictionary(g => g.Key, g => g.ToList());
+
+                // همه کلیدها (ترکیب‌های یکتا)
+                var allKeysY = groupedY.Keys
+                    .Union(beforeGroupedY.Keys)
+                    .Distinct()
                     .ToList();
-            }
 
-            // گروه‌بندی داده‌ها
-            var grouped = data
-                .Where(y => y.FkMoein != null && y.FkMoein.FkCol != null)
-                .GroupBy(y => y.FkMoein.FkCol.Id)
-                .ToDictionary(g => g.Key, g => g.ToList());
-
-            var beforeGrouped = beforeData
-                .Where(y => y.FkMoein != null && y.FkMoein.FkCol != null)
-                .GroupBy(y => y.FkMoein.FkCol.Id)
-                .ToDictionary(g => g.Key, g => g.ToList());
-
-            // مجموع همه کلیدهای موجود
-            var allKeys = grouped.Keys
-                .Union(beforeGrouped.Keys)
-                .Distinct()
-                .ToList();
-
-            // تولید گزارش نهایی
-            ColAcReportEntities.Clear();
-
-            foreach (var colId in allKeys)
-            {
-                var anyRecord = grouped.ContainsKey(colId) ? grouped[colId].First() :
-                                beforeGrouped[colId].First();
-
-                var colCode = anyRecord.FkMoein.FkCol.ColCode;
-                var colName = anyRecord.FkMoein.FkCol.ColName;
-
-                decimal? sumDebtor = grouped.ContainsKey(colId) ? grouped[colId].Sum(x => x.Debtor) : 0;
-                decimal? sumCreditor = grouped.ContainsKey(colId) ? grouped[colId].Sum(x => x.Creditor) : 0;
-                decimal? beforeSum = beforeGrouped.ContainsKey(colId) ?
-                                 beforeGrouped[colId].Sum(x => x.Debtor - x.Creditor) : 0;
-
-                ColAcReportEntities.Add(new ColAcReport
+                foreach (var key in allKeysY)
                 {
-                    Id = Guid.NewGuid(),
-                    ColCode = colCode,
-                    ColName = colName,
-                    SumDebtor = sumDebtor,
-                    SumCreditor = sumCreditor,
-                    BeforeSum = beforeSum,
-                    //acDocumentDetails = grouped[colId].ToObservableCollection()
-                });
-            }
-            if (control.SelectedIndex == 1)
-            {
-                datagridCol.SearchHelper.AllowFiltering = true;
-                try
-                {
-                    dataPager2.Source = null;
+                    var anyRecord = groupedY.ContainsKey(key)
+                        ? groupedY[key].First()
+                        : beforeGroupedY[key].First();
+
+                    var sumDebtor = groupedY.ContainsKey(key)
+                        ? groupedY[key].Sum(x => x.Debtor)
+                        : 0;
+
+                    var sumCreditor = groupedY.ContainsKey(key)
+                        ? groupedY[key].Sum(x => x.Creditor)
+                        : 0;
+
+                    var beforeSum = beforeGroupedY.ContainsKey(key)
+                        ? beforeGroupedY[key].Sum(x => x.Debtor - x.Creditor)
+                        : 0;
+                    var preferential = new PreferentialAcReport
+                    {
+                        Id = Guid.NewGuid(),
+                        FkMoein = anyRecord.FkMoein,
+                        FkPreferential = anyRecord.FkPreferential,
+                        SumDebtor = sumDebtor,
+                        SumCreditor = sumCreditor,
+                        BeforeSum = beforeSum
+                    };
+                    if (groupedY.ContainsKey(key))
+                        preferential.acDocumentDetails = groupedY[key].ToObservableCollection();
+
+                    PreferentialAcReportEntities.Add(preferential);
                 }
-                catch { }
-                try
+
+                if (control.SelectedIndex == 3)
                 {
-                    dataPager2.Source = new ObservableCollection<ColAcReport>();
+                    datagridPreferential.SearchHelper.AllowFiltering = true;
+                    try
+                    {
+                        dataPager4.Source = null;
+                    }
+                    catch { }
+
+                    try
+                    {
+                        dataPager4.Source = new ObservableCollection<PreferentialAcReport>();
+                    }
+                    catch (Exception ex) { }
+                    try
+                    {
+                        dataPager4.Source = PreferentialAcReportEntities;
+                    }
+                    catch (Exception ex) { }
+                    //datagridPreferential.ItemsSource=dataPager.Source;
                 }
-                catch (Exception ex) { }
-                try
+
+                System.IO.File.WriteAllLines(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WpfSimReport", "reportOption.txt"), new string[]
                 {
-                    dataPager2.Source = ColAcReportEntities;
-                }
-                catch (Exception ex) { }
-                //datagridCol.ItemsSource=dataPager.Source;
-            }
-
-            if (MoeinAcReportEntities != null)
-                MoeinAcReportEntities.Clear();
-            MoeinAcReportEntities = new ObservableCollection<MoeinAcReport>();
-            if (txtFromDoc.Text == "" && txtToDoc.Text == "" && txbCalender.Text == "" && txbCalender2.Text == "")
-            {
-                data = db.AcDocumentDetails
-                    .Include(x => x.FkAcDocHeader)
-                    .Include(x => x.FkPreferential)
-    .Include(u => u.FkMoein)
-        .ThenInclude(w => w.FkCol)
-    .AsNoTracking()
-    .ToList();
-            }
-            else
-            {
-                long fr = 0;
-                long to = long.MaxValue;
-                DateTime max = DateTime.MaxValue;
-
-                if (txtFromDoc.Text != "")
-                    fr = long.Parse(txtFromDoc.Text);
-                if (txtToDoc.Text != "")
-                    to = long.Parse(txtToDoc.Text);
-                if (txbCalender.Text != "")
-                    min = pcw1.SelectedDate.ToDateTime();
-                if (txbCalender2.Text != "")
-                    max = pcw2.SelectedDate.ToDateTime();
-
-                // داده اصلی
-                data = db.AcDocumentDetails
-                    .Include(x => x.FkAcDocHeader)
-                    .Include(x => x.FkPreferential)
-                    .Include(x => x.FkMoein)
-                        .ThenInclude(m => m.FkCol)
-                    .Where(t => t.FkAcDocHeader.NoDoument >= fr &&
-                                t.FkAcDocHeader.NoDoument <= to &&
-                                t.FkAcDocHeader.Date <= max &&
-                                t.FkAcDocHeader.Date >= min)
-                    .AsNoTracking()
-                    .ToList();
-            }
-
-            // داده‌های قبل از بازه برای مانده اول
-            beforeData = new();
-            if (min != DateTime.MinValue)
-            {
-                beforeData = db.AcDocumentDetails
-                    .Include(x => x.FkAcDocHeader)
-                    .Include(x => x.FkMoein)
-                        .ThenInclude(m => m.FkCol)
-                    .Where(t => t.FkAcDocHeader.Date < min)
-                    .AsNoTracking()
-                    .ToList();
-            }
-
-            // گروه‌بندی داده‌ها بر اساس MoeinId
-            grouped = data
-                .Where(y => y.FkMoein != null && y.FkMoein.FkCol != null)
-                .GroupBy(y => y.FkMoein.Id)
-                .ToDictionary(g => g.Key, g => g.ToList());
-
-            beforeGrouped = beforeData
-                .Where(y => y.FkMoein != null && y.FkMoein.FkCol != null)
-                .GroupBy(y => y.FkMoein.Id)
-                .ToDictionary(g => g.Key, g => g.ToList());
-
-            // کلیدهای یکتا از هر دو
-            allKeys = grouped.Keys
-                .Union(beforeGrouped.Keys)
-                .Distinct()
-                .ToList();
-
-            foreach (var moeinId in allKeys)
-            {
-                var anyRecord = grouped.ContainsKey(moeinId)
-                    ? grouped[moeinId].First()
-                    : beforeGrouped[moeinId].First();
-
-                var moeinCode = anyRecord.FkMoein.MoeinCode;
-                var moeinName = anyRecord.FkMoein.MoeinName;
-                var colCode = anyRecord.FkMoein.FkCol.ColCode;
-                var colName = anyRecord.FkMoein.FkCol.ColName;
-
-                var sumDebtor = grouped.ContainsKey(moeinId)
-                    ? grouped[moeinId].Sum(x => x.Debtor)
-                    : 0;
-
-                var sumCreditor = grouped.ContainsKey(moeinId)
-                    ? grouped[moeinId].Sum(x => x.Creditor)
-                    : 0;
-
-                var beforeSum = beforeGrouped.ContainsKey(moeinId)
-                    ? beforeGrouped[moeinId].Sum(x => x.Debtor - x.Creditor)
-                    : 0;
-
-                MoeinAcReportEntities.Add(new MoeinAcReport
-                {
-                    Id = Guid.NewGuid(),
-                    MoeinCode = moeinCode,
-                    MoeinName = moeinName,
-                    ColCode = colCode,
-                    ColName = colName,
-                    SumDebtor = sumDebtor,
-                    SumCreditor = sumCreditor,
-                    BeforeSum = beforeSum,
-                    //acDocumentDetails = grouped[moeinId].ToObservableCollection()
-                });
-            }
-            if (control.SelectedIndex == 2)
-            {
-                datagridMoein.SearchHelper.AllowFiltering = true;
-                try
-                {
-                    dataPager3.Source = null;
-                }
-                catch { }
-                try
-                {
-                    dataPager3.Source = new ObservableCollection<MoeinAcReport>();
-                }
-                catch (Exception ex) { }
-                try
-                {
-                    dataPager3.Source = MoeinAcReportEntities;
-                }
-                catch (Exception ex) { }
-                //datagridMoein.ItemsSource=dataPager.Source;
-            }
-
-
-            if (PreferentialAcReportEntities != null)
-                PreferentialAcReportEntities.Clear();
-            PreferentialAcReportEntities = new ObservableCollection<PreferentialAcReport>();
-            if (txtFromDoc.Text == "" && txtToDoc.Text == "" && txbCalender.Text == "" && txbCalender2.Text == "")
-            {
-                data = db.AcDocumentDetails
-    .Include(x => x.FkAcDocHeader)
-    .Include(x => x.FkPreferential)
-    .Include(x => x.FkMoein)
-        .ThenInclude(m => m.FkCol)
-    .AsNoTracking()
-    .ToList();
-            }
-            else
-            {
-                long fr = 0;
-                long to = long.MaxValue;
-                DateTime max = DateTime.MaxValue;
-
-                if (txtFromDoc.Text != "")
-                    fr = long.Parse(txtFromDoc.Text);
-                if (txtToDoc.Text != "")
-                    to = long.Parse(txtToDoc.Text);
-                if (txbCalender.Text != "")
-                    min = pcw1.SelectedDate.ToDateTime();
-                if (txbCalender2.Text != "")
-                    max = pcw2.SelectedDate.ToDateTime();
-
-                // داده اصلی
-                data = db.AcDocumentDetails
-    .Include(x => x.FkAcDocHeader)
-    .Include(x => x.FkPreferential)
-    .Include(x => x.FkMoein)
-        .ThenInclude(m => m.FkCol)
-    .Where(t => t.FkAcDocHeader.NoDoument >= fr &&
-                t.FkAcDocHeader.NoDoument <= to &&
-                t.FkAcDocHeader.Date <= max &&
-                t.FkAcDocHeader.Date >= min)
-    .AsNoTracking()
-    .ToList();
-            }
-            // داده‌های قبل از min برای مانده اول
-            beforeData = new();
-            if (min != DateTime.MinValue)
-            {
-                beforeData = db.AcDocumentDetails
-                    .Include(x => x.FkAcDocHeader)
-                    .Include(x => x.FkPreferential)
-                    .Include(x => x.FkMoein)
-                        .ThenInclude(m => m.FkCol)
-                    .Where(t => t.FkAcDocHeader.Date < min)
-                    .AsNoTracking()
-                    .ToList();
-            }
-
-            // گروه‌بندی: بر اساس ترکیب Preferential و Moein
-            var groupedY = data
-                .Where(x => x.FkPreferential != null && x.FkMoein != null)
-                .GroupBy(x => new { PrefId = x.FkPreferential.Id, MoeinId = x.FkMoein.Id })
-                .ToDictionary(g => g.Key, g => g.ToList());
-
-            var beforeGroupedY = beforeData
-                .Where(x => x.FkPreferential != null && x.FkMoein != null)
-                .GroupBy(x => new { PrefId = x.FkPreferential.Id, MoeinId = x.FkMoein.Id })
-                .ToDictionary(g => g.Key, g => g.ToList());
-
-            // همه کلیدها (ترکیب‌های یکتا)
-            var allKeysY = groupedY.Keys
-                .Union(beforeGroupedY.Keys)
-                .Distinct()
-                .ToList();
-
-            foreach (var key in allKeysY)
-            {
-                var anyRecord = groupedY.ContainsKey(key)
-                    ? groupedY[key].First()
-                    : beforeGroupedY[key].First();
-
-                var sumDebtor = groupedY.ContainsKey(key)
-                    ? groupedY[key].Sum(x => x.Debtor)
-                    : 0;
-
-                var sumCreditor = groupedY.ContainsKey(key)
-                    ? groupedY[key].Sum(x => x.Creditor)
-                    : 0;
-
-                var beforeSum = beforeGroupedY.ContainsKey(key)
-                    ? beforeGroupedY[key].Sum(x => x.Debtor - x.Creditor)
-                    : 0;
-                var preferential = new PreferentialAcReport
-                {
-                    Id = Guid.NewGuid(),
-                    FkMoein = anyRecord.FkMoein,
-                    FkPreferential = anyRecord.FkPreferential,
-                    SumDebtor = sumDebtor,
-                    SumCreditor = sumCreditor,
-                    BeforeSum = beforeSum                    
-                };
-                if (groupedY.ContainsKey(key))
-                    preferential.acDocumentDetails = groupedY[key].ToObservableCollection();
-
-                PreferentialAcReportEntities.Add(preferential);
-            }
-
-            if (control.SelectedIndex == 3)
-            {
-                datagridPreferential.SearchHelper.AllowFiltering = true;
-                try
-                {
-                    dataPager4.Source = null;
-                }
-                catch { }
-
-                try
-                {
-                    dataPager4.Source = new ObservableCollection<PreferentialAcReport>();
-                }
-                catch (Exception ex) { }
-                try
-                {
-                    dataPager4.Source = PreferentialAcReportEntities;
-                }
-                catch (Exception ex) { }
-                //datagridPreferential.ItemsSource=dataPager.Source;
-            }
-
-            System.IO.File.WriteAllLines(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WpfSimReport", "reportOption.txt"), new string[] 
-            {
                 txtFromDoc.Text == "" ? "اول" : txtFromDoc.Text,
             txtToDoc.Text == "" ? "آخر" : txtToDoc.Text,
              txbCalender.Text == "" ? "ابتدای دوره" : txbCalender.Text,
             txbCalender2.Text == "" ? "انتهای دوره" : txbCalender2.Text
-        });
+            });
 
-            Mouse.OverrideCursor = null;
+                Mouse.OverrideCursor = null;
+            }
+            catch(Exception ex) 
+            {
+                Mouse.OverrideCursor = null;
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void pcw1_SelectedDateChanged(object sender, RoutedEventArgs e)
