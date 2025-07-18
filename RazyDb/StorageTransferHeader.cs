@@ -19,8 +19,10 @@ namespace WpfRaziLedgerApp
         public Guid FkStorageId { get; set; }
         public Guid FkCodingTypesTransferId { get; set; }
         public string Description { get; set; }
+        public Guid? FkPeriodId { get; set; }
 
         public virtual CodingTypesTransfer FkCodingTypesTransfer { get; set; }
+        public virtual Period FkPeriod { get; set; }
         public virtual Storage FkStorage { get; set; }
         public virtual ICollection<StorageTransferDetail> StorageTransferDetails { get; set; }
     }

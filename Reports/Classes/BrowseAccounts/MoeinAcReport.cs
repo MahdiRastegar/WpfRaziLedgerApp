@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace WpfRaziLedgerApp
@@ -53,5 +54,7 @@ namespace WpfRaziLedgerApp
                 return 0;
             }
         }
+        [JsonIgnore]
+        public Guid colId { get; set; }
     }
 }

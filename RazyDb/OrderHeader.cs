@@ -18,7 +18,9 @@ namespace WpfRaziLedgerApp
         public long NoDoument { get; set; }
         public Guid FkPreferentialId { get; set; }
         public string Description { get; set; }
+        public Guid? FkPeriodId { get; set; }
 
+        public virtual Period FkPeriod { get; set; }
         public virtual Preferential FkPreferential { get; set; }
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
     }

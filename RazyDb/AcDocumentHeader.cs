@@ -23,8 +23,10 @@ namespace WpfRaziLedgerApp
         public long Serial { get; set; }
         public long NoDoument { get; set; }
         public Guid FkDocumentTypeId { get; set; }
+        public Guid? FkPeriodId { get; set; }
 
         public virtual DocumentType FkDocumentType { get; set; }
+        public virtual Period FkPeriod { get; set; }
         public virtual ICollection<AcDocumentDetail> AcDocumentDetails { get; set; }
         public virtual ICollection<CheckPaymentEvent> CheckPaymentEvents { get; set; }
         public virtual ICollection<CheckRecieveEvent> CheckRecieveEvents { get; set; }

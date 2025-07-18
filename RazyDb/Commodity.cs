@@ -26,8 +26,10 @@ namespace WpfRaziLedgerApp
         public string Name { get; set; }
         public Guid FkUnitId { get; set; }
         public bool? Taxable { get; set; }
+        public Guid? FkPeriodId { get; set; }
 
         public virtual GroupCommodity FkGroup { get; set; }
+        public virtual Period FkPeriod { get; set; }
         public virtual Unit FkUnit { get; set; }
         public virtual ICollection<CommodityPricingPanel> CommodityPricingPanels { get; set; }
         public virtual ICollection<NpstorageDetail> NpstorageDetails { get; set; }

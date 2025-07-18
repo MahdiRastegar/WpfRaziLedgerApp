@@ -70,7 +70,7 @@ namespace WpfRaziLedgerApp
                     }
                     break;                    
                 case 1:
-                    if (ColAcReportEntities?.Count > 0)
+                    if (ColAcReportEntities?.Count > 0&& dataPager2.Source is IEnumerable<ColAcReport> source&&source.Count()>0)
                     {
                         Mouse.OverrideCursor = Cursors.Wait;
                         //switch (GAcClassEntities[0].GetType())
@@ -86,7 +86,7 @@ namespace WpfRaziLedgerApp
                             Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
                             WriteIndented = true
                         };
-                        string jsonString = JsonSerializer.Serialize(ColAcReportEntities, options);
+                        string jsonString = JsonSerializer.Serialize(source, options);
                         System.IO.File.WriteAllText(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WpfSimReport", "JSON", "ColAcReport.json"), jsonString);
                         Mouse.OverrideCursor = null;
                         
@@ -98,7 +98,7 @@ namespace WpfRaziLedgerApp
                     }
                     break;                    
                 case 2:
-                    if (MoeinAcReportEntities?.Count > 0)
+                    if (MoeinAcReportEntities?.Count > 0 && dataPager3.Source is IEnumerable<MoeinAcReport> source2 && source2.Count() > 0)
                     {
                         Mouse.OverrideCursor = Cursors.Wait;
                         //switch (GAcClassEntities[0].GetType())
@@ -114,7 +114,7 @@ namespace WpfRaziLedgerApp
                             Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
                             WriteIndented = true
                         };
-                        string jsonString = JsonSerializer.Serialize(MoeinAcReportEntities, options);
+                        string jsonString = JsonSerializer.Serialize(source2, options);
                         System.IO.File.WriteAllText(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WpfSimReport", "JSON", "MoeinAcReport.json"), jsonString);
                         Mouse.OverrideCursor = null;
                         Process process = new Process();
@@ -125,7 +125,7 @@ namespace WpfRaziLedgerApp
                     }
                     break;                    
                 case 3:
-                    if (PreferentialAcReportEntities?.Count > 0)
+                    if (PreferentialAcReportEntities?.Count > 0 && dataPager4.Source is IEnumerable<PreferentialAcReport> source3 && source3.Count() > 0)
                     {
                         Mouse.OverrideCursor = Cursors.Wait;
                         //switch (GAcClassEntities[0].GetType())
@@ -141,7 +141,7 @@ namespace WpfRaziLedgerApp
                             Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
                             WriteIndented = true
                         };
-                        string jsonString = JsonSerializer.Serialize(PreferentialAcReportEntities, options);
+                        string jsonString = JsonSerializer.Serialize(source3, options);
                         System.IO.File.WriteAllText(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WpfSimReport", "JSON", "PreferentialAcReport.json"), jsonString);
                         Mouse.OverrideCursor = null;
                         Process process = new Process();
@@ -254,11 +254,11 @@ namespace WpfRaziLedgerApp
                 groupedX.ForEach(u => GAcClassEntities.Add(
                     new GAcClass()
                     {
-                        Id = Guid.NewGuid(),
+                        Id = u.First().FkMoein.FkCol.FkGroup.Id,
                         GroupCode = u.First().FkMoein.FkCol.FkGroup.GroupCode,
                         GroupName = u.First().FkMoein.FkCol.FkGroup.GroupName,
                         SumDebtor = u.Sum(w => w.Debtor),
-                        SumCreditor = u.Sum(w => w.Creditor),
+                        SumCreditor = u.Sum(w => w.Creditor),                        
                         //acDocumentDetails = u.ToObservableCollection()
                     }));
                 if (control.SelectedIndex == 0)
@@ -379,12 +379,13 @@ namespace WpfRaziLedgerApp
 
                     ColAcReportEntities.Add(new ColAcReport
                     {
-                        Id = Guid.NewGuid(),
+                        Id = colId,
                         ColCode = colCode,
                         ColName = colName,
                         SumDebtor = sumDebtor,
                         SumCreditor = sumCreditor,
                         BeforeSum = beforeSum,
+                        AgroupId = anyRecord.FkMoein.FkCol.FkGroupId
                         //acDocumentDetails = grouped[colId].ToObservableCollection()
                     });
                 }
@@ -506,7 +507,7 @@ namespace WpfRaziLedgerApp
 
                     MoeinAcReportEntities.Add(new MoeinAcReport
                     {
-                        Id = Guid.NewGuid(),
+                        Id = moeinId,
                         MoeinCode = moeinCode,
                         MoeinName = moeinName,
                         ColCode = colCode,
@@ -514,6 +515,7 @@ namespace WpfRaziLedgerApp
                         SumDebtor = sumDebtor,
                         SumCreditor = sumCreditor,
                         BeforeSum = beforeSum,
+                        colId= anyRecord.FkMoein.FkColId
                         //acDocumentDetails = grouped[moeinId].ToObservableCollection()
                     });
                 }
@@ -635,7 +637,8 @@ namespace WpfRaziLedgerApp
                         FkPreferential = anyRecord.FkPreferential,
                         SumDebtor = sumDebtor,
                         SumCreditor = sumCreditor,
-                        BeforeSum = beforeSum
+                        BeforeSum = beforeSum,
+                        moeinId=anyRecord.FkMoeinId
                     };
                     if (groupedY.ContainsKey(key))
                         preferential.acDocumentDetails = groupedY[key].ToObservableCollection();
@@ -798,7 +801,13 @@ namespace WpfRaziLedgerApp
             PreferentialAcReportEntities.Clear();
             datagrid.Dispose();
             datagridCol.Dispose();
+            datagridMoein.Dispose();
+            datagridPreferential.Dispose();
             dataPager.Dispose();
+            dataPager2.Dispose();
+            dataPager3.Dispose();
+            dataPager4.Dispose();
+            dataPager5.Dispose();
             DataContext = null;
             GC.Collect();
         }
@@ -906,7 +915,91 @@ namespace WpfRaziLedgerApp
         private void datagrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             var datagridF = control.SelectedContent as Syncfusion.UI.Xaml.Grid.SfDataGrid;
-            if (datagridF.SelectedItem is PreferentialAcReport baseBrowseAccounts)
+            if (datagridF.SelectedItem is GAcClass gAcClass)
+            {
+                datagridCol.SearchHelper.AllowFiltering = true;
+                try
+                {
+                    dataPager2.Source = null;
+                }
+                catch { }
+                try
+                {
+                    dataPager2.Source = new ObservableCollection<ColAcReport>();
+                }
+                catch (Exception ex) { }
+                try
+                {
+                    dataPager2.Source = ColAcReportEntities.Where(u=>u.AgroupId==gAcClass.Id);
+                }
+                catch (Exception ex) { }
+
+                control.SelectionChanged -= control_SelectionChanged;
+                control.SelectedIndex = 1;
+                dataPager4.Visibility = Visibility.Collapsed;
+                dataPager3.Visibility = Visibility.Collapsed;
+                dataPager2.Visibility = Visibility.Visible;
+                dataPager2.Visibility = Visibility.Collapsed;
+                dataPager5.Visibility = Visibility.Collapsed;
+                control.SelectionChanged += control_SelectionChanged;
+            }
+            else if (datagridF.SelectedItem is ColAcReport colAcReport)
+            {
+                datagridMoein.SearchHelper.AllowFiltering = true;
+                try
+                {
+                    dataPager3.Source = null;
+                }
+                catch { }
+                try
+                {
+                    dataPager3.Source = new ObservableCollection<MoeinAcReport>();
+                }
+                catch (Exception ex) { }
+                try
+                {
+                    dataPager3.Source = MoeinAcReportEntities.Where(u => u.colId == colAcReport.Id);
+                }
+                catch (Exception ex) { }
+
+                control.SelectionChanged -= control_SelectionChanged;
+                control.SelectedIndex = 2;
+                dataPager4.Visibility = Visibility.Collapsed;
+                dataPager3.Visibility = Visibility.Visible;
+                dataPager2.Visibility = Visibility.Collapsed;
+                dataPager2.Visibility = Visibility.Collapsed;
+                dataPager5.Visibility = Visibility.Collapsed;
+                control.SelectionChanged += control_SelectionChanged;
+            }
+            else if (datagridF.SelectedItem is MoeinAcReport moeinAcReport)
+            {
+                datagridPreferential.SearchHelper.AllowFiltering = true;
+                try
+                {
+                    dataPager4.Source = null;
+                }
+                catch { }
+                try
+                {
+                    dataPager4.Source = new ObservableCollection<PreferentialAcReport>();
+                }
+                catch (Exception ex) { }
+                try
+                {
+                    dataPager4.Source = PreferentialAcReportEntities.Where(u => u.moeinId == moeinAcReport.Id);
+                }
+                catch (Exception ex) { }
+
+                control.SelectionChanged -= control_SelectionChanged;
+                control.SelectedIndex = 3;
+                dataPager4.Visibility = Visibility.Visible;
+                dataPager3.Visibility = Visibility.Collapsed;
+                dataPager2.Visibility = Visibility.Collapsed;
+                dataPager2.Visibility = Visibility.Collapsed;
+                dataPager5.Visibility = Visibility.Collapsed;
+                control.SelectionChanged += control_SelectionChanged;
+            }
+            else if (datagridF.SelectedItem is PreferentialAcReport baseBrowseAccounts)
             {
                 datagridF.SearchHelper.AllowFiltering = true;
                 try

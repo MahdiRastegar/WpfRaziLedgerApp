@@ -107,5 +107,7 @@ namespace WpfRaziLedgerApp
                 return 0;
             }
         }
+        [JsonIgnore]
+        public Guid? moeinId { get; set; }
     }
 }

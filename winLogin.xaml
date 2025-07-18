@@ -1,0 +1,60 @@
+﻿<Window x:Class="WpfRaziLedgerApp.winLogin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:Syncfusion="http://schemas.syncfusion.com/wpf" 
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" Closed="Window_Closed"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" Loaded="Window_Loaded"
+        xmlns:local="clr-namespace:WpfRaziLedgerApp" WindowStartupLocation="CenterScreen"  FontFamily="{StaticResource NewFont}"
+        mc:Ignorable="d" ResizeMode="NoResize"
+        Title="پنجره ورود" Height="383" Width="540">
+    <Grid FlowDirection="RightToLeft">
+        <Grid.RowDefinitions>
+            <RowDefinition  Height="3*"/>
+            <RowDefinition Height="80"/>
+        </Grid.RowDefinitions>
+        <StackPanel>
+            <Syncfusion:SfTextInputLayout  x:Name="Sf_txtUserGroup" OutlineCornerRadius="8" Hint="دوره" Width="300" Margin="0 20 0 -40">
+                <Syncfusion:ComboBoxAdv AutoCompleteMode="Suggest" IsEditable="True" PreviewKeyDown="cmbPeriod_PreviewKeyDown" SelectionChanged="cmbPeriod_SelectionChanged" FontSize="16" DisplayMemberPath="Name" x:Name="cmbPeriod" FlowDirection="RightToLeft"/>
+            </Syncfusion:SfTextInputLayout>
+            <Syncfusion:SfTextInputLayout Name="Sf_txtSubscription" Margin="30 50" OutlineCornerRadius="8" Hint="کاربر" Width="300" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <Syncfusion:ComboBoxAdv AutoCompleteMode="Suggest" IsEditable="True" PreviewKeyDown="cmbUsers_PreviewKeyDown" SelectionChanged="cmbUsers_SelectionChanged" FontSize="16" DisplayMemberPath="UserName" x:Name="cmbUsers" FlowDirection="RightToLeft"/>
+            </Syncfusion:SfTextInputLayout>
+            <StackPanel Margin="0 -50">
+                <!-- کنترل رمز عبور مخفی -->
+
+
+                <!-- کنترل نمایش رمز عبور -->
+                <Syncfusion:SfTextInputLayout Name="Sf_txtPassword" Margin="0 0" OutlineCornerRadius="8" Hint="رمز عبور" Width="300" VerticalAlignment="Top" HorizontalAlignment="Center">
+                    <PasswordBox Name="PasswordText" FontSize="18" FlowDirection="LeftToRight" PreviewKeyDown="PasswordText_PreviewKeyDown"/>
+                </Syncfusion:SfTextInputLayout>
+                <!-- چک‌باکس برای نمایش یا مخفی کردن رمز عبور -->
+                <!--
+                <CheckBox Content="نمایش رمز عبور"
+                  Margin="0,0,200,0"
+                  VerticalAlignment="Top" HorizontalAlignment="Center"
+                  Checked="ShowPassword_Checked"
+                  Unchecked="ShowPassword_Unchecked"/>-->
+            </StackPanel>
+        </StackPanel>
+        <DockPanel Grid.Row="1" HorizontalAlignment="Center">
+            <Button Style="{StaticResource CustomButtonStyle}" x:Name="btnPassword" Margin="0 0"  Width="90" Content="تغییر رمز" Click="btnPassword_Click" FontSize="20" Height="40">
+                <Button.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FFE0EEFF"/>
+                        <GradientStop Color="#FFA4B6DA" Offset="0.131"/>
+                        <GradientStop Color="#FFB8E9F9" Offset="1"/>
+                    </LinearGradientBrush>
+                </Button.Background>
+            </Button>
+            <Button Style="{StaticResource CustomButtonStyle}" x:Name="btnConfirm" HorizontalAlignment="Left" Margin="10 0" Width="90" Content="تایید" Click="btnConfirm_Click" FontSize="20" Height="40">
+                <Button.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FFE0EEFF"/>
+                        <GradientStop Color="#FF7B9EE2" Offset="0.131"/>
+                        <GradientStop Color="#FF67D9FF" Offset="1"/>
+                    </LinearGradientBrush>
+                </Button.Background>
+            </Button>
+        </DockPanel>
+    </Grid>
+</Window>

@@ -31,8 +31,10 @@ namespace WpfRaziLedgerApp
         public Guid? FkPreferentialIdPersonnel { get; set; }
         public Guid? FkAcDocument { get; set; }
         public long? BuyRemittanceNumber { get; set; }
+        public Guid? FkPeriodId { get; set; }
 
         public virtual AcDocumentHeader FkAcDocumentNavigation { get; set; }
+        public virtual Period FkPeriod { get; set; }
         public virtual Preferential FkPreferential { get; set; }
         public virtual Preferential FkPreferentialIdDriverNavigation { get; set; }
         public virtual Preferential FkPreferentialIdFreightNavigation { get; set; }

@@ -34,15 +34,23 @@ namespace WpfRaziLedgerApp
             get { return _TaxPercent; }
             set { _TaxPercent = value; }
         }
-
+        public StatusOptions StatusOptions { get; set; }
         public MainWindow()
         {
             InitializeComponent();
+            Hide();            
             ribbon.RibbonState = Syncfusion.Windows.Tools.RibbonState.Hide;
             Current = this;
-            using var db=new wpfrazydbContext();
-            if (db.CodeSettings.FirstOrDefault(i => i.Name == "TaxPercent") is CodeSetting codeSetting)
-                TaxPercent = int.Parse(codeSetting.Value);
+            try
+            {
+                using var db = new wpfrazydbContext();
+                if (db.CodeSettings.FirstOrDefault(i => i.Name == "TaxPercent") is CodeSetting codeSetting)
+                    TaxPercent = int.Parse(codeSetting.Value);
+            }
+            catch (Exception ex) 
+            {
+                Xceed.Wpf.Toolkit.MessageBox.Show(ex.Message, "خطای اتصال به دیتابیس", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
             var gifImage = new BitmapImage(new Uri("pack://application:,,,/Images/AddDataLarge.gif"));
             XamlAnimatedGif.AnimationBehavior.SetSourceUri(this.gifImage, gifImage.UriSource);
         }
@@ -732,6 +740,38 @@ namespace WpfRaziLedgerApp
             //report.Compile();
             //report.Render();
             //report.ShowWithWpf(); // یا: report.Print(); یا report.ExportDocument(StiExportFormat.Pdf, ...);
+        }
+
+        private void rbnUser_Click(object sender, RoutedEventArgs e)
+        {
+            var list = GetTabControlItems;
+            var item = list.FirstOrDefault(y => y.Header == "کاربر");
+            if (item != null)
+            {
+                tabcontrol.SelectedItem = item;
+            }
+            else
+            {
+                item = new TabItemExt() { Header = "کاربر" };
+                item.Content = new usrUser();
+                tabcontrol.Items.Add(item);
+            }
+        }
+
+        private void rbnUserGroup_Click(object sender, RoutedEventArgs e)
+        {
+            var list = GetTabControlItems;
+            var item = list.FirstOrDefault(y => y.Header == "گروه کاربر");
+            if (item != null)
+            {
+                tabcontrol.SelectedItem = item;
+            }
+            else
+            {
+                item = new TabItemExt() { Header = "گروه کاربر" };
+                item.Content = new usrUserGroup();
+                tabcontrol.Items.Add(item);
+            }
         }
     }
 }

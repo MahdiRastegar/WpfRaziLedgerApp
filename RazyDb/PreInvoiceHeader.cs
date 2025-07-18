@@ -19,7 +19,9 @@ namespace WpfRaziLedgerApp
         public decimal? InvoiceDiscount { get; set; }
         public string Description { get; set; }
         public decimal SumDiscount { get; set; }
+        public Guid? FkPeriodId { get; set; }
 
+        public virtual Period FkPeriod { get; set; }
         public virtual Preferential FkPreferential { get; set; }
         public virtual ICollection<PreInvoiceDetail> PreInvoiceDetails { get; set; }
     }

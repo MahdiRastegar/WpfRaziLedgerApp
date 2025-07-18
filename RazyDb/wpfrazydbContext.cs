@@ -43,6 +43,8 @@ namespace WpfRaziLedgerApp
         public virtual DbSet<OrderHeader> OrderHeaders { get; set; }
         public virtual DbSet<PaymentMoneyDetail> PaymentMoneyDetails { get; set; }
         public virtual DbSet<PaymentMoneyHeader> PaymentMoneyHeaders { get; set; }
+        public virtual DbSet<Period> Periods { get; set; }
+        public virtual DbSet<Permission> Permissions { get; set; }
         public virtual DbSet<PreInvoiceDetail> PreInvoiceDetails { get; set; }
         public virtual DbSet<PreInvoiceHeader> PreInvoiceHeaders { get; set; }
         public virtual DbSet<Preferential> Preferentials { get; set; }
@@ -54,6 +56,7 @@ namespace WpfRaziLedgerApp
         public virtual DbSet<Province> Provinces { get; set; }
         public virtual DbSet<RecieveMoneyDetail> RecieveMoneyDetails { get; set; }
         public virtual DbSet<RecieveMoneyHeader> RecieveMoneyHeaders { get; set; }
+        public virtual DbSet<RibbonItem> RibbonItems { get; set; }
         public virtual DbSet<Storage> Storages { get; set; }
         public virtual DbSet<StorageReceiptDetail> StorageReceiptDetails { get; set; }
         public virtual DbSet<StorageReceiptHeader> StorageReceiptHeaders { get; set; }
@@ -63,6 +66,9 @@ namespace WpfRaziLedgerApp
         public virtual DbSet<StorageTransferHeader> StorageTransferHeaders { get; set; }
         public virtual DbSet<TGroup> TGroups { get; set; }
         public virtual DbSet<Unit> Units { get; set; }
+        public virtual DbSet<UserApp> UserApps { get; set; }
+        public virtual DbSet<UserGroup> UserGroups { get; set; }
+        public virtual DbSet<Version> Versions { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -126,11 +132,18 @@ namespace WpfRaziLedgerApp
 
                 entity.Property(e => e.FkDocumentTypeId).HasColumnName("fk_DocumentTypeId");
 
+                entity.Property(e => e.FkPeriodId).HasColumnName("fkPeriodId");
+
                 entity.HasOne(d => d.FkDocumentType)
                     .WithMany(p => p.AcDocumentHeaders)
                     .HasForeignKey(d => d.FkDocumentTypeId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_AcDocument_Header_DocumentType");
+
+                entity.HasOne(d => d.FkPeriod)
+                    .WithMany(p => p.AcDocumentHeaders)
+                    .HasForeignKey(d => d.FkPeriodId)
+                    .HasConstraintName("FK_AcDocument_Header_Period");
             });
 
             modelBuilder.Entity<Agroup>(entity =>
@@ -174,6 +187,8 @@ namespace WpfRaziLedgerApp
 
                 entity.Property(e => e.FkMoeinId).HasColumnName("fk_MoeinId");
 
+                entity.Property(e => e.FkPeriodId).HasColumnName("fkPeriodId");
+
                 entity.Property(e => e.FkPreferentialId).HasColumnName("fk_PreferentialId");
 
                 entity.Property(e => e.Indexer).ValueGeneratedOnAdd();
@@ -201,6 +216,11 @@ namespace WpfRaziLedgerApp
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_CheckPaymentEvents_Moein");
 
+                entity.HasOne(d => d.FkPeriod)
+                    .WithMany(p => p.CheckPaymentEvents)
+                    .HasForeignKey(d => d.FkPeriodId)
+                    .HasConstraintName("FK_CheckPaymentEvent_Period");
+
                 entity.HasOne(d => d.FkPreferential)
                     .WithMany(p => p.CheckPaymentEvents)
                     .HasForeignKey(d => d.FkPreferentialId)
@@ -223,6 +243,8 @@ namespace WpfRaziLedgerApp
                 entity.Property(e => e.FkDetaiId).HasColumnName("fk_DetaiId");
 
                 entity.Property(e => e.FkMoeinId).HasColumnName("fk_MoeinId");
+
+                entity.Property(e => e.FkPeriodId).HasColumnName("fkPeriodId");
 
                 entity.Property(e => e.FkPreferentialId).HasColumnName("fk_PreferentialId");
 
@@ -250,6 +272,11 @@ namespace WpfRaziLedgerApp
                     .HasForeignKey(d => d.FkMoeinId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_CheckRecieveEvents_Moein");
+
+                entity.HasOne(d => d.FkPeriod)
+                    .WithMany(p => p.CheckRecieveEvents)
+                    .HasForeignKey(d => d.FkPeriodId)
+                    .HasConstraintName("FK_CheckRecieveEvent_Period");
 
                 entity.HasOne(d => d.FkPreferential)
                     .WithMany(p => p.CheckRecieveEvents)
@@ -321,6 +348,8 @@ namespace WpfRaziLedgerApp
 
                 entity.Property(e => e.FkGroupId).HasColumnName("fk_GroupId");
 
+                entity.Property(e => e.FkPeriodId).HasColumnName("fkPeriodId");
+
                 entity.Property(e => e.FkUnitId).HasColumnName("fk_UnitId");
 
                 entity.Property(e => e.Name).IsRequired();
@@ -330,6 +359,11 @@ namespace WpfRaziLedgerApp
                     .HasForeignKey(d => d.FkGroupId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Commodity_GroupCommodity");
+
+                entity.HasOne(d => d.FkPeriod)
+                    .WithMany(p => p.Commodities)
+                    .HasForeignKey(d => d.FkPeriodId)
+                    .HasConstraintName("FK_Commodity_Period");
 
                 entity.HasOne(d => d.FkUnit)
                     .WithMany(p => p.Commodities)
@@ -350,6 +384,8 @@ namespace WpfRaziLedgerApp
 
                 entity.Property(e => e.FkCommodityId).HasColumnName("fk_CommodityId");
 
+                entity.Property(e => e.FkPeriodId).HasColumnName("fkPeriodId");
+
                 entity.Property(e => e.FkPriceGroupId).HasColumnName("fk_PriceGroupId");
 
                 entity.HasOne(d => d.FkCommodity)
@@ -357,6 +393,11 @@ namespace WpfRaziLedgerApp
                     .HasForeignKey(d => d.FkCommodityId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_CommodityPricingPanel_Commodity");
+
+                entity.HasOne(d => d.FkPeriod)
+                    .WithMany(p => p.CommodityPricingPanels)
+                    .HasForeignKey(d => d.FkPeriodId)
+                    .HasConstraintName("FK_CommodityPricingPanel_Period");
 
                 entity.HasOne(d => d.FkPriceGroup)
                     .WithMany(p => p.CommodityPricingPanels)
@@ -520,7 +561,14 @@ namespace WpfRaziLedgerApp
 
                 entity.Property(e => e.Date).HasColumnType("date");
 
+                entity.Property(e => e.FkPeriodId).HasColumnName("fkPeriodId");
+
                 entity.Property(e => e.FkPreferentialId).HasColumnName("fk_PreferentialId");
+
+                entity.HasOne(d => d.FkPeriod)
+                    .WithMany(p => p.OrderHeaders)
+                    .HasForeignKey(d => d.FkPeriodId)
+                    .HasConstraintName("FK_OrderHeader_Period");
 
                 entity.HasOne(d => d.FkPreferential)
                     .WithMany(p => p.OrderHeaders)
@@ -583,6 +631,8 @@ namespace WpfRaziLedgerApp
 
                 entity.Property(e => e.FkMoeinId).HasColumnName("fk_MoeinId");
 
+                entity.Property(e => e.FkPeriodId).HasColumnName("fkPeriodId");
+
                 entity.Property(e => e.FkPreferentialId).HasColumnName("fk_PreferentialId");
 
                 entity.HasOne(d => d.FkAcDocumentNavigation)
@@ -595,10 +645,45 @@ namespace WpfRaziLedgerApp
                     .HasForeignKey(d => d.FkMoeinId)
                     .HasConstraintName("FK_PaymentMoneyHeader_Moein");
 
+                entity.HasOne(d => d.FkPeriod)
+                    .WithMany(p => p.PaymentMoneyHeaders)
+                    .HasForeignKey(d => d.FkPeriodId)
+                    .HasConstraintName("FK_PaymentMoneyHeader_Period");
+
                 entity.HasOne(d => d.FkPreferential)
                     .WithMany(p => p.PaymentMoneyHeaders)
                     .HasForeignKey(d => d.FkPreferentialId)
                     .HasConstraintName("FK_PaymentMoneyHeader_Preferential");
+            });
+
+            modelBuilder.Entity<Period>(entity =>
+            {
+                entity.ToTable("Period");
+
+                entity.Property(e => e.Id).ValueGeneratedNever();
+            });
+
+            modelBuilder.Entity<Permission>(entity =>
+            {
+                entity.ToTable("Permission");
+
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.FkRibbonItemId).HasColumnName("fkRibbonItemId");
+
+                entity.Property(e => e.FkUserGroupId).HasColumnName("fkUserGroupId");
+
+                entity.HasOne(d => d.FkRibbonItem)
+                    .WithMany(p => p.Permissions)
+                    .HasForeignKey(d => d.FkRibbonItemId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Permission_RibbonItem");
+
+                entity.HasOne(d => d.FkUserGroup)
+                    .WithMany(p => p.Permissions)
+                    .HasForeignKey(d => d.FkUserGroupId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Permission_UserGroup");
             });
 
             modelBuilder.Entity<PreInvoiceDetail>(entity =>
@@ -640,11 +725,18 @@ namespace WpfRaziLedgerApp
 
                 entity.Property(e => e.Date).HasColumnType("date");
 
+                entity.Property(e => e.FkPeriodId).HasColumnName("fkPeriodId");
+
                 entity.Property(e => e.FkPreferentialId).HasColumnName("fk_PreferentialId");
 
                 entity.Property(e => e.InvoiceDiscount).HasColumnType("decimal(18, 0)");
 
                 entity.Property(e => e.SumDiscount).HasColumnType("decimal(18, 0)");
+
+                entity.HasOne(d => d.FkPeriod)
+                    .WithMany(p => p.PreInvoiceHeaders)
+                    .HasForeignKey(d => d.FkPeriodId)
+                    .HasConstraintName("FK_PreInvoiceHeader_Period");
 
                 entity.HasOne(d => d.FkPreferential)
                     .WithMany(p => p.PreInvoiceHeaders)
@@ -723,6 +815,8 @@ namespace WpfRaziLedgerApp
 
                 entity.Property(e => e.FkAcDocument).HasColumnName("fkAcDocument");
 
+                entity.Property(e => e.FkPeriodId).HasColumnName("fkPeriodId");
+
                 entity.Property(e => e.FkPreferentialId).HasColumnName("fk_PreferentialId");
 
                 entity.Property(e => e.InvoiceDiscount).HasColumnType("decimal(18, 0)");
@@ -735,6 +829,11 @@ namespace WpfRaziLedgerApp
                     .WithMany(p => p.ProductBuyHeaders)
                     .HasForeignKey(d => d.FkAcDocument)
                     .HasConstraintName("FK_ProductBuyHeader_AcDocument");
+
+                entity.HasOne(d => d.FkPeriod)
+                    .WithMany(p => p.ProductBuyHeaders)
+                    .HasForeignKey(d => d.FkPeriodId)
+                    .HasConstraintName("FK_ProductBuyHeader_Period");
 
                 entity.HasOne(d => d.FkPreferential)
                     .WithMany(p => p.ProductBuyHeaders)
@@ -784,6 +883,8 @@ namespace WpfRaziLedgerApp
 
                 entity.Property(e => e.FkAcDocument).HasColumnName("fkAcDocument");
 
+                entity.Property(e => e.FkPeriodId).HasColumnName("fkPeriodId");
+
                 entity.Property(e => e.FkPreferentialId).HasColumnName("fk_PreferentialId");
 
                 entity.Property(e => e.FkPreferentialIdDriver).HasColumnName("fk_PreferentialId_driver");
@@ -804,6 +905,11 @@ namespace WpfRaziLedgerApp
                     .WithMany(p => p.ProductSellHeaders)
                     .HasForeignKey(d => d.FkAcDocument)
                     .HasConstraintName("FK_ProductSellHeader_AcDocument");
+
+                entity.HasOne(d => d.FkPeriod)
+                    .WithMany(p => p.ProductSellHeaders)
+                    .HasForeignKey(d => d.FkPeriodId)
+                    .HasConstraintName("FK_ProductSellHeader_Period");
 
                 entity.HasOne(d => d.FkPreferential)
                     .WithMany(p => p.ProductSellHeaderFkPreferentials)
@@ -895,6 +1001,8 @@ namespace WpfRaziLedgerApp
 
                 entity.Property(e => e.FkMoeinId).HasColumnName("fk_MoeinId");
 
+                entity.Property(e => e.FkPeriodId).HasColumnName("fkPeriodId");
+
                 entity.Property(e => e.FkPreferentialId).HasColumnName("fk_PreferentialId");
 
                 entity.HasOne(d => d.FkAcDocumentNavigation)
@@ -907,10 +1015,22 @@ namespace WpfRaziLedgerApp
                     .HasForeignKey(d => d.FkMoeinId)
                     .HasConstraintName("FK_RecieveMoneyHeader_Moein");
 
+                entity.HasOne(d => d.FkPeriod)
+                    .WithMany(p => p.RecieveMoneyHeaders)
+                    .HasForeignKey(d => d.FkPeriodId)
+                    .HasConstraintName("FK_RecieveMoneyHeader_Period");
+
                 entity.HasOne(d => d.FkPreferential)
                     .WithMany(p => p.RecieveMoneyHeaders)
                     .HasForeignKey(d => d.FkPreferentialId)
                     .HasConstraintName("FK_RecieveMoneyHeader_Preferential");
+            });
+
+            modelBuilder.Entity<RibbonItem>(entity =>
+            {
+                entity.ToTable("RibbonItem");
+
+                entity.Property(e => e.Id).ValueGeneratedNever();
             });
 
             modelBuilder.Entity<Storage>(entity =>
@@ -921,11 +1041,18 @@ namespace WpfRaziLedgerApp
 
                 entity.Property(e => e.FkGroupId).HasColumnName("fk_GroupId");
 
+                entity.Property(e => e.FkPeriodId).HasColumnName("fkPeriodId");
+
                 entity.HasOne(d => d.FkGroup)
                     .WithMany(p => p.Storages)
                     .HasForeignKey(d => d.FkGroupId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Storage_GroupStorage");
+
+                entity.HasOne(d => d.FkPeriod)
+                    .WithMany(p => p.Storages)
+                    .HasForeignKey(d => d.FkPeriodId)
+                    .HasConstraintName("FK_Storage_Period");
             });
 
             modelBuilder.Entity<StorageReceiptDetail>(entity =>
@@ -963,6 +1090,8 @@ namespace WpfRaziLedgerApp
 
                 entity.Property(e => e.FkCodingReceiptTypesId).HasColumnName("fk_CodingReceiptTypesId");
 
+                entity.Property(e => e.FkPeriodId).HasColumnName("fkPeriodId");
+
                 entity.Property(e => e.FkStorageId).HasColumnName("fk_StorageId");
 
                 entity.HasOne(d => d.FkCodingReceiptTypes)
@@ -970,6 +1099,11 @@ namespace WpfRaziLedgerApp
                     .HasForeignKey(d => d.FkCodingReceiptTypesId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_StorageReceiptHeader_CodingReceiptTypes");
+
+                entity.HasOne(d => d.FkPeriod)
+                    .WithMany(p => p.StorageReceiptHeaders)
+                    .HasForeignKey(d => d.FkPeriodId)
+                    .HasConstraintName("FK_StorageReceiptHeader_Period");
 
                 entity.HasOne(d => d.FkStorage)
                     .WithMany(p => p.StorageReceiptHeaders)
@@ -1010,6 +1144,13 @@ namespace WpfRaziLedgerApp
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
                 entity.Property(e => e.Date).HasColumnType("date");
+
+                entity.Property(e => e.FkPeriodId).HasColumnName("fkPeriodId");
+
+                entity.HasOne(d => d.FkPeriod)
+                    .WithMany(p => p.StorageRotationHeaders)
+                    .HasForeignKey(d => d.FkPeriodId)
+                    .HasConstraintName("FK_StorageRotationHeader_Period");
             });
 
             modelBuilder.Entity<StorageTransferDetail>(entity =>
@@ -1047,6 +1188,8 @@ namespace WpfRaziLedgerApp
 
                 entity.Property(e => e.FkCodingTypesTransferId).HasColumnName("fk_CodingTypesTransferId");
 
+                entity.Property(e => e.FkPeriodId).HasColumnName("fkPeriodId");
+
                 entity.Property(e => e.FkStorageId).HasColumnName("fk_StorageId");
 
                 entity.HasOne(d => d.FkCodingTypesTransfer)
@@ -1054,6 +1197,11 @@ namespace WpfRaziLedgerApp
                     .HasForeignKey(d => d.FkCodingTypesTransferId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_StorageTransferHeader_CodingTypesTransfer");
+
+                entity.HasOne(d => d.FkPeriod)
+                    .WithMany(p => p.StorageTransferHeaders)
+                    .HasForeignKey(d => d.FkPeriodId)
+                    .HasConstraintName("FK_StorageTransferHeader_Period");
 
                 entity.HasOne(d => d.FkStorage)
                     .WithMany(p => p.StorageTransferHeaders)
@@ -1074,6 +1222,41 @@ namespace WpfRaziLedgerApp
                 entity.ToTable("Unit");
 
                 entity.Property(e => e.Id).ValueGeneratedNever();
+            });
+
+            modelBuilder.Entity<UserApp>(entity =>
+            {
+                entity.ToTable("UserApp");
+
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.FkUserGroupId).HasColumnName("fkUserGroupId");
+
+                entity.Property(e => e.Password).IsRequired();
+
+                entity.Property(e => e.UserName).IsRequired();
+
+                entity.HasOne(d => d.FkUserGroup)
+                    .WithMany(p => p.UserApps)
+                    .HasForeignKey(d => d.FkUserGroupId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_UserApp_UserGroup");
+            });
+
+            modelBuilder.Entity<UserGroup>(entity =>
+            {
+                entity.ToTable("UserGroup");
+
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.Name).IsRequired();
+            });
+
+            modelBuilder.Entity<Version>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("Version");
             });
 
             OnModelCreatingPartial(modelBuilder);

@@ -10,6 +10,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Name="row" Height="197" MinHeight="77"/>
             <RowDefinition/>
+            <RowDefinition Height="44"/>
         </Grid.RowDefinitions>
         <Syncfusion:Ribbon RibbonStateChanged="ribbon_RibbonStateChanged" FontSize="11.2" Panel.ZIndex="0" x:Name="ribbon" Syncfusion:Ribbon.IsAutoSizeFormEnabled="True" FlowDirection="RightToLeft"  RenderTransformOrigin="1,0" Margin="262,0,0,0">
             <Syncfusion:Ribbon.RenderTransform>
@@ -20,7 +21,7 @@
                     <TranslateTransform Y="41"/>
                 </TransformGroup>
             </Syncfusion:Ribbon.RenderTransform>
-            <Syncfusion:RibbonTab Name="rbnMain" Caption="تعاریف" IsChecked="True">
+            <Syncfusion:RibbonTab Name="rbnMain" Caption="تعاریف">
                 <Syncfusion:RibbonBar Name="New" Width="225" Header="حساب">
                     <Syncfusion:RibbonButton  Name="rbnAgroup" Click="rbnAgroup_Click" SizeForm="Large" Label="گروه حساب" LargeIcon="/Images/Definitions/agroup.png"/>
                     <Syncfusion:RibbonButton  Name="rbnCol" Click="rbnCol_Click" SizeForm="Large" Label="کل" LargeIcon="/Images/Definitions/col.png"/>
@@ -54,9 +55,13 @@
                     <Syncfusion:RibbonButton  Name="rbnBrowseAccounts" Click="rbnBrowseAccounts_Click" SizeForm="Large" Label="مرور حساب ها" LargeIcon="/Images/reports/BrowseAccounts.jpg"/>
                 </Syncfusion:RibbonBar>
             </Syncfusion:RibbonTab>
-            <Syncfusion:RibbonTab Name="rbnSetting" Caption="تنظیمات">
+            <Syncfusion:RibbonTab Name="rbnSetting" Caption="امکانات" IsChecked="True">
                 <Syncfusion:RibbonBar Width="120" Header="تنظیمات برنامه">
                     <Syncfusion:RibbonButton  Name="rbnConfiguration" Click="rbnConfiguration_Click" SizeForm="Large" Label="تنظیمات پیکربندی" LargeIcon="/Images/Definitions/configuration.png"/>
+                </Syncfusion:RibbonBar>
+                <Syncfusion:RibbonBar Width="120" Header="مدیریت برنامه">
+                    <Syncfusion:RibbonButton  Name="rbnUserGroup" Click="rbnUserGroup_Click" SizeForm="Large" Label="گروه کاربر"/>
+                    <Syncfusion:RibbonButton  Name="rbnUser" Click="rbnUser_Click" SizeForm="Large" Label="کاربر"/>
                 </Syncfusion:RibbonBar>
             </Syncfusion:RibbonTab>
             <Syncfusion:RibbonTab Name="rbnCommerce1" Caption="کالا و انبار">
@@ -109,5 +114,81 @@
             </Syncfusion:TabControlExt.Background>
         </Syncfusion:TabControlExt>
         <Image Name="gifImage" Visibility="Collapsed" Width="192" Height="108" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="250,80,0,0" />
+        <Syncfusion:RibbonStatusBar Name="statusBar" x:FieldModifier="public" Grid.Row="2" Height="42" DockPanel.Dock="Bottom">
+            <StatusBarItem Margin="5" HorizontalContentAlignment="Stretch">
+                <Grid FlowDirection="RightToLeft">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Border Width="3" Background="#FF9CB3D0" Opacity=".8"  HorizontalAlignment="Right" BorderThickness="1 0 0 1" BorderBrush="#FF798AA0" Margin="0 -7.54 8 -5" />
+                    <Border Grid.Column="1" Width="3" Background="#FF9CB3D0" Opacity=".8"  HorizontalAlignment="Right" BorderThickness="1 0 0 1" BorderBrush="#FF798AA0" Margin="0 -7.54 10 -5" />
+                    <Border Grid.Column="2" Width="3" Background="#FF9CB3D0" Opacity=".8"  HorizontalAlignment="Right" BorderThickness="1 0 0 1" BorderBrush="#FF798AA0" Margin="0 -7.54 10 -5" />
+                    <Border Grid.Column="3" Width="3" Background="#FF9CB3D0" Opacity=".8"  HorizontalAlignment="Right" BorderThickness="1 0 0 1" BorderBrush="#FF798AA0" Margin="0 -7.54 10 -5" />
+                    <Border Grid.Column="4" Width="3" Background="#FF9CB3D0" Opacity=".8"  HorizontalAlignment="Right" BorderThickness="1 0 0 1" BorderBrush="#FF798AA0" Margin="0 -7.54 10 -5" />
+                    <Border Grid.Column="0" Margin="-10 -8 13 -5" Opacity=".5">
+                        <Border.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FFF3E5FF"/>
+                                <GradientStop Color="#FF5A4835" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+                    </Border>
+                    <DockPanel  Grid.Column="0">
+                        <TextBlock Text="دوره مالی : " FontSize="18"/>
+                        <TextBlock Text="{Binding StatusOptions.Period.Name, RelativeSource={RelativeSource AncestorType=Window}}" FontSize="18"/>
+                    </DockPanel>
+                    <Border Grid.Column="1" Margin="-8 -8 13 -5" Opacity=".5">
+                        <Border.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FF3E6BA4"/>
+                                <GradientStop Color="#FFC26EFF" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+                    </Border>
+                    <Border Grid.Column="3" Margin="-10 -8 13 -5" Opacity="1">
+                        <Border.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FFBB7248" Offset="1"/>
+                                <GradientStop Color="#FFFBE8B3" Offset="0"/>
+                                <GradientStop Color="#FFDDDE87" Offset="0.513"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+                    </Border>
+                    
+                    <TextBlock Text="سیستم بازرگانی رازی" Grid.Column="1" HorizontalAlignment="Center" Margin="-30 0 0 0" FontSize="20" FontWeight="Bold">
+                        <TextBlock.Foreground>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FF001054"/>
+                                <GradientStop Color="#FF9A0937" Offset="0.715"/>
+                                <GradientStop Color="#FF2A2548" Offset="0.483"/>
+                                <GradientStop Color="#FF5377A7" Offset="1"/>
+                            </LinearGradientBrush>
+                        </TextBlock.Foreground>
+                    </TextBlock>
+                    <DockPanel  Grid.Column="2">
+                        <TextBlock Text="تاریخ : " FontSize="18"/>
+                        <TextBlock Text="{Binding StatusOptions.Date, RelativeSource={RelativeSource AncestorType=Window}}" FontSize="18"/>
+                    </DockPanel>
+                    <DockPanel  Grid.Column="3">
+                        <TextBlock Text="کاربر : " FontFamily="B nazanin" FontSize="18"/>
+                        <TextBlock FontFamily="B nazanin" Text="{Binding StatusOptions.User.UserName, RelativeSource={RelativeSource AncestorType=Window}}" FontSize="18"/>
+                    </DockPanel>
+                    <DockPanel  Grid.Column="4">
+                        <TextBlock Text="نسخه برنامه : " FontSize="18"/>
+                        <TextBlock Text="{Binding StatusOptions.VP, RelativeSource={RelativeSource AncestorType=Window}}" FontSize="18"/>
+                    </DockPanel>
+                    <DockPanel  Grid.Column="5">
+                        <TextBlock Text="نسخه دیتابیس : " FontSize="18"/>
+                        <TextBlock Text="{Binding StatusOptions.VD, RelativeSource={RelativeSource AncestorType=Window}}" FontSize="18"/>
+                    </DockPanel>
+                </Grid>
+            </StatusBarItem>
+
+        </Syncfusion:RibbonStatusBar>
     </Grid>
 </Window>

@@ -12,8 +12,10 @@ namespace WpfRaziLedgerApp
         public Guid FkCommodityId { get; set; }
         public DateTime Date { get; set; }
         public decimal? Fee { get; set; }
+        public Guid? FkPeriodId { get; set; }
 
         public virtual Commodity FkCommodity { get; set; }
+        public virtual Period FkPeriod { get; set; }
         public virtual PriceGroup FkPriceGroup { get; set; }
     }
 }

@@ -16,11 +16,13 @@ namespace WpfRaziLedgerApp
         public Guid FkPreferentialId { get; set; }
         public Guid FkMoeinId { get; set; }
         public string Description { get; set; }
+        public Guid? FkPeriodId { get; set; }
 
         public virtual AcDocumentHeader FkAc { get; set; }
         public virtual ChEvent FkChEvent { get; set; }
         public virtual RecieveMoneyDetail FkDetai { get; set; }
         public virtual Moein FkMoein { get; set; }
+        public virtual Period FkPeriod { get; set; }
         public virtual Preferential FkPreferential { get; set; }
     }
 }
