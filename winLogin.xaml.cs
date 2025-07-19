@@ -132,7 +132,6 @@ namespace WpfRaziLedgerApp
                 return;
             }
             var win = new winPassword() { UserName = cmbUsers.Text };
-            win.password = password;
             win.ShowDialog();
             if (win.StateOk == true)
             {

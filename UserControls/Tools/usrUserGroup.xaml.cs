@@ -74,11 +74,19 @@ namespace WpfRaziLedgerApp
             using var db = new wpfrazydbContext();
             var group = db.UserGroups.Find(id);
             if (group == null)
+            {
+                var lower = txtGroupName.Text.ToLower();
+                if (db.UserGroups.Any(g => g.Name.ToLower() == lower))
+                {
+                    Xceed.Wpf.Toolkit.MessageBox.Show("نام گروه کاربری تکراریست!", "خطا");
+                    return;
+                }
                 db.UserGroups.Add(new UserGroup()
                 {
                     Id = Guid.NewGuid(),
                     Name = txtGroupName.Text
                 });
+            }
             else
             {
                 group.Name = txtGroupName.Text;

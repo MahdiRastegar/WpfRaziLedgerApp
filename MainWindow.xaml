@@ -21,7 +21,7 @@
                     <TranslateTransform Y="41"/>
                 </TransformGroup>
             </Syncfusion:Ribbon.RenderTransform>
-            <Syncfusion:RibbonTab Name="rbnMain" Caption="تعاریف">
+            <Syncfusion:RibbonTab Name="rbnMain" Caption="تعاریف"  IsChecked="True">
                 <Syncfusion:RibbonBar Name="New" Width="225" Header="حساب">
                     <Syncfusion:RibbonButton  Name="rbnAgroup" Click="rbnAgroup_Click" SizeForm="Large" Label="گروه حساب" LargeIcon="/Images/Definitions/agroup.png"/>
                     <Syncfusion:RibbonButton  Name="rbnCol" Click="rbnCol_Click" SizeForm="Large" Label="کل" LargeIcon="/Images/Definitions/col.png"/>
@@ -55,7 +55,7 @@
                     <Syncfusion:RibbonButton  Name="rbnBrowseAccounts" Click="rbnBrowseAccounts_Click" SizeForm="Large" Label="مرور حساب ها" LargeIcon="/Images/reports/BrowseAccounts.jpg"/>
                 </Syncfusion:RibbonBar>
             </Syncfusion:RibbonTab>
-            <Syncfusion:RibbonTab Name="rbnSetting" Caption="امکانات" IsChecked="True">
+            <Syncfusion:RibbonTab Name="rbnSetting" Caption="امکانات">
                 <Syncfusion:RibbonBar Width="120" Header="تنظیمات برنامه">
                     <Syncfusion:RibbonButton  Name="rbnConfiguration" Click="rbnConfiguration_Click" SizeForm="Large" Label="تنظیمات پیکربندی" LargeIcon="/Images/Definitions/configuration.png"/>
                 </Syncfusion:RibbonBar>

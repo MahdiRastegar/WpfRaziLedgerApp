@@ -24,7 +24,6 @@ namespace WpfRaziLedgerApp
     public partial class winPassword : Window
     {
         public bool StateOk = false;
-        public string password="1";
         public string UserName = "";
         public winPassword()
         {
@@ -38,7 +37,8 @@ namespace WpfRaziLedgerApp
                 Xceed.Wpf.Toolkit.MessageBox.Show("کاربر گرامی لطفا رمز عبور فعلی را وارد کنید");
                 return;
             }
-            if (txtSubscription.Password != password)
+            using var db = new wpfrazydbContext();
+            if (txtSubscription.Password != db.UserApps.FirstOrDefault(t => t.UserName == UserName).Password)
             {
                 Xceed.Wpf.Toolkit.MessageBox.Show("رمز عبور فعلی اشتباهست!");
                 return;
@@ -54,7 +54,6 @@ namespace WpfRaziLedgerApp
                 return;
             }
             //App.SetKeyPassword(PasswordText.Password);
-            using var db = new wpfrazydbContext();
             db.UserApps.FirstOrDefault(t => t.UserName == UserName).Password = PasswordText.Password;
             db.SafeSaveChanges();
             Xceed.Wpf.Toolkit.MessageBox.Show("رمز عبور با موفقیت تغییر یافت.");
@@ -90,14 +89,9 @@ namespace WpfRaziLedgerApp
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            Title = "تغییر رمز عبور " + UserName;
-            if (password == "1")
-            {
-                txtSubscription.Password = "1";
-                PasswordText.Focus();
-            }
-            else
-                txtSubscription.Focus();
+            Title = UserName + " تغییر رمز عبور ";
+
+            txtSubscription.Focus();
         }
 
         private void PasswordText_PreviewKeyDown(object sender, KeyEventArgs e)
