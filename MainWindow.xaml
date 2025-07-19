@@ -21,7 +21,7 @@
                     <TranslateTransform Y="41"/>
                 </TransformGroup>
             </Syncfusion:Ribbon.RenderTransform>
-            <Syncfusion:RibbonTab Name="rbnMain" Caption="تعاریف"  IsChecked="True">
+            <Syncfusion:RibbonTab Name="rbnMain" Caption="تعاریف" IsChecked="True">
                 <Syncfusion:RibbonBar Name="New" Width="225" Header="حساب">
                     <Syncfusion:RibbonButton  Name="rbnAgroup" Click="rbnAgroup_Click" SizeForm="Large" Label="گروه حساب" LargeIcon="/Images/Definitions/agroup.png"/>
                     <Syncfusion:RibbonButton  Name="rbnCol" Click="rbnCol_Click" SizeForm="Large" Label="کل" LargeIcon="/Images/Definitions/col.png"/>
@@ -118,7 +118,7 @@
             <StatusBarItem Margin="5" HorizontalContentAlignment="Stretch">
                 <Grid FlowDirection="RightToLeft">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
+                        <ColumnDefinition Width="1.5*"/>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                         <ColumnDefinition/>

@@ -48,6 +48,7 @@ namespace WpfRaziLedgerApp
             if (PasswordText.Password == "")
             {
                 Xceed.Wpf.Toolkit.MessageBox.Show("لطفا رمز عبور را وارد کنید");
+                PasswordText.Focus();
                 return;
             }
 
@@ -78,6 +79,7 @@ namespace WpfRaziLedgerApp
                 }
             }
             Xceed.Wpf.Toolkit.MessageBox.Show("رمز عبور اشتباهست!");
+            PasswordText.Focus();
         }
         public static DateTime GetNistTime()
         {

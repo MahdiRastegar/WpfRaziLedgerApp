@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" Loaded="Window_Loaded"
         xmlns:local="clr-namespace:WpfRaziLedgerApp" WindowStartupLocation="CenterScreen"  FontFamily="{StaticResource NewFont}"
         mc:Ignorable="d" ResizeMode="NoResize"
-        Title="پنجره ورود" Height="394" Width="590">
+        Title="پنجره ورود" Height="408" Width="590">
     <Grid FlowDirection="RightToLeft">
         <Grid.RowDefinitions>
             <RowDefinition  Height="3*"/>
@@ -44,22 +44,61 @@
             <Button Style="{StaticResource CustomButtonStyle}" x:Name="btnPassword" Margin="0 0"  Width="90" Content="تغییر رمز" Click="btnPassword_Click" FontSize="20" Height="40">
                 <Button.Background>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                        <GradientStop Color="#FFE0EEFF"/>
-                        <GradientStop Color="#FFA4B6DA" Offset="0.131"/>
-                        <GradientStop Color="#FFB8E9F9" Offset="1"/>
+                        <GradientStop Color="#FFF1E0FF"/>
+                        <GradientStop Color="#FFDAA4DA" Offset="0.131"/>
+                        <GradientStop Color="#FFF9B8F1" Offset="1"/>
                     </LinearGradientBrush>
                 </Button.Background>
             </Button>
             <Button Style="{StaticResource CustomButtonStyle}" x:Name="btnConfirm" HorizontalAlignment="Left" Margin="10 0" Width="90" Content="ورود" Click="btnConfirm_Click" FontSize="20" Height="40">
                 <Button.Background>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                        <GradientStop Color="#FFE0EEFF"/>
-                        <GradientStop Color="#FF7B9EE2" Offset="0.131"/>
-                        <GradientStop Color="#FF67D9FF" Offset="1"/>
+                        <GradientStop Color="#FFFFF1E0"/>
+                        <GradientStop Color="#FFE2AF7B" Offset="0.131"/>
+                        <GradientStop Color="#FFFF7C67" Offset="1"/>
                     </LinearGradientBrush>
                 </Button.Background>
             </Button>
         </DockPanel>
-        <Image x:Name="___Images_RazyLogo_jpg" Grid.Column="0" VerticalAlignment="Bottom" Margin="10,0,-10,40" Grid.Row="0" Source="/Images/RazyLogo.png" Stretch="Uniform"/>
+        <Image x:Name="___Images_RazyLogo_jpg" Grid.Column="0" VerticalAlignment="Bottom" Margin="10,0,-10,50" Grid.Row="0" Source="/Images/RazyLogo.png" Stretch="Uniform"/>
+        <Border Panel.ZIndex="-1" BorderThickness="0 1 0 0" Opacity=".8" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" IsHitTestVisible="False" x:Name="AnimatedBorder">
+            <Border.BorderBrush>
+                <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+                    <GradientStop Color="#FF0A55EA"/>
+                    <GradientStop Color="White" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.BorderBrush>
+            <Border.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0" x:Name="AnimatedGradient">
+                    <GradientStop Color="#33B16A6A" Offset="0" x:Name="GradientStop1"/>
+                    <GradientStop Color="#66FFFFFF" Offset="1" x:Name="GradientStop2"/>
+                </LinearGradientBrush>
+            </Border.Background>
+            <Border.Triggers>
+                <EventTrigger RoutedEvent="Loaded">
+                    <BeginStoryboard>
+                        <Storyboard RepeatBehavior="Forever" AutoReverse="True">
+                            <!-- انیمیشن برای GradientStop1 -->
+                            <ColorAnimationUsingKeyFrames Storyboard.TargetName="GradientStop1" Storyboard.TargetProperty="Color">
+                                <LinearColorKeyFrame Value="#66B16A6A" KeyTime="0:0:0" />
+                                <!-- صورتی -->
+                                <LinearColorKeyFrame Value="#66FFA64C" KeyTime="0:0:2" />
+                                <!-- قرمز -->
+                                <LinearColorKeyFrame Value="#66B16A6A" KeyTime="0:0:4" />
+                                <!-- برگشت به صورتی -->
+                            </ColorAnimationUsingKeyFrames>
+
+                            <!-- انیمیشن برای GradientStop2 -->
+                            <ColorAnimationUsingKeyFrames Storyboard.TargetName="GradientStop2" Storyboard.TargetProperty="Color">
+                                <LinearColorKeyFrame Value="#66FFFFFF" KeyTime="0:0:0" />
+                                <LinearColorKeyFrame Value="#66FFCCCC" KeyTime="0:0:2" />
+                                <!-- قرمز روشن ملایم -->
+                                <LinearColorKeyFrame Value="#66FFFFFF" KeyTime="0:0:4" />
+                            </ColorAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Border.Triggers>
+        </Border>
     </Grid>
 </Window>
