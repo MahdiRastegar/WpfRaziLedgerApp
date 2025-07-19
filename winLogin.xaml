@@ -6,13 +6,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" Loaded="Window_Loaded"
         xmlns:local="clr-namespace:WpfRaziLedgerApp" WindowStartupLocation="CenterScreen"  FontFamily="{StaticResource NewFont}"
         mc:Ignorable="d" ResizeMode="NoResize"
-        Title="پنجره ورود" Height="383" Width="540">
+        Title="پنجره ورود" Height="394" Width="590">
     <Grid FlowDirection="RightToLeft">
         <Grid.RowDefinitions>
             <RowDefinition  Height="3*"/>
             <RowDefinition Height="80"/>
         </Grid.RowDefinitions>
-        <StackPanel>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="160"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="1" HorizontalAlignment="Left">
             <Syncfusion:SfTextInputLayout  x:Name="Sf_txtUserGroup" OutlineCornerRadius="8" Hint="دوره" Width="300" Margin="0 20 0 -40">
                 <Syncfusion:ComboBoxAdv AutoCompleteMode="Suggest" IsEditable="True" PreviewKeyDown="cmbPeriod_PreviewKeyDown" SelectionChanged="cmbPeriod_SelectionChanged" FontSize="16" DisplayMemberPath="Name" x:Name="cmbPeriod" FlowDirection="RightToLeft"/>
             </Syncfusion:SfTextInputLayout>
@@ -36,7 +40,7 @@
                   Unchecked="ShowPassword_Unchecked"/>-->
             </StackPanel>
         </StackPanel>
-        <DockPanel Grid.Row="1" HorizontalAlignment="Center">
+        <DockPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center">
             <Button Style="{StaticResource CustomButtonStyle}" x:Name="btnPassword" Margin="0 0"  Width="90" Content="تغییر رمز" Click="btnPassword_Click" FontSize="20" Height="40">
                 <Button.Background>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -46,7 +50,7 @@
                     </LinearGradientBrush>
                 </Button.Background>
             </Button>
-            <Button Style="{StaticResource CustomButtonStyle}" x:Name="btnConfirm" HorizontalAlignment="Left" Margin="10 0" Width="90" Content="تایید" Click="btnConfirm_Click" FontSize="20" Height="40">
+            <Button Style="{StaticResource CustomButtonStyle}" x:Name="btnConfirm" HorizontalAlignment="Left" Margin="10 0" Width="90" Content="ورود" Click="btnConfirm_Click" FontSize="20" Height="40">
                 <Button.Background>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                         <GradientStop Color="#FFE0EEFF"/>
@@ -56,5 +60,6 @@
                 </Button.Background>
             </Button>
         </DockPanel>
+        <Image x:Name="___Images_RazyLogo_jpg" Grid.Column="0" VerticalAlignment="Bottom" Margin="10,0,-10,40" Grid.Row="0" Source="/Images/RazyLogo.png" Stretch="Uniform"/>
     </Grid>
 </Window>
