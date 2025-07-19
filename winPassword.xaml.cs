@@ -25,6 +25,7 @@ namespace WpfRaziLedgerApp
     {
         public bool StateOk = false;
         public string password="1";
+        public string UserName = "";
         public winPassword()
         {
             InitializeComponent();           
@@ -53,6 +54,10 @@ namespace WpfRaziLedgerApp
                 return;
             }
             //App.SetKeyPassword(PasswordText.Password);
+            using var db = new wpfrazydbContext();
+            db.UserApps.FirstOrDefault(t => t.UserName == UserName).Password = PasswordText.Password;
+            db.SafeSaveChanges();
+            Xceed.Wpf.Toolkit.MessageBox.Show("رمز عبور با موفقیت تغییر یافت.");
             StateOk = true;
             Close();
         }
@@ -84,7 +89,8 @@ namespace WpfRaziLedgerApp
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
-        {            
+        {
+            Title = "تغییر رمز عبور " + UserName;
             if (password == "1")
             {
                 txtSubscription.Password = "1";

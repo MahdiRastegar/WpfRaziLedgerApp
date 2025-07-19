@@ -126,7 +126,12 @@ namespace WpfRaziLedgerApp
 
         private void btnPassword_Click(object sender, RoutedEventArgs e)
         {
-            var win = new winPassword();
+            if (cmbUsers.SelectedIndex == -1)
+            {
+                Xceed.Wpf.Toolkit.MessageBox.Show("کاربر گرامی لطفا کاربر را انتخاب کنید");
+                return;
+            }
+            var win = new winPassword() { UserName = cmbUsers.Text };
             win.password = password;
             win.ShowDialog();
             if (win.StateOk == true)
