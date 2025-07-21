@@ -62,6 +62,7 @@ namespace WpfRaziLedgerApp
         {
             // 1. دریافت دسترسی‌ها از دیتابیس
             var allowedIds = GetPermissionIdsForGroup(userGroupId); // List<Guid>
+            if(allowedIds.Count == 0) return;
 
             // 2. مرور کل آیتم‌های Ribbon
             foreach (var tab in ribbon.Items.OfType<RibbonTab>())
