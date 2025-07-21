@@ -59,9 +59,10 @@
                 <Syncfusion:RibbonBar Width="120" Header="تنظیمات برنامه">
                     <Syncfusion:RibbonButton  Name="rbnConfiguration" Click="rbnConfiguration_Click" SizeForm="Large" Label="تنظیمات پیکربندی" LargeIcon="/Images/Definitions/configuration.png"/>
                 </Syncfusion:RibbonBar>
-                <Syncfusion:RibbonBar Width="120" Header="مدیریت برنامه">
+                <Syncfusion:RibbonBar Width="140" Header="مدیریت برنامه">
                     <Syncfusion:RibbonButton  Name="rbnUserGroup" Click="rbnUserGroup_Click" SizeForm="Large" Label="گروه کاربر"/>
                     <Syncfusion:RibbonButton  Name="rbnUser" Click="rbnUser_Click" SizeForm="Large" Label="کاربر"/>
+                    <Syncfusion:RibbonButton  Name="rbnPermissionManager" Click="rbnPermissionManager_Click" SizeForm="Large" Label="سطح دسترسی"/>
                 </Syncfusion:RibbonBar>
             </Syncfusion:RibbonTab>
             <Syncfusion:RibbonTab Name="rbnCommerce1" Caption="کالا و انبار">

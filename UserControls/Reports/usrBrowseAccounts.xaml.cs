@@ -966,6 +966,7 @@ namespace WpfRaziLedgerApp
                 control.SelectedIndex = 2;
                 dataPager4.Visibility = Visibility.Collapsed;
                 dataPager3.Visibility = Visibility.Visible;
+                dataPager.Visibility = Visibility.Collapsed;
                 dataPager2.Visibility = Visibility.Collapsed;
                 dataPager2.Visibility = Visibility.Collapsed;
                 dataPager5.Visibility = Visibility.Collapsed;
@@ -996,6 +997,7 @@ namespace WpfRaziLedgerApp
                 dataPager3.Visibility = Visibility.Collapsed;
                 dataPager2.Visibility = Visibility.Collapsed;
                 dataPager2.Visibility = Visibility.Collapsed;
+                dataPager.Visibility = Visibility.Collapsed;
                 dataPager5.Visibility = Visibility.Collapsed;
                 control.SelectionChanged += control_SelectionChanged;
             }

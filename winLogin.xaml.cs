@@ -74,6 +74,8 @@ namespace WpfRaziLedgerApp
                         var binding = item.GetBindingExpression(TextBlock.TextProperty);
                         binding?.UpdateTarget();
                     }
+                    MainWindow.Current.LoadUser(userApp.FkUserGroupId);
+
                     Close();
                     return;
                 }

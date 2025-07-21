@@ -54,7 +54,71 @@ namespace WpfRaziLedgerApp
             var gifImage = new BitmapImage(new Uri("pack://application:,,,/Images/AddDataLarge.gif"));
             XamlAnimatedGif.AnimationBehavior.SetSourceUri(this.gifImage, gifImage.UriSource);
         }
+        public void LoadUser(Guid userGroupId)
+        {
+            ApplyPermissions(userGroupId);
+        }
+        private void ApplyPermissions(Guid userGroupId)
+        {
+            // 1. دریافت دسترسی‌ها از دیتابیس
+            var allowedIds = GetPermissionIdsForGroup(userGroupId); // List<Guid>
 
+            // 2. مرور کل آیتم‌های Ribbon
+            foreach (var tab in ribbon.Items.OfType<RibbonTab>())
+            {
+                bool hasVisibleChild = false;
+
+                foreach (var bar in tab.Items.OfType<RibbonBar>())
+                {
+                    foreach (var item in bar.Items.OfType<UIElement>())
+                    {
+                        if (item is RibbonButton btn && btn.Label != null)
+                        {
+                            var ribbonId = GetRibbonItemIdByName(btn.Label); // گرفتن Id از نام دکمه
+                            bool canAccess = allowedIds.Contains(ribbonId);
+
+                            btn.Visibility = canAccess ? Visibility.Visible : Visibility.Collapsed;
+
+                            if (canAccess)
+                                hasVisibleChild = true;
+                        }
+                    }
+
+                    // اگر هیچ دکمه‌ای در این Bar قابل دسترسی نبود، خودش رو پنهان کن
+                    bar.Visibility = bar.Items.OfType<RibbonButton>().Any(b => b.Visibility == Visibility.Visible)
+                        ? Visibility.Visible : Visibility.Collapsed;
+                    if(bar.Visibility== Visibility.Visible) 
+                    {
+                        var visibleButtons = bar.Items.OfType<RibbonButton>().Where(btn => btn.Visibility == Visibility.Visible).ToList();
+
+                        // تغییر اندازه bar بر اساس تعداد دکمه‌های قابل مشاهده
+                        bar.Width -= (bar.Items.OfType<RibbonButton>().Count() - visibleButtons.Count()) * 15;
+                    }
+                }
+
+                // اگر هیچ آیتمی در تب قابل نمایش نیست، تب هم پنهان شه
+                tab.Visibility = hasVisibleChild ? Visibility.Visible : Visibility.Collapsed;
+            }
+        }
+        private List<Guid> GetPermissionIdsForGroup(Guid groupId)
+        {
+            using (var context = new wpfrazydbContext())
+            {
+                return context.Permissions
+                              .Where(p => p.FkUserGroupId == groupId && p.CanAccess)
+                              .Select(p => p.FkRibbonItemId)
+                              .ToList();
+            }
+        }
+
+        private Guid GetRibbonItemIdByName(string buttonName)
+        {
+            using (var context = new wpfrazydbContext())
+            {
+                var item = context.RibbonItems.FirstOrDefault(r => r.DisplayName == buttonName || r.Category == buttonName);
+                return item?.Id ?? Guid.Empty;
+            }
+        }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             //var M = new winCol();
@@ -770,6 +834,22 @@ namespace WpfRaziLedgerApp
             {
                 item = new TabItemExt() { Header = "گروه کاربر" };
                 item.Content = new usrUserGroup();
+                tabcontrol.Items.Add(item);
+            }
+        }
+
+        private void rbnPermissionManager_Click(object sender, RoutedEventArgs e)
+        {
+            var list = GetTabControlItems;
+            var item = list.FirstOrDefault(y => y.Header == "سطح دسترسی");
+            if (item != null)
+            {
+                tabcontrol.SelectedItem = item;
+            }
+            else
+            {
+                item = new TabItemExt() { Header = "سطح دسترسی" };
+                item.Content = new usrPermissionManager();
                 tabcontrol.Items.Add(item);
             }
         }
