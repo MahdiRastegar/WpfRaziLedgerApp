@@ -176,6 +176,7 @@ namespace WpfRaziLedgerApp
             txtCodeCommodity.IsReadOnly = false;
             txtGroup.IsReadOnly = false;
             txtCommodityName.Text = "";
+            txtTonnage.Text = string.Empty;
             isCancel = true;            
             gridDelete.Visibility = Visibility.Hidden;
             borderEdit.Visibility = Visibility.Hidden;
