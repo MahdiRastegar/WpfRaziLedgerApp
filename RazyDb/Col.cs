@@ -18,7 +18,6 @@ namespace WpfRaziLedgerApp
         public byte? Type { get; set; }
         public byte? Action { get; set; }
         public Guid FkGroupId { get; set; }
-        public bool? PermissionView { get; set; }
 
         public virtual Agroup FkGroup { get; set; }
         public virtual ICollection<Moein> Moeins { get; set; }

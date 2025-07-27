@@ -166,6 +166,9 @@
                                     <TextBox Name="txtPhone3" TextChanged="TxtCodePreferential_TextChanged" VerticalContentAlignment="Center"  IsEnabled="True" IsReadOnly="False" PreviewTextInput="Txt_PreviewTextInput" Margin="0" FontSize="16"/>
                                 </Syncfusion:SfTextInputLayout>
                             </DockPanel>
+                            <Syncfusion:SfTextInputLayout Width="390" Name="Sf_Address"  OutlineCornerRadius="8" Hint="نشانی" Grid.Row="2"  VerticalAlignment="Center" Margin="10 0"  HorizontalAlignment="Left">
+                                <TextBox Name="txtAddress" TextChanged="TxtCodePreferential_TextChanged" VerticalContentAlignment="Center" AcceptsReturn="True" IsEnabled="True" IsReadOnly="False" PreviewTextInput="Txt_PreviewTextInput" Margin="0" FontSize="16"/>
+                            </Syncfusion:SfTextInputLayout>
                             <DockPanel >
                                 <Syncfusion:SfTextInputLayout Width="205" Name="Sf_EcCode"  OutlineCornerRadius="8" Hint="شماره اقتصادی" Grid.Row="2"  VerticalAlignment="Center" Margin="10 0"  HorizontalAlignment="Stretch">
                                     <TextBox Name="txtEcCode" TextChanged="TxtCodePreferential_TextChanged" VerticalContentAlignment="Center"  IsEnabled="True" IsReadOnly="False" PreviewTextInput="Txt_PreviewTextInput" Margin="0" FontSize="16"/>
@@ -192,9 +195,6 @@
                             </Syncfusion:SfTextInputLayout>
                             <Syncfusion:SfTextInputLayout  Width="300" Name="Sf_Email"  OutlineCornerRadius="8" Hint="ایمیل" Grid.Row="2"  VerticalAlignment="Center" Margin="10 0"  HorizontalAlignment="Left">
                                 <TextBox Name="txtEmail" TextAlignment="Right" GotFocus="txtEmail_GotFocus" TextChanged="TxtCodePreferential_TextChanged" VerticalContentAlignment="Center"  IsEnabled="True" IsReadOnly="False" PreviewTextInput="Txt_PreviewTextInput" Margin="0" FontSize="16"/>
-                            </Syncfusion:SfTextInputLayout>
-                            <Syncfusion:SfTextInputLayout Width="390" Name="Sf_Address"  OutlineCornerRadius="8" Hint="نشانی" Grid.Row="2"  VerticalAlignment="Center" Margin="10 0"  HorizontalAlignment="Left">
-                                <TextBox Name="txtAddress" TextChanged="TxtCodePreferential_TextChanged" VerticalContentAlignment="Center" AcceptsReturn="True" IsEnabled="True" IsReadOnly="False" PreviewTextInput="Txt_PreviewTextInput" Margin="0" FontSize="16"/>
                             </Syncfusion:SfTextInputLayout>
                             <Syncfusion:SfTextInputLayout Width="390" Name="Sf_Description"  OutlineCornerRadius="8" Hint="توضیحات" Grid.Row="2"  VerticalAlignment="Center" Margin="10 0"  HorizontalAlignment="Left">
                                 <TextBox Name="txtDescription" TextChanged="TxtCodePreferential_TextChanged" VerticalContentAlignment="Center" AcceptsReturn="True" IsEnabled="True" IsReadOnly="False" PreviewTextInput="Txt_PreviewTextInput" Margin="0" FontSize="16"/>
@@ -227,6 +227,18 @@
                         </Button.Background>
                     </Button>
                     <Image Source="/Images/Cancel.png" IsHitTestVisible="False" Width="36" />
+                </Grid>
+                <Grid>
+                    <Button Style="{StaticResource CustomButtonStyle}" ToolTip="چاپ" Click="btnPrint_Click" x:Name="btnPrint" HorizontalAlignment="Center" Margin="0 0 0 0" Width="60" Content="" FontSize="20" Height="45">
+                        <Button.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FFDDFFCB"/>
+                                <GradientStop Color="#FFE0FFD3" Offset="0.521"/>
+                                <GradientStop Color="#FFAAE8A8" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Button.Background>
+                    </Button>
+                    <Image Source="/Images/print.png" IsHitTestVisible="False" Width="36" />
                 </Grid>
                 <Grid Name="gridDelete" Visibility="Hidden">
                     <Button Style="{StaticResource CustomButtonStyle}" ToolTip="حذف" Click="BtnDelete_Click" x:Name="btnDelete" HorizontalAlignment="Center" Margin="0 0 0 0" Width="60" Content="" FontSize="20" Height="45">
@@ -325,6 +337,8 @@
                         <Syncfusion:GridTextColumn MinimumWidth="180" HeaderText="نام تفضیلی" ColumnSizer="Star" MappingName="PreferentialName" />
                         <Syncfusion:GridTextColumn MinimumWidth="70" Width="70" HeaderText="کد گروه" MappingName="FkGroup.GroupCode"/>
                         <Syncfusion:GridTextColumn MinimumWidth="125" HeaderText="نام گروه" ColumnSizer="Star" MappingName="FkGroup.GroupName" />
+                        <Syncfusion:GridTextColumn MinimumWidth="100" HeaderText="استان" ColumnSizer="Star" MappingName="FkCity.FkProvince.Name" />
+                        <Syncfusion:GridTextColumn MinimumWidth="100" HeaderText="شهر" ColumnSizer="Star" MappingName="FkCity.Name" />
                     </Syncfusion:SfDataGrid.Columns>
                 </Syncfusion:SfDataGrid>
                 <Syncfusion:SfDataPager x:Name="dataPager" FlowDirection="LeftToRight" VerticalAlignment="Bottom" Margin="0 -30" HorizontalAlignment="Center" UseOnDemandPaging="True"

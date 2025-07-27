@@ -139,6 +139,7 @@
             <Syncfusion:SfTextInputLayout  Name="Sf_txtVra" OutlineCornerRadius="8" Grid.Row="1" Grid.Column="1" Hint="نام گروه" VerticalAlignment="Center" Margin="30 0"  HorizontalAlignment="Stretch">
                 <TextBox Name="txtGroupName" Text="" TextChanged="txtGroupName_TextChanged" MaxLength="50" VerticalContentAlignment="Center"   PreviewTextInput="Txt_PreviewTextInput" Margin="0" FontSize="16"/>
             </Syncfusion:SfTextInputLayout>
+            <CheckBox Content="مجوز مشاهده" Grid.Row="2" Name="checkbox" VerticalAlignment="Center" Margin="31 0"/>
             <DockPanel VerticalAlignment="Center" Grid.Row="2" Grid.Column="1" Margin="30 0"  HorizontalAlignment="Stretch"/>
             <DockPanel  Grid.Row="4" Grid.ColumnSpan="2" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="15 0 15 10">
                 <Grid>
@@ -259,6 +260,7 @@
                     <Syncfusion:SfDataGrid.Columns>
                         <Syncfusion:GridTextColumn MinimumWidth="100" HeaderText="کد گروه" MappingName="GroupCode"/>
                         <Syncfusion:GridTextColumn MinimumWidth="145" HeaderText="نام گروه" ColumnSizer="Star" MappingName="GroupName" />
+                        <Syncfusion:GridCheckBoxColumn MinimumWidth="115" HeaderText="مجوز مشاهده" MappingName="PermissionView"/>
                     </Syncfusion:SfDataGrid.Columns>
                 </Syncfusion:SfDataGrid>
             </Grid>

@@ -84,11 +84,13 @@ namespace WpfRaziLedgerApp
                 {
                     Id = Guid.NewGuid(),
                     GroupCode = int.Parse(txtGroup.Text),
-                    GroupName = txtGroupName.Text
+                    GroupName = txtGroupName.Text,
+                    PermissionView = checkbox.IsChecked,
                 });
             else
             {
                 group.GroupName = txtGroupName.Text;
+                group.PermissionView = checkbox.IsChecked;
             }
             if (!db.SafeSaveChanges())  return;
             var M = db.TGroups.ToList();
@@ -259,6 +261,7 @@ namespace WpfRaziLedgerApp
             }
             txtGroupName.Text = "";
             Sf_txtVra.HasError = false;
+            checkbox.IsChecked = false;
             isCancel = true;
             using var db = new wpfrazydbContext();
             var en = db.TGroups.OrderByDescending(y => y.GroupCode).FirstOrDefault();
@@ -301,6 +304,7 @@ namespace WpfRaziLedgerApp
                 txtGroup.Text = group.GroupCode.ToString();
                 txtGroupName.Text = group.GroupName;
                 gridDelete.Visibility = Visibility.Visible;
+                checkbox.IsChecked = group.PermissionView;
                 isCancel = true;
                 borderEdit.Visibility = Visibility.Visible;
                 GetError();

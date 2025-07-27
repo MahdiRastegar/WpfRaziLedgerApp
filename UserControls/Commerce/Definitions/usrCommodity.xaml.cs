@@ -39,6 +39,11 @@ namespace WpfRaziLedgerApp
         {
             if (e.Text == "\r")
             {
+                if ((sender as TextBox).Name == "txtUnit")
+                {
+                    txtTonnage.Focus();
+                    return;
+                }
                 TraversalRequest request = new TraversalRequest(FocusNavigationDirection.Next);
                 request.Wrapped = true;
                 (sender as TextBox).MoveFocus(request);
@@ -134,7 +139,8 @@ namespace WpfRaziLedgerApp
                     FkGroupId = col.Id,
                     Name = txtCommodityName.Text,
                     FkUnit = mu,
-                    Taxable = checkbox.IsChecked
+                    Taxable = checkbox.IsChecked,
+                    Tonnage = short.Parse(txtTonnage.Text)
                 };
                 db.Commodities.Add(e_add);
                 Commodities.Add(e_add);
@@ -150,6 +156,7 @@ namespace WpfRaziLedgerApp
                 e_Edidet.FkUnit = mu;
                 e_Edidet.Taxable= checkbox.IsChecked;
                 Commodity.Taxable = checkbox.IsChecked;
+                e_Edidet.Tonnage = Commodity.Tonnage = short.Parse(txtTonnage.Text);
             }
             if (!db.SafeSaveChanges())  return;
             if (id == Guid.Empty)
@@ -377,6 +384,7 @@ namespace WpfRaziLedgerApp
             Sf_txtUnit.HasError = false;
             txtUnit.Text = "";
             txtUnitName.Text = "";
+            txtTonnage.Text = string.Empty;
             checkbox.IsChecked= false;
 
             txtGroup.Focus();
@@ -415,6 +423,7 @@ namespace WpfRaziLedgerApp
                 txtCodeCommodity.Text = Commodity.Code.ToString();
                 txtUnit.Text = Commodity.FkUnit.Code.ToString();
                 txtUnitName.Text = Commodity.FkUnit.Name.ToString();
+                txtTonnage.Text = Commodity.Tonnage.ToString();
                 checkbox.IsChecked = Commodity.Taxable;
 
                 gridDelete.Visibility = Visibility.Visible;
@@ -576,7 +585,7 @@ namespace WpfRaziLedgerApp
                     Dispatcher.BeginInvoke(new Action(async () =>
                     {
                         await Task.Delay(50);
-                        btnConfirm.Focus();
+                        txtTonnage.Focus();
                     }));
                 return;
             }
@@ -695,6 +704,17 @@ namespace WpfRaziLedgerApp
             else
             {
                 txtUnitName.Text = mu.Name;
+            }
+        }
+
+        private void txtTonnage_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            isCancel = false;
+            var j = 0;
+            int.TryParse(txtTonnage.Text, out j);
+            if (j > 999)
+            {
+                txtTonnage.Text = "999";
             }
         }
     }

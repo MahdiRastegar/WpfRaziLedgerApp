@@ -136,12 +136,15 @@
                 <TextBox Name="txtCommodityName" Text="" TextChanged="txtCommodityName_TextChanged" MaxLength="50" VerticalContentAlignment="Center"   PreviewTextInput="Txt_PreviewTextInput" Margin="0" FontSize="16"/>
             </Syncfusion:SfTextInputLayout>
             <Syncfusion:SfTextInputLayout Name="Sf_txtUnit" OutlineCornerRadius="8" Hint="کد واحد اندازه گیری" Grid.Row="3"  VerticalAlignment="Center" Margin="30 0"  HorizontalAlignment="Stretch">
-                <TextBox Name="txtUnit" LostFocus="txtUnit_LostFocus" VerticalContentAlignment="Center" TextChanged="TxtGroup_TextChanged" IsEnabled="True" IsReadOnly="False" PreviewTextInput="txtUnit_PreviewTextInput" Margin="0" FontSize="16"/>
+                <TextBox Name="txtUnit" LostFocus="txtUnit_LostFocus" VerticalContentAlignment="Center" TextChanged="TxtGroup_TextChanged" IsEnabled="True" IsReadOnly="False" PreviewTextInput="Txt_PreviewTextInput" Margin="0" FontSize="16"/>
             </Syncfusion:SfTextInputLayout>
             <Syncfusion:SfTextInputLayout Name="Sf_txtUnitName" OutlineCornerRadius="8" Hint="نام واحد اندازه گیری" Grid.Row="3"  VerticalAlignment="Center" Margin="30 0" Grid.Column="1"  HorizontalAlignment="Stretch">
                 <TextBox Name="txtUnitName" VerticalContentAlignment="Center"  IsEnabled="True" IsReadOnly="True" Margin="0" FontSize="16"/>
             </Syncfusion:SfTextInputLayout>
-            <CheckBox Content="مالیات پذیر" Grid.Row="4" Name="checkbox" VerticalAlignment="Center" Margin="31 0"/>
+            <Syncfusion:SfTextInputLayout Name="Sf_txtTonnage" OutlineCornerRadius="8" Hint="ضریب تناژ" Grid.Row="4"  VerticalAlignment="Center" Margin="30 0"  HorizontalAlignment="Stretch">
+                <TextBox Name="txtTonnage" VerticalContentAlignment="Center" TextChanged="txtTonnage_TextChanged" IsEnabled="True" IsReadOnly="False" PreviewTextInput="txtUnit_PreviewTextInput" Margin="0" FontSize="16"/>
+            </Syncfusion:SfTextInputLayout>
+            <CheckBox Content="مالیات پذیر" Grid.Row="4" Grid.Column="1" Name="checkbox" VerticalAlignment="Center" Margin="31 0"/>
             <DockPanel  Grid.Row="5" Grid.ColumnSpan="2" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="15 0 15 -15">
                 <Grid>
                     <Button Style="{StaticResource CustomButtonStyle}" ToolTip="ذخیره (Ctrl+S)" x:Name="btnConfirm" Width="60" Content="" Click="btnConfirm_Click" FontSize="20" Height="45">
@@ -264,9 +267,10 @@
                         <Syncfusion:GridTextColumn MinimumWidth="180" HeaderText="نام کالا" ColumnSizer="Star" MappingName="Name" />
                         <Syncfusion:GridTextColumn MinimumWidth="100" Width="70" HeaderText="کد گروه کالا" MappingName="FkGroup.GroupCode"/>
                         <Syncfusion:GridTextColumn MinimumWidth="125" HeaderText="نام گروه" ColumnSizer="Star" MappingName="FkGroup.GroupName" />
-                        <Syncfusion:GridTextColumn MinimumWidth="140" Width="70" HeaderText="کد واحد اندازه گیری" MappingName="FkUnit.Code"/>
+                        <Syncfusion:GridTextColumn MinimumWidth="130" Width="70" HeaderText="کد واحد اندازه گیری" MappingName="FkUnit.Code"/>
                         <Syncfusion:GridTextColumn MinimumWidth="125" HeaderText="نام واحد اندازه گیری" ColumnSizer="Star" MappingName="FkUnit.Name" />
-                        <Syncfusion:GridCheckBoxColumn MinimumWidth="125" HeaderText="مالیات پذیر" ColumnSizer="Star" MappingName="Taxable" />
+                        <Syncfusion:GridTextColumn MinimumWidth="80" Width="70" HeaderText="ضریب تناژ" MappingName="Tonnage"/>
+                        <Syncfusion:GridCheckBoxColumn MinimumWidth="110" HeaderText="مالیات پذیر" ColumnSizer="Star" MappingName="Taxable" />
                     </Syncfusion:SfDataGrid.Columns>
                 </Syncfusion:SfDataGrid>
                 <Syncfusion:SfDataPager x:Name="dataPager" FlowDirection="LeftToRight" VerticalAlignment="Bottom" Margin="0 -30" HorizontalAlignment="Center" UseOnDemandPaging="True"

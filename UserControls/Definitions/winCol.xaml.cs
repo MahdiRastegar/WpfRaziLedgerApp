@@ -96,7 +96,6 @@ namespace WpfRaziLedgerApp
                     ColName = txtColName.Text,
                     Type = (byte)cmbType.SelectedIndex,
                     Action = (byte)cmbAction.SelectedIndex,
-                    PermissionView = checkbox.IsChecked,
                     FkGroupId = group.Id
                 });
             }
@@ -105,7 +104,6 @@ namespace WpfRaziLedgerApp
                 col.Type = (byte)cmbType.SelectedIndex;
                 col.ColName = txtColName.Text;
                 col.Action = (byte)cmbAction.SelectedIndex;
-                col.PermissionView = checkbox.IsChecked;
             }
             if (!db.SafeSaveChanges())  return;
             var M = db.Cols.Include(w=>w.FkGroup).ToList();
@@ -113,7 +111,6 @@ namespace WpfRaziLedgerApp
             if (col == null)
             {
                 Xceed.Wpf.Toolkit.MessageBox.Show("اطلاعات اضافه شد.", "ثبت کل");                
-                checkbox.IsChecked = false;
                 isCancel = false;
             }
             else
@@ -359,7 +356,6 @@ namespace WpfRaziLedgerApp
             Sf_txtVra.HasError = false;
             Sf_txtName.HasError = false;
             txtGroup.IsReadOnly = false;
-            checkbox.IsChecked = false;
             Dispatcher.BeginInvoke(new Action(async () =>
             {
                 await Task.Delay(50);                
@@ -400,7 +396,6 @@ namespace WpfRaziLedgerApp
                 txtGroupName.Text = col.FkGroup.GroupName;
                 cmbAction.SelectedIndex = (int)col.Action;
                 txtCol.Text = col.ColCode.ToString();
-                checkbox.IsChecked = col.PermissionView;
                 txtGroup.IsReadOnly = true;
                 txtColName.Text = col.ColName;
                 cmbType.SelectedIndex = (int)col.Type;

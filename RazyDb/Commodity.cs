@@ -27,6 +27,7 @@ namespace WpfRaziLedgerApp
         public Guid FkUnitId { get; set; }
         public bool? Taxable { get; set; }
         public Guid? FkPeriodId { get; set; }
+        public short? Tonnage { get; set; }
 
         public virtual GroupCommodity FkGroup { get; set; }
         public virtual Period FkPeriod { get; set; }

@@ -4,11 +4,15 @@ using Syncfusion.XlsIO.Parser.Biff_Records;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Text.Encodings.Web;
+using System.Text.Json;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -58,7 +62,12 @@ namespace WpfRaziLedgerApp
                     }
                 }));
                 return;
-            }            
+            }  
+            if (e.Text == ""&& (sender as TextBox).Name == "txtAddress") 
+            {
+                txtEcCode.Focus();
+                return;
+            }
             if ((sender as TextBox).Name != "txtPreferentialName"&& (sender as TextBox).Name != "txtWebSite" && (sender as TextBox).Name != "txtEmail" && (sender as TextBox).Name != "txtAddress" && (sender as TextBox).Name != "txtDescription")
                 e.Handled = !IsTextAllowed(e.Text);            
         }
@@ -811,7 +820,7 @@ namespace WpfRaziLedgerApp
             {
                 if (btnMorePhone.Visibility==Visibility.Visible)
                 {
-                    txtEcCode.Focus();
+                    txtAddress.Focus();
                 }
                 else
                 {
@@ -834,6 +843,71 @@ namespace WpfRaziLedgerApp
                 (sender as ComboBoxAdv).MoveFocus(request);
 
                 return;
+            }
+        }
+
+        private void btnPrint_Click(object sender, RoutedEventArgs e)
+        {
+            if (dataPager.Source is IEnumerable<Preferential> source && source.Count() > 0)
+            {
+                Mouse.OverrideCursor = Cursors.Wait;
+                //switch (GAcClassEntities[0].GetType())
+                //{
+                //    case Type t when t == typeof(GAcClass):
+                //    
+                var preferentialReports = new List<PreferentialReport>();
+
+                foreach (var item in datagrid.View.Records.Select(r => r.Data as Preferential).ToList())
+                {
+                    preferentialReports.Add(new PreferentialReport()
+                    {
+                        PreferentialName = item.PreferentialName,
+                        PreferentialCode = item.PreferentialCode,
+                        GroupName = item.FkGroup.GroupName,
+                        AccountType = item.AccountType,
+                        Address = item.Address,
+                        CityName = item.FkCity?.Name,
+                        ProvinceName = item.FkCity?.FkProvince.Name,
+                        Description = item.Description,
+                        EconomicCode = item.EconomicCode,
+                        Email = item.Email,
+                        Id = item.Id,
+                        Mobile = item.Mobile,
+                        NationalCode = item.NationalCode,
+                        Phone1 = item.Phone1,
+                        Phone2 = item.Phone2,
+                        Phone3 = item.Phone3,
+                        PostalCode = item.PostalCode,
+                        RegistrationNumber = item.RegistrationNumber,
+                        WebSite = item.WebSite
+                    });
+                }
+                    
+                
+                if (preferentialReports.Count == 0)
+                {
+                    Mouse.OverrideCursor = null;
+                    return;
+                }
+
+                System.IO.Directory.Delete(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WpfSimReport", "JSON"), true);
+                Thread.Sleep(50);
+                System.IO.Directory.CreateDirectory(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WpfSimReport", "JSON"));
+
+                var options = new JsonSerializerOptions
+                {
+                    Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                    WriteIndented = true
+                };
+                
+                string jsonString = JsonSerializer.Serialize(preferentialReports, options);
+                System.IO.File.WriteAllText(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WpfSimReport", "JSON", "PreferentialReport.json"), jsonString);
+                Mouse.OverrideCursor = null;
+                Process process = new Process();
+                process.StartInfo.FileName = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WpfSimReport", "WpfAppEmpty.exe");
+                //process.StartInfo.Arguments = $"\"{reportPath}\" \"{outputPdf}\"";
+                process.StartInfo.UseShellExecute = false;
+                process.Start();
             }
         }
     }

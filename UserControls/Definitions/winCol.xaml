@@ -137,19 +137,6 @@
                     <Syncfusion:ComboBoxItemAdv >سود و زیانی</Syncfusion:ComboBoxItemAdv>
                 </Syncfusion:ComboBoxAdv>
             </Syncfusion:SfTextInputLayout>
-            <CheckBox Content="مجوز مشاهده" Grid.Row="4" Name="checkbox" VerticalAlignment="Center" Margin="31 0"/>
-            <DockPanel VerticalAlignment="Center" Margin="30 0"  HorizontalAlignment="Stretch"  Grid.Row="3">
-                <Border Width="12.5" Height="54" Tag="id" Visibility="Collapsed" MouseLeave="border_MouseLeave" Name="border" Panel.ZIndex="1" MouseUp="border_MouseUp" MouseEnter="Border_MouseEnter" MouseDown="Border_MouseDown" BorderThickness=".9" CornerRadius="10 1 1 10" BorderBrush="Black" Margin="0 -14.5 -12.5 0">
-                    <Border.Background>
-                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                            <GradientStop Color="#FF83B8D2"/>
-                            <GradientStop Color="#FFD2F0FF" Offset="0.846"/>
-                            <GradientStop Color="#FFB4E7FF" Offset="0.121"/>
-                            <GradientStop Color="#FF94C1D8" Offset="0.903"/>
-                        </LinearGradientBrush>
-                    </Border.Background>
-                </Border>
-            </DockPanel>
             <Syncfusion:SfTextInputLayout  Name="Sf_txtVra" OutlineCornerRadius="8" Grid.Row="2" Grid.Column="1" Hint="نام کل" VerticalAlignment="Center" Margin="30 0"  HorizontalAlignment="Stretch">
                 <TextBox Name="txtColName" Text="" TextChanged="txtColName_TextChanged" MaxLength="50" VerticalContentAlignment="Center"   PreviewTextInput="Txt_PreviewTextInput" Margin="0" FontSize="16"/>
             </Syncfusion:SfTextInputLayout>
@@ -276,7 +263,6 @@
                         <Syncfusion:GridTextColumn MinimumWidth="145" HeaderText="نام گروه" ColumnSizer="Star" MappingName="FkGroup.GroupName" />
                         <Syncfusion:GridTextColumn MinimumWidth="70" HeaderText="ماهیت" MappingName="GetType2"/>
                         <Syncfusion:GridTextColumn MinimumWidth="82" HeaderText="نوع عملکرد" MappingName="GetAction"/>
-                        <Syncfusion:GridCheckBoxColumn MinimumWidth="115" HeaderText="مجوز مشاهده" MappingName="PermissionView"/>
                     </Syncfusion:SfDataGrid.Columns>
                 </Syncfusion:SfDataGrid>
             </Grid>
