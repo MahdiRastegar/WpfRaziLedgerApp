@@ -13,6 +13,28 @@ using Microsoft.EntityFrameworkCore;
 
 namespace WpfRaziLedgerApp
 {
+    public static class VisualTreeHelperExtensions
+    {
+        public static IEnumerable<T> FindVisualChildren<T>(this DependencyObject depObj) where T : DependencyObject
+        {
+            if (depObj != null)
+            {
+                for (int i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
+                {
+                    DependencyObject child = VisualTreeHelper.GetChild(depObj, i);
+                    if (child is T t)
+                    {
+                        yield return t;
+                    }
+
+                    foreach (T childOfChild in FindVisualChildren<T>(child))
+                    {
+                        yield return childOfChild;
+                    }
+                }
+            }
+        }
+    }
     public static class ExtensionMethods
     {
         public static List<string> CompareObjects<T>(T obj1, T obj2)
