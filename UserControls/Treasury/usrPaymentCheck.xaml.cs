@@ -640,7 +640,8 @@ namespace WpfRaziLedgerApp
             };            
             
             datagrid.Visibility = Visibility.Visible;
-            gridSetting.Visibility = gridConfirm.Visibility = Visibility.Visible;
+            //gridSetting.Visibility = 
+                gridConfirm.Visibility = Visibility.Visible;
             Sf_txtMoein.HasError = Sf_txtPreferential.HasError= Sf_cmbChangeState.HasError = false;
             datagrid.BorderBrush = new System.Windows.Media.SolidColorBrush((System.Windows.Media.Color)ColorConverter.ConvertFromString("#FF808080"));
             txtMoein.Text= string.Empty;

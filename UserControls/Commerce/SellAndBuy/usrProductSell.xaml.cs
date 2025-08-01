@@ -1165,7 +1165,8 @@ namespace WpfRaziLedgerApp
             }
             datagrid.Visibility = Visibility.Visible;
             datagridSearch.Visibility = Visibility.Collapsed;
-            gridSetting.Visibility = gridConfirm.Visibility = Visibility.Visible;
+            //gridSetting.Visibility = 
+            gridConfirm.Visibility = Visibility.Visible;
             Sf_txtInvoiceNumber.HasError = false;
             txtDescription.Text = string.Empty;
             txtPreferential.Text = string.Empty;
@@ -1660,6 +1661,7 @@ namespace WpfRaziLedgerApp
                     txtInvoiceNumber.Text = header.InvoiceNumber.ToString();
                     txtPreferential.Text = header.FkPreferential.PreferentialCode.ToString();
                     txtPreferentialName.Text = header.FkPreferential.PreferentialName.ToString();
+                    txtBuyRemittanceNumber.Text = header.BuyRemittanceNumber.ToString();
                     txtDescription.Text = header.Description.ToString();
                     txtSerial.Text = header.Serial.ToString();
 
@@ -1702,7 +1704,8 @@ namespace WpfRaziLedgerApp
                     SearchTermTextBox.Text = "";
                     SearchTermTextBox.TextChanged+= SearchTermTextBox_TextChanged;
                     datagridSearch.Visibility = Visibility.Collapsed;
-                    gridSetting.Visibility = gridConfirm.Visibility = Visibility.Visible;
+                    //gridSetting.Visibility = 
+                    gridConfirm.Visibility = Visibility.Visible;
                     Sf_txtInvoiceNumber.HasError = false;
                     column3.Width = column2.Width = column1.Width = new GridLength(225);
                     borderEdit.Visibility = Visibility.Visible;
@@ -1724,7 +1727,7 @@ namespace WpfRaziLedgerApp
                     if (!AddedMode)
                     {
                         using var db = new wpfrazydbContext();
-                        var e_Edidet = db.ProductSellHeaders.Find(id);
+                        var e_Edidet = db.ProductSellHeaders.Include(h => h.ProductSellDetails).ThenInclude(k => k.FkCommodity).FirstOrDefault(u => u.Id == id);
                         var header = ProductSellHeaders.FirstOrDefault(o => o.Id == id);
                         header.ProductSellDetails.Clear();
                         e_Edidet.ProductSellDetails = e_Edidet.ProductSellDetails
@@ -1735,6 +1738,7 @@ namespace WpfRaziLedgerApp
                             header.ProductSellDetails.Add(item);
                             SetAccountName(db, item);
                         }
+                        id = Guid.Empty;
                     }
                     datagridSearch.ClearFilters();
                     datagridSearch.SortColumnDescriptions.Clear();
@@ -2514,6 +2518,11 @@ namespace WpfRaziLedgerApp
                     txtBuyRemittanceNumber.Text = "";
                 }
             }
+        }
+
+        private void datagrid_RecordDeleted(object sender, RecordDeletedEventArgs e)
+        {
+            CalDebCre(true);
         }
 
         private void persianCalendar_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)

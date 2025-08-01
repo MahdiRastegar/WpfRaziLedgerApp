@@ -639,7 +639,8 @@ namespace WpfRaziLedgerApp
             }
             datagrid.Visibility = Visibility.Visible;
             datagridSearch.Visibility = Visibility.Collapsed;
-            gridSetting.Visibility = gridConfirm.Visibility = Visibility.Visible;
+            //gridSetting.Visibility = 
+                gridConfirm.Visibility = Visibility.Visible;
             txtNoDocumen.Text = "";
             Sf_txtNoDocumen.HasError = false;
             txtPreferential.Text = string.Empty;
@@ -1035,7 +1036,8 @@ namespace WpfRaziLedgerApp
                     SearchTermTextBox.Text = "";
                     SearchTermTextBox.TextChanged+= SearchTermTextBox_TextChanged;
                     datagridSearch.Visibility = Visibility.Collapsed;
-                    gridSetting.Visibility = gridConfirm.Visibility = Visibility.Visible;
+                    //gridSetting.Visibility = 
+                        gridConfirm.Visibility = Visibility.Visible;
                     Sf_txtNoDocumen.HasError = false;
                     column1.Width = new GridLength(225);
                     borderEdit.Visibility = Visibility.Visible;
@@ -1057,7 +1059,7 @@ namespace WpfRaziLedgerApp
                     if (!AddedMode)
                     {
                         using var db = new wpfrazydbContext();
-                        var e_Edidet = db.OrderHeaders.Find(id);
+                        var e_Edidet = db.OrderHeaders.Include(h => h.OrderDetails).ThenInclude(k => k.FkCommodity).FirstOrDefault(u => u.Id == id);
                         var header = OrderHeaders.FirstOrDefault(o => o.Id == id);
                         header.OrderDetails.Clear();
                         e_Edidet.OrderDetails = e_Edidet.OrderDetails
@@ -1068,6 +1070,7 @@ namespace WpfRaziLedgerApp
                             header.OrderDetails.Add(item);
                             SetAccountName(db, item);
                         }
+                        id = Guid.Empty;
                     }
                     datagridSearch.ClearFilters();
                     datagridSearch.SortColumnDescriptions.Clear();
@@ -1659,6 +1662,7 @@ namespace WpfRaziLedgerApp
             
             return groupBox;
         }
+
         private void persianCalendar_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (!rl1)

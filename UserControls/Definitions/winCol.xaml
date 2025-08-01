@@ -64,7 +64,7 @@
         <Grid FlowDirection="RightToLeft">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="220"/>
-                <ColumnDefinition Width="300"/>
+                <ColumnDefinition Width="250"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
@@ -76,7 +76,7 @@
                 <RowDefinition Height="1*" MinHeight="90"/>
                 <RowDefinition Height="0"/>
             </Grid.RowDefinitions>
-            <Border  Name="borderEdit" Visibility="Hidden" Grid.ColumnSpan="2" CornerRadius="5" Margin="4 0 0 0" Grid.Row="1" Grid.RowSpan="5" BorderThickness="4">
+            <Border  Name="borderEdit" Visibility="Hidden" Grid.ColumnSpan="2" CornerRadius="5" Margin="4 0 34 0" Grid.Row="1" Grid.RowSpan="5" BorderThickness="4">
                 <Border.Background>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                         <GradientStop Color="White" Offset="0"/>
@@ -131,13 +131,14 @@
                     <Syncfusion:ComboBoxItemAdv >هردو</Syncfusion:ComboBoxItemAdv>
                 </Syncfusion:ComboBoxAdv>
             </Syncfusion:SfTextInputLayout>
-            <Syncfusion:SfTextInputLayout  Name="Sf_Actin" Grid.Column="1" OutlineCornerRadius="8" Hint="نوع عملکرد" Grid.Row="3"  VerticalAlignment="Center" Margin="30 0"  HorizontalAlignment="Stretch">
+            <Syncfusion:SfTextInputLayout  Name="Sf_Actin" Grid.Column="1" OutlineCornerRadius="8" Hint="نوع عملکرد" Grid.Row="3"  VerticalAlignment="Center" Margin="0,0,60,0"  HorizontalAlignment="Stretch">
                 <Syncfusion:ComboBoxAdv PreviewKeyDown="cmAction_PreviewKeyDown" SelectionChanged="cmbType_SelectionChanged"  Name="cmbAction" FlowDirection="RightToLeft">
                     <Syncfusion:ComboBoxItemAdv >ترازنامه ای</Syncfusion:ComboBoxItemAdv>
                     <Syncfusion:ComboBoxItemAdv >سود و زیانی</Syncfusion:ComboBoxItemAdv>
+                    <Syncfusion:ComboBoxItemAdv >انتظامی</Syncfusion:ComboBoxItemAdv>
                 </Syncfusion:ComboBoxAdv>
             </Syncfusion:SfTextInputLayout>
-            <Syncfusion:SfTextInputLayout  Name="Sf_txtVra" OutlineCornerRadius="8" Grid.Row="2" Grid.Column="1" Hint="نام کل" VerticalAlignment="Center" Margin="30 0"  HorizontalAlignment="Stretch">
+            <Syncfusion:SfTextInputLayout  Name="Sf_txtVra" OutlineCornerRadius="8" Grid.Row="2" Grid.Column="1" Hint="نام کل" VerticalAlignment="Center" Margin="0,0,60,0"  HorizontalAlignment="Stretch">
                 <TextBox Name="txtColName" Text="" TextChanged="txtColName_TextChanged" MaxLength="50" VerticalContentAlignment="Center"   PreviewTextInput="Txt_PreviewTextInput" Margin="0" FontSize="16"/>
             </Syncfusion:SfTextInputLayout>
             <DockPanel  Grid.Row="5" Grid.ColumnSpan="2" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="15 0 15 10">
@@ -178,7 +179,7 @@
                     <Image Source="/Images/Delete.png" IsHitTestVisible="False" Width="37.5" Stretch="Fill" Height="39" Margin="0 0 0 2"/>
                 </Grid>
             </DockPanel>
-            <Grid  Grid.Row="1" Grid.RowSpan="5" Grid.Column="2" Name="gridContainer">
+            <Grid  Grid.Row="1" Grid.RowSpan="5" Margin="-45 0 -20 0" Grid.Column="2" Name="gridContainer">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="80"/>
                     <RowDefinition/>
@@ -260,16 +261,16 @@
                         <Syncfusion:GridTextColumn Width="70" HeaderText="کد کل" MappingName="ColCode"/>
                         <Syncfusion:GridTextColumn MinimumWidth="171" HeaderText="نام کل" ColumnSizer="Star" MappingName="ColName" />
                         <Syncfusion:GridTextColumn Width="83" HeaderText="کد گروه" MappingName="FkGroup.GroupCode"/>
-                        <Syncfusion:GridTextColumn MinimumWidth="145" HeaderText="نام گروه" ColumnSizer="Star" MappingName="FkGroup.GroupName" />
-                        <Syncfusion:GridTextColumn MinimumWidth="70" HeaderText="ماهیت" MappingName="GetType2"/>
-                        <Syncfusion:GridTextColumn MinimumWidth="82" HeaderText="نوع عملکرد" MappingName="GetAction"/>
+                        <Syncfusion:GridTextColumn MinimumWidth="130" HeaderText="نام گروه" ColumnSizer="Star" MappingName="FkGroup.GroupName" />
+                        <Syncfusion:GridTextColumn Width="70" HeaderText="ماهیت" MappingName="GetType2"/>
+                        <Syncfusion:GridTextColumn Width="90" HeaderText="نوع عملکرد" MappingName="GetAction"/>
                     </Syncfusion:SfDataGrid.Columns>
                 </Syncfusion:SfDataGrid>
             </Grid>
             <Syncfusion:SfTextInputLayout x:Name="Sf_txtGreoup"  OutlineCornerRadius="8" Hint="کد گروه حساب" Grid.Row="1"  VerticalAlignment="Center" Margin="30,0,30,0">
                 <TextBox x:Name="txtGroup" LostFocus="txtGroup_LostFocus" TextChanged="txtColName_TextChanged" VerticalContentAlignment="Center" IsEnabled="True" IsReadOnly="False" PreviewTextInput="txtGroup_PreviewTextInput" Margin="0" FontSize="16"/>
             </Syncfusion:SfTextInputLayout>
-            <Syncfusion:SfTextInputLayout  x:Name="Sf_txtVra_Copy" OutlineCornerRadius="8" Grid.Row="1" Grid.Column="1" Hint="نام گروه" VerticalAlignment="Center" Margin="30,0,30,0">
+            <Syncfusion:SfTextInputLayout  x:Name="Sf_txtVra_Copy" OutlineCornerRadius="8" Grid.Row="1" Grid.Column="1" Hint="نام گروه" VerticalAlignment="Center" Margin="0,0,60,0">
                 <TextBox x:Name="txtGroupName" Text="" IsReadOnly="True" MaxLength="50" VerticalContentAlignment="Center"   PreviewTextInput="Txt_PreviewTextInput" Margin="0" FontSize="16"/>
             </Syncfusion:SfTextInputLayout>
         </Grid>

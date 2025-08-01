@@ -694,6 +694,17 @@ namespace WpfRaziLedgerApp
             };            
             searchImage.Opacity = 1;
             using var db = new wpfrazydbContext();
+            var y = db.AcDocumentHeaders.OrderByDescending(k => k.NoDoument).FirstOrDefault();
+            if (y == null)
+            {
+                txtSerial.Text = txtNoDocumen.Text = "1";
+            }
+            else
+            {
+                txtNoDocumen.Text = (y.NoDoument + 1).ToString();
+                var yb = db.AcDocumentHeaders.OrderByDescending(k => k.NoDoument).FirstOrDefault();
+                txtSerial.Text = (y.Serial + 1).ToString();
+            }
             if (!AddedMode)
             {
                 if (id != Guid.Empty)
@@ -720,7 +731,6 @@ namespace WpfRaziLedgerApp
             datagridSearch.Visibility = Visibility.Collapsed;
             gridConfirm.Visibility = Visibility.Visible;
             cmbType.IsReadOnly = false;
-            txtNoDocumen.Text = "";
             Sf_txtNoDocumen.HasError = false;
             Sf_txtDoumentType.HasError = false;
             Sf_txtDoumentType.ErrorText = "";
@@ -736,7 +746,6 @@ namespace WpfRaziLedgerApp
             gridDelete.Visibility = Visibility.Hidden;
             borderEdit.Visibility = Visibility.Hidden;
             cmbType.SelectedIndex = 0;
-            txtSerial.Text = "";
             datagrid.BorderBrush = new System.Windows.Media.SolidColorBrush((System.Windows.Media.Color)ColorConverter.ConvertFromString("#FF808080"));
             if (AcDocumentDetails.Count > 0)
             {

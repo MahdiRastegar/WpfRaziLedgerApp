@@ -58,7 +58,7 @@ namespace WpfRaziLedgerApp
                 if (PasswordText.Password == userApp.Password)
                 {
                     App.Suspended = false;
-                    MainWindow.Current.StatusOptions = new StatusOptions()
+                    MainWindow.StatusOptions = new StatusOptions()
                     {
                         User = userApp,
                         VD = db.Versions.First().DataBaseRazyDb,

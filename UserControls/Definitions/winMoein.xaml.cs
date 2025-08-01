@@ -91,6 +91,12 @@ namespace WpfRaziLedgerApp
             txtCol.Focus();
             dataPager.Source = null;
             dataPager.Source = Moeins;
+            datagrid.SortColumnDescriptions.Clear();
+            datagrid.SortColumnDescriptions.Add(new Syncfusion.UI.Xaml.Grid.SortColumnDescription()
+            {
+                ColumnName = "FkCol.ColCode",
+                SortDirection = System.ComponentModel.ListSortDirection.Ascending
+            });
         }
 
         private void btnConfirm_Click(object sender, RoutedEventArgs e)

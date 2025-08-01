@@ -242,7 +242,7 @@
     <comment>Text for GreaterThanorEqual</comment>
   </data>
   <data name="GroupDropAreaText" xml:space="preserve">
-    <value>برای گروه بندی بر اساس آن ستون، سر ستون را به اینجا بکشید</value>
+    <value>برای گروه بندی بر اساس یک ستون، سر ستون را به اینجا بکشید</value>
     <comment>Text for GroupDropArea</comment>
   </data>
   <data name="Height" xml:space="preserve">

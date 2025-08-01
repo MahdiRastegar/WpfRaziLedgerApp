@@ -1077,7 +1077,7 @@ namespace WpfRaziLedgerApp
                     if (!AddedMode)
                     {
                         using var db = new wpfrazydbContext();
-                        var e_Edidet = db.PreInvoiceHeaders.Find(id);
+                        var e_Edidet = db.PreInvoiceHeaders.Include(h => h.PreInvoiceDetails).ThenInclude(k => k.FkCommodity).FirstOrDefault(u => u.Id == id);
                         var header = PreInvoiceHeaders.FirstOrDefault(o => o.Id == id);
                         header.PreInvoiceDetails.Clear();
                         e_Edidet.PreInvoiceDetails = e_Edidet.PreInvoiceDetails
@@ -1088,6 +1088,7 @@ namespace WpfRaziLedgerApp
                             header.PreInvoiceDetails.Add(item);
                             SetAccountName(db, item);
                         }
+                        id = Guid.Empty;
                     }
                     datagridSearch.ClearFilters();
                     datagridSearch.SortColumnDescriptions.Clear();
@@ -1755,6 +1756,11 @@ namespace WpfRaziLedgerApp
                 column2.Width = new GridLength(0);
                 morefields.Visibility = Visibility.Visible;
             }
+        }
+
+        private void datagrid_RecordDeleted(object sender, RecordDeletedEventArgs e)
+        {
+            CalDebCre(true);
         }
 
         private void persianCalendar_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)

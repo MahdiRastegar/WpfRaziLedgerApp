@@ -56,8 +56,6 @@ namespace WpfRaziLedgerApp
             return !_regex.IsMatch(text);
         }
 
-        int rowsCount;
-        List<long> Ids;
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
             using var db=new wpfrazydbContext();
@@ -65,6 +63,12 @@ namespace WpfRaziLedgerApp
             datagrid.ItemsSource = M;
             datagrid.SearchHelper.AllowFiltering = true;
             txtGroup.Focus();
+            datagrid.SortColumnDescriptions.Clear();
+            datagrid.SortColumnDescriptions.Add(new Syncfusion.UI.Xaml.Grid.SortColumnDescription()
+            {
+                ColumnName = "ColCode",
+                SortDirection = System.ComponentModel.ListSortDirection.Ascending
+            });
         }
 
         private void btnConfirm_Click(object sender, RoutedEventArgs e)

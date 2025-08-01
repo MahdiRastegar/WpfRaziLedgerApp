@@ -803,6 +803,7 @@ namespace WpfRaziLedgerApp
             datagridCol.Dispose();
             datagridMoein.Dispose();
             datagridPreferential.Dispose();
+            datagridِDetails.Dispose();
             dataPager.Dispose();
             dataPager2.Dispose();
             dataPager3.Dispose();

@@ -34,6 +34,8 @@ namespace WpfRaziLedgerApp
                         return "ترازنامه ای";
                     case 1:
                         return "سود و زیانی";
+                    case 2:
+                        return "انتظامی";
                 }
                 return "";
             }

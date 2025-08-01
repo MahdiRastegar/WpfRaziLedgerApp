@@ -64,7 +64,7 @@
         <Grid FlowDirection="RightToLeft">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="225"/>
-                <ColumnDefinition Width="300"/>
+                <ColumnDefinition Width="270"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
@@ -132,7 +132,7 @@
             <Syncfusion:SfTextInputLayout  Name="Sf_txtPreferentialName" OutlineCornerRadius="8" Grid.Row="2" Grid.Column="1" Hint="نام تفضیلی" VerticalAlignment="Center" Margin="30 0"  HorizontalAlignment="Stretch">
                 <TextBox Name="txtPreferentialName" Text="" TextChanged="txtPreferentialName_TextChanged" MaxLength="50" VerticalContentAlignment="Center"   PreviewTextInput="Txt_PreviewTextInput" Margin="0" FontSize="16"/>
             </Syncfusion:SfTextInputLayout>
-            <Expander  x:Name="expander" Grid.Row="3" Grid.ColumnSpan="2" Margin="10 0 10 50" Header="اطلاعات بیشتر" FontSize="16" Grid.RowSpan="2" FlowDirection="RightToLeft">
+            <Expander  x:Name="expander" Grid.Row="3" Grid.ColumnSpan="2" Margin="10 0 -10 50" Header="اطلاعات بیشتر" FontSize="16" Grid.RowSpan="2" FlowDirection="RightToLeft">
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
                     <GroupBox Margin="5">
                         <StackPanel>
@@ -241,7 +241,7 @@
                     <Image Source="/Images/print.png" IsHitTestVisible="False" Width="36" />
                 </Grid>
                 <Grid Name="gridDelete" Visibility="Hidden">
-                    <Button Style="{StaticResource CustomButtonStyle}" ToolTip="حذف" Click="BtnDelete_Click" x:Name="btnDelete" HorizontalAlignment="Center" Margin="0 0 0 0" Width="60" Content="" FontSize="20" Height="45">
+                    <Button Style="{StaticResource CustomButtonStyle}" ToolTip="حذف" Click="BtnDelete_Click" x:Name="btnDelete" HorizontalAlignment="Center" Margin="10 0 10 0" Width="60" Content="" FontSize="20" Height="45">
                         <Button.Background>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                 <GradientStop Color="#FFFFDCCB"/>
@@ -253,7 +253,7 @@
                     <Image Source="/Images/Delete.png" IsHitTestVisible="False" Width="37.5" Stretch="Fill" Height="39" Margin="0 0 0 2"/>
                 </Grid>
             </DockPanel>
-            <Grid  Grid.Row="1" Grid.RowSpan="4" Grid.Column="2" Name="gridContainer">
+            <Grid  Grid.Row="1" Grid.RowSpan="4" Margin="-10 0 0 0" Grid.Column="2" Name="gridContainer">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="80"/>
                     <RowDefinition/>

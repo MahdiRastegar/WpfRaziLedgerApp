@@ -1174,7 +1174,8 @@ namespace WpfRaziLedgerApp
             }
             datagrid.Visibility = Visibility.Visible;
             datagridSearch.Visibility = Visibility.Collapsed;
-            gridSetting.Visibility = gridConfirm.Visibility = Visibility.Visible;
+            //gridSetting.Visibility = 
+                gridConfirm.Visibility = Visibility.Visible;
             Sf_txtMoein.HasError = Sf_txtPreferential.HasError = false;
             datagrid.BorderBrush = new System.Windows.Media.SolidColorBrush((System.Windows.Media.Color)ColorConverter.ConvertFromString("#FF808080"));
             txtMoein.Text= string.Empty;
@@ -1667,7 +1668,8 @@ namespace WpfRaziLedgerApp
                     SearchTermTextBox.Text = "";
                     SearchTermTextBox.TextChanged+= SearchTermTextBox_TextChanged;
                     datagridSearch.Visibility = Visibility.Collapsed;
-                    gridSetting.Visibility = gridConfirm.Visibility = Visibility.Visible;
+                    //gridSetting.Visibility = 
+                        gridConfirm.Visibility = Visibility.Visible;
                     column1.Width = new GridLength(170);
                     column2.Width = new GridLength(225);
                     borderEdit.Visibility = Visibility.Visible;

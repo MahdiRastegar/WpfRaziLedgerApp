@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Threading;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
@@ -69,6 +72,31 @@ namespace WpfRaziLedgerApp
         public virtual DbSet<UserApp> UserApps { get; set; }
         public virtual DbSet<UserGroup> UserGroups { get; set; }
         public virtual DbSet<Version> Versions { get; set; }
+
+        public override int SaveChanges()
+        {
+            SetCurrentPeriodId();
+            return base.SaveChanges();
+        }
+
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            SetCurrentPeriodId();
+            return await base.SaveChangesAsync(cancellationToken);
+        }
+
+        private void SetCurrentPeriodId()
+        {
+            foreach (var entry in ChangeTracker.Entries()
+                .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified))
+            {
+                var property = entry.Entity.GetType().GetProperty("FkPeriodId");
+                if (property != null && property.PropertyType == typeof(Nullable<Guid>))
+                {
+                    property.SetValue(entry.Entity, MainWindow.StatusOptions.Period.Id);
+                }
+            }
+        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -144,6 +172,8 @@ namespace WpfRaziLedgerApp
                     .WithMany(p => p.AcDocumentHeaders)
                     .HasForeignKey(d => d.FkPeriodId)
                     .HasConstraintName("FK_AcDocument_Header_Period");
+                if (MainWindow.StatusOptions != null)
+                    entity.HasQueryFilter(e => !e.FkPeriodId.HasValue || e.FkPeriodId == MainWindow.StatusOptions.Period.Id);
             });
 
             modelBuilder.Entity<Agroup>(entity =>
@@ -226,6 +256,8 @@ namespace WpfRaziLedgerApp
                     .HasForeignKey(d => d.FkPreferentialId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_CheckPaymentEvents_Preferential");
+                if (MainWindow.StatusOptions != null)
+                    entity.HasQueryFilter(e => !e.FkPeriodId.HasValue || e.FkPeriodId == MainWindow.StatusOptions.Period.Id);
             });
 
             modelBuilder.Entity<CheckRecieveEvent>(entity =>
@@ -283,6 +315,8 @@ namespace WpfRaziLedgerApp
                     .HasForeignKey(d => d.FkPreferentialId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_CheckRecieveEvents_Preferential");
+                if (MainWindow.StatusOptions != null)
+                    entity.HasQueryFilter(e => !e.FkPeriodId.HasValue || e.FkPeriodId == MainWindow.StatusOptions.Period.Id);
             });
 
             modelBuilder.Entity<City>(entity =>
@@ -370,6 +404,8 @@ namespace WpfRaziLedgerApp
                     .HasForeignKey(d => d.FkUnitId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Commodity_Unit");
+                if (MainWindow.StatusOptions != null)
+                    entity.HasQueryFilter(e => !e.FkPeriodId.HasValue || e.FkPeriodId == MainWindow.StatusOptions.Period.Id);
             });
 
             modelBuilder.Entity<CommodityPricingPanel>(entity =>
@@ -404,6 +440,8 @@ namespace WpfRaziLedgerApp
                     .HasForeignKey(d => d.FkPriceGroupId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_CommodityPricingPanel_PriceGroup");
+                if (MainWindow.StatusOptions != null)
+                    entity.HasQueryFilter(e => !e.FkPeriodId.HasValue || e.FkPeriodId == MainWindow.StatusOptions.Period.Id);
             });
 
             modelBuilder.Entity<CustomerGroup>(entity =>
@@ -575,6 +613,8 @@ namespace WpfRaziLedgerApp
                     .HasForeignKey(d => d.FkPreferentialId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_OrderHeader_Preferential");
+                if (MainWindow.StatusOptions != null)
+                    entity.HasQueryFilter(e => !e.FkPeriodId.HasValue || e.FkPeriodId == MainWindow.StatusOptions.Period.Id);
             });
 
             modelBuilder.Entity<PaymentMoneyDetail>(entity =>
@@ -654,6 +694,8 @@ namespace WpfRaziLedgerApp
                     .WithMany(p => p.PaymentMoneyHeaders)
                     .HasForeignKey(d => d.FkPreferentialId)
                     .HasConstraintName("FK_PaymentMoneyHeader_Preferential");
+                if (MainWindow.StatusOptions != null)
+                    entity.HasQueryFilter(e => !e.FkPeriodId.HasValue || e.FkPeriodId == MainWindow.StatusOptions.Period.Id);
             });
 
             modelBuilder.Entity<Period>(entity =>
@@ -743,6 +785,8 @@ namespace WpfRaziLedgerApp
                     .HasForeignKey(d => d.FkPreferentialId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_PreInvoiceHeader_Preferential");
+                if (MainWindow.StatusOptions != null)
+                    entity.HasQueryFilter(e => !e.FkPeriodId.HasValue || e.FkPeriodId == MainWindow.StatusOptions.Period.Id);
             });
 
             modelBuilder.Entity<Preferential>(entity =>
@@ -840,6 +884,8 @@ namespace WpfRaziLedgerApp
                     .HasForeignKey(d => d.FkPreferentialId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_ProductBuyHeader_Preferential");
+                if (MainWindow.StatusOptions != null)
+                    entity.HasQueryFilter(e => !e.FkPeriodId.HasValue || e.FkPeriodId == MainWindow.StatusOptions.Period.Id);
             });
 
             modelBuilder.Entity<ProductSellDetail>(entity =>
@@ -936,6 +982,8 @@ namespace WpfRaziLedgerApp
                     .WithMany(p => p.ProductSellHeaderFkPreferentialIdReceiverNavigations)
                     .HasForeignKey(d => d.FkPreferentialIdReceiver)
                     .HasConstraintName("FK_ProductSellHeader_Preferential4");
+                if (MainWindow.StatusOptions != null)
+                    entity.HasQueryFilter(e => !e.FkPeriodId.HasValue || e.FkPeriodId == MainWindow.StatusOptions.Period.Id);
             });
 
             modelBuilder.Entity<Province>(entity =>
@@ -1024,6 +1072,8 @@ namespace WpfRaziLedgerApp
                     .WithMany(p => p.RecieveMoneyHeaders)
                     .HasForeignKey(d => d.FkPreferentialId)
                     .HasConstraintName("FK_RecieveMoneyHeader_Preferential");
+                if (MainWindow.StatusOptions != null)
+                    entity.HasQueryFilter(e => !e.FkPeriodId.HasValue || e.FkPeriodId == MainWindow.StatusOptions.Period.Id);
             });
 
             modelBuilder.Entity<RibbonItem>(entity =>
@@ -1053,6 +1103,8 @@ namespace WpfRaziLedgerApp
                     .WithMany(p => p.Storages)
                     .HasForeignKey(d => d.FkPeriodId)
                     .HasConstraintName("FK_Storage_Period");
+                if (MainWindow.StatusOptions != null)
+                    entity.HasQueryFilter(e => !e.FkPeriodId.HasValue || e.FkPeriodId == MainWindow.StatusOptions.Period.Id);
             });
 
             modelBuilder.Entity<StorageReceiptDetail>(entity =>
@@ -1110,6 +1162,8 @@ namespace WpfRaziLedgerApp
                     .HasForeignKey(d => d.FkStorageId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_StorageReceiptHeader_Storage");
+                if (MainWindow.StatusOptions != null)
+                    entity.HasQueryFilter(e => !e.FkPeriodId.HasValue || e.FkPeriodId == MainWindow.StatusOptions.Period.Id);
             });
 
             modelBuilder.Entity<StorageRotationDetail>(entity =>
@@ -1151,6 +1205,8 @@ namespace WpfRaziLedgerApp
                     .WithMany(p => p.StorageRotationHeaders)
                     .HasForeignKey(d => d.FkPeriodId)
                     .HasConstraintName("FK_StorageRotationHeader_Period");
+                if (MainWindow.StatusOptions != null)
+                    entity.HasQueryFilter(e => !e.FkPeriodId.HasValue || e.FkPeriodId == MainWindow.StatusOptions.Period.Id);
             });
 
             modelBuilder.Entity<StorageTransferDetail>(entity =>
@@ -1208,6 +1264,8 @@ namespace WpfRaziLedgerApp
                     .HasForeignKey(d => d.FkStorageId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_StorageTransferHeader_Storage");
+                if (MainWindow.StatusOptions != null)
+                    entity.HasQueryFilter(e => !e.FkPeriodId.HasValue || e.FkPeriodId == MainWindow.StatusOptions.Period.Id);
             });
 
             modelBuilder.Entity<TGroup>(entity =>

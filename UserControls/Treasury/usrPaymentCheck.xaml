@@ -490,7 +490,7 @@ FontFamily="{StaticResource IranSans}" Width="27"
                     </Button>
                     <Image Source="/Images/Cancel.png" IsHitTestVisible="False" Width="36" />
                 </Grid>
-                <Grid  x:Name="gridSetting">
+                <Grid  x:Name="gridSetting" Visibility="Collapsed">
                     <Button Style="{StaticResource CustomButtonStyle}" ToolTip="تنظیمات پیکربندی" Click="btnSetting_Click" x:Name="btnSetting" HorizontalAlignment="Center" Margin="10 0 10 0" Width="60" Content="" FontSize="20" Height="45">
                         <Button.Background>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">

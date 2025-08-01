@@ -2,9 +2,11 @@
 using Syncfusion.Windows.Tools.Controls;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -34,7 +36,8 @@ namespace WpfRaziLedgerApp
             get { return _TaxPercent; }
             set { _TaxPercent = value; }
         }
-        public StatusOptions StatusOptions { get; set; }
+        public static StatusOptions StatusOptions { get; set; }
+        public static bool ViewFormLeftRigth = true;
         public MainWindow()
         {
             InitializeComponent();
@@ -100,6 +103,7 @@ namespace WpfRaziLedgerApp
                 // اگر هیچ آیتمی در تب قابل نمایش نیست، تب هم پنهان شه
                 tab.Visibility = hasVisibleChild ? Visibility.Visible : Visibility.Collapsed;
             }
+            //rbnConfiguration2.Visibility = Visibility.Visible;
         }
         private List<Guid> GetPermissionIdsForGroup(Guid groupId)
         {
@@ -222,7 +226,7 @@ namespace WpfRaziLedgerApp
                 row.Height = new GridLength();
             }
             else
-                row.Height = new GridLength(197);
+                row.Height = new GridLength(160);
         }
 
         private void rbnGroup_Click(object sender, RoutedEventArgs e)
@@ -851,6 +855,56 @@ namespace WpfRaziLedgerApp
             {
                 item = new TabItemExt() { Header = "سطح دسترسی" };
                 item.Content = new usrPermissionManager();
+                tabcontrol.Items.Add(item);
+            }
+        }
+
+        private void rbnConfiguration2_Click(object sender, RoutedEventArgs e)
+        {
+            if (ViewFormLeftRigth)
+            {
+                if (Xceed.Wpf.Toolkit.MessageBox.Show("آیا می خواهید نمایش فرم از بالا به پایین باشد و برنامه دوباره اجرا شود؟", "نحوه نمایش فرم", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+                {
+                    System.IO.File.WriteAllText(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Setting.txt"), "false");
+                    App.Current.Shutdown();
+                    string jsonArg = JsonSerializer.Serialize(WpfRaziLedgerApp.MainWindow.StatusOptions);
+
+                    // توجه: چون بعضی کاراکترها ممکنه برای command line مناسب نباشن، پیشنهاد می‌شه encode کنی:
+                    string encodedArg = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(jsonArg));
+
+                    // Start process with encoded argument
+                    Process.Start(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WpfRaziLedgerApp.exe"), encodedArg);
+                }
+            }
+            else
+            {
+                if (Xceed.Wpf.Toolkit.MessageBox.Show("آیا می خواهید نمایش فرم از چپ به راست باشد و برنامه دوباره اجرا شود؟", "نحوه نمایش فرم", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+                {
+                    System.IO.File.WriteAllText(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Setting.txt"), "true");
+                    App.Current.Shutdown();
+                    string jsonArg = JsonSerializer.Serialize(WpfRaziLedgerApp.MainWindow.StatusOptions);
+
+                    // توجه: چون بعضی کاراکترها ممکنه برای command line مناسب نباشن، پیشنهاد می‌شه encode کنی:
+                    string encodedArg = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(jsonArg));
+
+                    // Start process with encoded argument
+                    Process.Start(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WpfRaziLedgerApp.exe"), encodedArg);
+                }
+            }
+        }
+
+        private void rbnBuyRemittance_Click(object sender, RoutedEventArgs e)
+        {
+            var list = GetTabControlItems;
+            var item = list.FirstOrDefault(y => y.Header == "گزارش حواله خرید");
+            if (item != null)
+            {
+                tabcontrol.SelectedItem = item;
+            }
+            else
+            {
+                item = new TabItemExt() { Header = "گزارش حواله خرید" };
+                item.Content = new usrBuyRemittance();
                 tabcontrol.Items.Add(item);
             }
         }

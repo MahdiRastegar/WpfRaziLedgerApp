@@ -303,6 +303,15 @@ namespace WpfRaziLedgerApp
                                 e_addHeader.Description =="" ? null :
                                     $"توضیحات : {e_addHeader.Description}"
                             };
+                    var parts2 = parts.ToArray().ToList();
+                    parts2[1] = $"بابت مقدار";
+                    foreach ( var part in ProductBuy_Details)
+                    {
+                        parts2[1] += $" {part.Value} {part.FkCommodity.Name} و";
+                    }
+                    parts2[1] = parts2[1].Remove(parts2[1].Count() - 2);
+                    parts2[1] += $" فاکتور شماره {txtInvoiceNumber.Text} از {e_addHeader.FkPreferential.PreferentialName}";
+                    parts2[2] = "";
                     var enx = new AcDocumentDetail()
                     {
                         FkMoeinId = moeinHeader2.Id,
@@ -310,7 +319,7 @@ namespace WpfRaziLedgerApp
                         FkAcDocHeader = e_addHeader2,
                         Creditor = 0,
                         Debtor = ProductBuy_Details.Sum(y => y.Value * y.Fee),
-                        Description = string.Join(",", parts.Where(s => !string.IsNullOrWhiteSpace(s))),
+                        Description = string.Join(",", parts2.Where(s => !string.IsNullOrWhiteSpace(s))),
                         Indexer = index2,
                         //AccountName = item.AccountName,
                         Id = Guid.NewGuid()
@@ -360,6 +369,8 @@ namespace WpfRaziLedgerApp
                                 e_addHeader.Description =="" ? null :
                                     $"توضیحات : {e_addHeader.Description}"
                             };
+                    parts2=parts.ToArray().ToList();
+                    parts2[1] = $"فاکتور خرید شماره {txtInvoiceNumber.Text}";
                     enx = new AcDocumentDetail()
                     {
                         FkMoeinId = moeinHeader.Id,
@@ -367,7 +378,7 @@ namespace WpfRaziLedgerApp
                         FkAcDocHeader = e_addHeader2,
                         Creditor = ProductBuy_Details.Sum(y => y.Sum),
                         Debtor = 0,
-                        Description = string.Join(",", parts.Where(s => !string.IsNullOrWhiteSpace(s))),
+                        Description = string.Join(",", parts2.Where(s => !string.IsNullOrWhiteSpace(s))),
                         Indexer = index2,
                         //AccountName = item.AccountName,
                         Id = Guid.NewGuid()
@@ -383,6 +394,9 @@ namespace WpfRaziLedgerApp
                         var moeinD = db.Moeins.Include(m => m.FkCol).FirstOrDefault(f => f.MoeinName == "تخفیفات خرید");
                         var pD = db.Preferentials.FirstOrDefault(f => f.PreferentialName == "تخفیفات خرید");
                         index2++;
+                        parts2 = parts.ToArray().ToList();
+                        parts2[1] = $"تخفیف فاکتور شماره {txtInvoiceNumber.Text} بنام {e_addHeader.FkPreferential.PreferentialName}";
+                        parts2[2] = "";
                         enx = new AcDocumentDetail()
                         {
                             FkMoeinId = moeinD.Id,
@@ -390,7 +404,7 @@ namespace WpfRaziLedgerApp
                             FkAcDocHeader = e_addHeader2,
                             Debtor = 0,
                             Creditor = ProductBuy_Details.Sum(y => y.Discount),
-                            Description = string.Join(",", parts.Where(s => !string.IsNullOrWhiteSpace(s))),
+                            Description = string.Join(",", parts2.Where(s => !string.IsNullOrWhiteSpace(s))),
                             Indexer = index2,
                             //AccountName = item.AccountName,
                             Id = Guid.NewGuid()
@@ -507,6 +521,15 @@ namespace WpfRaziLedgerApp
                                 e_Edidet.Description =="" ? null :
                                     $"توضیحات : {e_Edidet.Description}"
                             };
+                        var parts2 = parts.ToArray().ToList();
+                        parts2[1] = $"بابت مقدار";
+                        foreach (var part in ProductBuy_Details)
+                        {
+                            parts2[1] += $" {part.Value} {part.FkCommodity.Name} و";
+                        }
+                        parts2[1] = parts2[1].Remove(parts2[1].Count() - 2);
+                        parts2[1] += $" فاکتور شماره {txtInvoiceNumber.Text} از {e_addHeader.FkPreferential.PreferentialName}";
+                        parts2[2] = "";
                         var enx = new AcDocumentDetail()
                         {
                             FkMoeinId = moeinHeader.Id,
@@ -514,7 +537,7 @@ namespace WpfRaziLedgerApp
                             FkAcDocHeader = ac,
                             Creditor = 0,
                             Debtor = ProductBuy_Details.Sum(y => y.Value * y.Fee),
-                            Description = string.Join(",", parts.Where(s => !string.IsNullOrWhiteSpace(s))),
+                            Description = string.Join(",", parts2.Where(s => !string.IsNullOrWhiteSpace(s))),
                             Indexer = index2,
                             //AccountName = item.AccountName,
                             Id = Guid.NewGuid()
@@ -566,6 +589,8 @@ namespace WpfRaziLedgerApp
                                 e_Edidet.Description =="" ? null :
                                     $"توضیحات : {e_Edidet.Description}"
                             };
+                        parts2 = parts.ToArray().ToList();
+                        parts2[1] = $"فاکتور خرید شماره {txtInvoiceNumber.Text}";
                         enx = new AcDocumentDetail()
                         {
                             FkMoeinId = moeinHeader2.Id,
@@ -573,7 +598,7 @@ namespace WpfRaziLedgerApp
                             FkAcDocHeader = ac,
                             Creditor = ProductBuy_Details.Sum(y => y.Sum),
                             Debtor = 0,
-                            Description = string.Join(",", parts.Where(s => !string.IsNullOrWhiteSpace(s))),
+                            Description = string.Join(",", parts2.Where(s => !string.IsNullOrWhiteSpace(s))),
                             Indexer = index2,
                             //AccountName = item.AccountName,
                             Id = Guid.NewGuid()
@@ -590,6 +615,9 @@ namespace WpfRaziLedgerApp
                             var moeinD = db.Moeins.Include(m => m.FkCol).FirstOrDefault(f => f.MoeinName == "تخفیفات خرید");
                             var pD = db.Preferentials.FirstOrDefault(f => f.PreferentialName == "تخفیفات خرید");
                             index2++;
+                            parts2 = parts.ToArray().ToList();
+                            parts2[1] = $"تخفیف فاکتور شماره {txtInvoiceNumber.Text} بنام {e_addHeader.FkPreferential.PreferentialName}";
+                            parts2[2] = "";
                             enx = new AcDocumentDetail()
                             {
                                 FkMoeinId = moeinD.Id,
@@ -597,7 +625,7 @@ namespace WpfRaziLedgerApp
                                 FkAcDocHeader = ac,
                                 Debtor = 0,
                                 Creditor = ProductBuy_Details.Sum(y => y.Discount),
-                                Description = string.Join(",", parts.Where(s => !string.IsNullOrWhiteSpace(s))),
+                                Description = string.Join(",", parts2.Where(s => !string.IsNullOrWhiteSpace(s))),
                                 Indexer = index2,
                                 //AccountName = item.AccountName,
                                 Id = Guid.NewGuid()
@@ -1504,7 +1532,7 @@ namespace WpfRaziLedgerApp
                     if (!AddedMode)
                     {
                         using var db = new wpfrazydbContext();
-                        var e_Edidet = db.ProductBuyHeaders.Find(id);
+                        var e_Edidet = db.ProductBuyHeaders.Include(h => h.ProductBuyDetails).ThenInclude(k=>k.FkCommodity).FirstOrDefault(u => u.Id == id);
                         var header = ProductBuyHeaders.FirstOrDefault(o => o.Id == id);
                         header.ProductBuyDetails.Clear();
                         e_Edidet.ProductBuyDetails = e_Edidet.ProductBuyDetails
@@ -1515,6 +1543,7 @@ namespace WpfRaziLedgerApp
                             header.ProductBuyDetails.Add(item);
                             SetAccountName(db, item);
                         }
+                        id = Guid.Empty;
                     }
                     datagridSearch.ClearFilters();
                     datagridSearch.SortColumnDescriptions.Clear();
@@ -1553,7 +1582,11 @@ namespace WpfRaziLedgerApp
                         Dispatcher.BeginInvoke(new Action(() =>
                         {
                             datagridSearch.Visibility = Visibility.Visible;
-                            dataPager.Source = t;
+                            try
+                            {
+                                dataPager.Source = t;
+                            }
+                            catch { }
                         }), DispatcherPriority.Render);
                     }), DispatcherPriority.Render);
                     gridConfirm.Visibility = Visibility.Collapsed;
@@ -2160,6 +2193,11 @@ namespace WpfRaziLedgerApp
                     Xceed.Wpf.Toolkit.MessageBox.Show("این شماره حواله تکراریست!");
                 }
             }
+        }
+
+        private void datagrid_RecordDeleted(object sender, RecordDeletedEventArgs e)
+        {
+            CalDebCre(true);
         }
 
         private void persianCalendar_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)

@@ -15,6 +15,7 @@
     </Syncfusion:SfSkinManager.VisualStyle>-->
     <UserControl.Resources>
         <ResourceDictionary>
+            <local:PersianDateConverter x:Key="PersianDateConverter"/>
             <local:CaptionSummaryColumnConverter x:Key="captionSummaryColumnConverter"/>
             <local2:SampleConverter x:Key="sampleConverter" />
             <local:DeleteRowStyleConverter x:Key="DeleteRowStyleConverter" />
@@ -665,7 +666,16 @@ SummaryType="DoubleAggregate" >
                             SizeChanged="datagrid_SizeChanged" Loaded="datagridCol_Loaded" PreviewKeyDown="datagrid_PreviewKeyDown" FontSize="14" RowHeight="30" ShowRowHeader="True" AllowFiltering="False" AllowEditing="False" AllowResizingColumns="True" HeaderStyle="{StaticResource headerStyle}"  Name="datagridِDetails" HeaderRowHeight="40" MinHeight="80" AutoGenerateColumns="False" FlowDirection="RightToLeft">
                             <Syncfusion:SfDataGrid.Columns>
                                 <Syncfusion:GridNumericColumn NumberDecimalDigits="0" MinimumWidth="110" Width="80" HeaderText="شماره سند" MappingName="FkAcDocHeader.NoDoument" TextAlignment="Left"/>
-                                <Syncfusion:GridDateTimeColumn MinimumWidth="140" HeaderText="تاریخ" MappingName="FkAcDocHeader.Date"/>
+                                <Syncfusion:GridDateTimeColumn MinimumWidth="140" HeaderText="تاریخ" MappingName="FkAcDocHeader.Date" >
+                                    <Syncfusion:GridDateTimeColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding FkAcDocHeader.Date, Converter={StaticResource PersianDateConverter}}"/>
+                                        </DataTemplate>
+                                    </Syncfusion:GridDateTimeColumn.CellTemplate>
+                                    <!--<Syncfusion:GridDateTimeColumn.FilterPopupStyle>
+        <StaticResource ResourceKey="CustomFilterPopupStyle" />
+    </Syncfusion:GridDateTimeColumn.FilterPopupStyle>-->
+                                </Syncfusion:GridDateTimeColumn>
                                 <Syncfusion:GridTextColumn MinimumWidth="95" Width="80" HeaderText="کل معین" MappingName="ColeMoein"/>
                                 <Syncfusion:GridTextColumn MinimumWidth="95" Width="80" HeaderText="تفضیلی" MappingName="PreferentialCode"/>
                                 <Syncfusion:GridTextColumn MinimumWidth="190" Width="100" HeaderText="نام" IsReadOnly="True" MappingName="Name"/>
