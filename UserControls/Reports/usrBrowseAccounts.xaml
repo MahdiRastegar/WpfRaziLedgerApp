@@ -662,7 +662,7 @@ SummaryType="DoubleAggregate" >
                                 <GradientStop Color="#FFB7ECBC" Offset="0"/>
                             </LinearGradientBrush>
                         </Syncfusion:TabItemExt.Background>
-                        <Syncfusion:SfDataGrid  ItemsSource="{Binding ElementName=dataPager5,Path=PagedSource}"
+                        <Syncfusion:SfDataGrid ItemsSource="{Binding ElementName=dataPager5,Path=PagedSource}"
                             SizeChanged="datagrid_SizeChanged" Loaded="datagridCol_Loaded" PreviewKeyDown="datagrid_PreviewKeyDown" FontSize="14" RowHeight="30" ShowRowHeader="True" AllowFiltering="False" AllowEditing="False" AllowResizingColumns="True" HeaderStyle="{StaticResource headerStyle}"  Name="datagridِDetails" HeaderRowHeight="40" MinHeight="80" AutoGenerateColumns="False" FlowDirection="RightToLeft">
                             <Syncfusion:SfDataGrid.Columns>
                                 <Syncfusion:GridNumericColumn NumberDecimalDigits="0" MinimumWidth="110" Width="80" HeaderText="شماره سند" MappingName="FkAcDocHeader.NoDoument" TextAlignment="Left"/>
@@ -682,6 +682,7 @@ SummaryType="DoubleAggregate" >
                                 <Syncfusion:GridTextColumn MinimumWidth="350" HeaderText="شرح" ColumnSizer="Star" MappingName="Description" />
                                 <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="0" MinimumWidth="118" HeaderText="بدهکار" MappingName="Debtor" TextAlignment="Left"/>
                                 <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="0" MinimumWidth="118" HeaderText="بستانکار" MappingName="Creditor" TextAlignment="Left"/>
+                                <Syncfusion:GridTextColumn MinimumWidth="118" HeaderText="مانده" MappingName="RunningSum" TextAlignment="Left"/>
                             </Syncfusion:SfDataGrid.Columns>
                             <Syncfusion:SfDataGrid.TableSummaryRows>
                                 <Syncfusion:GridSummaryRow ShowSummaryInRow="False">

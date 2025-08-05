@@ -18,6 +18,7 @@ using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using WpfRaziLedgerApp.Interfaces;
 using XamlAnimatedGif;
 
@@ -30,6 +31,7 @@ namespace WpfRaziLedgerApp
     {
         public static MainWindow Current;
         private int _TaxPercent=-1;
+        private DispatcherTimer timer;
 
         public int TaxPercent
         {
@@ -41,6 +43,9 @@ namespace WpfRaziLedgerApp
         public MainWindow()
         {
             InitializeComponent();
+            timer = new DispatcherTimer();
+            timer.Tick += Timer_Tick;
+            SetNextTick();
             Hide();            
             ribbon.RibbonState = Syncfusion.Windows.Tools.RibbonState.Hide;
             Current = this;
@@ -56,6 +61,20 @@ namespace WpfRaziLedgerApp
             }
             var gifImage = new BitmapImage(new Uri("pack://application:,,,/Images/AddDataLarge.gif"));
             XamlAnimatedGif.AnimationBehavior.SetSourceUri(this.gifImage, gifImage.UriSource);
+            ClockText.Text = DateTime.Now.ToString("HH:mm");
+        }
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            ClockText.Text = DateTime.Now.ToString("HH:mm");
+            SetNextTick(); // بعد از آپدیت، زمان تیک بعدی را مجدد تنظیم می‌کنیم
+        }
+
+        private void SetNextTick()
+        {
+            var now = DateTime.Now;
+            var nextMinute = now.AddMinutes(1).AddSeconds(-now.Second).AddMilliseconds(-now.Millisecond);
+            timer.Interval = nextMinute - now; // فاصله تا دقیقه بعد
+            timer.Start();
         }
         public void LoadUser(Guid userGroupId)
         {
@@ -209,9 +228,10 @@ namespace WpfRaziLedgerApp
 
         private void tabcontrol_TabClosing(object sender, CancelingRoutedEventArgs e)
         {
-            this.Effect = new BlurEffect() { Radius = 4 };
-            e.Cancel = !((e.OriginalSource as TabItemExt).Content as ITabForm).CloseForm();
-            this.Effect = null;
+            var n = (e.OriginalSource as TabItemExt).Content;
+            (n as FrameworkElement).Effect = new BlurEffect() { Radius = 4 };
+            e.Cancel = !(n as ITabForm).CloseForm();
+            (n as FrameworkElement).Effect = null;
         }
 
         private void Window_StateChanged(object sender, EventArgs e)
@@ -778,9 +798,11 @@ namespace WpfRaziLedgerApp
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            this.Effect = new BlurEffect() { Radius = 5 };
             if (Xceed.Wpf.Toolkit.MessageBox.Show("آیا می خواهید از برنامه خارج شوید؟", "خروج", MessageBoxButton.YesNo, MessageBoxImage.Warning) != MessageBoxResult.Yes)
             {
                 e.Cancel = true;
+                this.Effect = null;
             }
         }
 

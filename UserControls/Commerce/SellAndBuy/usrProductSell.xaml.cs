@@ -387,6 +387,8 @@ namespace WpfRaziLedgerApp
                                 e_addHeader.Description =="" ? null :
                                     $"توضیحات : {e_addHeader.Description}"
                             };
+                    var parts2 = parts.ToArray().ToList();
+                    parts2[1] = $"فاکتور فروش شماره {txtInvoiceNumber.Text}";
                     var enx = new AcDocumentDetail()
                     {
                         FkMoeinId = moeinHeader.Id,
@@ -394,7 +396,7 @@ namespace WpfRaziLedgerApp
                         FkAcDocHeader = e_addHeader2,
                         Debtor = ProductSell_Details.Sum(y => y.Sum),
                         Creditor = 0,
-                        Description = string.Join(",", parts.Where(s => !string.IsNullOrWhiteSpace(s))),
+                        Description = string.Join(",", parts2.Where(s => !string.IsNullOrWhiteSpace(s))),
                         Indexer = index2,
                         //AccountName = item.AccountName,
                         Id = Guid.NewGuid()
@@ -410,6 +412,9 @@ namespace WpfRaziLedgerApp
                         index2++;
                         var moeinD = db.Moeins.Include(m => m.FkCol).FirstOrDefault(f => f.MoeinName == "تخفیفات فروش");
                         var pD = db.Preferentials.FirstOrDefault(f => f.PreferentialName == "تخفیفات فروش");
+                        parts2 = parts.ToArray().ToList();
+                        parts2[1] = $"تخفیف فاکتور شماره {txtInvoiceNumber.Text} بنام {e_addHeader.FkPreferential.PreferentialName}";
+                        parts2[2] = "";
                         enx = new AcDocumentDetail()
                         {
                             FkMoeinId = moeinD.Id,
@@ -417,7 +422,7 @@ namespace WpfRaziLedgerApp
                             FkAcDocHeader = e_addHeader2,
                             Creditor = 0,
                             Debtor = ProductSell_Details.Sum(y => y.Discount),
-                            Description = string.Join(",", parts.Where(s => !string.IsNullOrWhiteSpace(s))),
+                            Description = string.Join(",", parts2.Where(s => !string.IsNullOrWhiteSpace(s))),
                             Indexer = index2,
                             //AccountName = item.AccountName,
                             Id = Guid.NewGuid()
@@ -458,6 +463,15 @@ namespace WpfRaziLedgerApp
                                 e_addHeader.Description =="" ? null :
                                     $"توضیحات : {e_addHeader.Description}"
                             };
+                    parts2 = parts.ToArray().ToList();
+                    parts2[1] = $"بابت مقدار";
+                    foreach (var part in ProductSell_Details)
+                    {
+                        parts2[1] += $" {part.Value} {part.FkCommodity.Name} و";
+                    }
+                    parts2[1] = parts2[1].Remove(parts2[1].Count() - 2);
+                    parts2[1] += $" فاکتور شماره {txtInvoiceNumber.Text} بنام {e_addHeader.FkPreferential.PreferentialName}";
+                    parts2[2] = "";
                     enx = new AcDocumentDetail()
                     {
                         FkMoeinId = moeinHeader2.Id,
@@ -465,7 +479,7 @@ namespace WpfRaziLedgerApp
                         FkAcDocHeader = e_addHeader2,
                         Debtor = 0,
                         Creditor = ProductSell_Details.Sum(y => y.Value * y.Fee),
-                        Description = string.Join(",", parts.Where(s => !string.IsNullOrWhiteSpace(s))),
+                        Description = string.Join(",", parts2.Where(s => !string.IsNullOrWhiteSpace(s))),
                         Indexer = index2,
                         //AccountName = item.AccountName,
                         Id = Guid.NewGuid()
@@ -479,6 +493,9 @@ namespace WpfRaziLedgerApp
                     if (ProductSell_Details.Sum(y => y.Tax) > 0)
                     {
                         index2++;
+                        parts2 = parts.ToArray().ToList();
+                        parts2[1] = $"ارزش افزوده فاکتور شماره {txtInvoiceNumber.Text} بنام {e_addHeader.FkPreferential.PreferentialName}";
+                        parts2[2] = "";
                         enx = new AcDocumentDetail()
                         {
                             FkMoeinId = moeinTax.Id,
@@ -486,7 +503,7 @@ namespace WpfRaziLedgerApp
                             FkAcDocHeader = e_addHeader2,
                             Debtor = 0,
                             Creditor = ProductSell_Details.Sum(y => y.Tax),
-                            Description = string.Join(",", parts.Where(s => !string.IsNullOrWhiteSpace(s))),
+                            Description = string.Join(",", parts2.Where(s => !string.IsNullOrWhiteSpace(s))),
                             Indexer = index2,
                             //AccountName = item.AccountName,
                             Id = Guid.NewGuid()
@@ -638,6 +655,8 @@ namespace WpfRaziLedgerApp
                                 e_Edidet.Description =="" ? null :
                                     $"توضیحات : {e_Edidet.Description}"
                             };
+                        var parts2 = parts.ToArray().ToList();
+                        parts2[1] = $"فاکتور فروش شماره {txtInvoiceNumber.Text}";
                         var enx = new AcDocumentDetail()
                         {
                             FkMoeinId = moeinHeader.Id,
@@ -645,7 +664,7 @@ namespace WpfRaziLedgerApp
                             FkAcDocHeader = ac,
                             Debtor = ProductSell_Details.Sum(y => y.Sum),
                             Creditor = 0,
-                            Description = string.Join(",", parts.Where(s => !string.IsNullOrWhiteSpace(s))),
+                            Description = string.Join(",", parts2.Where(s => !string.IsNullOrWhiteSpace(s))),
                             Indexer = index2,
                             //AccountName = item.AccountName,
                             Id = Guid.NewGuid()
@@ -662,6 +681,9 @@ namespace WpfRaziLedgerApp
                             index2++;
                             var moeinD = db.Moeins.Include(m => m.FkCol).FirstOrDefault(f => f.MoeinName == "تخفیفات فروش");
                             var pD = db.Preferentials.FirstOrDefault(f => f.PreferentialName == "تخفیفات فروش");
+                            parts2 = parts.ToArray().ToList();
+                            parts2[1] = $"تخفیف فاکتور شماره {txtInvoiceNumber.Text} بنام {e_Edidet.FkPreferential.PreferentialName}";
+                            parts2[2] = "";
                             enx = new AcDocumentDetail()
                             {
                                 FkMoeinId = moeinD.Id,
@@ -669,7 +691,7 @@ namespace WpfRaziLedgerApp
                                 FkAcDocHeader = ac,
                                 Creditor = 0,
                                 Debtor = ProductSell_Details.Sum(y => y.Discount),
-                                Description = string.Join(",", parts.Where(s => !string.IsNullOrWhiteSpace(s))),
+                                Description = string.Join(",", parts2.Where(s => !string.IsNullOrWhiteSpace(s))),
                                 Indexer = index2,
                                 //AccountName = item.AccountName,
                                 Id = Guid.NewGuid()
@@ -711,6 +733,15 @@ namespace WpfRaziLedgerApp
                                 e_Edidet.Description =="" ? null :
                                     $"توضیحات : {e_Edidet.Description}"
                             };
+                        parts2 = parts.ToArray().ToList();
+                        parts2[1] = $"بابت مقدار";
+                        foreach (var part in ProductSell_Details)
+                        {
+                            parts2[1] += $" {part.Value} {part.FkCommodity.Name} و";
+                        }
+                        parts2[1] = parts2[1].Remove(parts2[1].Count() - 2);
+                        parts2[1] += $" فاکتور شماره {txtInvoiceNumber.Text} بنام {e_Edidet.FkPreferential.PreferentialName}";
+                        parts2[2] = "";
                         enx = new AcDocumentDetail()
                         {
                             FkMoeinId = moeinHeader2.Id,
@@ -718,11 +749,11 @@ namespace WpfRaziLedgerApp
                             FkAcDocHeader = ac,
                             Debtor = 0,
                             Creditor = ProductSell_Details.Sum(y => y.Value * y.Fee),
-                            Description = string.Join(",", parts.Where(s => !string.IsNullOrWhiteSpace(s))),
+                            Description = string.Join(",", parts2.Where(s => !string.IsNullOrWhiteSpace(s))),
                             Indexer = index2,
                             //AccountName = item.AccountName,
                             Id = Guid.NewGuid()
-                        };
+                        };                       
                         threads.Add(new Thread(() =>
                         {
                             enx.FkMoein = moeinHeader2;
@@ -733,6 +764,9 @@ namespace WpfRaziLedgerApp
                         if (ProductSell_Details.Sum(y => y.Tax) > 0)
                         {
                             index2++;
+                            parts2 = parts.ToArray().ToList();
+                            parts2[1] = $"ارزش افزوده فاکتور شماره {txtInvoiceNumber.Text} بنام {e_Edidet.FkPreferential.PreferentialName}";
+                            parts2[2] = "";
                             enx = new AcDocumentDetail()
                             {
                                 FkMoeinId = moeinTax.Id,
@@ -740,7 +774,7 @@ namespace WpfRaziLedgerApp
                                 FkAcDocHeader = ac,
                                 Debtor = 0,
                                 Creditor = ProductSell_Details.Sum(y => y.Tax),
-                                Description = string.Join(",", parts.Where(s => !string.IsNullOrWhiteSpace(s))),
+                                Description = string.Join(",", parts2.Where(s => !string.IsNullOrWhiteSpace(s))),
                                 Indexer = index2,
                                 //AccountName = item.AccountName,
                                 Id = Guid.NewGuid()

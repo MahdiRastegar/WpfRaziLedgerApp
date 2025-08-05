@@ -904,8 +904,8 @@ namespace WpfRaziLedgerApp
                 if (!tt.AcDocumentDetails.Any(i => i.Description?.ToLower().Contains(SearchTermTextBox.Text.ToLower())==true ||
                 i.Name.ToLower().Contains(SearchTermTextBox.Text.ToLower()) ||
                 i.Creditor2?.ToString().ToLower().Contains(SearchTermTextBox.Text.ToLower()) == true ||
-                i.ColeMoein.ToLower().Contains(SearchTermTextBox.Text.ToLower()) ||
-                i.PreferentialCode.ToLower().Contains(SearchTermTextBox.Text.ToLower()) ||
+                i.ColeMoein?.ToLower().Contains(SearchTermTextBox.Text.ToLower())==true ||
+                i.PreferentialCode?.ToLower().Contains(SearchTermTextBox.Text.ToLower()) == true ||
                 i.Debtor2?.ToString().ToLower().Contains(SearchTermTextBox.Text.ToLower()) == true))
                 {
                     //datagridSearch.View.Records.Remove(item);

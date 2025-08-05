@@ -528,7 +528,7 @@ namespace WpfRaziLedgerApp
                             parts2[1] += $" {part.Value} {part.FkCommodity.Name} و";
                         }
                         parts2[1] = parts2[1].Remove(parts2[1].Count() - 2);
-                        parts2[1] += $" فاکتور شماره {txtInvoiceNumber.Text} از {e_addHeader.FkPreferential.PreferentialName}";
+                        parts2[1] += $" فاکتور شماره {txtInvoiceNumber.Text} از {e_Edidet.FkPreferential.PreferentialName}";
                         parts2[2] = "";
                         var enx = new AcDocumentDetail()
                         {
@@ -616,7 +616,7 @@ namespace WpfRaziLedgerApp
                             var pD = db.Preferentials.FirstOrDefault(f => f.PreferentialName == "تخفیفات خرید");
                             index2++;
                             parts2 = parts.ToArray().ToList();
-                            parts2[1] = $"تخفیف فاکتور شماره {txtInvoiceNumber.Text} بنام {e_addHeader.FkPreferential.PreferentialName}";
+                            parts2[1] = $"تخفیف فاکتور شماره {txtInvoiceNumber.Text} بنام {e_Edidet.FkPreferential.PreferentialName}";
                             parts2[2] = "";
                             enx = new AcDocumentDetail()
                             {

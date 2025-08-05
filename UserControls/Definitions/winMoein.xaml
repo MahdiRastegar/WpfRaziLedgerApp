@@ -263,7 +263,7 @@
                     <Syncfusion:SfDataGrid.Columns>
                         <Syncfusion:GridTextColumn MinimumWidth="80" Width="80" HeaderText="کد معین" MappingName="MoeinCode"/>
                         <Syncfusion:GridTextColumn MinimumWidth="100" HeaderText="نام معین" ColumnSizer="Star" MappingName="MoeinName" />
-                        <Syncfusion:GridTextColumn MinimumWidth="70" Width="70" HeaderText="کد کل" MappingName="FkCol.ColCode"/>
+                        <Syncfusion:GridTextColumn MinimumWidth="80" Width="80" HeaderText="کد کل" MappingName="FkCol.ColCode"/>
                         <Syncfusion:GridTextColumn MinimumWidth="145" HeaderText="نام کل" ColumnSizer="AutoLastColumnFill" MappingName="FkCol.ColName" />
                     </Syncfusion:SfDataGrid.Columns>
                 </Syncfusion:SfDataGrid>

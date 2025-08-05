@@ -387,7 +387,7 @@
                 <RowDefinition Height="1*" MinHeight="80"/>
                 <RowDefinition Height="25"/>
             </Grid.RowDefinitions>
-            <Border Visibility="Collapsed" Margin="0 -40 -4 55" Name="morefields" Grid.Column="0" Grid.RowSpan="6" Grid.Row="1" Panel.ZIndex="10" Background="Transparent">
+            <Border Visibility="Collapsed" Margin="8 -40 -12 55" Name="morefields" Grid.Column="0" Grid.RowSpan="6" Grid.Row="1" Panel.ZIndex="10" Background="Transparent">
                 <Button Click="btnMorefields_Click" Name="btnMorefields" Margin="0 35 0 0" ToolTip="نمایش فیلدها">
                     <TextBlock Text="►" FontSize="45" RenderTransformOrigin="0.5,0.5">
                         <TextBlock.Foreground>

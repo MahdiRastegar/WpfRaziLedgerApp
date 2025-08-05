@@ -314,10 +314,23 @@ namespace WpfRaziLedgerApp
                         Serial = long.Parse(serial2),
                         FkDocumentType = documentType
                     };
+                    var col = db.CodeSettings.FirstOrDefault(t => t.Name == "ColCodeCheckPayment");
+                    var mo = db.CodeSettings.FirstOrDefault(t => t.Name == "MoeinCodeCheckPayment");
+                    var moein = db.Moeins.Find(mus1.Find(t => (t.AdditionalEntity as AccountSearchClass).ColMoein == (col.Value + mo.Value).ToString()).Id);                    
+
                     DbSet<AcDocumentDetail> details2 = null;
                     int index2 = 0;                    
                     foreach (var item in paymentMoney_Details)
                     {
+                        string part2 = null;
+                        if (moein.Id == item.FkMoein.Id)//اسناد پرداختنی
+                        {
+                            part2 = $"صدور چک شماره {item.Number} سررسید {item.Date?.ToPersianDateString()} در وجه {e_addHeader.FkPreferential.PreferentialName} طی رسید {e_addHeader.ReceiptNumber} بابت {e_addHeader.Description}";
+                        }
+                        else if (db.Moeins.FirstOrDefault(y => y.MoeinName == "حساب های پرداختنی تجاری").Id == item.FkMoein.Id || db.Moeins.FirstOrDefault(y => y.MoeinName == "حسابهای پرداختنی تجاری").Id == item.FkMoein.Id)
+                        {
+                            part2 = $"پرداخت چک شماره {item.Number} سررسید {item.Date?.ToPersianDateString()} طی رسید {e_addHeader.ReceiptNumber} بابت {e_addHeader.Description}";
+                        }
                         index2++;
                         var parts = new List<string?>
                             {
@@ -329,8 +342,8 @@ namespace WpfRaziLedgerApp
                                 item.FkBankNavigation?.Name,
                                 item.BranchName,
                                 item.SayadiNumber,
-                                item.Registered == null ? null :
-                                    (item.Registered == true ? "ثبت شده" : "ثبت نشده")
+                                //item.Registered == null ? null :
+                                //    (item.Registered == true ? "ثبت شده" : "ثبت نشده")
                             };
 
                         var en = new AcDocumentDetail()
@@ -340,15 +353,25 @@ namespace WpfRaziLedgerApp
                             FkAcDocHeader = e_addHeader2,
                             Debtor = item.Price,
                             Creditor = 0,
-                            Description = string.Join(",", parts.Where(s => !string.IsNullOrWhiteSpace(s))),
+                            Description =part2??string.Join(",", parts.Where(s => !string.IsNullOrWhiteSpace(s))),
                             Indexer = index2,
                             //AccountName = item.AccountName,
                             Id = Guid.NewGuid()
                         };
+                        
                         db.AcDocumentDetails.Add(en);
                     }
                     foreach (var item in paymentMoney_Details)
                     {
+                        string part2 = null;
+                        if (moein.Id == item.FkMoein.Id)//اسناد پرداختنی
+                        {
+                            part2 = $"صدور چک شماره {item.Number} سررسید {item.Date?.ToPersianDateString()} در وجه {e_addHeader.FkPreferential.PreferentialName} طی رسید {e_addHeader.ReceiptNumber} بابت {e_addHeader.Description}";
+                        }
+                        else if (db.Moeins.FirstOrDefault(y => y.MoeinName == "حساب های پرداختنی تجاری").Id == item.FkMoein.Id || db.Moeins.FirstOrDefault(y => y.MoeinName == "حسابهای پرداختنی تجاری").Id == item.FkMoein.Id)
+                        {
+                            part2 = $"پرداخت چک شماره {item.Number} سررسید {item.Date?.ToPersianDateString()} طی رسید {e_addHeader.ReceiptNumber} بابت {e_addHeader.Description}";
+                        }
                         index2++;
                         var parts = new List<string?>
                             {
@@ -372,7 +395,7 @@ namespace WpfRaziLedgerApp
                             FkAcDocHeader = e_addHeader2,
                             Debtor = 0,
                             Creditor = item.Price,
-                            Description = string.Join(",", parts.Where(s => !string.IsNullOrWhiteSpace(s))),
+                            Description = part2 ?? string.Join(",", parts.Where(s => !string.IsNullOrWhiteSpace(s))),
                             Indexer = index2,
                             //AccountName = item.AccountName,
                             Id = Guid.NewGuid()
@@ -501,8 +524,20 @@ namespace WpfRaziLedgerApp
                             db.AcDocumentDetails.Remove(item);
                         }
                         var list = new List<AcDocumentDetail>();
+                        var col = db.CodeSettings.FirstOrDefault(t => t.Name == "ColCodeCheckPayment");
+                        var mo = db.CodeSettings.FirstOrDefault(t => t.Name == "MoeinCodeCheckPayment");
+                        var moein = db.Moeins.Find(mus1.Find(t => (t.AdditionalEntity as AccountSearchClass).ColMoein == (col.Value + mo.Value).ToString()).Id);
                         foreach (var item in paymentMoney_Details)
                         {
+                            string part2 = null;
+                            if (moein.Id == item.FkMoein.Id)//اسناد پرداختنی
+                            {
+                                part2 = $"صدور چک شماره {item.Number} سررسید {item.Date?.ToPersianDateString()} در وجه {e_Edidet.FkPreferential.PreferentialName} طی رسید {e_Edidet.ReceiptNumber} بابت {e_Edidet.Description}";
+                            }
+                            else if (db.Moeins.FirstOrDefault(y => y.MoeinName == "حساب های پرداختنی تجاری").Id == item.FkMoein.Id || db.Moeins.FirstOrDefault(y => y.MoeinName == "حسابهای پرداختنی تجاری").Id == item.FkMoein.Id)
+                            {
+                                part2 = $"پرداخت چک شماره {item.Number} سررسید {item.Date?.ToPersianDateString()} طی رسید {e_Edidet.ReceiptNumber} بابت {e_Edidet.Description}";
+                            }
                             index2++;
                             var parts = new List<string?>
                             {
@@ -525,7 +560,7 @@ namespace WpfRaziLedgerApp
                                 FkAcDocHeader = ac,
                                 Debtor = item.Price,
                                 Creditor = 0,
-                                Description = string.Join(",", parts.Where(s => !string.IsNullOrWhiteSpace(s))),
+                                Description = part2 ?? string.Join(",", parts.Where(s => !string.IsNullOrWhiteSpace(s))),
                                 Indexer = index2,
                                 //AccountName = item.AccountName,
                                 Id = Guid.NewGuid()
@@ -535,6 +570,15 @@ namespace WpfRaziLedgerApp
                         }
                         foreach (var item in paymentMoney_Details)
                         {
+                            string part2 = null;
+                            if (moein.Id == item.FkMoein.Id)//اسناد پرداختنی
+                            {
+                                part2 = $"صدور چک شماره {item.Number} سررسید {item.Date?.ToPersianDateString()} در وجه {e_Edidet.FkPreferential.PreferentialName} طی رسید {e_Edidet.ReceiptNumber} بابت {e_Edidet.Description}";
+                            }
+                            else if (db.Moeins.FirstOrDefault(y => y.MoeinName == "حساب های پرداختنی تجاری").Id == item.FkMoein.Id || db.Moeins.FirstOrDefault(y => y.MoeinName == "حسابهای پرداختنی تجاری").Id == item.FkMoein.Id)
+                            {
+                                part2 = $"پرداخت چک شماره {item.Number} سررسید {item.Date?.ToPersianDateString()} طی رسید {e_Edidet.ReceiptNumber} بابت {e_Edidet.Description}";
+                            }
                             index2++;
                             var parts = new List<string?>
                             {
@@ -558,7 +602,7 @@ namespace WpfRaziLedgerApp
                                 FkAcDocHeader = ac,
                                 Debtor = 0,
                                 Creditor = item.Price,
-                                Description = string.Join(",", parts.Where(s => !string.IsNullOrWhiteSpace(s))),
+                                Description =part2?? string.Join(",", parts.Where(s => !string.IsNullOrWhiteSpace(s))),
                                 Indexer = index2,
                                 //AccountName = item.AccountName,
                                 Id = Guid.NewGuid()

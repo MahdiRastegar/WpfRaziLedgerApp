@@ -317,9 +317,22 @@ FontFamily="{StaticResource IranSans}" Width="27"
                             SizeChanged="datagrid_SizeChanged" Loaded="datagridCol_Loaded" PreviewKeyDown="datagrid_PreviewKeyDown" FontSize="14" RowHeight="30" ShowRowHeader="True" AllowFiltering="False" AllowEditing="False" AllowResizingColumns="True" HeaderStyle="{StaticResource headerStyle}"  Name="datagridِDetails" HeaderRowHeight="40" MinHeight="80" AutoGenerateColumns="False" FlowDirection="RightToLeft">
                             <Syncfusion:SfDataGrid.Columns>
                                 <Syncfusion:GridTextColumn MinimumWidth="95" ColumnSizer="Star" HeaderText="نام کالا" MappingName="Name"/>
-                                <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="3" MinimumWidth="188" HeaderText="مقدار" MappingName="Count" TextAlignment="Left"/>
-                                <Syncfusion:GridTextColumn MinimumWidth="188" HeaderText="کد تفضیلی" MappingName="PreferentialCode" TextAlignment="Left"/>
-                                <Syncfusion:GridTextColumn MinimumWidth="118" HeaderText="نوع عملیات" MappingName="SellOrBuy" TextAlignment="Left"/>
+                                <Syncfusion:GridDateTimeColumn Width="90" HeaderText="تاریخ" MappingName="Date" >
+                                    <Syncfusion:GridDateTimeColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Date, Converter={StaticResource PersianDateConverter}}"/>
+                                        </DataTemplate>
+                                    </Syncfusion:GridDateTimeColumn.CellTemplate>
+                                    <!--<Syncfusion:GridDateTimeColumn.FilterPopupStyle>
+    <StaticResource ResourceKey="CustomFilterPopupStyle" />
+</Syncfusion:GridDateTimeColumn.FilterPopupStyle>-->
+                                </Syncfusion:GridDateTimeColumn>
+                                <Syncfusion:GridNumericColumn  NumberDecimalDigits="0" Width="120" HeaderText="شماره حواله خرید" MappingName="BuyRemittanceNumber" TextAlignment="Left"/>
+                                <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="3" Width="100" HeaderText="مقدار" MappingName="Count" TextAlignment="Left"/>
+                                <Syncfusion:GridTextColumn Width="90" HeaderText="کد تفضیلی" MappingName="PreferentialCode" TextAlignment="Left"/>
+                                <Syncfusion:GridTextColumn Width="130" HeaderText="نام تفضیلی" MappingName="PreferentialName" TextAlignment="Left"/>
+                                <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="3" Width="105" HeaderText="تعداد مانده" MappingName="RemainingCount" TextAlignment="Left"/>
+                                <Syncfusion:GridTextColumn Width="90" HeaderText="نوع عملیات" MappingName="SellOrBuy" TextAlignment="Left"/>
                             </Syncfusion:SfDataGrid.Columns>
 
                         </Syncfusion:SfDataGrid>

@@ -250,7 +250,7 @@
     <comment>Text for Height of page size in PrintDialog</comment>
   </data>
   <data name="Items" xml:space="preserve">
-    <value>Items</value>
+    <value>ردیف</value>
     <comment>Items to Display</comment>
   </data>
   <data name="LandScapeOrientation" xml:space="preserve">

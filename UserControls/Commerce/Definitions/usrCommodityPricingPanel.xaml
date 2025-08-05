@@ -68,7 +68,7 @@
         <Grid FlowDirection="RightToLeft">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="248"/>
-                <ColumnDefinition Width="280"/>
+                <ColumnDefinition Width="200"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
@@ -125,7 +125,7 @@
                     </EventTrigger>
                 </Border.Triggers>
             </Border>
-            <TextBlock VerticalAlignment="Center" Name="txbCalender" HorizontalAlignment="Left" Margin="130 0 0 12" FontSize="17" Text="" Grid.Row="1"/>
+            <TextBlock VerticalAlignment="Center" Name="txbCalender" HorizontalAlignment="Left" Margin="130 0 0 12" FontSize="15" Text="" Grid.Row="1"/>
             <PersianCalendarWPF:PersianDatePicker Grid.Row="1" SelectedDateChanged="pcw1_SelectedDateChanged" BorderThickness="0" HorizontalAlignment="Left" Name="pcw1" FlowDirection="LeftToRight" Margin="95,20,0,35"
 PersianCalendarWPF:FontSize="13.5"
 PersianCalendarWPF:InfoElement.DateInRangeTextColor="Gray"
@@ -141,23 +141,23 @@ FontFamily="{StaticResource IranSans}" Width="27"
                     <SolidColorBrush Color="Transparent"/>
                 </PersianCalendarWPF:PersianDatePicker.Background>
             </PersianCalendarWPF:PersianDatePicker>
-            <Syncfusion:SfTextInputLayout IsHitTestVisible="False" x:Name="Sf_txtType" OutlineCornerRadius="8" Hint="تاریخ اجرا" Grid.Row="1"  VerticalAlignment="Center" Margin="20 0">
-                <Label Height="25" FontSize="16"/>
+            <Syncfusion:SfTextInputLayout IsHitTestVisible="False" x:Name="Sf_txtType" OutlineCornerRadius="8" Hint="تاریخ اجرا" Grid.Row="1"  VerticalAlignment="Center" Margin="20 0 40 0">
+                <Label Height="25" FontSize="14"/>
             </Syncfusion:SfTextInputLayout>
-            <Syncfusion:SfTextInputLayout  x:Name="Sf_txtInvoiceDiscount" OutlineCornerRadius="8" Grid.Row="4" Grid.Column="1" Hint="فی" VerticalAlignment="Center" Margin="30,10">
-                <TextBox x:Name="txtInvoiceDiscount" LostFocus="txtInvoiceDiscount_LostFocus" PreviewKeyDown="txtInvoiceDiscount_PreviewKeyDown" Text="0" TextChanged="txtInvoiceDiscount_TextChanged" MaxLength="50" VerticalContentAlignment="Center" PreviewTextInput="txtInvoiceDiscount_PreviewTextInput" Margin="0" FontSize="16"/>
+            <Syncfusion:SfTextInputLayout  x:Name="Sf_txtInvoiceDiscount" OutlineCornerRadius="8" Grid.Row="4" Grid.Column="1" Hint="فی" VerticalAlignment="Center" Margin="-20 0 30 0">
+                <TextBox x:Name="txtInvoiceDiscount" LostFocus="txtInvoiceDiscount_LostFocus" PreviewKeyDown="txtInvoiceDiscount_PreviewKeyDown" Text="0" TextChanged="txtInvoiceDiscount_TextChanged" MaxLength="50" VerticalContentAlignment="Center" PreviewTextInput="txtInvoiceDiscount_PreviewTextInput" Margin="0" FontSize="14"/>
             </Syncfusion:SfTextInputLayout>
-            <Syncfusion:SfTextInputLayout Name="Sf_txtCommodity" OutlineCornerRadius="8" Hint="کد کالا" Grid.Row="2"  VerticalAlignment="Center" Margin="30 0"  HorizontalAlignment="Stretch">
-                <TextBox Name="txtCommodity" LostFocus="TxtGroup_LostFocus" VerticalContentAlignment="Center" TextChanged="TxtGroup_TextChanged" IsEnabled="True" IsReadOnly="False" PreviewTextInput="txtCommodity_PreviewTextInput" Margin="0" FontSize="16"/>
+            <Syncfusion:SfTextInputLayout Name="Sf_txtCommodity" OutlineCornerRadius="8" Hint="کد کالا" Grid.Row="2"  VerticalAlignment="Center" Margin="20 0 40 0"  HorizontalAlignment="Stretch">
+                <TextBox Name="txtCommodity" LostFocus="TxtGroup_LostFocus" VerticalContentAlignment="Center" TextChanged="TxtGroup_TextChanged" IsEnabled="True" IsReadOnly="False" PreviewTextInput="txtCommodity_PreviewTextInput" Margin="0" FontSize="14"/>
             </Syncfusion:SfTextInputLayout>
-            <Syncfusion:SfTextInputLayout Name="Sf_txtCommodityName" OutlineCornerRadius="8" Hint="نام" Grid.Row="2"  VerticalAlignment="Center" Margin="30 0" Grid.Column="1"  HorizontalAlignment="Stretch">
-                <TextBox Name="txtCommodityName" VerticalContentAlignment="Center"  IsEnabled="True" IsReadOnly="True" Margin="0" FontSize="16"/>
+            <Syncfusion:SfTextInputLayout Name="Sf_txtCommodityName" OutlineCornerRadius="8" Hint="نام" Grid.Row="2"  VerticalAlignment="Center" Margin="-20 0 30 0" Grid.Column="1"  HorizontalAlignment="Stretch">
+                <TextBox Name="txtCommodityName" VerticalContentAlignment="Center"  IsEnabled="True" IsReadOnly="True" Margin="0" FontSize="14"/>
             </Syncfusion:SfTextInputLayout>
-            <Syncfusion:SfTextInputLayout Name="Sf_txtPriceGroup" OutlineCornerRadius="8" Hint="کد گروه قیمت" Grid.Row="3"  VerticalAlignment="Center" Margin="30 0"  HorizontalAlignment="Stretch">
-                <TextBox Name="txtPriceGroup" LostFocus="txtPriceGroup_LostFocus" VerticalContentAlignment="Center" TextChanged="TxtGroup_TextChanged" IsEnabled="True" IsReadOnly="False" PreviewTextInput="txtPriceGroup_PreviewTextInput" Margin="0" FontSize="16"/>
+            <Syncfusion:SfTextInputLayout Name="Sf_txtPriceGroup" OutlineCornerRadius="8" Hint="کد گروه قیمت" Grid.Row="3"  VerticalAlignment="Center" Margin="20 0 40 0"  HorizontalAlignment="Stretch">
+                <TextBox Name="txtPriceGroup" LostFocus="txtPriceGroup_LostFocus" VerticalContentAlignment="Center" TextChanged="TxtGroup_TextChanged" IsEnabled="True" IsReadOnly="False" PreviewTextInput="txtPriceGroup_PreviewTextInput" Margin="0" FontSize="14"/>
             </Syncfusion:SfTextInputLayout>
-            <Syncfusion:SfTextInputLayout Name="Sf_txtPriceGroupName" OutlineCornerRadius="8" Hint="نام گروه قیمت" Grid.Row="3"  VerticalAlignment="Center" Margin="30 0" Grid.Column="1"  HorizontalAlignment="Stretch">
-                <TextBox Name="txtPriceGroupName" VerticalContentAlignment="Center"  IsEnabled="True" IsReadOnly="True" Margin="0" FontSize="16"/>
+            <Syncfusion:SfTextInputLayout Name="Sf_txtPriceGroupName" OutlineCornerRadius="8" Hint="نام گروه قیمت" Grid.Row="3"  VerticalAlignment="Center" Margin="-20 0 30 0" Grid.Column="1"  HorizontalAlignment="Stretch">
+                <TextBox Name="txtPriceGroupName" VerticalContentAlignment="Center"  IsEnabled="True" IsReadOnly="True" Margin="0" FontSize="14"/>
             </Syncfusion:SfTextInputLayout>
             <DockPanel  Grid.Row="5" Grid.ColumnSpan="2" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="15 0 15 -15">
                 <Grid>
@@ -197,7 +197,7 @@ FontFamily="{StaticResource IranSans}" Width="27"
                     <Image Source="/Images/Delete.png" IsHitTestVisible="False" Width="37.5" Stretch="Fill" Height="39" Margin="0 0 0 2"/>
                 </Grid>
             </DockPanel>
-            <Grid  Grid.Row="1" Grid.RowSpan="5" Grid.Column="2" Name="gridContainer">
+            <Grid  Grid.Row="1" Grid.RowSpan="5" Grid.Column="2" Margin="-35 0 -20 0" Name="gridContainer">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="80"/>
                     <RowDefinition/>
@@ -229,7 +229,7 @@ FontFamily="{StaticResource IranSans}" Width="27"
                         </TextBox.Background>
 
                     </TextBox>
-                    <TextBlock IsHitTestVisible="False" Grid.Column="1" Text="جستجو..." Name="testsearch" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="16" Margin="10,0,0,0" Foreground="#FF9E9E9E">
+                    <TextBlock IsHitTestVisible="False" Grid.Column="1" Text="جستجو..." Name="testsearch" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="14" Margin="10,0,0,0" Foreground="#FF9E9E9E">
                         <TextBlock.Style>
                             <Style TargetType="{x:Type TextBlock}">
                                 <Setter Property="Visibility" Value="Collapsed"/>
@@ -277,18 +277,18 @@ FontFamily="{StaticResource IranSans}" Width="27"
                             </Style>
                         </Syncfusion:SfDataGrid.AlternatingRowStyle>-->
                     <Syncfusion:SfDataGrid.Columns>
-                        <Syncfusion:GridTextColumn MinimumWidth="115" Width="115" HeaderText="کد کالا" MappingName="FkCommodity.Code"/>
+                        <Syncfusion:GridTextColumn MinimumWidth="100" Width="100" HeaderText="کد کالا" MappingName="FkCommodity.Code"/>
                         <Syncfusion:GridTextColumn MinimumWidth="180" HeaderText="نام کالا" ColumnSizer="Star" MappingName="FkCommodity.Name" />
-                        <Syncfusion:GridTextColumn MinimumWidth="140" Width="70" HeaderText="کد گروه قیمت" MappingName="FkPriceGroup.GroupCode"/>
-                        <Syncfusion:GridTextColumn MinimumWidth="125" HeaderText="نام گروه قیمت" MappingName="FkPriceGroup.GroupName" />
-                        <Syncfusion:GridDateTimeColumn MinimumWidth="125" HeaderText="تاریخ" ColumnSizer="Star" MappingName="Date">
+                        <Syncfusion:GridTextColumn MinimumWidth="70" Width="70" HeaderText="کد گروه قیمت" MappingName="FkPriceGroup.GroupCode"/>
+                        <Syncfusion:GridTextColumn Width="120" HeaderText="نام گروه قیمت" MappingName="FkPriceGroup.GroupName" />
+                        <Syncfusion:GridDateTimeColumn Width="110" HeaderText="تاریخ" ColumnSizer="Star" MappingName="Date">
                             <Syncfusion:GridDateTimeColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBlock Text="{Binding Date, Converter={StaticResource PersianDateConverter}}"/>
                                 </DataTemplate>
                             </Syncfusion:GridDateTimeColumn.CellTemplate>
                         </Syncfusion:GridDateTimeColumn>
-                        <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="0" MinimumWidth="118" HeaderText="فی" MappingName="Fee" TextAlignment="Left"/>
+                        <Syncfusion:GridNumericColumn NumberGroupSeparator="," NumberGroupSizes="3"  NumberDecimalDigits="0" Width="110" HeaderText="فی" MappingName="Fee" TextAlignment="Left"/>
                     </Syncfusion:SfDataGrid.Columns>
                 </Syncfusion:SfDataGrid>
                 <Syncfusion:SfDataPager x:Name="dataPager" FlowDirection="LeftToRight" VerticalAlignment="Bottom" Margin="0 -30" HorizontalAlignment="Center" UseOnDemandPaging="True"

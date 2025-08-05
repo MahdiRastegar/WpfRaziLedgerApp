@@ -1696,9 +1696,12 @@ namespace WpfRaziLedgerApp
             {
                 datagrid.Columns[0].IsHidden = true;
                 datagrid.Columns[1].IsHidden = false;
+                column1.Width = column2.Width = new GridLength(0);
             }
             else
             {
+                column1.Width = new GridLength(170);
+                column2.Width = new GridLength(230);
                 datagrid.Columns[0].IsHidden = false;
                 datagrid.Columns[1].IsHidden = true;
                 item1.Visibility= item2.Visibility = item3.Visibility = item4.Visibility = item5.Visibility = item6.Visibility =  Visibility.Visible;

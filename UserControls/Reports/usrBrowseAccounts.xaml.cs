@@ -24,6 +24,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WpfRaziLedgerApp.Interfaces;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace WpfRaziLedgerApp
 {
@@ -641,7 +642,16 @@ namespace WpfRaziLedgerApp
                         moeinId=anyRecord.FkMoeinId
                     };
                     if (groupedY.ContainsKey(key))
-                        preferential.acDocumentDetails = groupedY[key].ToObservableCollection();
+                        preferential.acDocumentDetails = groupedY[key].OrderBy(y => y.FkAcDocHeader.Date).ToObservableCollection();
+                    decimal runningCount = 0;
+                    foreach (var item in preferential.acDocumentDetails)
+                    {
+                        runningCount += (item.Debtor??0)-(item.Creditor??0);
+                        if (runningCount >= 0)
+                            item.RunningSum = runningCount.ToString("#,##0");
+                        else
+                            item.RunningSum = $"({(-runningCount).ToString("#,##0")})";
+                    }
 
                     PreferentialAcReportEntities.Add(preferential);
                 }
@@ -1023,6 +1033,15 @@ namespace WpfRaziLedgerApp
                 dataPager2.Visibility = Visibility.Collapsed;
                 dataPager5.Visibility = Visibility.Visible;
                 control.SelectionChanged += control_SelectionChanged;
+                try
+                {
+                    datagridِDetails.SortColumnDescriptions.Clear();
+                    datagridِDetails.SortColumnDescriptions.Add(new Syncfusion.UI.Xaml.Grid.SortColumnDescription()
+                    {
+                        ColumnName = "FkAcDocHeader.Date",
+                        SortDirection = System.ComponentModel.ListSortDirection.Ascending
+                    });
+                } catch { }
             }
         }
 

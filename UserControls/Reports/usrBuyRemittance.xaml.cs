@@ -199,6 +199,8 @@ namespace WpfRaziLedgerApp
                         Name = x.FkCommodity.Name,
                         Count = x.Value,
                         PreferentialCode = x.FkHeader.FkPreferential.PreferentialCode,
+                        PreferentialName = x.FkHeader.FkPreferential.PreferentialName,
+                        BuyRemittanceNumber = buyGroup.First().FkHeader.BuyRemittanceNumber,
                         SellOrBuy = "خرید",
                         Date = x.FkHeader.Date
                     }) ?? Enumerable.Empty<BuyRemittanceDetail>();
@@ -211,6 +213,8 @@ namespace WpfRaziLedgerApp
                         Name = x.FkCommodity.Name,
                         Count = x.Value,
                         PreferentialCode = x.FkHeader.FkPreferential.PreferentialCode,
+                        PreferentialName = x.FkHeader.FkPreferential.PreferentialName,
+                        BuyRemittanceNumber = sellGroup.First().FkHeader.BuyRemittanceNumber,
                         SellOrBuy = "فروش",
                         Date = x.FkHeader.Date
                     }) ?? Enumerable.Empty<BuyRemittanceDetail>();
@@ -219,6 +223,17 @@ namespace WpfRaziLedgerApp
                         .Concat(sellDetails)
                         .OrderBy(d => d.Date) // مرتب‌سازی بر اساس تاریخ
                         .ToList();
+                    // محاسبه RemainingCount
+                    decimal runningCount = 0;
+                    foreach (var detail in allDetailsSorted)
+                    {
+                        if (detail.SellOrBuy == "خرید")
+                            runningCount += detail.Count;
+                        else if (detail.SellOrBuy == "فروش")
+                            runningCount -= detail.Count;
+
+                        detail.RemainingCount = runningCount;
+                    }
                     var report = new BuyRemittanceReport
                     {
                         Id = commodityInfo.Id,

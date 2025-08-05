@@ -1,12 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
-using WpfRaziLedgerApp;
-using WpfRaziLedgerApp;
-using WpfRaziLedgerApp;
-using WpfRaziLedgerApp;
-using WpfRaziLedgerApp;
-using WpfRaziLedgerApp;
 
 #nullable disable
 
@@ -28,5 +23,7 @@ namespace WpfRaziLedgerApp
         public virtual Moein FkMoein { get; set; }
         [JsonIgnore]
         public virtual Preferential FkPreferential { get; set; }
+        [NotMapped]
+        public string RunningSum { get; set; }
     }
 }

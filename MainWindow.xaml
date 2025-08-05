@@ -8,7 +8,7 @@
         Title="صفحه اصلی" Height="450" Width="1150"  MinHeight="815" MinWidth="1130">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Name="row" Height="160" MinHeight="77"/>
+            <RowDefinition Name="row" Height="160" MinHeight="45"/>
             <RowDefinition/>
             <RowDefinition Height="44"/>
         </Grid.RowDefinitions>
@@ -90,7 +90,7 @@
             <Syncfusion:RibbonTab Name="rbnReports" Caption="گزارشات" >
                 <Syncfusion:RibbonBar Name="barReports" Width="120" Header="مرور حساب ها">
                     <Syncfusion:RibbonButton  Name="rbnBrowseAccounts" Click="rbnBrowseAccounts_Click" SizeForm="Large" Label="مرور حساب ها" LargeIcon="/Images/reports/BrowseAccounts.jpg"/>
-                    <Syncfusion:RibbonButton  Name="rbnBuyRemittance" Click="rbnBuyRemittance_Click" SizeForm="Large" Label="گزارش حواله خرید"/>
+                    <Syncfusion:RibbonButton  Name="rbnBuyRemittance" Click="rbnBuyRemittance_Click" SizeForm="Large" Label="گزارش حواله خرید" LargeIcon="/Images/reports/BuyRemittance.png"/>
                 </Syncfusion:RibbonBar>
             </Syncfusion:RibbonTab>
             <Syncfusion:RibbonTab Name="rbnSetting" Caption="امکانات">
@@ -130,7 +130,7 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <Border Width="3" Background="#FF9CB3D0" Opacity=".8"  HorizontalAlignment="Right" BorderThickness="1 0 0 1" BorderBrush="#FF798AA0" Margin="0 -7.54 8 -5" />
-                    <Border Grid.Column="1" Width="3" Background="#FF9CB3D0" Opacity=".8"  HorizontalAlignment="Right" BorderThickness="1 0 0 1" BorderBrush="#FF798AA0" Margin="0 -7.54 10 -5" />
+                    <Border Grid.Column="1" Visibility="Collapsed" Width="3" Background="#FF9CB3D0" Opacity=".8"  HorizontalAlignment="Right" BorderThickness="1 0 0 1" BorderBrush="#FF798AA0" Margin="0 -7.54 10 -5" />
                     <Border Grid.Column="2" Width="3" Background="#FF9CB3D0" Opacity=".8"  HorizontalAlignment="Right" BorderThickness="1 0 0 1" BorderBrush="#FF798AA0" Margin="0 -7.54 10 -5" />
                     <Border Grid.Column="3" Width="3" Background="#FF9CB3D0" Opacity=".8"  HorizontalAlignment="Right" BorderThickness="1 0 0 1" BorderBrush="#FF798AA0" Margin="0 -7.54 10 -5" />
                     <Border Grid.Column="4" Width="3" Background="#FF9CB3D0" Opacity=".8"  HorizontalAlignment="Right" BorderThickness="1 0 0 1" BorderBrush="#FF798AA0" Margin="0 -7.54 10 -5" />
@@ -146,7 +146,7 @@
                         <TextBlock Text="دوره مالی : " FontSize="18"/>
                         <TextBlock Text="{Binding StatusOptions.Period.Name, RelativeSource={RelativeSource AncestorType=Window}}" FontSize="18"/>
                     </DockPanel>
-                    <Border Grid.Column="1" Margin="-8 -8 13 -5" Opacity=".5">
+                    <Border Grid.Column="1" Grid.ColumnSpan="2" Margin="-8 -8 13 -5" Opacity=".5">
                         <Border.Background>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                 <GradientStop Color="#FF3E6BA4"/>
@@ -164,7 +164,7 @@
                         </Border.Background>
                     </Border>
                     
-                    <TextBlock Text="سیستم بازرگانی رازی" Grid.Column="1" HorizontalAlignment="Center" Margin="-30 0 0 0" FontSize="20" FontWeight="Bold">
+                    <TextBlock Text="سیستم بازرگانی رازی" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" Margin="-30 0 0 0" FontSize="20" FontWeight="Bold">
                         <TextBlock.Foreground>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                 <GradientStop Color="#FF001054"/>
@@ -178,18 +178,22 @@
                         <TextBlock Text="تاریخ : " FontSize="18"/>
                         <TextBlock Text="{Binding StatusOptions.Date, RelativeSource={RelativeSource AncestorType=Window}}" FontSize="18"/>
                     </DockPanel>
-                    <DockPanel  Grid.Column="3">
+                    <DockPanel  Grid.Column="3" HorizontalAlignment="Center" Margin="0 0 40 0">
                         <TextBlock Text="کاربر : " FontFamily="B nazanin" FontSize="18"/>
                         <TextBlock FontFamily="B nazanin" Text="{Binding StatusOptions.User.UserName, RelativeSource={RelativeSource AncestorType=Window}}" FontSize="18"/>
                     </DockPanel>
                     <!--<DockPanel  Grid.Column="4">
                         <TextBlock Text="نسخه برنامه : " FontSize="18"/>
                         <TextBlock Text="{Binding StatusOptions.VP, RelativeSource={RelativeSource AncestorType=Window}}" FontSize="18"/>
-                    </DockPanel>
+                    </DockPanel>                    
                     <DockPanel  Grid.Column="5">
                         <TextBlock Text="نسخه دیتابیس : " FontSize="18"/>
                         <TextBlock Text="{Binding StatusOptions.VD, RelativeSource={RelativeSource AncestorType=Window}}" FontSize="18"/>
                     </DockPanel>-->
+                    <DockPanel  Grid.Column="4">
+                        <TextBlock Text="ساعت : " FontSize="18"/>
+                        <TextBlock x:Name="ClockText"  Text="--:--" FontSize="18"/>
+                    </DockPanel>
                 </Grid>
             </StatusBarItem>
 

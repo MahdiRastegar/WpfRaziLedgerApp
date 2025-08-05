@@ -19,9 +19,20 @@ namespace WpfRaziLedgerApp
         public decimal Count { get; set; }
         //کد تفضیلی خریدار یا فروشنده
         public int PreferentialCode { get; set; }
+        public string PreferentialName { get; set; }
         // خرید یا فروش
-        public string SellOrBuy { get; set; }
+        public string SellOrBuy { get; set; }        
         [JsonIgnore]
         public DateTime Date { get; set; }
+        public string DateString 
+        { 
+            get
+            {
+                return Date.ToPersianDateString();
+            }
+        }
+        //تعداد مانده
+        public long? BuyRemittanceNumber { get; set; }
+        public decimal RemainingCount { get; set; }
     }
 }

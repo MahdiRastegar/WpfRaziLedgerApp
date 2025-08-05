@@ -140,8 +140,10 @@ namespace WpfRaziLedgerApp
                     Name = txtCommodityName.Text,
                     FkUnit = mu,
                     Taxable = checkbox.IsChecked,
-                    Tonnage = short.Parse(txtTonnage.Text)
                 };
+                short? j = short.TryParse(txtTonnage.Text, out short temp) ? temp : (short?)null;
+                e_add.Tonnage = j;
+
                 db.Commodities.Add(e_add);
                 Commodities.Add(e_add);
             }
@@ -156,7 +158,8 @@ namespace WpfRaziLedgerApp
                 e_Edidet.FkUnit = mu;
                 e_Edidet.Taxable= checkbox.IsChecked;
                 Commodity.Taxable = checkbox.IsChecked;
-                e_Edidet.Tonnage = Commodity.Tonnage = short.Parse(txtTonnage.Text);
+                short? j = short.TryParse(txtTonnage.Text, out short temp) ? temp : (short?)null;
+                e_Edidet.Tonnage = Commodity.Tonnage = j;
             }
             if (!db.SafeSaveChanges())  return;
             if (id == Guid.Empty)
