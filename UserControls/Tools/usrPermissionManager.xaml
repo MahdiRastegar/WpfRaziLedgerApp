@@ -108,20 +108,20 @@
                         <StackPanel Orientation="Horizontal" Margin="20,2,0,5" 
                             Visibility="{Binding IsPermissionIconsVisible, Converter={StaticResource BoolToVisibilityConverter}}">
                             <!-- Insert -->
-                            <TextBlock Text="" 
+                            <TextBlock Text="" ToolTip="دسترسی جدید"
                                FontFamily="Segoe MDL2 Assets" FontWeight="Bold"
                                Margin="0,0,10,0"
                                Foreground="{Binding CanInsert, Converter={StaticResource BoolToBrushConverter1}}"
                                MouseLeftButtonDown="InsertIcon_Click"/>
                             <!-- Delete -->
-                            <TextBlock Text=""
+                            <TextBlock Text="" ToolTip="دسترسی حذف"
                                FontFamily="Segoe MDL2 Assets"
                                Margin="0,0,10,0"
                                Foreground="{Binding CanDelete, Converter={StaticResource BoolToBrushConverter2}}"
                                MouseLeftButtonDown="DeleteIcon_Click"/>
                             <!-- Modify -->
                             <TextBlock Text=""
-                               FontFamily="Segoe MDL2 Assets"
+                               FontFamily="Segoe MDL2 Assets" ToolTip="دسترسی ویرایش"
                                Foreground="{Binding CanModify, Converter={StaticResource BoolToBrushConverter3}}"
                                MouseLeftButtonDown="ModifyIcon_Click"/>
                         </StackPanel>
