@@ -626,7 +626,8 @@ namespace WpfRaziLedgerApp
             }
             datagrid.Visibility = Visibility.Visible;
             datagridSearch.Visibility = Visibility.Collapsed;
-            gridSetting.Visibility = gridConfirm.Visibility = Visibility.Visible;
+            //gridSetting.Visibility = 
+                gridConfirm.Visibility = Visibility.Visible;
             txtDescription.Text = string.Empty;
             txtPreferential.Text = string.Empty;
             Sf_txtPreferential.HasError = false;
@@ -716,8 +717,9 @@ namespace WpfRaziLedgerApp
 
             }
             //btnCancel_Click(null, null);
+            datagridSearch.View.Refresh();
         }
-        
+
         private void SearchTermTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (SearchTermTextBox.Text.Trim() == string.Empty)
@@ -1056,7 +1058,8 @@ namespace WpfRaziLedgerApp
                     SearchTermTextBox.Text = "";
                     SearchTermTextBox.TextChanged+= SearchTermTextBox_TextChanged;
                     datagridSearch.Visibility = Visibility.Collapsed;
-                    gridSetting.Visibility = gridConfirm.Visibility = Visibility.Visible;
+                    //gridSetting.Visibility = 
+                        gridConfirm.Visibility = Visibility.Visible;
                     column2.Width = column1.Width = new GridLength(225);
                     borderEdit.Visibility = Visibility.Visible;
                     RefreshDataGridForSetPersianNumber();
@@ -1761,6 +1764,11 @@ namespace WpfRaziLedgerApp
         private void datagrid_RecordDeleted(object sender, RecordDeletedEventArgs e)
         {
             CalDebCre(true);
+        }
+
+        private void btnPrint_Click(object sender, RoutedEventArgs e)
+        {
+
         }
 
         private void persianCalendar_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)

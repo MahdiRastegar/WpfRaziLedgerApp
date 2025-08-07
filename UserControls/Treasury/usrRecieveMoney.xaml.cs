@@ -1274,7 +1274,7 @@ namespace WpfRaziLedgerApp
                 db.RecieveMoneyDetails.Remove(item);
             }
             var recieveMoneyHeader = db.RecieveMoneyHeaders.Find(id);
-            //حذف سند حسابداری
+            //حذف آیتم حسابداری
             if (recieveMoneyHeader.FkAcDocument is Guid acDocument)
             {
                 foreach (var item in db.AcDocumentDetails.Where(u => u.FkAcDocHeaderId == acDocument))
@@ -1311,9 +1311,10 @@ namespace WpfRaziLedgerApp
 
             }
             id = Guid.Empty;
+            datagridSearch.View.Refresh();
             //btnCancel_Click(null, null);
         }
-        
+
         private void SearchTermTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (SearchTermTextBox.Text.Trim() == string.Empty)
@@ -2822,6 +2823,11 @@ namespace WpfRaziLedgerApp
             morefields.Visibility = Visibility.Collapsed;
             column1.Width = new GridLength(170);
             column2.Width = new GridLength(170);
+        }
+
+        private void btnPrint_Click(object sender, RoutedEventArgs e)
+        {
+
         }
 
         private void persianCalendarE_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)

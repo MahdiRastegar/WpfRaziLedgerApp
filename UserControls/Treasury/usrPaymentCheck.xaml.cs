@@ -1605,6 +1605,11 @@ namespace WpfRaziLedgerApp
 
         }
 
+        private void btnPrint_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
         private void persianCalendarE_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (!rl2)

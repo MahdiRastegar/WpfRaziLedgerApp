@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" Loaded="Window_Loaded"
         xmlns:local="clr-namespace:WpfRaziLedgerApp" WindowStartupLocation="CenterScreen"  FontFamily="{StaticResource NewFont}"
         mc:Ignorable="d" ResizeMode="NoResize"
-        Title="پنجره ورود" Height="408" Width="590">
+        Title="پنجره ورود" Height="420" Width="590">
     <Grid FlowDirection="RightToLeft">
         <Grid.RowDefinitions>
             <RowDefinition  Height="3*"/>
@@ -60,7 +60,7 @@
                 </Button.Background>
             </Button>
         </DockPanel>
-        <Image x:Name="___Images_RazyLogo_jpg" Grid.Column="0" VerticalAlignment="Bottom" Margin="10,0,-10,50" Grid.Row="0" Source="/Images/RazyLogo.png" Stretch="Uniform"/>
+        <Image x:Name="___Images_RazyLogo_jpg" Grid.Column="0" VerticalAlignment="Bottom" Margin="10,0,-10,60" Grid.Row="0" Source="/Images/RazyLogo.png" Stretch="Uniform"/>
         <Border Panel.ZIndex="-1" BorderThickness="0 1 0 0" Opacity=".8" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" IsHitTestVisible="False" x:Name="AnimatedBorder">
             <Border.BorderBrush>
                 <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">

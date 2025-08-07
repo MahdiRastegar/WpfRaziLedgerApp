@@ -6,6 +6,13 @@
         Height="auto" Width="auto" Background="White"
         FlowDirection="RightToLeft">
     <UserControl.Resources>
+        <local:BoolToBrushConverter x:Key="BoolToBrushConverter1" 
+                            ActiveBrush="#FF00E403" InactiveBrush="LightGray"/>
+        <local:BoolToBrushConverter x:Key="BoolToBrushConverter2" 
+                    ActiveBrush="#FFD80000" InactiveBrush="LightGray"/>
+        <local:BoolToBrushConverter x:Key="BoolToBrushConverter3" 
+                    ActiveBrush="#FFD68900" InactiveBrush="LightGray"/>
+        <local:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
         <Style TargetType="TreeViewItem">
             <Setter Property="FocusVisualStyle" Value="{x:Null}" />
             <Setter Property="IsExpanded" Value="False"/>
@@ -89,13 +96,39 @@
         <TreeView x:Name="treePermissions" Grid.Row="1" Margin="0,10,0,10">
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate ItemsSource="{Binding Children}">
-                    <StackPanel Orientation="Horizontal">
-                        <CheckBox Checked="CheckBox_Checked" Unchecked="CheckBox_Checked" IsChecked="{Binding CanAccess, Mode=TwoWay}" Content="{Binding Name}"/>
+                    <StackPanel Orientation="Vertical">
+                        <!-- CheckBox اصلی -->
+                        <StackPanel Orientation="Horizontal">
+                            <CheckBox Content="{Binding Name}" 
+                              IsChecked="{Binding CanAccess, Mode=TwoWay}" 
+                              IsThreeState="True"/>
+                        </StackPanel>
+
+                        <!-- آیکون‌های Insert/Delete/Modify -->
+                        <StackPanel Orientation="Horizontal" Margin="20,2,0,5" 
+                            Visibility="{Binding IsPermissionIconsVisible, Converter={StaticResource BoolToVisibilityConverter}}">
+                            <!-- Insert -->
+                            <TextBlock Text="" 
+                               FontFamily="Segoe MDL2 Assets" FontWeight="Bold"
+                               Margin="0,0,10,0"
+                               Foreground="{Binding CanInsert, Converter={StaticResource BoolToBrushConverter1}}"
+                               MouseLeftButtonDown="InsertIcon_Click"/>
+                            <!-- Delete -->
+                            <TextBlock Text=""
+                               FontFamily="Segoe MDL2 Assets"
+                               Margin="0,0,10,0"
+                               Foreground="{Binding CanDelete, Converter={StaticResource BoolToBrushConverter2}}"
+                               MouseLeftButtonDown="DeleteIcon_Click"/>
+                            <!-- Modify -->
+                            <TextBlock Text=""
+                               FontFamily="Segoe MDL2 Assets"
+                               Foreground="{Binding CanModify, Converter={StaticResource BoolToBrushConverter3}}"
+                               MouseLeftButtonDown="ModifyIcon_Click"/>
+                        </StackPanel>
                     </StackPanel>
                 </HierarchicalDataTemplate>
             </TreeView.ItemTemplate>
         </TreeView>
-
 
         <!-- دکمه ذخیره -->
         <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Left" Margin="10">

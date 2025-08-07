@@ -490,6 +490,18 @@ FontFamily="{StaticResource IranSans}" Width="27"
                     </Button>
                     <Image Source="/Images/Cancel.png" IsHitTestVisible="False" Width="36" />
                 </Grid>
+                <Grid>
+                    <Button Style="{StaticResource CustomButtonStyle}" ToolTip="چاپ" Click="btnPrint_Click" x:Name="btnPrint" HorizontalAlignment="Center" Margin="0 0 0 0" Width="60" Content="" FontSize="20" Height="45">
+                        <Button.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FFDDFFCB"/>
+                                <GradientStop Color="#FFE0FFD3" Offset="0.521"/>
+                                <GradientStop Color="#FFAAE8A8" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Button.Background>
+                    </Button>
+                    <Image Source="/Images/print.png" IsHitTestVisible="False" Width="36" />
+                </Grid>
                 <Grid  x:Name="gridSetting" Visibility="Collapsed">
                     <Button Style="{StaticResource CustomButtonStyle}" ToolTip="تنظیمات پیکربندی" Click="btnSetting_Click" x:Name="btnSetting" HorizontalAlignment="Center" Margin="10 0 10 0" Width="60" Content="" FontSize="20" Height="45">
                         <Button.Background>

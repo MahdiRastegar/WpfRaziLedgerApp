@@ -1133,7 +1133,7 @@ namespace WpfRaziLedgerApp
                 db.ProductBuyDetails.Remove(item);
             }
             var productBuyHeader = db.ProductBuyHeaders.Find(id);
-            //حذف سند حسابداری
+            //حذف آیتم حسابداری
             if (productBuyHeader.FkAcDocument is Guid acDocument)
             {
                 foreach (var item in db.AcDocumentDetails.Where(u => u.FkAcDocHeaderId == acDocument))
@@ -1169,6 +1169,7 @@ namespace WpfRaziLedgerApp
             {
 
             }
+            datagridSearch.View.Refresh();
             //btnCancel_Click(null, null);
         }
 
@@ -2198,6 +2199,11 @@ namespace WpfRaziLedgerApp
         private void datagrid_RecordDeleted(object sender, RecordDeletedEventArgs e)
         {
             CalDebCre(true);
+        }
+
+        private void btnPrint_Click(object sender, RoutedEventArgs e)
+        {
+
         }
 
         private void persianCalendar_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)

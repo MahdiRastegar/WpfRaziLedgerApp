@@ -811,6 +811,7 @@ namespace WpfRaziLedgerApp
             {
 
             }
+            datagridSearch.View.Refresh();
             //btnCancel_Click(null, null);
         }
         
@@ -1607,6 +1608,11 @@ namespace WpfRaziLedgerApp
         {
             if (SearchTermTextBox.Text.Trim() != string.Empty)
                 datagridSearch.ExpandAllDetailsView();
+        }
+
+        private void btnPrint_Click(object sender, RoutedEventArgs e)
+        {
+
         }
 
         private void persianCalendar_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)

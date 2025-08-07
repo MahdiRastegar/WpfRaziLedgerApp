@@ -1322,7 +1322,7 @@ namespace WpfRaziLedgerApp
                 }
                 db.PaymentMoneyDetails.Remove(item);
             }
-            //حذف سند حسابداری
+            //حذف آیتم حسابداری
             var paymentMoneyHeader = db.PaymentMoneyHeaders.Find(id);
             if (paymentMoneyHeader.FkAcDocument is Guid acDocument)
             {
@@ -2788,6 +2788,11 @@ namespace WpfRaziLedgerApp
             morefields.Visibility = Visibility.Collapsed;
             column1.Width = new GridLength(170);
             column2.Width = new GridLength(170);
+        }
+
+        private void btnPrint_Click(object sender, RoutedEventArgs e)
+        {
+
         }
 
         private void persianCalendarE_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)

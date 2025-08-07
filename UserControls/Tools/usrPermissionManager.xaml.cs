@@ -61,13 +61,16 @@ namespace WpfRaziLedgerApp
     {
         var children = g.Select(item =>
         {
-            bool childAccess = existingPermissions.Any(p => p.FkRibbonItemId == item.Id);
+            var permission = existingPermissions.FirstOrDefault(p => p.FkRibbonItemId == item.Id);
             return new RibbonPermissionNode
             {
                 RibbonItemId = item.Id,
                 Name = item.DisplayName,
                 Category = item.Category,
-                CanAccess = childAccess
+                CanAccess = permission != null,
+                CanDelete = permission?.CanDelete ?? false,
+                CanModify = permission?.CanModify ?? false,
+                CanInsert = permission?.CanInsert ?? false,
             };
         }).ToList();
 
@@ -81,11 +84,14 @@ namespace WpfRaziLedgerApp
         };
 
         foreach (var child in children)
+        {
             child.Parent = parent;
+            child.IsPermissionIconsVisible = false;
+        }
 
         // بررسی وضعیت اولیه
         parent.EvaluateCanAccessFromChildren();
-
+        
         return parent;
     }).ToList();
 
@@ -158,6 +164,9 @@ namespace WpfRaziLedgerApp
                         Id = Guid.NewGuid(),
                         CanAccess = true,
                         FkUserGroupId = selectedGroupId,
+                        CanInsert=node.CanInsert,
+                        CanDelete=node.CanDelete,
+                        CanModify=node.CanModify,
                         FkRibbonItemId = node.RibbonItemId ?? Guid.Empty
                     };
                     db.Permissions.Add(permission);
@@ -173,6 +182,23 @@ namespace WpfRaziLedgerApp
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
             isCancel = false;
+        }
+        private void InsertIcon_Click(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is TextBlock tb && tb.DataContext is RibbonPermissionNode node)
+                node.CanInsert = !node.CanInsert;
+        }
+
+        private void DeleteIcon_Click(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is TextBlock tb && tb.DataContext is RibbonPermissionNode node)
+                node.CanDelete = !node.CanDelete;
+        }
+
+        private void ModifyIcon_Click(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is TextBlock tb && tb.DataContext is RibbonPermissionNode node)
+                node.CanModify = !node.CanModify;
         }
     }
 }

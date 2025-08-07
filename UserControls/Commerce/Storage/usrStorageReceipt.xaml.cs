@@ -762,9 +762,10 @@ namespace WpfRaziLedgerApp
             {
 
             }
+            datagridSearch.View.Refresh();
             //btnCancel_Click(null, null);
         }
-        
+
         private void SearchTermTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (SearchTermTextBox.Text.Trim() == string.Empty)

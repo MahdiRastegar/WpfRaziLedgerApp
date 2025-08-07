@@ -64,13 +64,14 @@
             <Style x:Key="rowstyle" TargetType="Syncfusion:VirtualizingCellsControl">
                 <Setter Property="Background" Value="{Binding UpdateSourceTrigger=PropertyChanged,Converter={StaticResource CustomRowStyleConverter},ConverterParameter=Background}" />
             </Style>
+            <local:RowIndexConverter x:Key="RowIndexConverter"/>
             <Style TargetType="Syncfusion:GridRowHeaderCell">
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="Syncfusion:GridRowHeaderCell">
                             <Border x:Name="PART_RowHeaderCellBorder"
-                 BorderBrush="{TemplateBinding BorderBrush}"
-                 BorderThickness="{TemplateBinding BorderThickness}">
+      BorderBrush="{TemplateBinding BorderBrush}"
+      BorderThickness="{TemplateBinding BorderThickness}">
                                 <Border.Background>
                                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                         <GradientStop Color="#FFCFE5F5"/>
@@ -79,9 +80,9 @@
                                 </Border.Background>
                                 <Grid>
                                     <TextBlock HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            Text="{Binding RowIndex,RelativeSource={RelativeSource TemplatedParent}}"
-                            TextAlignment="Center" />
+                 VerticalAlignment="Center"
+                 Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource RowIndexConverter}}"
+                 TextAlignment="Center" />
                                 </Grid>
                             </Border>
                         </ControlTemplate>
@@ -532,6 +533,18 @@ FontFamily="{StaticResource IranSans}" Width="27"
                     </Button>
                     <Image Source="/Images/Cancel.png" IsHitTestVisible="False" Width="36" />
                 </Grid>
+                <Grid>
+                    <Button Style="{StaticResource CustomButtonStyle}" ToolTip="چاپ" Click="btnPrint_Click" x:Name="btnPrint" HorizontalAlignment="Center" Margin="0 0 0 0" Width="60" Content="" FontSize="20" Height="45">
+                        <Button.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FFDDFFCB"/>
+                                <GradientStop Color="#FFE0FFD3" Offset="0.521"/>
+                                <GradientStop Color="#FFAAE8A8" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Button.Background>
+                    </Button>
+                    <Image Source="/Images/print.png" IsHitTestVisible="False" Width="36" />
+                </Grid>
                 <Grid  x:Name="gridSetting" Visibility="Collapsed">
                     <Button Style="{StaticResource CustomButtonStyle}" ToolTip="تنظیمات پیکربندی" Click="btnSetting_Click" x:Name="btnSetting" HorizontalAlignment="Center" Margin="10 0 10 0" Width="60" Content="" FontSize="20" Height="45">
                         <Button.Background>
@@ -724,16 +737,16 @@ Source="{Binding RecieveMoneyHeaders}"/>
             </Grid>
             <DockPanel Grid.Row="5" Grid.RowSpan="2" VerticalAlignment="Bottom" Margin="0,0,45,6" Grid.Column="3" HorizontalAlignment="Right">
                 <Grid Name="gridDelete" Visibility="Collapsed" Margin="20 0">
-                    <Button Style="{StaticResource CustomButtonStyle}" ToolTip="حذف سند" Click="BtnDelete_Click" x:Name="btnDelete" HorizontalAlignment="Center" Margin="0 0 0 0" Width="60" Content="" FontSize="20" Height="45">
+                    <Button Style="{StaticResource CustomButtonStyle2}" ToolTip="حذف آیتم" Click="BtnDelete_Click" x:Name="btnDelete" HorizontalAlignment="Center" Margin="0 0 0 0" Width="65" Content="" FontSize="20" Height="58">
                         <Button.Background>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                <GradientStop Color="#FFFFDCCB"/>
-                                <GradientStop Color="#FFFFE7D3" Offset="0.521"/>
-                                <GradientStop Color="#FFBDA178" Offset="1"/>
+                                <GradientStop Color="#FFC8878A"/>
+                                <GradientStop Color="White" Offset="0.721"/>
+                                <GradientStop Color="#FFBCB4CC" Offset="1"/>
                             </LinearGradientBrush>
                         </Button.Background>
                     </Button>
-                    <Image Source="/Images/Delete.png" IsHitTestVisible="False" Width="37.5" Stretch="Fill" Height="39" Margin="0 0 0 2"/>
+                    <Image Source="/Images/Recycle Bin Full.png" IsHitTestVisible="False" Width="48" Stretch="Fill" Height="48" Margin="0 0 0 2"/>
                 </Grid>
                 <Image Name="searchImage" ToolTip="جستجو" PreviewMouseDown="searchImage_PreviewMouseDown" Visibility="Visible"  Height="55" Cursor="Hand" Source="/Images/Data.png"/>
             </DockPanel>

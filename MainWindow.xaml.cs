@@ -1,4 +1,5 @@
-﻿using Syncfusion.Linq;
+﻿using Microsoft.EntityFrameworkCore;
+using Syncfusion.Linq;
 using Syncfusion.Windows.Tools.Controls;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
@@ -66,6 +68,7 @@ namespace WpfRaziLedgerApp
         private void Timer_Tick(object sender, EventArgs e)
         {
             ClockText.Text = DateTime.Now.ToString("HH:mm");
+            txbDate.Text = DateTime.Now.ToPersianDateString();
             SetNextTick(); // بعد از آپدیت، زمان تیک بعدی را مجدد تنظیم می‌کنیم
         }
 
@@ -179,12 +182,8 @@ namespace WpfRaziLedgerApp
             {
                 tabcontrol.SelectedItem = item;
             }
-            else
-            {
-                item = new TabItemExt() { Header = "حساب کل" };                
-                item.Content = new winCol();
-                tabcontrol.Items.Add(item);
-            }
+            else            
+                AddTabWithTriangle("حساب کل", new winCol(),sender as RibbonButton);
         }
 
         private void rbnMoein_Click(object sender, RoutedEventArgs e)
@@ -195,12 +194,8 @@ namespace WpfRaziLedgerApp
             {
                 tabcontrol.SelectedItem = item;
             }
-            else
-            {
-                item = new TabItemExt() { Header = "حساب معین" };
-                item.Content = new winMoein();
-                tabcontrol.Items.Add(item);
-            }
+            else            
+                AddTabWithTriangle("حساب معین", new winMoein(),sender as RibbonButton);
         }
 
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -230,7 +225,10 @@ namespace WpfRaziLedgerApp
         {
             var n = (e.OriginalSource as TabItemExt).Content;
             (n as FrameworkElement).Effect = new BlurEffect() { Radius = 4 };
-            e.Cancel = !(n as ITabForm).CloseForm();
+            if (n is ITabForm tab)
+                e.Cancel = !tab.CloseForm();
+            else
+                e.Cancel = !((n as Grid).Children[0] as ITabForm).CloseForm();
             (n as FrameworkElement).Effect = null;
         }
 
@@ -257,12 +255,8 @@ namespace WpfRaziLedgerApp
             {
                 tabcontrol.SelectedItem = item;
             }
-            else
-            {
-                item = new TabItemExt() { Header = "گروه تفضیلی" };
-                item.Content = new usrGroup();
-                tabcontrol.Items.Add(item);
-            }
+            else            
+                AddTabWithTriangle("گروه تفضیلی", new usrGroup(),sender as RibbonButton);
         }
 
         private void rbnPreferential_Click(object sender, RoutedEventArgs e)
@@ -273,12 +267,8 @@ namespace WpfRaziLedgerApp
             {
                 tabcontrol.SelectedItem = item;
             }
-            else
-            {
-                item = new TabItemExt() { Header = "حساب تفضیلی" };                
-                item.Content = new usrPreferential();
-                tabcontrol.Items.Add(item);
-            }
+            else            
+                AddTabWithTriangle("حساب تفضیلی", new usrPreferential(),sender as RibbonButton);
         }
 
         private void rbnAgroup_Click(object sender, RoutedEventArgs e)
@@ -289,12 +279,8 @@ namespace WpfRaziLedgerApp
             {
                 tabcontrol.SelectedItem = item;
             }
-            else
-            {
-                item = new TabItemExt() { Header = "گروه حساب" };
-                item.Content = new usrAgroup();
-                tabcontrol.Items.Add(item);
-            }
+            else            
+                AddTabWithTriangle("گروه حساب", new usrAgroup(),sender as RibbonButton);
         }
 
         private void tabcontrol_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -311,12 +297,8 @@ namespace WpfRaziLedgerApp
             {
                 tabcontrol.SelectedItem = item;
             }
-            else
-            {
-                item = new TabItemExt() { Header = "نوع سند" };
-                item.Content = new usrAcType();
-                tabcontrol.Items.Add(item);
-            }
+            else            
+                AddTabWithTriangle("نوع سند", new usrAcType(),sender as RibbonButton);
         }
 
         private void rbnAcDoc_Click(object sender, RoutedEventArgs e)
@@ -327,12 +309,8 @@ namespace WpfRaziLedgerApp
             {
                 tabcontrol.SelectedItem = item;
             }
-            else
-            {
-                item = new TabItemExt() { Header = "سند حسابداری" };
-                item.Content = new usrAccountDocument();
-                tabcontrol.Items.Add(item);
-            }
+            else            
+                AddTabWithTriangle("سند حسابداری", new usrAccountDocument(),sender as RibbonButton);
         }
 
         private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -346,12 +324,14 @@ namespace WpfRaziLedgerApp
                     return;
                 }
             }
-            if ((tabcontrol.SelectedItem as TabItemExt)?.Content is UserControl userControl)
+            if ((tabcontrol.SelectedItem as TabItemExt)?.Content is Grid grid && grid.Children[0] is UserControl userControl)
             {
                 if ((Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)) && Keyboard.IsKeyDown(Key.S))
                 {
                     Type type = userControl.GetType();
-
+                    var btnSave = userControl.FindName("btnConfirm") as FrameworkElement;
+                    if (btnSave != null && (btnSave.Parent as Grid).Visibility == Visibility.Collapsed)
+                        return;
                     MethodInfo method = type.GetMethod("btnConfirm_Click", BindingFlags.NonPublic | BindingFlags.Instance);
 
                     if (method != null)
@@ -373,12 +353,8 @@ namespace WpfRaziLedgerApp
             {
                 tabcontrol.SelectedItem = item;
             }
-            else
-            {
-                item = new TabItemExt() { Header = "بانک" };
-                item.Content = new usrBank();
-                tabcontrol.Items.Add(item);
-            }
+            else            
+                AddTabWithTriangle("بانک", new usrBank(),sender as RibbonButton);
         }
 
         private void rbnRecieveMoney_Click(object sender, RoutedEventArgs e)
@@ -389,12 +365,8 @@ namespace WpfRaziLedgerApp
             {
                 tabcontrol.SelectedItem = item;
             }
-            else
-            {
-                item = new TabItemExt() { Header = "دریافت وجه" };
-                item.Content = new usrRecieveMoney();
-                tabcontrol.Items.Add(item);
-            }
+            else            
+                AddTabWithTriangle("دریافت وجه", new usrRecieveMoney(),sender as RibbonButton);
         }
 
         private void rbnPaymentMoney_Click(object sender, RoutedEventArgs e)
@@ -405,12 +377,8 @@ namespace WpfRaziLedgerApp
             {
                 tabcontrol.SelectedItem = item;
             }
-            else
-            {
-                item = new TabItemExt() { Header = "پرداخت وجه" };
-                item.Content = new usrPaymentMoney();
-                tabcontrol.Items.Add(item);
-            }
+            else            
+                AddTabWithTriangle("پرداخت وجه", new usrPaymentMoney(),sender as RibbonButton);
         }
 
         private void rbnRecieveCheck_Click(object sender, RoutedEventArgs e)
@@ -421,12 +389,8 @@ namespace WpfRaziLedgerApp
             {
                 tabcontrol.SelectedItem = item;
             }
-            else
-            {
-                item = new TabItemExt() { Header = "چک های دریافتی" };
-                item.Content = new usrRecieveCheck();
-                tabcontrol.Items.Add(item);
-            }
+            else            
+                AddTabWithTriangle("چک های دریافتی", new usrRecieveCheck(), sender as RibbonButton);
         }
 
         private void rbnPaymentCheck_Click(object sender, RoutedEventArgs e)
@@ -437,12 +401,8 @@ namespace WpfRaziLedgerApp
             {
                 tabcontrol.SelectedItem = item;
             }
-            else
-            {
-                item = new TabItemExt() { Header = "چک های پرداختی" };
-                item.Content = new usrPaymentCheck();
-                tabcontrol.Items.Add(item);
-            }
+            else            
+                AddTabWithTriangle("چک های پرداختی", new usrPaymentCheck(), sender as RibbonButton);
         }
 
         private void rbnProvince_Click(object sender, RoutedEventArgs e)
@@ -450,17 +410,170 @@ namespace WpfRaziLedgerApp
             var list = GetTabControlItems;
             var item = list.FirstOrDefault(y => y.Header == "استان");
             if (item != null)
-            {
                 tabcontrol.SelectedItem = item;
+            else
+                AddTabWithTriangle("استان", new usrProvince(),sender as RibbonButton);
+        }
+    
+        private void AddTabWithTriangle(string header, UserControl userControl, RibbonButton tabItemExt =null)
+        {
+            // ایجاد تب
+            var item = new TabItemExt() { Header = header };
+
+            // Container برای overlay کردن محتوا و مثلث
+            var container = new Grid();
+
+            // اضافه کردن محتوا (UserControl)
+            container.Children.Add(userControl);
+            using var db=new wpfrazydbContext();
+            
+            if(header=="حساب تفضیلی")
+                header="تفضیلی";
+            if (header == "حساب کل")
+                header = "کل";
+            if (header == "حساب معین")
+                header = "معین";
+            if (header == "سند حسابداری")
+                header = " سند حسابداری";
+            var per = db.Permissions.Include(t => t.FkRibbonItem).FirstOrDefault(u => u.FkUserGroupId == StatusOptions.User.FkUserGroupId && u.FkRibbonItem.DisplayName == header && ((tabItemExt.Parent as RibbonBar).Parent as RibbonTab).Caption == u.FkRibbonItem.Category);
+            var btnSave = userControl.FindName("btnConfirm") as FrameworkElement;
+            var btnDelete = userControl.FindName("btnDelete") as FrameworkElement;
+            if (btnSave != null)
+            {
+                (btnSave.Parent as Grid).IsVisibleChanged += btnSave_IsVisibleChanged;
+            }
+            if (btnDelete != null)
+            {
+                (btnDelete.Parent as Grid).IsVisibleChanged += btnDelete_IsVisibleChanged;                
+            }
+            if (per.CanInsert == false)
+            {
+                if (btnSave != null)
+                    (btnSave.Parent as Grid).Visibility = Visibility.Collapsed;
+            }
+
+            // ایجاد مثلث سبز
+            var triangle = CreateGreenTriangle(per.CanInsert==true);
+            triangle.Tag = per;
+            triangle.VerticalAlignment = VerticalAlignment.Top;
+            triangle.HorizontalAlignment = HorizontalAlignment.Left;
+            Panel.SetZIndex(triangle, 1);
+            container.Children.Add(triangle);
+
+            // وصل کردن واکنش به borderEdit داخل UserControl (اگر وجود داشته باشد)
+            var borderEditField = userControl.FindName("borderEdit") as FrameworkElement;
+            if (borderEditField != null)
+            {
+                borderEditField.IsVisibleChanged += (s, e) =>
+                {                    
+                    triangle.Visibility = borderEditField.Visibility == Visibility.Visible
+                        ? Visibility.Collapsed
+                        : Visibility.Visible;
+                    if (borderEditField.Visibility == Visibility.Visible)
+                    {
+                        if (per.CanModify == true)
+                            (btnSave.Parent as Grid).Visibility = Visibility.Visible;
+                        else
+                            (btnSave.Parent as Grid).Visibility = Visibility.Collapsed;
+                    }
+                    else if (borderEditField.Visibility != Visibility.Visible)
+                    {
+                        if (per.CanInsert == true)
+                            (btnSave.Parent as Grid).Visibility = Visibility.Visible;
+                        else
+                            (btnSave.Parent as Grid).Visibility = Visibility.Collapsed;
+                    }
+                };
             }
             else
+                triangle.Visibility = Visibility.Collapsed;
+            var datagridSearchField = userControl.FindName("datagridSearch") as FrameworkElement;
+            if (datagridSearchField != null)
             {
-                item = new TabItemExt() { Header = "استان" };
-                item.Content = new usrProvince();
-                tabcontrol.Items.Add(item);
+                datagridSearchField.IsVisibleChanged += (s, e) =>
+                {
+                    if (datagridSearchField.Visibility == Visibility.Visible)
+                    {
+                        triangle.Visibility = Visibility.Collapsed;
+                    }
+                    else
+                        triangle.Visibility = borderEditField.Visibility == Visibility.Visible
+                            ? Visibility.Collapsed
+                            : Visibility.Visible;
+                };
             }
+
+            // اضافه به تب‌ها
+            item.Content = container;
+            tabcontrol.Items.Add(item);
+            tabcontrol.SelectedItem = item;
         }
 
+        private void btnDelete_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (sender is Grid grid && (((grid.DataContext as UserControl).Parent as Grid).Children[1] as Polygon).Tag is Permission permission)
+            {
+                if (grid.Visibility == Visibility.Visible)
+                {
+                    if (permission.CanDelete != true)
+                    {
+                        grid.IsVisibleChanged -= btnDelete_IsVisibleChanged;
+                        grid.Visibility= Visibility.Collapsed;
+                        grid.IsVisibleChanged += btnDelete_IsVisibleChanged;
+                    }
+                }
+
+           }
+        }
+        private void btnSave_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (sender is Grid grid && (((grid.DataContext as UserControl).Parent as Grid).Children[1] as Polygon).Tag is Permission permission)
+            {
+                if (grid.Visibility == Visibility.Visible)
+                {
+                    if (permission.CanInsert != true&&(grid.DataContext as UserControl).FindName("borderEdit") is Border border&&border.Visibility!= Visibility.Visible)
+                    {
+                        grid.IsVisibleChanged -= btnSave_IsVisibleChanged;
+                        grid.Visibility = Visibility.Collapsed;
+                        grid.IsVisibleChanged += btnSave_IsVisibleChanged;
+                    }
+                }
+
+            }
+        }
+        private FrameworkElement CreateGreenTriangle(bool green=true)
+        {
+            // براش برای پر کردن مثلث (حتماً باید SolidColorBrush باشه تا رنگش انیمیت بشه)
+            var fillBrush = green == true ? new SolidColorBrush(Colors.Green): new SolidColorBrush(Colors.Gray);
+
+            var triangle = new System.Windows.Shapes.Polygon
+            {
+                Points = new PointCollection { new Point(0, 0), new Point(22, 0), new Point(0, 22) },
+                Fill = fillBrush,
+                Stroke = green == true ? Brushes.DarkGreen : Brushes.DarkGray,
+                StrokeThickness = 1,
+                ToolTip = "جدید"+(green?"": " - عدم دسترسی"),
+                Width = 20,
+                Height = 20,
+                Margin = new Thickness(1)
+            };
+
+            // انیمیشن رنگ (از سبز معمولی به سبز روشن‌تر و برگشت)
+            var animation = new ColorAnimation
+            {
+                From = green ? Colors.LimeGreen : Colors.MistyRose,
+                To = green ? Colors.LightGreen : Colors.Crimson,
+                Duration = TimeSpan.FromSeconds(0.6),
+                AutoReverse = true,
+                RepeatBehavior = RepeatBehavior.Forever
+            };
+
+            // شروع انیمیشن بدون Storyboard
+            fillBrush.BeginAnimation(SolidColorBrush.ColorProperty, animation);
+
+            return triangle;
+        }
+       
         private void rbnCity_Click(object sender, RoutedEventArgs e)
         {
             var list = GetTabControlItems;
@@ -469,12 +582,8 @@ namespace WpfRaziLedgerApp
             {
                 tabcontrol.SelectedItem = item;
             }
-            else
-            {
-                item = new TabItemExt() { Header = "شهر" };
-                item.Content = new usrCity();
-                tabcontrol.Items.Add(item);
-            }
+            else            
+                AddTabWithTriangle("شهر", new usrCity(),sender as RibbonButton);
         }
 
         private void rbnPriceGroup_Click(object sender, RoutedEventArgs e)
@@ -485,12 +594,8 @@ namespace WpfRaziLedgerApp
             {
                 tabcontrol.SelectedItem = item;
             }
-            else
-            {
-                item = new TabItemExt() { Header = "گروه قیمت" };
-                item.Content = new usrPriceGroup();
-                tabcontrol.Items.Add(item);
-            }
+            else            
+                AddTabWithTriangle("گروه قیمت", new usrPriceGroup(),sender as RibbonButton);
         }
 
         private void rbnCustomerGroup_Click(object sender, RoutedEventArgs e)
@@ -501,12 +606,8 @@ namespace WpfRaziLedgerApp
             {
                 tabcontrol.SelectedItem = item;
             }
-            else
-            {
-                item = new TabItemExt() { Header = "گروه مشتریان" };
-                item.Content = new usrCustomerGroup();
-                tabcontrol.Items.Add(item);
-            }
+            else            
+                AddTabWithTriangle("گروه مشتریان", new usrCustomerGroup(),sender as RibbonButton);
         }
 
         private void rbnGroupStorage_Click(object sender, RoutedEventArgs e)
@@ -517,12 +618,8 @@ namespace WpfRaziLedgerApp
             {
                 tabcontrol.SelectedItem = item;
             }
-            else
-            {
-                item = new TabItemExt() { Header = "گروه انبار" };
-                item.Content = new usrGroupStorage();
-                tabcontrol.Items.Add(item);
-            }
+            else            
+                AddTabWithTriangle("گروه انبار", new usrGroupStorage(),sender as RibbonButton);
         }
 
         private void rbnDefinitionStorage_Click(object sender, RoutedEventArgs e)
@@ -533,12 +630,8 @@ namespace WpfRaziLedgerApp
             {
                 tabcontrol.SelectedItem = item;
             }
-            else
-            {
-                item = new TabItemExt() { Header = "انبار" };
-                item.Content = new usrStorage();
-                tabcontrol.Items.Add(item);
-            }
+            else            
+                AddTabWithTriangle("انبار", new usrStorage(),sender as RibbonButton);
         }
 
         private void rbnUnit_Click(object sender, RoutedEventArgs e)
@@ -549,12 +642,8 @@ namespace WpfRaziLedgerApp
             {
                 tabcontrol.SelectedItem = item;
             }
-            else
-            {
-                item = new TabItemExt() { Header = "واحد اندازه گیری" };
-                item.Content = new usrUnit();
-                tabcontrol.Items.Add(item);
-            }
+            else            
+                AddTabWithTriangle("واحد اندازه گیری", new usrUnit(),sender as RibbonButton);
         }
 
         private void rbnGroupCommodity_Click(object sender, RoutedEventArgs e)
@@ -566,11 +655,7 @@ namespace WpfRaziLedgerApp
                 tabcontrol.SelectedItem = item;
             }
             else
-            {
-                item = new TabItemExt() { Header = "گروه کالا" };
-                item.Content = new usrGroupCommodity();
-                tabcontrol.Items.Add(item);
-            }
+                AddTabWithTriangle("گروه کالا", new usrGroupCommodity(),sender as RibbonButton);
         }
 
         private void rbnDefinitionCommodity_Click(object sender, RoutedEventArgs e)
@@ -581,12 +666,8 @@ namespace WpfRaziLedgerApp
             {
                 tabcontrol.SelectedItem = item;
             }
-            else
-            {
-                item = new TabItemExt() { Header = "کالا" };
-                item.Content = new usrCommodity();
-                tabcontrol.Items.Add(item);
-            }
+            else            
+                AddTabWithTriangle("کالا", new usrCommodity(),sender as RibbonButton);
         }
 
         private void rbnCommodityPricingPanel_Click(object sender, RoutedEventArgs e)
@@ -597,12 +678,8 @@ namespace WpfRaziLedgerApp
             {
                 tabcontrol.SelectedItem = item;
             }
-            else
-            {
-                item = new TabItemExt() { Header = "پنل قیمت گذاری کالا" };
-                item.Content = new usrCommodityPricingPanel();
-                tabcontrol.Items.Add(item);
-            }
+            else            
+                AddTabWithTriangle("پنل قیمت گذاری کالا", new usrCommodityPricingPanel(),sender as RibbonButton);
         }
 
         private void rbnCodingReceiptTypes_Click(object sender, RoutedEventArgs e)
@@ -613,12 +690,8 @@ namespace WpfRaziLedgerApp
             {
                 tabcontrol.SelectedItem = item;
             }
-            else
-            {
-                item = new TabItemExt() { Header = "کدینگ انواع رسید" };
-                item.Content = new usrCodingReceiptTypes();
-                tabcontrol.Items.Add(item);
-            }
+            else            
+                AddTabWithTriangle("کدینگ انواع رسید", new usrCodingReceiptTypes(),sender as RibbonButton);
         }
         private void rbnCodingTypesTransfer_Click(object sender, RoutedEventArgs e)
         {
@@ -628,12 +701,8 @@ namespace WpfRaziLedgerApp
             {
                 tabcontrol.SelectedItem = item;
             }
-            else
-            {
-                item = new TabItemExt() { Header = "کدینگ انواع حواله" };
-                item.Content = new usrCodingTypesTransfer();
-                tabcontrol.Items.Add(item);
-            }
+            else            
+                AddTabWithTriangle("کدینگ انواع حواله", new usrCodingTypesTransfer(),sender as RibbonButton);
         }
 
         private void rbnStorageReceipt_Click(object sender, RoutedEventArgs e)
@@ -644,12 +713,8 @@ namespace WpfRaziLedgerApp
             {
                 tabcontrol.SelectedItem = item;
             }
-            else
-            {
-                item = new TabItemExt() { Header = "رسید انبار" };
-                item.Content = new usrStorageReceipt();
-                tabcontrol.Items.Add(item);
-            }
+            else            
+                AddTabWithTriangle("رسید انبار", new usrStorageReceipt(),sender as RibbonButton);
         }
 
         private void rbnStorageTransfer_Click(object sender, RoutedEventArgs e)
@@ -660,12 +725,8 @@ namespace WpfRaziLedgerApp
             {
                 tabcontrol.SelectedItem = item;
             }
-            else
-            {
-                item = new TabItemExt() { Header = "حواله انبار" };
-                item.Content = new usrStorageTransfer();
-                tabcontrol.Items.Add(item);
-            }
+            else            
+                AddTabWithTriangle("حواله انبار", new usrStorageTransfer(),sender as RibbonButton);
         }
 
         private void rbnStorageBetweenTransfer_Click(object sender, RoutedEventArgs e)
@@ -676,12 +737,8 @@ namespace WpfRaziLedgerApp
             {
                 tabcontrol.SelectedItem = item;
             }
-            else
-            {
-                item = new TabItemExt() { Header = "حواله بین انبار" };
-                item.Content = new usrStorageBetweenTransfer();
-                tabcontrol.Items.Add(item);
-            }
+            else            
+                AddTabWithTriangle("حواله بین انبار", new usrStorageBetweenTransfer(),sender as RibbonButton);
         }
 
         private void rbnStorageRotation_Click(object sender, RoutedEventArgs e)
@@ -692,12 +749,8 @@ namespace WpfRaziLedgerApp
             {
                 tabcontrol.SelectedItem = item;
             }
-            else
-            {
-                item = new TabItemExt() { Header = "انبارگردانی" };
-                item.Content = new usrStorageRotation();
-                tabcontrol.Items.Add(item);
-            }
+            else            
+                AddTabWithTriangle("انبارگردانی", new usrStorageRotation(),sender as RibbonButton);
         }
 
         private void rbnNPStorage_Click(object sender, RoutedEventArgs e)
@@ -723,13 +776,8 @@ namespace WpfRaziLedgerApp
             if (item != null)
             {
                 tabcontrol.SelectedItem = item;
-            }
-            else
-            {
-                item = new TabItemExt() { Header = "سفارش" };
-                item.Content = new usrOrder();
-                tabcontrol.Items.Add(item);
-            }
+            }            
+                AddTabWithTriangle("سفارش", new usrOrder(),sender as RibbonButton);
         }
 
         private void rbnPurchaseInvoice_Click(object sender, RoutedEventArgs e)
@@ -740,12 +788,8 @@ namespace WpfRaziLedgerApp
             {
                 tabcontrol.SelectedItem = item;
             }
-            else
-            {
-                item = new TabItemExt() { Header = "فاکتور خرید" };
-                item.Content = new usrProductBuy();
-                tabcontrol.Items.Add(item);
-            }
+            else            
+                AddTabWithTriangle("فاکتور خرید", new usrProductBuy(),sender as RibbonButton);
         }
 
         private void rbnSalesInvoice_Click(object sender, RoutedEventArgs e)
@@ -756,12 +800,8 @@ namespace WpfRaziLedgerApp
             {
                 tabcontrol.SelectedItem = item;
             }
-            else
-            {
-                item = new TabItemExt() { Header = "فاکتور فروش" };
-                item.Content = new usrProductSell();
-                tabcontrol.Items.Add(item);
-            }
+            else            
+                AddTabWithTriangle("فاکتور فروش", new usrProductSell(),sender as RibbonButton);
         }
 
         private void rbnSalesProforma_Click(object sender, RoutedEventArgs e)
@@ -772,12 +812,8 @@ namespace WpfRaziLedgerApp
             {
                 tabcontrol.SelectedItem = item;
             }
-            else
-            {
-                item = new TabItemExt() { Header = "پیش فاکتور فروش" };
-                item.Content = new usrPreInvoice();
-                tabcontrol.Items.Add(item);
-            }
+            else            
+                AddTabWithTriangle("پیش فاکتور فروش", new usrPreInvoice(),sender as RibbonButton);
         }
 
         private void rbnConfiguration_Click(object sender, RoutedEventArgs e)
@@ -841,12 +877,8 @@ namespace WpfRaziLedgerApp
             {
                 tabcontrol.SelectedItem = item;
             }
-            else
-            {
-                item = new TabItemExt() { Header = "کاربر" };
-                item.Content = new usrUser();
-                tabcontrol.Items.Add(item);
-            }
+            else            
+                AddTabWithTriangle("کاربر", new usrUser(),sender as RibbonButton);
         }
 
         private void rbnUserGroup_Click(object sender, RoutedEventArgs e)
@@ -857,12 +889,8 @@ namespace WpfRaziLedgerApp
             {
                 tabcontrol.SelectedItem = item;
             }
-            else
-            {
-                item = new TabItemExt() { Header = "گروه کاربر" };
-                item.Content = new usrUserGroup();
-                tabcontrol.Items.Add(item);
-            }
+            else            
+                AddTabWithTriangle("گروه کاربر", new usrUserGroup(),sender as RibbonButton);
         }
 
         private void rbnPermissionManager_Click(object sender, RoutedEventArgs e)
