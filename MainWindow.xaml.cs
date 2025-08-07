@@ -177,25 +177,25 @@ namespace WpfRaziLedgerApp
         private void rbnCol_Click(object sender, RoutedEventArgs e)
         {
             var list = GetTabControlItems;
-            var item = list.FirstOrDefault(y => y.Header == "حساب کل");
+            var item = list.FirstOrDefault(y => y.Tag?.ToString() == "حساب کل");
             if (item != null)
             {
                 tabcontrol.SelectedItem = item;
             }
             else            
-                AddTabWithTriangle("حساب کل", new winCol(),sender as RibbonButton);
+                AddTabWithTriangle("حساب کل", new winCol(),sender as RibbonButton, "Definitions/col.png");
         }
 
         private void rbnMoein_Click(object sender, RoutedEventArgs e)
         {
             var list = GetTabControlItems;
-            var item = list.FirstOrDefault(y => y.Header == "حساب معین");
+            var item = list.FirstOrDefault(y => y.Tag?.ToString() == "حساب معین");
             if (item != null)
             {
                 tabcontrol.SelectedItem = item;
             }
             else            
-                AddTabWithTriangle("حساب معین", new winMoein(),sender as RibbonButton);
+                AddTabWithTriangle("حساب معین", new winMoein(),sender as RibbonButton, "Definitions/moeinPng.png");
         }
 
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -250,37 +250,37 @@ namespace WpfRaziLedgerApp
         private void rbnGroup_Click(object sender, RoutedEventArgs e)
         {
             var list = GetTabControlItems;
-            var item = list.FirstOrDefault(y => y.Header == "گروه تفضیلی");
+            var item = list.FirstOrDefault(y => y.Tag?.ToString() == "گروه تفضیلی");
             if (item != null)
             {
                 tabcontrol.SelectedItem = item;
             }
             else            
-                AddTabWithTriangle("گروه تفضیلی", new usrGroup(),sender as RibbonButton);
+                AddTabWithTriangle("گروه تفضیلی", new usrGroup(),sender as RibbonButton, "Definitions/preferentialGroup.png");
         }
 
         private void rbnPreferential_Click(object sender, RoutedEventArgs e)
         {
             var list = GetTabControlItems;
-            var item = list.FirstOrDefault(y => y.Header == "حساب تفضیلی");
+            var item = list.FirstOrDefault(y => y.Tag?.ToString() == "حساب تفضیلی");
             if (item != null)
             {
                 tabcontrol.SelectedItem = item;
             }
             else            
-                AddTabWithTriangle("حساب تفضیلی", new usrPreferential(),sender as RibbonButton);
+                AddTabWithTriangle("حساب تفضیلی", new usrPreferential(),sender as RibbonButton, "Definitions/preferential.jpg");
         }
 
         private void rbnAgroup_Click(object sender, RoutedEventArgs e)
         {
             var list = GetTabControlItems;
-            var item = list.FirstOrDefault(y => y.Header == "گروه حساب");
+            var item = list.FirstOrDefault(y => y.Tag?.ToString() == "گروه حساب");
             if (item != null)
             {
                 tabcontrol.SelectedItem = item;
             }
             else            
-                AddTabWithTriangle("گروه حساب", new usrAgroup(),sender as RibbonButton);
+                AddTabWithTriangle("گروه حساب", new usrAgroup(),sender as RibbonButton, "Definitions/agroup.png");
         }
 
         private void tabcontrol_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -292,25 +292,25 @@ namespace WpfRaziLedgerApp
         private void rbnAcType_Click(object sender, RoutedEventArgs e)
         {
             var list = GetTabControlItems;
-            var item = list.FirstOrDefault(y => y.Header == "نوع سند");
+            var item = list.FirstOrDefault(y => y.Tag?.ToString() == "نوع سند");
             if (item != null)
             {
                 tabcontrol.SelectedItem = item;
             }
             else            
-                AddTabWithTriangle("نوع سند", new usrAcType(),sender as RibbonButton);
+                AddTabWithTriangle("نوع سند", new usrAcType(),sender as RibbonButton, "Definitions/acTypecopy.png");
         }
 
         private void rbnAcDoc_Click(object sender, RoutedEventArgs e)
         {
             var list = GetTabControlItems;
-            var item = list.FirstOrDefault(y => y.Header == "سند حسابداری");
+            var item = list.FirstOrDefault(y => y.Tag?.ToString() == "سند حسابداری");
             if (item != null)
             {
                 tabcontrol.SelectedItem = item;
             }
             else            
-                AddTabWithTriangle("سند حسابداری", new usrAccountDocument(),sender as RibbonButton);
+                AddTabWithTriangle("سند حسابداری", new usrAccountDocument(),sender as RibbonButton, "Definitions/acDoc.png");
         }
 
         private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -348,77 +348,100 @@ namespace WpfRaziLedgerApp
         private void rbnBank_Click(object sender, RoutedEventArgs e)
         {
             var list = GetTabControlItems;
-            var item = list.FirstOrDefault(y => y.Header == "بانک");
+            var item = list.FirstOrDefault(y => y.Tag?.ToString() == "بانک");
             if (item != null)
             {
                 tabcontrol.SelectedItem = item;
             }
             else            
-                AddTabWithTriangle("بانک", new usrBank(),sender as RibbonButton);
+                AddTabWithTriangle("بانک", new usrBank(),sender as RibbonButton, "Definitions/bank copy.png");
         }
 
         private void rbnRecieveMoney_Click(object sender, RoutedEventArgs e)
         {
             var list = GetTabControlItems;
-            var item = list.FirstOrDefault(y => y.Header == "دریافت وجه");
+            var item = list.FirstOrDefault(y => y.Tag?.ToString() == "دریافت وجه");
             if (item != null)
             {
                 tabcontrol.SelectedItem = item;
             }
             else            
-                AddTabWithTriangle("دریافت وجه", new usrRecieveMoney(),sender as RibbonButton);
+                AddTabWithTriangle("دریافت وجه", new usrRecieveMoney(),sender as RibbonButton, "Definitions/recieveMoney.png");
         }
 
         private void rbnPaymentMoney_Click(object sender, RoutedEventArgs e)
         {
             var list = GetTabControlItems;
-            var item = list.FirstOrDefault(y => y.Header == "پرداخت وجه");
+            var item = list.FirstOrDefault(y => y.Tag?.ToString() == "پرداخت وجه");
             if (item != null)
             {
                 tabcontrol.SelectedItem = item;
             }
             else            
-                AddTabWithTriangle("پرداخت وجه", new usrPaymentMoney(),sender as RibbonButton);
+                AddTabWithTriangle("پرداخت وجه", new usrPaymentMoney(),sender as RibbonButton, "Definitions/recieveMoney.png");
         }
 
         private void rbnRecieveCheck_Click(object sender, RoutedEventArgs e)
         {
             var list = GetTabControlItems;
-            var item = list.FirstOrDefault(y => y.Header == "چک های دریافتی");
+            var item = list.FirstOrDefault(y => y.Tag?.ToString() == "چک های دریافتی");
             if (item != null)
             {
                 tabcontrol.SelectedItem = item;
             }
             else            
-                AddTabWithTriangle("چک های دریافتی", new usrRecieveCheck(), sender as RibbonButton);
+                AddTabWithTriangle("چک های دریافتی", new usrRecieveCheck(), sender as RibbonButton, "Definitions/recieveCheck copy.png");
         }
 
         private void rbnPaymentCheck_Click(object sender, RoutedEventArgs e)
         {
             var list = GetTabControlItems;
-            var item = list.FirstOrDefault(y => y.Header == "چک های پرداختی");
+            var item = list.FirstOrDefault(y => y.Tag?.ToString() == "چک های پرداختی");
             if (item != null)
             {
                 tabcontrol.SelectedItem = item;
             }
             else            
-                AddTabWithTriangle("چک های پرداختی", new usrPaymentCheck(), sender as RibbonButton);
+                AddTabWithTriangle("چک های پرداختی", new usrPaymentCheck(), sender as RibbonButton, "Definitions/recieveCheck copy.png");
         }
 
         private void rbnProvince_Click(object sender, RoutedEventArgs e)
         {
             var list = GetTabControlItems;
-            var item = list.FirstOrDefault(y => y.Header == "استان");
+            var item = list.FirstOrDefault(y => y.Tag?.ToString() == "استان");
             if (item != null)
                 tabcontrol.SelectedItem = item;
             else
-                AddTabWithTriangle("استان", new usrProvince(),sender as RibbonButton);
+                AddTabWithTriangle("استان", new usrProvince(),sender as RibbonButton, "Commerce/province.jpg");
         }
     
-        private void AddTabWithTriangle(string header, UserControl userControl, RibbonButton tabItemExt =null)
+        private void AddTabWithTriangle(string header, UserControl userControl, RibbonButton tabItemExt,string imagename="print.png")
         {
             // ایجاد تب
-            var item = new TabItemExt() { Header = header };
+            var headerPanel = new StackPanel
+            {
+                Orientation = Orientation.Horizontal,
+                Margin = new Thickness(0),
+            };
+
+            var icon = new Image
+            {
+                Source = new BitmapImage(new Uri("pack://application:,,,/Images/"+ imagename)),
+                Width = 23,
+                Height = 23,
+                Margin = new Thickness(0, 0, 5, 0), // فاصله بین عکس و متن
+            };
+
+            var title = new TextBlock
+            {
+                Text = header,
+                VerticalAlignment = VerticalAlignment.Center
+            };
+
+            headerPanel.Children.Add(icon);
+            headerPanel.Children.Add(title);
+
+            var item = new TabItemExt { Header = headerPanel,Tag=header };
 
             // Container برای overlay کردن محتوا و مثلث
             var container = new Grid();
@@ -577,186 +600,186 @@ namespace WpfRaziLedgerApp
         private void rbnCity_Click(object sender, RoutedEventArgs e)
         {
             var list = GetTabControlItems;
-            var item = list.FirstOrDefault(y => y.Header == "شهر");
+            var item = list.FirstOrDefault(y => y.Tag?.ToString() == "شهر");
             if (item != null)
             {
                 tabcontrol.SelectedItem = item;
             }
             else            
-                AddTabWithTriangle("شهر", new usrCity(),sender as RibbonButton);
+                AddTabWithTriangle("شهر", new usrCity(),sender as RibbonButton, "Commerce/province.jpg");
         }
 
         private void rbnPriceGroup_Click(object sender, RoutedEventArgs e)
         {
             var list = GetTabControlItems;
-            var item = list.FirstOrDefault(y => y.Header == "گروه قیمت");
+            var item = list.FirstOrDefault(y => y.Tag?.ToString() == "گروه قیمت");
             if (item != null)
             {
                 tabcontrol.SelectedItem = item;
             }
             else            
-                AddTabWithTriangle("گروه قیمت", new usrPriceGroup(),sender as RibbonButton);
+                AddTabWithTriangle("گروه قیمت", new usrPriceGroup(),sender as RibbonButton, "Commerce/priceGroup.png");
         }
 
         private void rbnCustomerGroup_Click(object sender, RoutedEventArgs e)
         {
             var list = GetTabControlItems;
-            var item = list.FirstOrDefault(y => y.Header == "گروه مشتریان");
+            var item = list.FirstOrDefault(y => y.Tag?.ToString() == "گروه مشتریان");
             if (item != null)
             {
                 tabcontrol.SelectedItem = item;
             }
             else            
-                AddTabWithTriangle("گروه مشتریان", new usrCustomerGroup(),sender as RibbonButton);
+                AddTabWithTriangle("گروه مشتریان", new usrCustomerGroup(),sender as RibbonButton, "Commerce/customerGroup.png");
         }
 
         private void rbnGroupStorage_Click(object sender, RoutedEventArgs e)
         {
             var list = GetTabControlItems;
-            var item = list.FirstOrDefault(y => y.Header == "گروه انبار");
+            var item = list.FirstOrDefault(y => y.Tag?.ToString() == "گروه انبار");
             if (item != null)
             {
                 tabcontrol.SelectedItem = item;
             }
             else            
-                AddTabWithTriangle("گروه انبار", new usrGroupStorage(),sender as RibbonButton);
+                AddTabWithTriangle("گروه انبار", new usrGroupStorage(),sender as RibbonButton, "Commerce/groupStorage.jpg");
         }
 
         private void rbnDefinitionStorage_Click(object sender, RoutedEventArgs e)
         {
             var list = GetTabControlItems;
-            var item = list.FirstOrDefault(y => y.Header == "انبار");
+            var item = list.FirstOrDefault(y => y.Tag?.ToString() == "انبار");
             if (item != null)
             {
                 tabcontrol.SelectedItem = item;
             }
             else            
-                AddTabWithTriangle("انبار", new usrStorage(),sender as RibbonButton);
+                AddTabWithTriangle("انبار", new usrStorage(),sender as RibbonButton, "Commerce/DefinitionStorage.png");
         }
 
         private void rbnUnit_Click(object sender, RoutedEventArgs e)
         {
             var list = GetTabControlItems;
-            var item = list.FirstOrDefault(y => y.Header == "واحد اندازه گیری");
+            var item = list.FirstOrDefault(y => y.Tag?.ToString() == "واحد اندازه گیری");
             if (item != null)
             {
                 tabcontrol.SelectedItem = item;
             }
             else            
-                AddTabWithTriangle("واحد اندازه گیری", new usrUnit(),sender as RibbonButton);
+                AddTabWithTriangle("واحد اندازه گیری", new usrUnit(),sender as RibbonButton, "Commerce/unit.jpg");
         }
 
         private void rbnGroupCommodity_Click(object sender, RoutedEventArgs e)
         {
             var list = GetTabControlItems;
-            var item = list.FirstOrDefault(y => y.Header == "گروه کالا");
+            var item = list.FirstOrDefault(y => y.Tag?.ToString() == "گروه کالا");
             if (item != null)
             {
                 tabcontrol.SelectedItem = item;
             }
             else
-                AddTabWithTriangle("گروه کالا", new usrGroupCommodity(),sender as RibbonButton);
+                AddTabWithTriangle("گروه کالا", new usrGroupCommodity(),sender as RibbonButton, "Commerce/groupCommodity.jpg");
         }
 
         private void rbnDefinitionCommodity_Click(object sender, RoutedEventArgs e)
         {
             var list = GetTabControlItems;
-            var item = list.FirstOrDefault(y => y.Header == "کالا");
+            var item = list.FirstOrDefault(y => y.Tag?.ToString() == "کالا");
             if (item != null)
             {
                 tabcontrol.SelectedItem = item;
             }
             else            
-                AddTabWithTriangle("کالا", new usrCommodity(),sender as RibbonButton);
+                AddTabWithTriangle("کالا", new usrCommodity(),sender as RibbonButton, "Commerce/commodity.png");
         }
 
         private void rbnCommodityPricingPanel_Click(object sender, RoutedEventArgs e)
         {
             var list = GetTabControlItems;
-            var item = list.FirstOrDefault(y => y.Header == "پنل قیمت گذاری کالا");
+            var item = list.FirstOrDefault(y => y.Tag?.ToString() == "پنل قیمت گذاری کالا");
             if (item != null)
             {
                 tabcontrol.SelectedItem = item;
             }
             else            
-                AddTabWithTriangle("پنل قیمت گذاری کالا", new usrCommodityPricingPanel(),sender as RibbonButton);
+                AddTabWithTriangle("پنل قیمت گذاری کالا", new usrCommodityPricingPanel(),sender as RibbonButton, "Commerce/commodityPricingPanel.jpg");
         }
 
         private void rbnCodingReceiptTypes_Click(object sender, RoutedEventArgs e)
         {
             var list = GetTabControlItems;
-            var item = list.FirstOrDefault(y => y.Header == "کدینگ انواع رسید");
+            var item = list.FirstOrDefault(y => y.Tag?.ToString() == "کدینگ انواع رسید");
             if (item != null)
             {
                 tabcontrol.SelectedItem = item;
             }
             else            
-                AddTabWithTriangle("کدینگ انواع رسید", new usrCodingReceiptTypes(),sender as RibbonButton);
+                AddTabWithTriangle("کدینگ انواع رسید", new usrCodingReceiptTypes(),sender as RibbonButton, "Commerce/receiptTypes.jpg");
         }
         private void rbnCodingTypesTransfer_Click(object sender, RoutedEventArgs e)
         {
             var list = GetTabControlItems;
-            var item = list.FirstOrDefault(y => y.Header == "کدینگ انواع حواله");
+            var item = list.FirstOrDefault(y => y.Tag?.ToString() == "کدینگ انواع حواله");
             if (item != null)
             {
                 tabcontrol.SelectedItem = item;
             }
             else            
-                AddTabWithTriangle("کدینگ انواع حواله", new usrCodingTypesTransfer(),sender as RibbonButton);
+                AddTabWithTriangle("کدینگ انواع حواله", new usrCodingTypesTransfer(),sender as RibbonButton, "Commerce/receiptTypes.jpg");
         }
 
         private void rbnStorageReceipt_Click(object sender, RoutedEventArgs e)
         {
             var list = GetTabControlItems;
-            var item = list.FirstOrDefault(y => y.Header == "رسید انبار");
+            var item = list.FirstOrDefault(y => y.Tag?.ToString() == "رسید انبار");
             if (item != null)
             {
                 tabcontrol.SelectedItem = item;
             }
             else            
-                AddTabWithTriangle("رسید انبار", new usrStorageReceipt(),sender as RibbonButton);
+                AddTabWithTriangle("رسید انبار", new usrStorageReceipt(),sender as RibbonButton, "Commerce/storageReceipt.jpg");
         }
 
         private void rbnStorageTransfer_Click(object sender, RoutedEventArgs e)
         {
             var list = GetTabControlItems;
-            var item = list.FirstOrDefault(y => y.Header == "حواله انبار");
+            var item = list.FirstOrDefault(y => y.Tag?.ToString() == "حواله انبار");
             if (item != null)
             {
                 tabcontrol.SelectedItem = item;
             }
             else            
-                AddTabWithTriangle("حواله انبار", new usrStorageTransfer(),sender as RibbonButton);
+                AddTabWithTriangle("حواله انبار", new usrStorageTransfer(),sender as RibbonButton, "Commerce/storageReceipt.jpg");
         }
 
         private void rbnStorageBetweenTransfer_Click(object sender, RoutedEventArgs e)
         {
             var list = GetTabControlItems;
-            var item = list.FirstOrDefault(y => y.Header == "حواله بین انبار");
+            var item = list.FirstOrDefault(y => y.Tag?.ToString() == "حواله بین انبار");
             if (item != null)
             {
                 tabcontrol.SelectedItem = item;
             }
             else            
-                AddTabWithTriangle("حواله بین انبار", new usrStorageBetweenTransfer(),sender as RibbonButton);
+                AddTabWithTriangle("حواله بین انبار", new usrStorageBetweenTransfer(),sender as RibbonButton, "Commerce/storageBetweenTransfer.jpg");
         }
 
         private void rbnStorageRotation_Click(object sender, RoutedEventArgs e)
         {
             var list = GetTabControlItems;
-            var item = list.FirstOrDefault(y => y.Header == "انبارگردانی");
+            var item = list.FirstOrDefault(y => y.Tag?.ToString() == "انبارگردانی");
             if (item != null)
             {
                 tabcontrol.SelectedItem = item;
             }
             else            
-                AddTabWithTriangle("انبارگردانی", new usrStorageRotation(),sender as RibbonButton);
+                AddTabWithTriangle("انبارگردانی", new usrStorageRotation(),sender as RibbonButton, "Commerce/StorageRotation.jpg");
         }
 
         private void rbnNPStorage_Click(object sender, RoutedEventArgs e)
         {
             var list = GetTabControlItems;
-            var item = list.FirstOrDefault(y => y.Header == "کسر و اضافات انبار");
+            var item = list.FirstOrDefault(y => y.Tag?.ToString() == "کسر و اضافات انبار");
             if (item != null)
             {
                 tabcontrol.SelectedItem = item;
@@ -772,48 +795,49 @@ namespace WpfRaziLedgerApp
         private void rbnOrder_Click(object sender, RoutedEventArgs e)
         {
             var list = GetTabControlItems;
-            var item = list.FirstOrDefault(y => y.Header == "سفارش");
+            var item = list.FirstOrDefault(y => y.Tag?.ToString() == "سفارش");
             if (item != null)
             {
                 tabcontrol.SelectedItem = item;
-            }            
-                AddTabWithTriangle("سفارش", new usrOrder(),sender as RibbonButton);
+            }    
+            else
+                AddTabWithTriangle("سفارش", new usrOrder(),sender as RibbonButton, "Commerce2/order.jpg");
         }
 
         private void rbnPurchaseInvoice_Click(object sender, RoutedEventArgs e)
         {
             var list = GetTabControlItems;
-            var item = list.FirstOrDefault(y => y.Header == "فاکتور خرید");
+            var item = list.FirstOrDefault(y => y.Tag?.ToString() == "فاکتور خرید");
             if (item != null)
             {
                 tabcontrol.SelectedItem = item;
             }
             else            
-                AddTabWithTriangle("فاکتور خرید", new usrProductBuy(),sender as RibbonButton);
+                AddTabWithTriangle("فاکتور خرید", new usrProductBuy(),sender as RibbonButton, "Commerce2/purchaseInvoice.jpg");
         }
 
         private void rbnSalesInvoice_Click(object sender, RoutedEventArgs e)
         {
             var list = GetTabControlItems;
-            var item = list.FirstOrDefault(y => y.Header == "فاکتور فروش");
+            var item = list.FirstOrDefault(y => y.Tag?.ToString() == "فاکتور فروش");
             if (item != null)
             {
                 tabcontrol.SelectedItem = item;
             }
             else            
-                AddTabWithTriangle("فاکتور فروش", new usrProductSell(),sender as RibbonButton);
+                AddTabWithTriangle("فاکتور فروش", new usrProductSell(),sender as RibbonButton, "Commerce2/salesInvoice.jpg");
         }
 
         private void rbnSalesProforma_Click(object sender, RoutedEventArgs e)
         {
             var list = GetTabControlItems;
-            var item = list.FirstOrDefault(y => y.Header == "پیش فاکتور فروش");
+            var item = list.FirstOrDefault(y => y.Tag?.ToString() == "پیش فاکتور فروش");
             if (item != null)
             {
                 tabcontrol.SelectedItem = item;
             }
             else            
-                AddTabWithTriangle("پیش فاکتور فروش", new usrPreInvoice(),sender as RibbonButton);
+                AddTabWithTriangle("پیش فاکتور فروش", new usrPreInvoice(),sender as RibbonButton, "Commerce2/salesProforma.jpg");
         }
 
         private void rbnConfiguration_Click(object sender, RoutedEventArgs e)
@@ -872,25 +896,25 @@ namespace WpfRaziLedgerApp
         private void rbnUser_Click(object sender, RoutedEventArgs e)
         {
             var list = GetTabControlItems;
-            var item = list.FirstOrDefault(y => y.Header == "کاربر");
+            var item = list.FirstOrDefault(y => y.Tag?.ToString() == "کاربر");
             if (item != null)
             {
                 tabcontrol.SelectedItem = item;
             }
             else            
-                AddTabWithTriangle("کاربر", new usrUser(),sender as RibbonButton);
+                AddTabWithTriangle("کاربر", new usrUser(),sender as RibbonButton, "Tools/User.png");
         }
 
         private void rbnUserGroup_Click(object sender, RoutedEventArgs e)
         {
             var list = GetTabControlItems;
-            var item = list.FirstOrDefault(y => y.Header == "گروه کاربر");
+            var item = list.FirstOrDefault(y => y.Tag?.ToString() == "گروه کاربر");
             if (item != null)
             {
                 tabcontrol.SelectedItem = item;
             }
             else            
-                AddTabWithTriangle("گروه کاربر", new usrUserGroup(),sender as RibbonButton);
+                AddTabWithTriangle("گروه کاربر", new usrUserGroup(),sender as RibbonButton, "Tools/UserGroup.png");
         }
 
         private void rbnPermissionManager_Click(object sender, RoutedEventArgs e)
