@@ -315,7 +315,7 @@ namespace WpfRaziLedgerApp
 
         private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            if ((tabcontrol.SelectedItem as TabItemExt)?.Content is ITabEdidGrid usrAccountDocument)
+            if ((tabcontrol.SelectedItem as TabItemExt)?.Content is Grid grid2 && grid2.Children[0] is ITabEdidGrid usrAccountDocument)
             {
                 if (usrAccountDocument.DataGridIsFocused && e.Key == Key.Enter)
                 {
