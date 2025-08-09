@@ -2022,7 +2022,7 @@ namespace WpfRaziLedgerApp
                     t = db.ProductBuyHeaders.Where(u => u.FkPreferentialId == mu.Id).Max(i => i.InvoiceNumber);
                 }
                 catch { }
-                txtInvoiceNumber.Text = (t + 1).ToString();
+                //txtInvoiceNumber.Text = (t + 1).ToString();
             }
         }
 
