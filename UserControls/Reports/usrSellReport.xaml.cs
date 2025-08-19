@@ -66,71 +66,7 @@ namespace WpfRaziLedgerApp
                 process.StartInfo.UseShellExecute = false;
                 process.StartInfo.Arguments = MainWindow.StatusOptions.Period.Value.ToString();
                 process.Start();
-            }
-            /*switch (control.SelectedIndex)
-            {
-                case 0:
-                    if (buyRemittanceReports?.Count > 0 && dataPager.Source is IEnumerable<BuyRemittanceReport> source && source.Count() > 0)
-                    {
-                        Mouse.OverrideCursor = Cursors.Wait;
-                        //switch (GAcClassEntities[0].GetType())
-                        //{
-                        //    case Type t when t == typeof(GAcClass):                        
-
-                        System.IO.Directory.Delete(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WpfSimReport", "JSON"),true);
-                        Thread.Sleep(50);
-                        System.IO.Directory.CreateDirectory(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WpfSimReport", "JSON"));
-
-                        var options = new JsonSerializerOptions
-                        {
-                            Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-                            WriteIndented = true
-                        };
-                        string jsonString = JsonSerializer.Serialize(source, options);
-                        System.IO.File.WriteAllText(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WpfSimReport", "JSON", "BuyRemittanceReport.json"), jsonString);
-                        Mouse.OverrideCursor = null;
-                       
-                        Process process = new Process();
-                        process.StartInfo.FileName = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WpfSimReport", "WpfAppEmpty.exe");
-                        //process.StartInfo.Arguments = $"\"{reportPath}\" \"{outputPdf}\"";
-                        process.StartInfo.UseShellExecute = false;
-                        process.StartInfo.Arguments = MainWindow.StatusOptions.Period.Value.ToString();
-                        process.Start();
-                    }
-                    break;
-                case 1:
-                    if (datagridِDetails.ItemsSource is Syncfusion.UI.Xaml.Grid.GridPagedCollectionViewWrapper fas)
-                    {
-                        if (fas.SourceCollection is ObservableCollection<BuyRemittanceDetail> Entities && Entities.Count > 0)
-                        {
-                            Mouse.OverrideCursor = Cursors.Wait;
-                            //switch (GAcClassEntities[0].GetType())
-                            //{
-                            //    case Type t when t == typeof(GAcClass):                        
-
-                            System.IO.Directory.Delete(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WpfSimReport", "JSON"), true);
-                            Thread.Sleep(50);
-                            System.IO.Directory.CreateDirectory(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WpfSimReport", "JSON"));
-
-                            var options = new JsonSerializerOptions
-                            {
-                                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-                                WriteIndented = true
-                            };
-                            string jsonString = JsonSerializer.Serialize(Entities, options);
-                            System.IO.File.WriteAllText(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WpfSimReport", "JSON", "BuyRemittanceDetail.json"), jsonString);
-                            Mouse.OverrideCursor = null;
-                            
-                            Process process = new Process();
-                            process.StartInfo.FileName = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WpfSimReport", "WpfAppEmpty.exe");
-                            //process.StartInfo.Arguments = $"\"{reportPath}\" \"{outputPdf}\"";
-                            process.StartInfo.UseShellExecute = false;
-                            process.StartInfo.Arguments = MainWindow.StatusOptions.Period.Value.ToString();
-                            process.Start();
-                        }
-                    }
-                    break;
-            }*/
+            }            
         }
 
     public ObservableCollection<SellReport> SellReports { get; set; }
@@ -354,6 +290,7 @@ namespace WpfRaziLedgerApp
 
         private void btnChart_Click(object sender, RoutedEventArgs e)
         {
+            Mouse.OverrideCursor = Cursors.Wait;
             var win = new winChart();
             using var db = new wpfrazydbContext();
             var pc = new PersianCalendar();
@@ -456,6 +393,7 @@ namespace WpfRaziLedgerApp
         Tonnage = g.Sum(x => x.FkCommodity.Tonnage.Value * x.Value)
     })
     .ToList().ToObservableCollection();
+            Mouse.OverrideCursor = null;
 
             win.Show();
         }

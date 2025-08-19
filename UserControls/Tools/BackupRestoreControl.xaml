@@ -21,11 +21,11 @@ Click="btnSelectFolder_Click"/>
                     </DockPanel>
 
                     <Button x:Name="btnBackup"
-                            Width="200" Height="40" Margin="0,20,0,0"
+                            Width="170" Height="42" Margin="0,20,0,0"
                             Click="btnBackup_Click">
                         <Button.Content>
                             <StackPanel Orientation="Horizontal">
-                                <Image Source="/Images/Tools/backup.png" Width="32" Height="32"/>
+                                <Image Source="/Images/Tools/backup.png" Width="36" Margin="10 0" Height="36"/>
                                 <TextBlock Text="  پشتیبان‌گیری" VerticalAlignment="Center"/>
                             </StackPanel>
                         </Button.Content>
@@ -47,11 +47,11 @@ Margin="5,0,10,8"
                     </DockPanel>
 
                     <Button x:Name="btnRestore"
-                            Width="200" Height="40" Margin="0,20,0,0"
+                            Width="140" Height="42" Margin="0,20,0,0"
                             Click="btnRestore_Click">
                         <Button.Content>
                             <StackPanel Orientation="Horizontal">
-                                <Image Source="/Images/Tools/restore.png" Width="32" Height="32"/>
+                                <Image Source="/Images/Tools/restore.png" Margin="-10 0 20 0" Width="37" Height="37"/>
                                 <TextBlock Text="  بازیابی" VerticalAlignment="Center"/>
                             </StackPanel>
                         </Button.Content>
