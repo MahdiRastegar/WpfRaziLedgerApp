@@ -61,8 +61,8 @@ namespace WpfRaziLedgerApp
             {
                 Xceed.Wpf.Toolkit.MessageBox.Show(ex.Message, "خطای اتصال به دیتابیس", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            var gifImage = new BitmapImage(new Uri("pack://application:,,,/Images/AddDataLarge.gif"));
-            XamlAnimatedGif.AnimationBehavior.SetSourceUri(this.gifImage, gifImage.UriSource);
+            //var gifImage = new BitmapImage(new Uri("pack://application:,,,/Images/AddDataLarge.gif"));
+            //XamlAnimatedGif.AnimationBehavior.SetSourceUri(this.gifImage, gifImage.UriSource);
             ClockText.Text = DateTime.Now.ToString("HH:mm");
         }
         private void Timer_Tick(object sender, EventArgs e)
@@ -415,7 +415,7 @@ namespace WpfRaziLedgerApp
                 AddTabWithTriangle("استان", new usrProvince(),sender as RibbonButton, "Commerce/province.jpg");
         }
     
-        private void AddTabWithTriangle(string header, UserControl userControl, RibbonButton tabItemExt,string imagename="print.png")
+        private void AddTabWithTriangle(string header, UserControl userControl, RibbonButton tabItemExt,string imagename,bool isTringle=true)
         {
             // ایجاد تب
             var headerPanel = new StackPanel
@@ -426,12 +426,13 @@ namespace WpfRaziLedgerApp
 
             var icon = new Image
             {
-                Source = new BitmapImage(new Uri("pack://application:,,,/Images/"+ imagename)),
+                Source = imagename == "" ? null : new BitmapImage(new Uri("pack://application:,,,/Images/" + imagename)),
                 Width = 23,
                 Height = 23,
                 Margin = new Thickness(0, 0, 5, 0), // فاصله بین عکس و متن
             };
-
+            if (imagename == "")
+                icon.Visibility = Visibility.Collapsed;
             var title = new TextBlock
             {
                 Text = header,
@@ -448,84 +449,86 @@ namespace WpfRaziLedgerApp
 
             // اضافه کردن محتوا (UserControl)
             container.Children.Add(userControl);
-            using var db=new wpfrazydbContext();
-            
-            if(header=="حساب تفضیلی")
-                header="تفضیلی";
-            if (header == "حساب کل")
-                header = "کل";
-            if (header == "حساب معین")
-                header = "معین";
-            if (header == "سند حسابداری")
-                header = " سند حسابداری";
-            var per = db.Permissions.Include(t => t.FkRibbonItem).FirstOrDefault(u => u.FkUserGroupId == StatusOptions.User.FkUserGroupId && u.FkRibbonItem.DisplayName == header && ((tabItemExt.Parent as RibbonBar).Parent as RibbonTab).Caption == u.FkRibbonItem.Category);
-            var btnSave = userControl.FindName("btnConfirm") as FrameworkElement;
-            var btnDelete = userControl.FindName("btnDelete") as FrameworkElement;
-            if (btnSave != null)
+            if (isTringle)
             {
-                (btnSave.Parent as Grid).IsVisibleChanged += btnSave_IsVisibleChanged;
-            }
-            if (btnDelete != null)
-            {
-                (btnDelete.Parent as Grid).IsVisibleChanged += btnDelete_IsVisibleChanged;                
-            }
-            if (per.CanInsert == false)
-            {
+                using var db = new wpfrazydbContext();
+
+                if (header == "حساب تفضیلی")
+                    header = "تفضیلی";
+                if (header == "حساب کل")
+                    header = "کل";
+                if (header == "حساب معین")
+                    header = "معین";
+                if (header == "سند حسابداری")
+                    header = " سند حسابداری";
+                var per = db.Permissions.Include(t => t.FkRibbonItem).FirstOrDefault(u => u.FkUserGroupId == StatusOptions.User.FkUserGroupId && u.FkRibbonItem.DisplayName == header && ((tabItemExt.Parent as RibbonBar).Parent as RibbonTab).Caption == u.FkRibbonItem.Category);
+                var btnSave = userControl.FindName("btnConfirm") as FrameworkElement;
+                var btnDelete = userControl.FindName("btnDelete") as FrameworkElement;
                 if (btnSave != null)
-                    (btnSave.Parent as Grid).Visibility = Visibility.Collapsed;
-            }
-
-            // ایجاد مثلث سبز
-            var triangle = CreateGreenTriangle(per.CanInsert==true);
-            triangle.Tag = per;
-            triangle.VerticalAlignment = VerticalAlignment.Top;
-            triangle.HorizontalAlignment = HorizontalAlignment.Left;
-            Panel.SetZIndex(triangle, 1);
-            container.Children.Add(triangle);
-
-            // وصل کردن واکنش به borderEdit داخل UserControl (اگر وجود داشته باشد)
-            var borderEditField = userControl.FindName("borderEdit") as FrameworkElement;
-            if (borderEditField != null)
-            {
-                borderEditField.IsVisibleChanged += (s, e) =>
-                {                    
-                    triangle.Visibility = borderEditField.Visibility == Visibility.Visible
-                        ? Visibility.Collapsed
-                        : Visibility.Visible;
-                    if (borderEditField.Visibility == Visibility.Visible)
-                    {
-                        if (per.CanModify == true)
-                            (btnSave.Parent as Grid).Visibility = Visibility.Visible;
-                        else
-                            (btnSave.Parent as Grid).Visibility = Visibility.Collapsed;
-                    }
-                    else if (borderEditField.Visibility != Visibility.Visible)
-                    {
-                        if (per.CanInsert == true)
-                            (btnSave.Parent as Grid).Visibility = Visibility.Visible;
-                        else
-                            (btnSave.Parent as Grid).Visibility = Visibility.Collapsed;
-                    }
-                };
-            }
-            else
-                triangle.Visibility = Visibility.Collapsed;
-            var datagridSearchField = userControl.FindName("datagridSearch") as FrameworkElement;
-            if (datagridSearchField != null)
-            {
-                datagridSearchField.IsVisibleChanged += (s, e) =>
                 {
-                    if (datagridSearchField.Visibility == Visibility.Visible)
+                    (btnSave.Parent as Grid).IsVisibleChanged += btnSave_IsVisibleChanged;
+                }
+                if (btnDelete != null)
+                {
+                    (btnDelete.Parent as Grid).IsVisibleChanged += btnDelete_IsVisibleChanged;
+                }
+                if (per.CanInsert == false)
+                {
+                    if (btnSave != null)
+                        (btnSave.Parent as Grid).Visibility = Visibility.Collapsed;
+                }
+
+                // ایجاد مثلث سبز
+                var triangle = CreateGreenTriangle(per.CanInsert == true);
+                triangle.Tag = per;
+                triangle.VerticalAlignment = VerticalAlignment.Top;
+                triangle.HorizontalAlignment = HorizontalAlignment.Left;
+                Panel.SetZIndex(triangle, 1);
+                container.Children.Add(triangle);
+
+                // وصل کردن واکنش به borderEdit داخل UserControl (اگر وجود داشته باشد)
+                var borderEditField = userControl.FindName("borderEdit") as FrameworkElement;
+                if (borderEditField != null)
+                {
+                    borderEditField.IsVisibleChanged += (s, e) =>
                     {
-                        triangle.Visibility = Visibility.Collapsed;
-                    }
-                    else
                         triangle.Visibility = borderEditField.Visibility == Visibility.Visible
                             ? Visibility.Collapsed
                             : Visibility.Visible;
-                };
+                        if (borderEditField.Visibility == Visibility.Visible)
+                        {
+                            if (per.CanModify == true)
+                                (btnSave.Parent as Grid).Visibility = Visibility.Visible;
+                            else
+                                (btnSave.Parent as Grid).Visibility = Visibility.Collapsed;
+                        }
+                        else if (borderEditField.Visibility != Visibility.Visible)
+                        {
+                            if (per.CanInsert == true)
+                                (btnSave.Parent as Grid).Visibility = Visibility.Visible;
+                            else
+                                (btnSave.Parent as Grid).Visibility = Visibility.Collapsed;
+                        }
+                    };
+                }
+                else
+                    triangle.Visibility = Visibility.Collapsed;
+                var datagridSearchField = userControl.FindName("datagridSearch") as FrameworkElement;
+                if (datagridSearchField != null)
+                {
+                    datagridSearchField.IsVisibleChanged += (s, e) =>
+                    {
+                        if (datagridSearchField.Visibility == Visibility.Visible)
+                        {
+                            triangle.Visibility = Visibility.Collapsed;
+                        }
+                        else
+                            triangle.Visibility = borderEditField.Visibility == Visibility.Visible
+                                ? Visibility.Collapsed
+                                : Visibility.Visible;
+                    };
+                }
             }
-
             // اضافه به تب‌ها
             item.Content = container;
             tabcontrol.Items.Add(item);
@@ -843,17 +846,13 @@ namespace WpfRaziLedgerApp
         private void rbnConfiguration_Click(object sender, RoutedEventArgs e)
         {
             var list = GetTabControlItems;
-            var item = list.FirstOrDefault(y => y.Header == "تنظیمات پیکربندی");
+            var item = list.FirstOrDefault(y => y.Tag?.ToString() == "تنظیمات پیکربندی");
             if (item != null)
             {
                 tabcontrol.SelectedItem = item;
             }
             else
-            {
-                item = new TabItemExt() { Header = "تنظیمات پیکربندی" };
-                item.Content = new usrSettingConfig();
-                tabcontrol.Items.Add(item);
-            }
+                AddTabWithTriangle("تنظیمات پیکربندی", new usrSettingConfig(), sender as RibbonButton, "Definitions/configuration.png", false);            
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -869,17 +868,13 @@ namespace WpfRaziLedgerApp
         private void rbnBrowseAccounts_Click(object sender, RoutedEventArgs e)
         {
             var list = GetTabControlItems;
-            var item = list.FirstOrDefault(y => y.Header == "مرور حساب ها");
+            var item = list.FirstOrDefault(y => y.Tag?.ToString() == "مرور حساب ها");
             if (item != null)
             {
                 tabcontrol.SelectedItem = item;
             }
             else
-            {
-                item = new TabItemExt() { Header = "مرور حساب ها" };
-                item.Content = new usrBrowseAccounts();
-                tabcontrol.Items.Add(item);
-            }
+                AddTabWithTriangle("مرور حساب ها", new usrBrowseAccounts(), sender as RibbonButton, "reports/BrowseAccounts.jpg",false);            
 
             //var report = new StiReport();
             //report.Load("Report.mrt");
@@ -920,17 +915,13 @@ namespace WpfRaziLedgerApp
         private void rbnPermissionManager_Click(object sender, RoutedEventArgs e)
         {
             var list = GetTabControlItems;
-            var item = list.FirstOrDefault(y => y.Header == "سطح دسترسی");
+            var item = list.FirstOrDefault(y => y.Tag?.ToString() == "سطح دسترسی");
             if (item != null)
             {
                 tabcontrol.SelectedItem = item;
             }
             else
-            {
-                item = new TabItemExt() { Header = "سطح دسترسی" };
-                item.Content = new usrPermissionManager();
-                tabcontrol.Items.Add(item);
-            }
+                AddTabWithTriangle("سطح دسترسی", new usrPermissionManager(), sender as RibbonButton, "Tools/Premession.png",false);            
         }
 
         private void rbnConfiguration2_Click(object sender, RoutedEventArgs e)
@@ -970,17 +961,37 @@ namespace WpfRaziLedgerApp
         private void rbnBuyRemittance_Click(object sender, RoutedEventArgs e)
         {
             var list = GetTabControlItems;
-            var item = list.FirstOrDefault(y => y.Header == "گزارش حواله خرید");
+            var item = list.FirstOrDefault(y => y.Tag?.ToString() == "گزارش حواله خرید");
             if (item != null)
             {
                 tabcontrol.SelectedItem = item;
             }
             else
+                AddTabWithTriangle("گزارش حواله خرید", new usrBuyRemittance(), sender as RibbonButton, "reports/BuyRemittance.png",false);            
+        }
+
+        private void rbnSellReport_Click(object sender, RoutedEventArgs e)
+        {
+            var list = GetTabControlItems;
+            var item = list.FirstOrDefault(y => y.Tag?.ToString() == "گزارش فروش");
+            if (item != null)
             {
-                item = new TabItemExt() { Header = "گزارش حواله خرید" };
-                item.Content = new usrBuyRemittance();
-                tabcontrol.Items.Add(item);
+                tabcontrol.SelectedItem = item;
             }
+            else
+                AddTabWithTriangle("گزارش فروش", new usrSellReport(), sender as RibbonButton, "", false);
+        }
+
+        private void rbnSupport_Click(object sender, RoutedEventArgs e)
+        {
+            var list = GetTabControlItems;
+            var item = list.FirstOrDefault(y => y.Tag?.ToString() == "پشتیبان");
+            if (item != null)
+            {
+                tabcontrol.SelectedItem = item;
+            }
+            else
+                AddTabWithTriangle("پشتیبان", new BackupRestoreControl(), sender as RibbonButton, "", false);
         }
     }
 }

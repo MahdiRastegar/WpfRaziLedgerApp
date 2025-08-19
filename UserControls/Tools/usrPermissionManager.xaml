@@ -99,7 +99,7 @@
                     <StackPanel Orientation="Vertical">
                         <!-- CheckBox اصلی -->
                         <StackPanel Orientation="Horizontal">
-                            <CheckBox Content="{Binding Name}" 
+                            <CheckBox Content="{Binding Name}" Checked="CheckBox_Checked_1" Unchecked="CheckBox_Checked_1"
                               IsChecked="{Binding CanAccess, Mode=TwoWay}" 
                               IsThreeState="True"/>
                         </StackPanel>

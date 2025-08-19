@@ -1,0 +1,63 @@
+﻿<UserControl x:Class="WpfRaziLedgerApp.BackupRestoreControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Height="auto" Width="auto" Background="White"
+             xmlns:local="clr-namespace:WpfRaziLedgerApp" FlowDirection="RightToLeft"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+              xmlns:Syncfusion="http://schemas.syncfusion.com/wpf">
+
+    <Grid Margin="10">
+        <TabControl>
+            <!-- تب پشتیبان‌گیری -->
+            <TabItem Header="پشتیبان‌گیری">
+                <StackPanel Margin="20" VerticalAlignment="Top" HorizontalAlignment="Left" Width="600">
+
+                    <DockPanel  Margin="0,10,0,0">
+                        <Button x:Name="btnSelectFolder" Content="..." FontSize="16"
+Width="30" Height="28"
+Margin="5,0,10,8"
+Click="btnSelectFolder_Click"/>
+                        <Syncfusion:SfTextInputLayout Hint="مسیر پوشه بکاپ">
+                            <TextBox x:Name="txtBackupFolder" IsReadOnly="True" Width="450"/>
+                        </Syncfusion:SfTextInputLayout>
+                    </DockPanel>
+
+                    <Button x:Name="btnBackup"
+                            Width="200" Height="40" Margin="0,20,0,0"
+                            Click="btnBackup_Click">
+                        <Button.Content>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="/Images/Tools/backup.png" Width="32" Height="32"/>
+                                <TextBlock Text="  پشتیبان‌گیری" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button.Content>
+                    </Button>
+                </StackPanel>
+            </TabItem>
+
+            <!-- تب بازیابی -->
+            <TabItem Header="بازیابی">
+                <StackPanel Margin="20" VerticalAlignment="Top" Width="600"  HorizontalAlignment="Left">
+                    <DockPanel Margin="0,10,0,0">
+                        <Button x:Name="btnBrowseRestore" Content="..." FontSize="16"
+Width="30" Height="28"
+Margin="5,0,10,8"
+        Click="btnBrowseRestore_Click"/>
+                    <Syncfusion:SfTextInputLayout Hint="مسیر فایل بکاپ">
+                            <TextBox x:Name="txtRestoreFile" IsReadOnly="True" Width="450"/>
+                        </Syncfusion:SfTextInputLayout>
+                    </DockPanel>
+
+                    <Button x:Name="btnRestore"
+                            Width="200" Height="40" Margin="0,20,0,0"
+                            Click="btnRestore_Click">
+                        <Button.Content>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="/Images/Tools/restore.png" Width="32" Height="32"/>
+                                <TextBlock Text="  بازیابی" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button.Content>
+                    </Button>
+                </StackPanel>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</UserControl>

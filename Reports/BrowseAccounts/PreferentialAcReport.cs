@@ -29,7 +29,7 @@ namespace WpfRaziLedgerApp
                     _Name = null;
                     return _Name;
                 }
-                _Name = $"{FkPreferential?.PreferentialName}-{FkMoein?.MoeinName}";
+                _Name = $"{FkMoein?.MoeinName}-{FkPreferential?.PreferentialName}";
                 if (_Name.StartsWith("-"))
                     _Name = _Name.Substring(1);
                 if (_Name.EndsWith("-"))

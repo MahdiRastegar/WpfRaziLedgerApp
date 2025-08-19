@@ -1,0 +1,123 @@
+﻿<Window x:Class="WpfRaziLedgerApp.winChart"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" WindowStartupLocation="CenterScreen"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"  FontFamily="{StaticResource NewFont}"
+        xmlns:syncfusion="http://schemas.syncfusion.com/wpf"   DataContext="{Binding ElementName=winDC}"
+        xmlns:local="clr-namespace:WpfRaziLedgerApp"
+        mc:Ignorable="d" Name="winDC" MinHeight="500" MinWidth="800"
+        Title="نمودار فروش" Height="500" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition Width="210"/>
+        </Grid.ColumnDefinitions>
+
+        <syncfusion:SfTextInputLayout  Grid.Column="1"  Name="Sf_txtUserGroup" OutlineCornerRadius="8" Grid.Row="1" Hint="نوع نمودار" VerticalAlignment="Top" Margin="0 20 10 0"  HorizontalAlignment="Center" Width="200">
+            <syncfusion:ComboBoxAdv HorizontalContentAlignment="Right" AutoCompleteMode="Suggest" IsEditable="False" FontSize="13" PreviewKeyDown="cmbType_PreviewKeyDown" SelectionChanged="cmbType_SelectionChanged" Name="cmbType" FlowDirection="RightToLeft">
+                <syncfusion:ComboBoxItemAdv >فروش کل به تفکیک ماه</syncfusion:ComboBoxItemAdv>
+                <syncfusion:ComboBoxItemAdv >تناژ کل به تفکیک ماه</syncfusion:ComboBoxItemAdv>
+                <syncfusion:ComboBoxItemAdv >تناژ کل به تفکیک شهر</syncfusion:ComboBoxItemAdv>
+                <syncfusion:ComboBoxItemAdv >تناژ کل به تفکیک محصولات</syncfusion:ComboBoxItemAdv>
+            </syncfusion:ComboBoxAdv>
+        </syncfusion:SfTextInputLayout>
+
+        <syncfusion:SfChart Name="chart1" Visibility="Collapsed" Grid.Column="0" Header="فروش کل بتفکیک ماه" FontSize="20" Margin="10">
+            <!--Initialize the horizontal axis for SfChart-->
+            <syncfusion:SfChart.PrimaryAxis>
+                <syncfusion:CategoryAxis Header="ماه" FontSize="14"/>
+            </syncfusion:SfChart.PrimaryAxis>
+
+            <!--Initialize the vertical axis for SfChart-->
+            <syncfusion:SfChart.SecondaryAxis>
+                <syncfusion:NumericalAxis Header="میلیون) فروش کل)" FontSize="14"/>
+            </syncfusion:SfChart.SecondaryAxis>
+
+            <!--Adding Legend to the SfChart-->
+            <syncfusion:SfChart.Legend>
+                <syncfusion:ChartLegend/>
+            </syncfusion:SfChart.Legend>
+
+            <!--Initialize the series for SfChart-->
+            <syncfusion:ColumnSeries Name="ColumnSeries1" Label="فروش" ItemsSource="{Binding MonthlyTotalSales}" XBindingPath="Month" YBindingPath="Price" ShowTooltip="True" >
+                <!--<syncfusion:ColumnSeries.AdornmentsInfo>
+                    <syncfusion:ChartAdornmentInfo ShowLabel="True" >
+                    </syncfusion:ChartAdornmentInfo>
+                </syncfusion:ColumnSeries.AdornmentsInfo>-->
+            </syncfusion:ColumnSeries>
+
+        </syncfusion:SfChart>
+        <syncfusion:SfChart Visibility="Collapsed" Name="chart2" Grid.Column="0" Header="تناژ کل بتفکیک ماه" FontSize="20" Margin="10">
+            <!--Initialize the horizontal axis for SfChart-->
+            <syncfusion:SfChart.PrimaryAxis>
+                <syncfusion:CategoryAxis Header="ماه" FontSize="14"/>
+            </syncfusion:SfChart.PrimaryAxis>
+
+            <!--Initialize the vertical axis for SfChart-->
+            <syncfusion:SfChart.SecondaryAxis>
+                <syncfusion:NumericalAxis Header="تناژ" FontSize="14"/>
+            </syncfusion:SfChart.SecondaryAxis>
+
+            <!--Adding Legend to the SfChart-->
+            <syncfusion:SfChart.Legend>
+                <syncfusion:ChartLegend/>
+            </syncfusion:SfChart.Legend>
+
+            <!--Initialize the series for SfChart-->
+            <syncfusion:ColumnSeries Name="ColumnSeries2" Label="تناژ" ItemsSource="{Binding MonthlyTonnageTotals}" XBindingPath="Month" YBindingPath="Tonnage" ShowTooltip="True" >
+                <!--<syncfusion:ColumnSeries.AdornmentsInfo>
+            <syncfusion:ChartAdornmentInfo ShowLabel="True" >
+            </syncfusion:ChartAdornmentInfo>
+        </syncfusion:ColumnSeries.AdornmentsInfo>-->
+            </syncfusion:ColumnSeries>
+
+        </syncfusion:SfChart>
+        <syncfusion:SfChart Name="chart3" Grid.Column="0" Visibility="Collapsed" Header="تناژ کل بتفکیک شهر" FontSize="20" Margin="10">
+            <syncfusion:SfChart.PrimaryAxis>
+                <syncfusion:CategoryAxis Header="شهر" FontSize="14"/>
+            </syncfusion:SfChart.PrimaryAxis>
+
+            <syncfusion:SfChart.SecondaryAxis>
+                <syncfusion:NumericalAxis Header="تناژ" FontSize="14"/>
+            </syncfusion:SfChart.SecondaryAxis>
+
+            <syncfusion:SfChart.Legend>
+                <syncfusion:ChartLegend/>
+            </syncfusion:SfChart.Legend>
+
+            <syncfusion:ColumnSeries Name="ColumnSeries3" Label="تناژ" ItemsSource="{Binding CityTotalTonnages}" XBindingPath="City" YBindingPath="Tonnage" ShowTooltip="True" >
+            </syncfusion:ColumnSeries>
+
+        </syncfusion:SfChart>
+        <syncfusion:SfChart Name="chart4" Grid.Column="0" Header="تناژ کل بتفکیک محصولات" FontSize="20" Margin="10">
+            <syncfusion:SfChart.PrimaryAxis>
+                <syncfusion:CategoryAxis Header="کالا در هر ماه"
+                             FontSize="14"
+                             LabelPlacement="OnTicks"
+                             LabelExtent="50">
+                    <syncfusion:CategoryAxis.LabelTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding LabelContent}" 
+                           TextAlignment="Center"
+                           HorizontalAlignment="Center"
+                           TextWrapping="Wrap"/>
+                        </DataTemplate>
+                    </syncfusion:CategoryAxis.LabelTemplate>
+                </syncfusion:CategoryAxis>
+            </syncfusion:SfChart.PrimaryAxis>
+
+
+            <syncfusion:SfChart.SecondaryAxis>
+                <syncfusion:NumericalAxis Header="تناژ" FontSize="14"/>
+            </syncfusion:SfChart.SecondaryAxis>
+
+            <syncfusion:SfChart.Legend>
+                <syncfusion:ChartLegend/>
+            </syncfusion:SfChart.Legend>
+
+            <syncfusion:ColumnSeries Name="ColumnSeries4" Label="تناژ" ItemsSource="{Binding CommodityTotalTonnages}" XBindingPath="NameMounth" YBindingPath="Tonnage" ShowTooltip="True" >
+            </syncfusion:ColumnSeries>
+
+        </syncfusion:SfChart>
+    </Grid>
+</Window>

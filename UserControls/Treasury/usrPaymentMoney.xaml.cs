@@ -414,9 +414,9 @@ namespace WpfRaziLedgerApp
                     {
                         if (item is TabItemExt tabItemExt)
                         {
-                            if (tabItemExt.Header.ToString() == "سند حسابداری")
+                            if (tabItemExt.Header is StackPanel stack && (stack.Children[1] as TextBlock).Text.ToString() == "سند حسابداری")
                             {
-                                if (tabItemExt.Content is usrAccountDocument usrAccountDocument)
+                                if (tabItemExt.Content is Grid grid && grid.Children[0] is usrAccountDocument usrAccountDocument)
                                 {
                                     if (usrAccountDocument.LoadedFill)
                                         usrAccountDocument.AcDocumentHeaders.Add(e_addHeader2);
@@ -620,9 +620,9 @@ namespace WpfRaziLedgerApp
                         {
                             if (item is TabItemExt tabItemExt)
                             {
-                                if (tabItemExt.Header.ToString() == "سند حسابداری")
+                                if (tabItemExt.Header is StackPanel stack && (stack.Children[1] as TextBlock).Text.ToString() == "سند حسابداری")
                                 {
-                                    if (tabItemExt.Content is usrAccountDocument usrAccountDocument)
+                                    if (tabItemExt.Content is Grid grid && grid.Children[0] is usrAccountDocument usrAccountDocument)
                                     {
                                         if (usrAccountDocument.LoadedFill)
                                         {
@@ -1335,9 +1335,9 @@ namespace WpfRaziLedgerApp
                 {
                     if (item is TabItemExt tabItemExt)
                     {
-                        if (tabItemExt.Header.ToString() == "سند حسابداری")
+                        if (tabItemExt.Header is StackPanel stack && (stack.Children[1] as TextBlock).Text.ToString() == "سند حسابداری")
                         {
-                            if (tabItemExt.Content is usrAccountDocument usrAccountDocument)
+                            if (tabItemExt.Content is Grid grid && grid.Children[0] is usrAccountDocument usrAccountDocument)
                             {
                                 if (usrAccountDocument.LoadedFill)
                                 {

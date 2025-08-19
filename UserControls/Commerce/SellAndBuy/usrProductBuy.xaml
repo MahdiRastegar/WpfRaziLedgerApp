@@ -722,6 +722,7 @@ Source="{Binding acDocument_Headers}"/>
         </Syncfusion:SfDataGrid.AlternatingRowStyle>-->
                     <Syncfusion:SfDataGrid.Columns>
                         <Syncfusion:GridNumericColumn NumberDecimalDigits="0" MinimumWidth="110" Width="80" HeaderText="شماره فاکتور" MappingName="InvoiceNumber" TextAlignment="Left"/>
+                        <Syncfusion:GridNumericColumn NumberDecimalDigits="0" MinimumWidth="125" Width="125" HeaderText="شماره حواله خرید" MappingName="BuyRemittanceNumber" TextAlignment="Left"/>
                         <Syncfusion:GridDateTimeColumn FilterPopupStyle="{StaticResource SfDataGridFilterPopupStyle1}" Width="110" HeaderText="تاریخ" MappingName="Date" >
                             <Syncfusion:GridDateTimeColumn.CellTemplate>
                                 <DataTemplate>

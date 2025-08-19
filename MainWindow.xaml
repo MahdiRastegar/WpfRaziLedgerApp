@@ -34,9 +34,9 @@
             <Syncfusion:RibbonTab Name="rbnCommerce2" Caption="خرید و فروش">
                 <Syncfusion:RibbonBar Name="barOperation2" Width="182" Header="عملیات">
                     <Syncfusion:RibbonButton  Name="rbnOrder" Click="rbnOrder_Click" SizeForm="Large" Label="سفارش" LargeIcon="/Images/Commerce2/order.jpg"/>
-                    <Syncfusion:RibbonButton  Name="rbnPurchaseInvoice" Click="rbnPurchaseInvoice_Click" SizeForm="Large" Label="فاکتور خرید" LargeIcon="/Images/Commerce2/purchaseInvoice.jpg"/>
-                    <Syncfusion:RibbonButton Name="rbnSalesInvoice" Click="rbnSalesInvoice_Click" SizeForm="Large" Label="فاکتور فروش" LargeIcon="/Images/Commerce2/salesInvoice.jpg"/>
-                    <Syncfusion:RibbonButton Name="rbnSalesProforma" Click="rbnSalesProforma_Click" SizeForm="Large" Label="پیش فاکتور فروش" LargeIcon="/Images/Commerce2/salesProforma.jpg"/>
+                    <Syncfusion:RibbonButton  Name="rbnPurchaseInvoice" Click="rbnPurchaseInvoice_Click" SizeForm="Large" Label="فاکتور خرید" LargeIcon="/Images/Commerce2/purchaseInvoice.png"/>
+                    <Syncfusion:RibbonButton Name="rbnSalesInvoice" Click="rbnSalesInvoice_Click" SizeForm="Large" Label="فاکتور فروش" LargeIcon="/Images/Commerce2/salesInvoice.png"/>
+                    <Syncfusion:RibbonButton Name="rbnSalesProforma" Click="rbnSalesProforma_Click" SizeForm="Large" Label="پیش فاکتور فروش" LargeIcon="/Images/Commerce2/salesProforma.png"/>
                 </Syncfusion:RibbonBar>
             </Syncfusion:RibbonTab>
             <Syncfusion:RibbonTab Name="rbnFinance" Caption="مالی">
@@ -60,22 +60,22 @@
             </Syncfusion:RibbonTab>
             <Syncfusion:RibbonTab Name="rbnCommerce1" Caption="کالا و انبار">
                 <Syncfusion:RibbonBar Name="barDefinitions" Width="215" Header="تعاریف ابتدایی">
-                    <Syncfusion:RibbonButton  Name="rbnProvince" Click="rbnProvince_Click" SizeForm="Large" Label="استان" LargeIcon="/Images/Commerce/province.jpg"/>
-                    <Syncfusion:RibbonButton  Name="rbnCity" Click="rbnCity_Click" SizeForm="Large" Label="شهر" LargeIcon="/Images/Commerce/province.jpg"/>
+                    <Syncfusion:RibbonButton  Name="rbnProvince" Click="rbnProvince_Click" SizeForm="Large" Label="استان" LargeIcon="/Images/Commerce/province.png"/>
+                    <Syncfusion:RibbonButton  Name="rbnCity" Click="rbnCity_Click" SizeForm="Large" Label="شهر" LargeIcon="/Images/Commerce/province.png"/>
                     <Syncfusion:RibbonSeparator/>
                     <Syncfusion:RibbonButton Name="rbnPriceGroup" Click="rbnPriceGroup_Click" SizeForm="Large" Label="گروه قیمت"  LargeIcon="/Images/Commerce/priceGroup.png"/>
                     <Syncfusion:RibbonButton Name="rbnPreferential1" Click="rbnPreferential_Click" SizeForm="Large" Label="تفضیلی" LargeIcon="/Images/Definitions/preferential.jpg"/>
-                    <Syncfusion:RibbonButton Name="rbnCustomerGroup" Click="rbnCustomerGroup_Click" SizeForm="Large" Label="گروه مشتریان"  LargeIcon="/Images/Commerce/customerGroup.jpg"/>
+                    <Syncfusion:RibbonButton Name="rbnCustomerGroup" Click="rbnCustomerGroup_Click" SizeForm="Large" Label="گروه مشتریان"  LargeIcon="/Images/Commerce/customerGroup.png"/>
                 </Syncfusion:RibbonBar>
                 <Syncfusion:RibbonBar Name="barDefinitionStorage" Width="90" Header="تعریف انبار">
-                    <Syncfusion:RibbonButton  Name="rbnGroupStorage" Click="rbnGroupStorage_Click" SizeForm="Large" Label="گروه انبار"  LargeIcon="/Images/Commerce/groupStorage.jpg"/>
-                    <Syncfusion:RibbonButton  Name="rbnDefinitionStorage" Click="rbnDefinitionStorage_Click" SizeForm="Large" Label="انبار"  LargeIcon="/Images/Commerce/DefinitionStorage.png"/>
+                    <Syncfusion:RibbonButton  Name="rbnGroupStorage" Click="rbnGroupStorage_Click" SizeForm="Large" Label="گروه انبار"  LargeIcon="/Images/Commerce/groupStorage.png"/>
+                    <Syncfusion:RibbonButton  Name="rbnDefinitionStorage" Click="rbnDefinitionStorage_Click" SizeForm="Large" Label="انبار"  LargeIcon="/Images/Commerce/definitionStorage2.png"/>
                 </Syncfusion:RibbonBar>
                 <Syncfusion:RibbonBar Name="barCommodity" Width="180" Header="کالا">
-                    <Syncfusion:RibbonButton  Name="rbnUnit" Click="rbnUnit_Click" SizeForm="Large" Label="واحد اندازه گیری" LargeIcon="/Images/Commerce/unit.jpg"/>
-                    <Syncfusion:RibbonButton  Name="rbnGroupCommodity" Click="rbnGroupCommodity_Click" SizeForm="Large" Label="گروه کالا" LargeIcon="/Images/Commerce/groupCommodity.jpg"/>
+                    <Syncfusion:RibbonButton  Name="rbnUnit" Click="rbnUnit_Click" SizeForm="Large" Label="واحد اندازه گیری" LargeIcon="/Images/Commerce/unit.png"/>
+                    <Syncfusion:RibbonButton  Name="rbnGroupCommodity" Click="rbnGroupCommodity_Click" SizeForm="Large" Label="گروه کالا" LargeIcon="/Images/Commerce/groupCommodity.png"/>
                     <Syncfusion:RibbonButton  Name="rbnDefinitionCommodity" Click="rbnDefinitionCommodity_Click" SizeForm="Large" Label="کالا" LargeIcon="/Images/Commerce/commodity.png"/>
-                    <Syncfusion:RibbonButton  Name="rbnCommodityPricingPanel" Click="rbnCommodityPricingPanel_Click" SizeForm="Large" Label="پنل قیمت گذاری کالا" LargeIcon="/Images/Commerce/commodityPricingPanel.jpg"/>
+                    <Syncfusion:RibbonButton  Name="rbnCommodityPricingPanel" Click="rbnCommodityPricingPanel_Click" SizeForm="Large" Label="پنل قیمت گذاری کالا" LargeIcon="/Images/Commerce/commodityPricingPanel.png"/>
                 </Syncfusion:RibbonBar>
                 <Syncfusion:RibbonBar Name="barStorage" Width="275" Header="انبار">
                     <Syncfusion:RibbonButton  Name="rbnCodingReceiptTypes" Click="rbnCodingReceiptTypes_Click" SizeForm="Large" Label="کدینگ انواع رسید" LargeIcon="/Images/Commerce/receiptTypes.jpg"/>
@@ -84,13 +84,14 @@
                     <Syncfusion:RibbonButton  Name="rbnStorageReceipt" Click="rbnStorageReceipt_Click" SizeForm="Large" Label="رسید انبار" LargeIcon="/Images/Commerce/storageReceipt.jpg"/>
                     <Syncfusion:RibbonButton  Name="rbnStorageTransfer" Click="rbnStorageTransfer_Click" SizeForm="Large" Label="حواله انبار" LargeIcon="/Images/Commerce/storageReceipt.jpg"/>
                     <Syncfusion:RibbonButton  Name="rbnStorageBetweenTransfer" Click="rbnStorageBetweenTransfer_Click" SizeForm="Large" Label="حواله بین انبار" LargeIcon="/Images/Commerce/storageBetweenTransfer.jpg"/>
-                    <Syncfusion:RibbonButton  Name="rbnStorageRotation" Click="rbnStorageRotation_Click" SizeForm="Large" Label="انبارگردانی" LargeIcon="/Images/Commerce/StorageRotation.jpg"/>
+                    <Syncfusion:RibbonButton  Name="rbnStorageRotation" Click="rbnStorageRotation_Click" SizeForm="Large" Label="انبارگردانی" LargeIcon="/Images/Commerce/StorageRotation.png"/>
                 </Syncfusion:RibbonBar>
             </Syncfusion:RibbonTab>
             <Syncfusion:RibbonTab Name="rbnReports" Caption="گزارشات" >
-                <Syncfusion:RibbonBar Name="barReports" Width="120" Header="مرور حساب ها">
+                <Syncfusion:RibbonBar Name="barReports" Width="145" Header="">
                     <Syncfusion:RibbonButton  Name="rbnBrowseAccounts" Click="rbnBrowseAccounts_Click" SizeForm="Large" Label="مرور حساب ها" LargeIcon="/Images/reports/BrowseAccounts.jpg"/>
                     <Syncfusion:RibbonButton  Name="rbnBuyRemittance" Click="rbnBuyRemittance_Click" SizeForm="Large" Label="گزارش حواله خرید" LargeIcon="/Images/reports/BuyRemittance.png"/>
+                    <Syncfusion:RibbonButton  Name="rbnSellReport" Click="rbnSellReport_Click" SizeForm="Large" Label="گزارش فروش"/>
                 </Syncfusion:RibbonBar>
             </Syncfusion:RibbonTab>
             <Syncfusion:RibbonTab Name="rbnSetting" Caption="امکانات">
@@ -98,10 +99,11 @@
                     <Syncfusion:RibbonButton  Name="rbnConfiguration" Click="rbnConfiguration_Click" SizeForm="Large" Label="تنظیمات پیکربندی" LargeIcon="/Images/Definitions/configuration.png"/>
                     <Syncfusion:RibbonButton  Name="rbnConfiguration2" Click="rbnConfiguration2_Click" SizeForm="Large" Label="نمایش فرم"/>
                 </Syncfusion:RibbonBar>
-                <Syncfusion:RibbonBar Width="140" Header="مدیریت برنامه">
+                <Syncfusion:RibbonBar Width="175" Header="مدیریت برنامه">
                     <Syncfusion:RibbonButton  Name="rbnUserGroup" Click="rbnUserGroup_Click" SizeForm="Large" Label="گروه کاربر" LargeIcon="/Images/Tools/UserGroup.png"/>
                     <Syncfusion:RibbonButton  Name="rbnUser" Click="rbnUser_Click" SizeForm="Large" Label="کاربر" LargeIcon="/Images/Tools/User.png"/>
                     <Syncfusion:RibbonButton  Name="rbnPermissionManager" Click="rbnPermissionManager_Click" SizeForm="Large" Label="سطح دسترسی" LargeIcon="/Images/Tools/Premession.png"/>
+                    <Syncfusion:RibbonButton  Name="rbnSupport" Click="rbnSupport_Click" SizeForm="Large" Label="پشتیبان"/>
                 </Syncfusion:RibbonBar>
             </Syncfusion:RibbonTab>
             

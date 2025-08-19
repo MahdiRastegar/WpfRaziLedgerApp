@@ -20,7 +20,7 @@ namespace WpfRaziLedgerApp
                     _Name = null;
                     return _Name;
                 }
-                _Name = $"{FkPreferential.PreferentialName}-{FkMoein.MoeinName}";
+                _Name = $"{FkMoein.MoeinName}-{FkPreferential.PreferentialName}";
                 return _Name;
             }
             set { _Name = value; }

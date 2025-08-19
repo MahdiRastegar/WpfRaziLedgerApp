@@ -106,7 +106,10 @@ namespace WpfRaziLedgerApp
             if (allChecked)
                 CanAccess = true;
             else if (noneChecked)
+            {
                 CanAccess = false;
+                OnPropertyChanged(nameof(CanAccess));
+            }
             else
                 CanAccess = null;
         }

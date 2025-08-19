@@ -141,7 +141,7 @@ namespace WpfRaziLedgerApp
         {
             if (selectedGroupId == Guid.Empty)
             {
-                MessageBox.Show("لطفاً یک گروه کاربری انتخاب کنید.");
+                Xceed.Wpf.Toolkit.MessageBox.Show("لطفاً یک گروه کاربری انتخاب کنید.","سطح دسترسی", MessageBoxButton.OK,MessageBoxImage.Warning);
                 return;
             }
 
@@ -199,6 +199,16 @@ namespace WpfRaziLedgerApp
         {
             if (sender is TextBlock tb && tb.DataContext is RibbonPermissionNode node)
                 node.CanModify = !node.CanModify;
+        }
+
+        private void CheckBox_Checked_1(object sender, RoutedEventArgs e)
+        {
+            isCancel = false;
+            return;
+            if (sender is CheckBox checkBox && checkBox.IsChecked == false && checkBox.DataContext is RibbonPermissionNode permissionNode)// && permissionNode.Children.Any(d => d.CanAccess == true))
+            {
+                permissionNode.Children.ForEach(y=>y.CanAccess = false);
+            }
         }
     }
 }

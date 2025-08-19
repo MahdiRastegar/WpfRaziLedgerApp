@@ -365,7 +365,7 @@ namespace WpfRaziLedgerApp
                     index2++;
                     var parts = new List<string?>
                             {
-                                e_addHeader.Date.ToPersianDateString(),
+                                "",
                                 $"شماره فاکتور : {txtInvoiceNumber.Text}" ,
                                 $"نام تفضیلی : {e_addHeader.FkPreferential.PreferentialName}" ,
                                 e_addHeader.OrderNumber ==null ? null :
@@ -441,7 +441,7 @@ namespace WpfRaziLedgerApp
                     index2++;
                     parts = new List<string?>
                             {
-                                e_addHeader.Date.ToPersianDateString(),
+                                "",
                                 $"شماره فاکتور : {txtInvoiceNumber.Text}" ,
                                 $"نام تفضیلی : {e_addHeader.FkPreferential.PreferentialName}" ,
                                 e_addHeader.OrderNumber ==null ? null :
@@ -521,9 +521,9 @@ namespace WpfRaziLedgerApp
                     {
                         if (item is TabItemExt tabItemExt)
                         {
-                            if (tabItemExt.Header.ToString() == "سند حسابداری")
+                            if (tabItemExt.Header is StackPanel stack && (stack.Children[1] as TextBlock).Text.ToString() == "سند حسابداری")
                             {
-                                if (tabItemExt.Content is usrAccountDocument usrAccountDocument)
+                                if (tabItemExt.Content is Grid grid && grid.Children[0] is usrAccountDocument usrAccountDocument)
                                 {
                                     if (usrAccountDocument.LoadedFill)
                                         usrAccountDocument.AcDocumentHeaders.Add(e_addHeader2);
@@ -633,7 +633,7 @@ namespace WpfRaziLedgerApp
                         index2++;
                         var parts = new List<string?>
                             {
-                                e_Edidet.Date.ToPersianDateString(),
+                                "",
                                 $"شماره فاکتور : {txtInvoiceNumber.Text}" ,
                                 $"نام تفضیلی : {e_Edidet.FkPreferential.PreferentialName}" ,
                                 e_Edidet.OrderNumber ==null ? null :
@@ -711,7 +711,7 @@ namespace WpfRaziLedgerApp
                         index2++;
                         parts = new List<string?>
                             {
-                                e_Edidet.Date.ToPersianDateString(),
+                                "",
                                 $"شماره فاکتور : {txtInvoiceNumber.Text}" ,
                                 $"نام تفضیلی : {e_Edidet.FkPreferential.PreferentialName}" ,
                                 e_Edidet.OrderNumber ==null ? null :
@@ -791,9 +791,9 @@ namespace WpfRaziLedgerApp
                         {
                             if (item is TabItemExt tabItemExt)
                             {
-                                if (tabItemExt.Header.ToString() == "سند حسابداری")
+                                if (tabItemExt.Header is StackPanel stack && (stack.Children[1] as TextBlock).Text.ToString() == "سند حسابداری")
                                 {
-                                    if (tabItemExt.Content is usrAccountDocument usrAccountDocument)
+                                    if (tabItemExt.Content is Grid grid && grid.Children[0] is usrAccountDocument usrAccountDocument)
                                     {
                                         if (usrAccountDocument.LoadedFill)
                                         {
@@ -1320,9 +1320,9 @@ namespace WpfRaziLedgerApp
                 {
                     if (item is TabItemExt tabItemExt)
                     {
-                        if (tabItemExt.Header.ToString() == "سند حسابداری")
+                        if (tabItemExt.Header is StackPanel stack && (stack.Children[1] as TextBlock).Text.ToString() == "سند حسابداری")
                         {
-                            if (tabItemExt.Content is usrAccountDocument usrAccountDocument)
+                            if (tabItemExt.Content is Grid grid && grid.Children[0] is usrAccountDocument usrAccountDocument)
                             {
                                 if (usrAccountDocument.LoadedFill)
                                 {
