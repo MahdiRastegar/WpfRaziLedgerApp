@@ -103,7 +103,7 @@
                     <Syncfusion:RibbonButton  Name="rbnUserGroup" Click="rbnUserGroup_Click" SizeForm="Large" Label="گروه کاربر" LargeIcon="/Images/Tools/UserGroup.png"/>
                     <Syncfusion:RibbonButton  Name="rbnUser" Click="rbnUser_Click" SizeForm="Large" Label="کاربر" LargeIcon="/Images/Tools/User.png"/>
                     <Syncfusion:RibbonButton  Name="rbnPermissionManager" Click="rbnPermissionManager_Click" SizeForm="Large" Label="سطح دسترسی" LargeIcon="/Images/Tools/Premession.png"/>
-                    <Syncfusion:RibbonButton  Name="rbnSupport" Click="rbnSupport_Click" SizeForm="Large" Label="پشتیبان"/>
+                    <Syncfusion:RibbonButton  Name="rbnSupport" Click="rbnSupport_Click" SizeForm="Large" Label="پشتیبان" LargeIcon="/Images/Tools/backup.png"/>
                 </Syncfusion:RibbonBar>
             </Syncfusion:RibbonTab>
             

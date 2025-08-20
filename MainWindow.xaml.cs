@@ -991,7 +991,7 @@ namespace WpfRaziLedgerApp
                 tabcontrol.SelectedItem = item;
             }
             else
-                AddTabWithTriangle("پشتیبان", new BackupRestoreControl(), sender as RibbonButton, "", false);
+                AddTabWithTriangle("پشتیبان", new BackupRestoreControl(), sender as RibbonButton, "Tools/backup.png", false);
         }
     }
 }
