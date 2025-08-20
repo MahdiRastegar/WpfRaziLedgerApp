@@ -13,6 +13,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -108,7 +109,8 @@ namespace WpfRaziLedgerApp
                 Xceed.Wpf.Toolkit.MessageBox.Show("لطفا فایل بکاپ را انتخاب کنید.");
                 return;
             }
-            if (Xceed.Wpf.Toolkit.MessageBox.Show("آیا می خواهید عملیات بازیابی صورت گیرد و از برنامه خارج شوید، دوباره وارد شوید؟", "خروج", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+            MainWindow.Current.Effect = new BlurEffect() { Radius = 5 };
+            if (Xceed.Wpf.Toolkit.MessageBox.Show("آیا می خواهید عملیات بازیابی صورت گیرد و از برنامه خارج شوید، دوباره وارد شوید؟", "بازیابی اطلاعات", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
             {
                 Process process = new Process();
                 process.StartInfo.FileName = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WpfSimReport", "WpfAppEmpty.exe");
@@ -118,6 +120,7 @@ namespace WpfRaziLedgerApp
                 process.Start();
                 Environment.Exit(0);
             }
+            MainWindow.Current.Effect = null;
         }
 
         public bool CloseForm()
