@@ -701,7 +701,7 @@ BeginTime="0:0:0" />-->
                                         </Style>
                                     </Syncfusion:GridCheckBoxSelectorColumn.CellStyle>
                                 </Syncfusion:GridCheckBoxSelectorColumn>
-                                <Syncfusion:GridTemplateColumn Width="64" MappingName="">
+                                <Syncfusion:GridTemplateColumn Width="66" MappingName="">
                                     <Syncfusion:GridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <Grid>

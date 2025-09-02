@@ -27,10 +27,11 @@
             <RowDefinition Height="25"/>
         </Grid.RowDefinitions>
         <Image Name="imgReceive" Source="/Images/tick-icon-30.png" Grid.Row="1" Visibility="Collapsed"/>
-        <Button Width="310" Margin="10 10" Height="60" Name="btnReceive" Click="btnReceive_Click" HorizontalAlignment="Left" Content="پیکربندی دریافت وجه-چک های دریافتی" FontSize="18" Grid.Column="1" Grid.Row="1"/>
+        <Button Width="310" Margin="10 10" Height="60" Name="btnReceive" Click="btnReceive_Click" HorizontalAlignment="Left" Content="دریافت وجه-چک های دریافتی" FontSize="18" Grid.Column="1" Grid.Row="1"/>
         <Image Name="imgPayment" Source="/Images/tick-icon-30.png" Grid.Row="2" Visibility="Collapsed"/>
-        <Button Width="310" Margin="10 10" Click="btnPayment_Click" Height="60" Name="btnPayment" HorizontalAlignment="Left" Content="پیکربندی پرداخت وجه-چک های پرداختی" FontSize="18" Grid.Column="1" Grid.Row="2"/>
-        <Image Name="imgTaxPercent" Source="/Images/tick-icon-30.png" Grid.Row="3" Visibility="Collapsed"/>
-        <Button Width="140" Margin="10 10" Height="60" Click="btnTaxPercent_Click" Name="btnTaxPercent" HorizontalAlignment="Left" Content="درصد مالیات" FontSize="18" Grid.Column="1" Grid.Row="3"/>
+        <Button Width="310" Margin="10 10" Click="btnPayment_Click" Height="60" Name="btnPayment" HorizontalAlignment="Left" Content="پرداخت وجه-چک های پرداختی" FontSize="18" Grid.Column="1" Grid.Row="2"/>
+        <Button Width="150" Margin="10 10" Click="btnOther_Click" Height="60" Name="btnOther" HorizontalAlignment="Left" Content="سایر" FontSize="18" Grid.Column="1" Grid.Row="3"/>
+        <Image Name="imgTaxPercent" Source="/Images/tick-icon-30.png" Grid.Row="4" Visibility="Collapsed"/>
+        <Button Width="140" Margin="10 10" Height="60" Click="btnTaxPercent_Click" Name="btnTaxPercent" HorizontalAlignment="Left" Content="درصد مالیات" FontSize="18" Grid.Column="1" Grid.Row="4"/>
     </Grid>
 </UserControl>

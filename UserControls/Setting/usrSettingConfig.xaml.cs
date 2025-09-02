@@ -614,5 +614,10 @@ namespace WpfRaziLedgerApp
 
             return groupBox;
         }
+
+        private void btnOther_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
