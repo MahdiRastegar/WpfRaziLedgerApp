@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Syncfusion.CompoundFile.XlsIO.Native;
 using Syncfusion.Data.Extensions;
 using Syncfusion.Windows.Controls;
 using Syncfusion.XlsIO.Parser.Biff_Records;
@@ -249,7 +250,7 @@ namespace WpfRaziLedgerApp
         public bool CloseForm()
         {            
             var list = MainWindow.Current.GetTabControlItems;
-            var item = list.FirstOrDefault(u => u.Header == "گزارش فروش");
+            var item = list.FirstOrDefault(y => y.Tag?.ToString() == "گزارش فروش");
             MainWindow.Current.tabcontrol.Items.Remove(item);
             Dispatcher.BeginInvoke(new Action(() =>
             {
@@ -311,7 +312,7 @@ namespace WpfRaziLedgerApp
                 })
                 .Select((g, index) => new MonthlyTotalSale
                 {
-                    Index = index + 1,
+                    Index = persianMonths.IndexOf(persianMonths[g.Key.Month - 1]) + 1,
                     Month = $"{g.Key.Year} {persianMonths[g.Key.Month - 1]}",
                     Price = g.Sum(x => x.Value * x.Fee)/1000
                 })
@@ -334,11 +335,12 @@ namespace WpfRaziLedgerApp
     .ThenBy(g => g.Key.Month)
     .Select((g, idx) => new MonthlyTotalTonnage
     {
-        Index = idx + 1,
+        Index = persianMonths.IndexOf(persianMonths[g.Key.Month - 1]) + 1,
         Month = $"{g.Key.Year} {persianMonths[g.Key.Month - 1]}",
         Tonnage = g.Where(x => x.FkCommodity.Tonnage.HasValue)
                    .Sum(x => (decimal)x.FkCommodity.Tonnage.Value * x.Value)
     })
+    .OrderBy(x => x.Index)
     .ToList().ToObservableCollection();
 
             win.CityTotalTonnages = db.ProductSellDetails
@@ -364,34 +366,19 @@ namespace WpfRaziLedgerApp
     .Include(d => d.FkHeader)
     .Where(d => d.FkCommodity.Tonnage.HasValue) // فقط کالاهایی که ضریب تناژ دارند
     .AsEnumerable() // از اینجا به بعد روی حافظه (برای محاسبه تناژ)
-    .GroupBy(d => new
-    {
-        Month = d.FkHeader.Date.Month,
+            .GroupBy(d => new
+            {
+        Month = pc.GetMonth(d.FkHeader.Date),
         CommodityName = d.FkCommodity.Name
     })
     .Select((g, index) => new CommodityTotalTonnage
     {
-        Index = index + 1,
-        Month = new System.Globalization.PersianCalendar()
-                    .GetMonth(g.First().FkHeader.Date) switch
-        {
-            1 => "فروردین",
-            2 => "اردیبهشت",
-            3 => "خرداد",
-            4 => "تیر",
-            5 => "مرداد",
-            6 => "شهریور",
-            7 => "مهر",
-            8 => "آبان",
-            9 => "آذر",
-            10 => "دی",
-            11 => "بهمن",
-            12 => "اسفند",
-            _ => "نامشخص"
-        },
+        Index = persianMonths.IndexOf(persianMonths[g.Key.Month - 1]) + 1,
+        Month = persianMonths[g.Key.Month - 1],
         CommodityName = g.Key.CommodityName,
         Tonnage = g.Sum(x => x.FkCommodity.Tonnage.Value * x.Value)
     })
+    .OrderBy(x => x.Index)
     .ToList().ToObservableCollection();
             Mouse.OverrideCursor = null;
 

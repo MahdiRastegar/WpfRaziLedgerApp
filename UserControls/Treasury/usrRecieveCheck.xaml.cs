@@ -458,6 +458,7 @@ namespace WpfRaziLedgerApp
                     }
                 }
                 db.AcDocumentHeaders.Add(e_addHeader2);
+                en.FkAc = e_addHeader2;
 
                 foreach (var item in MainWindow.Current.tabcontrol.Items)
                 {
@@ -643,11 +644,8 @@ namespace WpfRaziLedgerApp
         bool forceClose = false;
         private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Escape)
-            {
-                CloseForm();
-            }
-            else if (!txtMoein.IsFocused && !txtPreferential.IsFocused)
+            
+            if (!txtMoein.IsFocused && !txtPreferential.IsFocused)
             {
                 switch (e.Key) 
                 {
@@ -854,7 +852,7 @@ namespace WpfRaziLedgerApp
             }
             forceClose = true;
             var list = MainWindow.Current.GetTabControlItems;
-            var item = list.FirstOrDefault(u => u.Header == "چک های دریافتی");
+            var item = list.FirstOrDefault(y => y.Tag?.ToString() == "چک های دریافتی");
             MainWindow.Current.tabcontrol.Items.Remove(item);
             Dispatcher.BeginInvoke(new Action(() =>
             {
@@ -1695,7 +1693,8 @@ namespace WpfRaziLedgerApp
             if (control.SelectedIndex == 0)
             {
                 datagrid.Columns[0].IsHidden = true;
-                datagrid.Columns[1].IsHidden = false;
+                datagrid.Columns[1].IsHidden = true;
+                datagrid.Columns[2].IsHidden = false;
                 column1.Width = column2.Width = new GridLength(0);
             }
             else
@@ -1703,7 +1702,8 @@ namespace WpfRaziLedgerApp
                 column1.Width = new GridLength(170);
                 column2.Width = new GridLength(230);
                 datagrid.Columns[0].IsHidden = false;
-                datagrid.Columns[1].IsHidden = true;
+                datagrid.Columns[1].IsHidden = false;
+                datagrid.Columns[2].IsHidden = true;
                 item1.Visibility= item2.Visibility = item3.Visibility = item4.Visibility = item5.Visibility = item6.Visibility =  Visibility.Visible;
             }
             if (control.SelectedIndex == 1)
@@ -1819,6 +1819,91 @@ namespace WpfRaziLedgerApp
         private void btnPrint_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void btnCCH_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if(e.LeftButton == MouseButtonState.Pressed)
+            {
+                var CRE = (sender as Button).DataContext as CheckRecieveEvent;
+                if (Xceed.Wpf.Toolkit.MessageBox.Show("آیا می خواهید تمام سوابق مربوط به این چک به همراه سندهای مربوطه حذف شوند؟", "خروج", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+                {
+                    Mouse.OverrideCursor = Cursors.Wait;
+                    using var db = new wpfrazydbContext();
+
+                    var events = db.CheckRecieveEvents
+                        .Include(v => v.FkAc)
+                        .Where(y => y.FkDetaiId == CRE.FkDetaiId)
+                        .ToList();   // ✅ دیتا کشیده میشه و reader بسته میشه
+                    if(events.Count()==1)
+                    {
+                        Mouse.OverrideCursor = null;
+                        Xceed.Wpf.Toolkit.MessageBox.Show("هیچ سابقه ای برای این چک وجود ندارد");
+                        return;
+                    }
+                    foreach (var item in events.OrderByDescending(y=>y.Indexer))
+                    {
+                        if (item.FkAc != null)
+                        {
+                            var guid = item.FkAc.Id;
+                            var details = db.AcDocumentDetails
+                                .Where(u => u.FkAcDocHeader == item.FkAc)
+                                .ToList();   // ✅ کشیدن دیتا قبل از حلقه
+
+                            foreach (var itemz in details)
+                            {
+                                db.AcDocumentDetails.Remove(itemz);
+                            }
+                            db.AcDocumentHeaders.Remove(item.FkAc);
+                            foreach (var itemd in MainWindow.Current.tabcontrol.Items)
+                            {
+                                if (itemd is TabItemExt tabItemExt)
+                                {
+                                    if (tabItemExt.Header is StackPanel stack && (stack.Children[1] as TextBlock).Text.ToString() == "سند حسابداری")
+                                    {
+                                        if (tabItemExt.Content is Grid grid && grid.Children[0] is usrAccountDocument usrAccountDocument)
+                                        {
+                                            if (usrAccountDocument.LoadedFill)
+                                            {
+                                                usrAccountDocument.AcDocumentHeaders.Remove(usrAccountDocument.AcDocumentHeaders.First(y => y.Id == guid));
+                                            }
+                                        }
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+
+                        var toRemove = db.CheckRecieveEvents.Find(item.Id);
+                        if (toRemove != null)
+                            db.CheckRecieveEvents.Remove(toRemove);
+
+                        if (!db.SafeSaveChanges())
+                        {
+                            Mouse.OverrideCursor = null;
+                            return;
+                        }
+
+                        if (db.CheckRecieveEvents.Count(y => y.FkDetaiId == CRE.FkDetaiId) == 1)
+                        {
+                            Mouse.OverrideCursor = null;
+                            Xceed.Wpf.Toolkit.MessageBox.Show("عملیات با موفقیت انجام شد");
+                            checkRecieveEvents.Remove(CRE);
+
+                            var en = db.CheckRecieveEvents.Include(u => u.FkChEvent)
+                                .Include(d => d.FkPreferential)
+                                .Include(d => d.FkMoein)
+                                .Include(y => y.FkDetai).Include(u => u.FkDetai.FkBankNavigation)
+                                .Include(y => y.FkDetai).Include(u => u.FkDetai.FkHeader)
+                                .Include(u => u.FkDetai.FkHeader.FkMoein)
+                                .Include(u => u.FkDetai.FkHeader.FkPreferential).First(y => y.FkDetaiId == CRE.FkDetaiId);
+                            checkRecieveEvents.Add(en);
+                            TabControlExt_SelectionChanged(null, null);                            
+                            break;
+                        }
+                    }
+                }
+            }
         }
 
         private void persianCalendarE_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)

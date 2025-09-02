@@ -49,6 +49,8 @@ namespace WpfRaziLedgerApp
                                 return $"{string.Format("{0:#,###}", b-a)}";
                             }
                         }
+                        a = decimal.Parse(string.Format("{0:N0}", item.AggregateValues.Values.ToArray()));
+                        return $"{string.Format("{0:#,###}", a)}";
                     }
                 }
             }

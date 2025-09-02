@@ -38,11 +38,12 @@ namespace WpfRaziLedgerApp
                 return;
             }
             using var db = new wpfrazydbContext();
-            if (txtSubscription.Password != db.UserApps.FirstOrDefault(t => t.UserName == UserName).Password)
-            {
-                Xceed.Wpf.Toolkit.MessageBox.Show("رمز عبور فعلی اشتباهست!");
-                return;
-            }
+            if (db.UserApps.FirstOrDefault(t => t.UserName == UserName).Password != "1")
+                if (txtSubscription.Password != CryptoHelper.Decrypt(db.UserApps.FirstOrDefault(t => t.UserName == UserName).Password))
+                {
+                    Xceed.Wpf.Toolkit.MessageBox.Show("رمز عبور فعلی اشتباهست!");
+                    return;
+                }
             if (PasswordText.Password.Trim() == "")
             {
                 Xceed.Wpf.Toolkit.MessageBox.Show("کاربر گرامی لطفا رمز عبور جدید را وارد کنید");
@@ -54,7 +55,7 @@ namespace WpfRaziLedgerApp
                 return;
             }
             //App.SetKeyPassword(PasswordText.Password);
-            db.UserApps.FirstOrDefault(t => t.UserName == UserName).Password = PasswordText.Password;
+            db.UserApps.FirstOrDefault(t => t.UserName == UserName).Password = CryptoHelper.Encrypt(PasswordText.Password);
             db.SafeSaveChanges();
             Xceed.Wpf.Toolkit.MessageBox.Show("رمز عبور با موفقیت تغییر یافت.");
             StateOk = true;

@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using WpfRaziLedgerApp.RazyDb;
 
 #nullable disable
 
@@ -73,6 +74,7 @@ namespace WpfRaziLedgerApp
         public virtual DbSet<UserGroup> UserGroups { get; set; }
         public virtual DbSet<Version> Versions { get; set; }
 
+        public virtual DbSet<UserDesktopItem> UserDesktopItems { get; set; }
         public override int SaveChanges()
         {
             SetCurrentPeriodId();
@@ -1332,6 +1334,16 @@ namespace WpfRaziLedgerApp
                 entity.HasNoKey();
 
                 entity.ToTable("Version");
+            });
+            modelBuilder.Entity<UserDesktopItem>(entity =>
+            {
+                entity.ToTable("UserDesktopItem");
+
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.FkribbonItemId).HasColumnName("FKRibbonItemId");
+
+                entity.Property(e => e.FkuserId).HasColumnName("FKUserId");
             });
 
             OnModelCreatingPartial(modelBuilder);

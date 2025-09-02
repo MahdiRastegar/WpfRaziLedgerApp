@@ -18,6 +18,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WpfRaziLedgerApp.Interfaces;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 namespace WpfRaziLedgerApp
 {
@@ -32,6 +33,9 @@ namespace WpfRaziLedgerApp
         public BackupRestoreControl()
         {
             InitializeComponent();
+            var path = System.IO.Path.Combine(Directory.GetDirectoryRoot(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory)), "wpfrazydbBackup");
+            if (!Directory.Exists(path))
+                Directory.CreateDirectory(path);
             connectionString = System.IO.File.ReadAllText(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "cs.txt"));
         }
 
@@ -41,7 +45,7 @@ namespace WpfRaziLedgerApp
             var dialog = new System.Windows.Forms.FolderBrowserDialog();
             try
             {
-                dialog.InitialDirectory = new DirectoryInfo(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Backup")).FullName;
+                dialog.InitialDirectory = System.IO.Path.Combine(Directory.GetDirectoryRoot(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory)), "wpfrazydbBackup");
             }
             catch { }
             if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
@@ -49,7 +53,7 @@ namespace WpfRaziLedgerApp
                 txtBackupFolder.Text = dialog.SelectedPath;
             }
         }
-
+        string path2 = "";
         // دکمه پشتیبان‌گیری
         private void btnBackup_Click(object sender, RoutedEventArgs e)
         {
@@ -81,6 +85,7 @@ namespace WpfRaziLedgerApp
                 }
 
                 Xceed.Wpf.Toolkit.MessageBox.Show("پشتیبان‌گیری با موفقیت انجام شد.");
+                path2 = folderPath;
             }
             catch (Exception ex)
             {
@@ -93,6 +98,11 @@ namespace WpfRaziLedgerApp
         {
             OpenFileDialog openFile = new OpenFileDialog();
             openFile.Filter = "Backup Files (*.bak)|*.bak";
+            if (path2 != "")
+                openFile.InitialDirectory = path2;
+            else
+                openFile.InitialDirectory = System.IO.Path.Combine(Directory.GetDirectoryRoot(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory)), "wpfrazydbBackup");
+            path2 = "";
             if (openFile.ShowDialog() == true)
             {
                 txtRestoreFile.Text = openFile.FileName;
@@ -126,7 +136,7 @@ namespace WpfRaziLedgerApp
         public bool CloseForm()
         {
             var list = MainWindow.Current.GetTabControlItems;
-            var item = list.FirstOrDefault(u => u.Header == "پشتیبان");
+            var item = list.FirstOrDefault(y => y.Tag?.ToString() == "پشتیبان");
             MainWindow.Current.tabcontrol.Items.Remove(item);
             Dispatcher.BeginInvoke(new Action(() =>
             {
@@ -146,6 +156,20 @@ namespace WpfRaziLedgerApp
         public void SetNull()
         {
             throw new NotImplementedException();
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                txtBackupFolder.Text = System.IO.Path.Combine(Directory.GetDirectoryRoot(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory)), "wpfrazydbBackup");
+            }
+            catch { }
+        }
+
+        private void UserControl_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            
         }
     }
 }

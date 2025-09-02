@@ -57,10 +57,15 @@ namespace WpfRaziLedgerApp
         List<Mu> mus1 = new List<Mu>();
         List<Mu> mus2 = new List<Mu>();
         public usrProductSell()
-        {
+        {            
             ProductSell_Details = new ObservableCollection<ProductSellDetail>();
             ProductSellHeaders = new ObservableCollection<ProductSellHeader>();
             InitializeComponent();
+            if (SystemParameters.PrimaryScreenHeight >= 1200)
+            {
+                morefields.Visibility = Visibility.Collapsed;
+                gridContainer.Visibility = Visibility.Visible;
+            }
             ProductSellViewModel = Resources["viewmodel"] as ProductSellViewModel;
             ProductSellViewModel.ProductSell_Details.CollectionChanged += ProductSell_Details_CollectionChanged;
             txbCalender.Text = pcw1.SelectedDate.ToString();
@@ -1128,23 +1133,12 @@ namespace WpfRaziLedgerApp
         bool forceClose = false;
         private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Escape)
-            {
-                CloseForm();
-            }         
+                     
         }
 
         bool isCancel = true;
         private void btnCancel_Click(object sender, RoutedEventArgs e)
-        {
-            if (morefields.Visibility == Visibility.Visible)
-            {
-                morefields.Visibility = Visibility.Collapsed;
-                column1.Width = new GridLength(225);
-                column2.Width = new GridLength(200);
-                column3.Width = new GridLength(200);
-                Sf_Description.Visibility = Visibility.Visible;
-            }
+        {        
             if (AddedMode&&isCancel)
             {
                 return;
@@ -1193,7 +1187,6 @@ namespace WpfRaziLedgerApp
                     }
                 }
                 AddedMode = true;
-                column3.Width = column2.Width = column1.Width = new GridLength(225);
                 datagrid.AllowEditing = datagrid.AllowDeleting = true;
                 datagrid.AddNewRowPosition = Syncfusion.UI.Xaml.Grid.AddNewRowPosition.Bottom;
             }
@@ -1252,7 +1245,11 @@ namespace WpfRaziLedgerApp
             dataPager.Visibility = Visibility.Collapsed;
             gridDelete.Visibility = Visibility.Hidden;
             borderEdit.Visibility = Visibility.Hidden;
-            Grid.SetRowSpan(gridContainer, 6);
+            Grid.SetRowSpan(gridContainer, 1);
+            if (SystemParameters.PrimaryScreenHeight > 1200)
+                gridFields.Visibility = Visibility.Visible;
+            else
+                morefields.Visibility = Visibility.Visible;
             gridFactor.Visibility = Visibility.Visible;
             txtSerial.Text = "";
             datagrid.BorderBrush = new System.Windows.Media.SolidColorBrush((System.Windows.Media.Color)ColorConverter.ConvertFromString("#FF808080"));
@@ -1504,7 +1501,7 @@ namespace WpfRaziLedgerApp
             }
             forceClose = true;
             var list = MainWindow.Current.GetTabControlItems;
-            var item = list.FirstOrDefault(u => u.Header == "فاکتور فروش");
+            var item = list.FirstOrDefault(y => y.Tag?.ToString() == "فاکتور فروش");
             MainWindow.Current.tabcontrol.Items.Remove(item);
             Dispatcher.BeginInvoke(new Action(() =>
             {
@@ -1732,7 +1729,11 @@ namespace WpfRaziLedgerApp
                     datagrid.Visibility = Visibility.Visible;
                     dataPager.Visibility = Visibility.Collapsed;
                     testsearch.Text = "جستجو...";
-                    Grid.SetRowSpan(gridContainer, 6);
+                    if (SystemParameters.PrimaryScreenHeight > 1200)
+                        gridFields.Visibility = Visibility.Visible;
+                    else
+                        morefields.Visibility = Visibility.Visible;
+                    Grid.SetRowSpan(gridContainer, 1);
                     gridFactor.Visibility = Visibility.Visible;
                     datagrid.SearchHelper.ClearSearch();
                     SearchTermTextBox.TextChanged-= SearchTermTextBox_TextChanged;
@@ -1742,7 +1743,6 @@ namespace WpfRaziLedgerApp
                     //gridSetting.Visibility = 
                     gridConfirm.Visibility = Visibility.Visible;
                     Sf_txtInvoiceNumber.HasError = false;
-                    column3.Width = column2.Width = column1.Width = new GridLength(225);
                     borderEdit.Visibility = Visibility.Visible;
                     RefreshDataGridForSetPersianNumber();
                     datagrid.SelectedIndex = ProductSell_Details.Count - 1;
@@ -1803,7 +1803,10 @@ namespace WpfRaziLedgerApp
                     datagrid.Visibility = Visibility.Collapsed;
                     datagridSearch.Visibility = Visibility.Visible;
                     dataPager.Visibility = Visibility.Visible;
-                    Grid.SetRowSpan(gridContainer, 8);
+                    Grid.SetRowSpan(gridContainer, 2);
+                    morefields.Visibility= Visibility.Collapsed;
+                    gridContainer.Visibility = Visibility.Visible;
+                    gridFields.Visibility = Visibility.Collapsed;
                     gridFactor.Visibility = Visibility.Collapsed;
                     testsearch.Text = "جستجو در جزئیات...";
                     Dispatcher.BeginInvoke(new Action(() =>
@@ -1827,7 +1830,6 @@ namespace WpfRaziLedgerApp
                         B = 255,
                         A = 240
                     };
-                    column3.Width = column2.Width = column1.Width = new GridLength(0);
                     datagrid.AllowEditing = datagrid.AllowDeleting = false;
                     datagrid.AddNewRowPosition = Syncfusion.UI.Xaml.Grid.AddNewRowPosition.None;
                     AddedMode = false;
@@ -2520,25 +2522,35 @@ namespace WpfRaziLedgerApp
 
         private void btnMorefields_Click(object sender, RoutedEventArgs e)
         {
-            morefields.Visibility = Visibility.Collapsed;
-            column1.Width = new GridLength(225);
-            column2.Width = new GridLength(200);
-            column3.Width = new GridLength(200);
-            Sf_Description.Visibility = Visibility.Visible;
-            Sf_txtCarType.Visibility = Visibility.Visible;
+            if (gridContainer.Visibility == Visibility.Collapsed)
+            {
+                gridFields.Visibility = Visibility.Collapsed;
+                gridContainer.Visibility = Visibility.Visible;
+                row1.Height = new GridLength(0);
+                rotate.Angle = 90;
+                btnMorefields.ToolTip = "نمایش فیلدها";
+            }
+            else
+            {
+                gridFields.Visibility = Visibility.Visible;
+                gridContainer.Visibility = Visibility.Collapsed;
+                row1.Height = new GridLength(7, GridUnitType.Auto);
+                rotate.Angle = -90;
+                btnMorefields.ToolTip = "نمایش اقلام";
+            }
+            //morefields.Visibility = Visibility.Collapsed;
+            //Sf_Description.Visibility = Visibility.Visible;
+            //Sf_txtCarType.Visibility = Visibility.Visible;
         }
 
         private void datagrid_GotFocus(object sender, RoutedEventArgs e)
         {
-            if (SystemParameters.PrimaryScreenWidth <= 1600 && morefields.Visibility == Visibility.Collapsed)
+            /*if (SystemParameters.PrimaryScreenWidth <= 1600 && morefields.Visibility == Visibility.Collapsed)
             {
-                column1.Width = new GridLength(50);
-                column2.Width = new GridLength(0);
-                column3.Width = new GridLength(0);
                 morefields.Visibility = Visibility.Visible;
                 Sf_Description.Visibility = Visibility.Collapsed;
                 Sf_txtCarType.Visibility = Visibility.Collapsed;
-            }
+            }*/
         }
 
         private void txtBuyRemittanceNumber_LostFocus(object sender, RoutedEventArgs e)

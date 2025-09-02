@@ -119,7 +119,7 @@ namespace WpfRaziLedgerApp
             }
             forceClose = true;
             var list = MainWindow.Current.GetTabControlItems;
-            var item = list.FirstOrDefault(u => u.Header == "سطح دسترسی");
+            var item = list.FirstOrDefault(y => y.Tag?.ToString() == "سطح دسترسی");
             MainWindow.Current.tabcontrol.Items.Remove(item);
             return true;
         }
@@ -131,10 +131,7 @@ namespace WpfRaziLedgerApp
 
         private void UserControl_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Escape)
-            {
-                CloseForm();
-            }
+            
         }
 
         private void btnConfirm_Click(object sender, RoutedEventArgs e)

@@ -55,7 +55,7 @@ namespace WpfRaziLedgerApp
             using var db = new wpfrazydbContext();
             if (db.UserApps.FirstOrDefault(u => u.UserName == cmbUsers.Text) is UserApp userApp)
             {
-                if (PasswordText.Password == userApp.Password)
+                if (PasswordText.Password == CryptoHelper.Decrypt(userApp.Password))
                 {
                     App.Suspended = false;
                     MainWindow.StatusOptions = new StatusOptions()

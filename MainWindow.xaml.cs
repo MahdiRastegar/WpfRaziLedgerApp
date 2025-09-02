@@ -1,13 +1,17 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Syncfusion.CompoundFile.XlsIO.Native;
 using Syncfusion.Linq;
+using Syncfusion.UI.Xaml.TextInputLayout;
 using Syncfusion.Windows.Tools.Controls;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -83,6 +87,7 @@ namespace WpfRaziLedgerApp
         {
             ApplyPermissions(userGroupId);
         }
+        Dictionary<RibbonButton, Guid> keyValuePairs = new Dictionary<RibbonButton, Guid>();
         private void ApplyPermissions(Guid userGroupId)
         {
             // 1. دریافت دسترسی‌ها از دیتابیس
@@ -96,6 +101,7 @@ namespace WpfRaziLedgerApp
 
                 foreach (var bar in tab.Items.OfType<RibbonBar>())
                 {
+                    UIElement? item2=null;
                     foreach (var item in bar.Items.OfType<UIElement>())
                     {
                         if (item is RibbonButton btn && btn.Label != null)
@@ -104,10 +110,17 @@ namespace WpfRaziLedgerApp
                             bool canAccess = allowedIds.Contains(ribbonId);
 
                             btn.Visibility = canAccess ? Visibility.Visible : Visibility.Collapsed;
+                            if(btn.Visibility == Visibility.Visible) 
+                            {
+                                keyValuePairs.Add(btn, ribbonId);
+                            }
+                            if (btn.Visibility == Visibility.Collapsed && item2 is RibbonSeparator separator)
+                                separator.Visibility = Visibility.Collapsed;
 
                             if (canAccess)
                                 hasVisibleChild = true;
                         }
+                        item2 = item;
                     }
 
                     // اگر هیچ دکمه‌ای در این Bar قابل دسترسی نبود، خودش رو پنهان کن
@@ -125,6 +138,11 @@ namespace WpfRaziLedgerApp
                 // اگر هیچ آیتمی در تب قابل نمایش نیست، تب هم پنهان شه
                 tab.Visibility = hasVisibleChild ? Visibility.Visible : Visibility.Collapsed;
             }
+            if (rbnDoshboardSetting.Visibility == Visibility.Visible)
+                rbnPreview.Visibility = Visibility.Visible;
+            //rbnDoshboard.Visibility = 
+            if (rbnPreview.Visibility != Visibility.Visible)
+                borderMiz.Visibility = Visibility.Collapsed;
             //rbnConfiguration2.Visibility = Visibility.Visible;
         }
         private List<Guid> GetPermissionIdsForGroup(Guid groupId)
@@ -180,10 +198,10 @@ namespace WpfRaziLedgerApp
             var item = list.FirstOrDefault(y => y.Tag?.ToString() == "حساب کل");
             if (item != null)
             {
-                tabcontrol.SelectedItem = item;
+                {tabcontrol.SelectedItem = item; if (sender is MyPublisher publisher) ((item.Content as Grid).Children[0] as FrameworkElement).Tag = sender;}
             }
             else            
-                AddTabWithTriangle("حساب کل", new winCol(),sender as RibbonButton, "Definitions/col.png");
+                AddTabWithTriangle("حساب کل", new winCol(),sender , "Definitions/col.png");
         }
 
         private void rbnMoein_Click(object sender, RoutedEventArgs e)
@@ -192,10 +210,10 @@ namespace WpfRaziLedgerApp
             var item = list.FirstOrDefault(y => y.Tag?.ToString() == "حساب معین");
             if (item != null)
             {
-                tabcontrol.SelectedItem = item;
+                {tabcontrol.SelectedItem = item; if (sender is MyPublisher publisher) ((item.Content as Grid).Children[0] as FrameworkElement).Tag = sender;}
             }
             else            
-                AddTabWithTriangle("حساب معین", new winMoein(),sender as RibbonButton, "Definitions/moeinPng.png");
+                AddTabWithTriangle("حساب معین", new winMoein(),sender , "Definitions/moeinPng.png");
         }
 
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -217,8 +235,10 @@ namespace WpfRaziLedgerApp
 
         private void tabcontrol_TabClosed(object sender, CloseTabEventArgs e)
         {
-            (e.TargetTabItem.Content as IDisposable)?.Dispose();
+            ((e.TargetTabItem.Content as Grid).Children[0] as IDisposable)?.Dispose();
             tabcontrol.Items.Remove(e.TargetTabItem);
+            /*if (DeskWindow.OpenTabs.FirstOrDefault(t => (t.Tag as Dictionary<RibbonButton, UserControl>).First().Value == (e.TargetTabItem.Content as Grid).Children[0]) is Border border)
+                DeskWindow.OpenTabs.Remove(border);*/
         }
 
         private void tabcontrol_TabClosing(object sender, CancelingRoutedEventArgs e)
@@ -239,6 +259,14 @@ namespace WpfRaziLedgerApp
 
         private void ribbon_RibbonStateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
+            //if (ribbon.SelectedItem is RibbonTab tab && tab.Name == "rbnPreview")
+            //{
+            //    ribbon.RibbonStateChanged -= ribbon_RibbonStateChanged;
+            //    ribbon.RibbonState = Syncfusion.Windows.Tools.RibbonState.Hide;
+            //    ribbon.RibbonStateChanged += ribbon_RibbonStateChanged;
+            //    row.Height = new GridLength();
+            //    return;
+            //}
             if(ribbon.RibbonState== Syncfusion.Windows.Tools.RibbonState.Hide)
             {
                 row.Height = new GridLength();
@@ -253,10 +281,10 @@ namespace WpfRaziLedgerApp
             var item = list.FirstOrDefault(y => y.Tag?.ToString() == "گروه تفضیلی");
             if (item != null)
             {
-                tabcontrol.SelectedItem = item;
+                {tabcontrol.SelectedItem = item; if (sender is MyPublisher publisher) ((item.Content as Grid).Children[0] as FrameworkElement).Tag = sender;}
             }
             else            
-                AddTabWithTriangle("گروه تفضیلی", new usrGroup(),sender as RibbonButton, "Definitions/preferentialGroup.png");
+                AddTabWithTriangle("گروه تفضیلی", new usrGroup(),sender , "Definitions/preferentialGroup.png");
         }
 
         private void rbnPreferential_Click(object sender, RoutedEventArgs e)
@@ -265,10 +293,10 @@ namespace WpfRaziLedgerApp
             var item = list.FirstOrDefault(y => y.Tag?.ToString() == "حساب تفضیلی");
             if (item != null)
             {
-                tabcontrol.SelectedItem = item;
+                {tabcontrol.SelectedItem = item; if (sender is MyPublisher publisher) ((item.Content as Grid).Children[0] as FrameworkElement).Tag = sender;}
             }
             else            
-                AddTabWithTriangle("حساب تفضیلی", new usrPreferential(),sender as RibbonButton, "Definitions/preferential.jpg");
+                AddTabWithTriangle("حساب تفضیلی", new usrPreferential(),sender , "Definitions/preferential.jpg");
         }
 
         private void rbnAgroup_Click(object sender, RoutedEventArgs e)
@@ -277,10 +305,10 @@ namespace WpfRaziLedgerApp
             var item = list.FirstOrDefault(y => y.Tag?.ToString() == "گروه حساب");
             if (item != null)
             {
-                tabcontrol.SelectedItem = item;
+                {tabcontrol.SelectedItem = item; if (sender is MyPublisher publisher) ((item.Content as Grid).Children[0] as FrameworkElement).Tag = sender;}
             }
             else            
-                AddTabWithTriangle("گروه حساب", new usrAgroup(),sender as RibbonButton, "Definitions/agroup.png");
+                AddTabWithTriangle("گروه حساب", new usrAgroup(),sender , "Definitions/agroup.png");
         }
 
         private void tabcontrol_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -295,10 +323,10 @@ namespace WpfRaziLedgerApp
             var item = list.FirstOrDefault(y => y.Tag?.ToString() == "نوع سند");
             if (item != null)
             {
-                tabcontrol.SelectedItem = item;
+                {tabcontrol.SelectedItem = item; if (sender is MyPublisher publisher) ((item.Content as Grid).Children[0] as FrameworkElement).Tag = sender;}
             }
             else            
-                AddTabWithTriangle("نوع سند", new usrAcType(),sender as RibbonButton, "Definitions/acTypecopy.png");
+                AddTabWithTriangle("نوع سند", new usrAcType(),sender , "Definitions/acTypecopy.png");
         }
 
         private void rbnAcDoc_Click(object sender, RoutedEventArgs e)
@@ -307,17 +335,30 @@ namespace WpfRaziLedgerApp
             var item = list.FirstOrDefault(y => y.Tag?.ToString() == "سند حسابداری");
             if (item != null)
             {
-                tabcontrol.SelectedItem = item;
+                {tabcontrol.SelectedItem = item; if (sender is MyPublisher publisher) ((item.Content as Grid).Children[0] as FrameworkElement).Tag = sender;}
             }
             else            
-                AddTabWithTriangle("سند حسابداری", new usrAccountDocument(),sender as RibbonButton, "Definitions/acDoc.png");
+                AddTabWithTriangle("سند حسابداری", new usrAccountDocument(),sender , "Definitions/acDoc.png");
         }
-
+        const byte VK_F2 = 0x71;
+        const uint KEYEVENTF_KEYUP = 0x0002;
+        [DllImport("user32.dll")]
+        public static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, UIntPtr dwExtraInfo);
         private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            if ((tabcontrol.SelectedItem as TabItemExt)?.Content is Grid grid2 && grid2.Children[0] is ITabEdidGrid usrAccountDocument)
+            if (e.Key == Key.Escape && (tabcontrol.SelectedItem as TabItemExt)?.Content is Grid grid2d && grid2d.Children[0] is ITabForm tabForm)
             {
-                if (usrAccountDocument.DataGridIsFocused && e.Key == Key.Enter)
+                tabForm.CloseForm();
+            }
+            else if (e.Key == Key.F5 && borderMiz.Visibility == Visibility.Visible)
+            {
+                var map = BuildRibbonButtonMap();
+                var desk = new DeskWindow(StatusOptions.User.Id, map);
+                desk.Show();
+            }
+            else if ((tabcontrol.SelectedItem as TabItemExt)?.Content is Grid grid2 && grid2.Children[0] is ITabEdidGrid usrAccountDocument)
+            {
+                if ((usrAccountDocument.DataGridIsFocused || (Keyboard.FocusedElement as FrameworkElement)?.GetParentOfType<Syncfusion.UI.Xaml.Grid.SfDataGrid>() is Syncfusion.UI.Xaml.Grid.SfDataGrid) && e.Key == Key.Enter)
                 {
                     usrAccountDocument.SetEnterToNextCell();
                     e.Handled = true;
@@ -341,20 +382,98 @@ namespace WpfRaziLedgerApp
 
                         method.Invoke(userControl, parameters);
                     }
+                    return;
+                }
+                if(Keyboard.IsKeyDown(Key.LeftCtrl) && Keyboard.IsKeyDown(Key.N))
+                {
+                    var focused = Keyboard.FocusedElement;
+                    var sfDataGrid = focused as Syncfusion.UI.Xaml.Grid.SfDataGrid
+                 ?? (focused as FrameworkElement)?.GetParentOfType<Syncfusion.UI.Xaml.Grid.SfDataGrid>();
+                    if (sfDataGrid?.SelectionController.CurrentCellManager?.CurrentCell is Syncfusion.UI.Xaml.Grid.DataColumn column && GetClick(column.GridColumn.MappingName) is string str0)
+                    {
+                        Type type = GetType();
+                        MethodInfo method = type.GetMethod(str0, BindingFlags.NonPublic | BindingFlags.Instance);
+
+                        if (method != null)
+                        {
+                            e.Handled = true;
+                            var rbn = FindName(str0.Replace("_Click", "")) as FrameworkElement;
+                            rbn.Tag = column.GridColumn;
+                            var my = new MyPublisher()
+                            {
+                                eventNav = new EventNav(rbn as RibbonButton, "")
+                            };
+                            object[] parameters = new object[] { my, null };
+
+                            Mouse.OverrideCursor = Cursors.Wait;
+                            method.Invoke(this, parameters);
+                            my.MyEvent += (s1, e1) =>
+                            {
+                                //textBox.Text = (e1 as EventNav).Message;
+                                dynamic y = null;
+                                var element = (sfDataGrid.SelectionController.CurrentCellManager.CurrentCell.Element as Syncfusion.UI.Xaml.Grid.GridCell)
+                                        .Content as FrameworkElement;
+                                y = element.DataContext;
+                                if (sfDataGrid.SelectedIndex == -1 || element is TextBlock)
+                                {
+                                    sfDataGrid.GetParentOfType<UserControl>().Tag = (e1 as EventNav).Message;                                    
+                                }                                
+                            };
+
+                            Mouse.OverrideCursor = null;
+                        }
+                    }
+                    else if (focused is TextBox textBox&&textBox.GetParentOfType<SfTextInputLayout>() is SfTextInputLayout sfTextInputLayout &&sfTextInputLayout.Tag is string str)
+                    {
+                        Type type = GetType();
+                        MethodInfo method = type.GetMethod(str, BindingFlags.NonPublic | BindingFlags.Instance);
+
+                        if (method != null)
+                        {
+                            e.Handled = true;
+                            var rbn = FindName(str.Replace("_Click", "")) as FrameworkElement;
+                            rbn.Tag = textBox;
+                            var my = new MyPublisher()
+                            {
+                                eventNav = new EventNav(rbn as RibbonButton, "")
+                            };
+                            object[] parameters = new object[] { my, null };
+
+                            Mouse.OverrideCursor = Cursors.Wait;
+                            method.Invoke(this, parameters);
+                            my.MyEvent += (s1, e1) =>
+                            {
+                                textBox.Text = (e1 as EventNav).Message;
+                                // Raise کردن LostFocus
+                                textBox.RaiseEvent(new RoutedEventArgs(UIElement.LostFocusEvent));
+                            };
+                            
+                            Mouse.OverrideCursor = null;
+                        }
+                    }
+
                 }
             }
         }
-
+        public string GetClick(string str)
+        { 
+            switch(str) 
+            {
+                case "CommodityCode":
+                    return "rbnDefinitionCommodity_Click";
+            }
+            return null;
+        }
         private void rbnBank_Click(object sender, RoutedEventArgs e)
         {
             var list = GetTabControlItems;
             var item = list.FirstOrDefault(y => y.Tag?.ToString() == "بانک");
             if (item != null)
             {
-                tabcontrol.SelectedItem = item;
+                {tabcontrol.SelectedItem = item; if (sender is MyPublisher publisher) ((item.Content as Grid).Children[0] as FrameworkElement).Tag = sender;}
             }
             else            
-                AddTabWithTriangle("بانک", new usrBank(),sender as RibbonButton, "Definitions/bank copy.png");
+                AddTabWithTriangle("بانک", new usrBank(),sender , "Definitions/bank2.png");
         }
 
         private void rbnRecieveMoney_Click(object sender, RoutedEventArgs e)
@@ -363,10 +482,10 @@ namespace WpfRaziLedgerApp
             var item = list.FirstOrDefault(y => y.Tag?.ToString() == "دریافت وجه");
             if (item != null)
             {
-                tabcontrol.SelectedItem = item;
+                {tabcontrol.SelectedItem = item; if (sender is MyPublisher publisher) ((item.Content as Grid).Children[0] as FrameworkElement).Tag = sender;}
             }
             else            
-                AddTabWithTriangle("دریافت وجه", new usrRecieveMoney(),sender as RibbonButton, "Definitions/recieveMoney.png");
+                AddTabWithTriangle("دریافت وجه", new usrRecieveMoney(),sender , "Definitions/recieveMoney4.png");
         }
 
         private void rbnPaymentMoney_Click(object sender, RoutedEventArgs e)
@@ -375,10 +494,10 @@ namespace WpfRaziLedgerApp
             var item = list.FirstOrDefault(y => y.Tag?.ToString() == "پرداخت وجه");
             if (item != null)
             {
-                tabcontrol.SelectedItem = item;
+                {tabcontrol.SelectedItem = item; if (sender is MyPublisher publisher) ((item.Content as Grid).Children[0] as FrameworkElement).Tag = sender;}
             }
             else            
-                AddTabWithTriangle("پرداخت وجه", new usrPaymentMoney(),sender as RibbonButton, "Definitions/recieveMoney.png");
+                AddTabWithTriangle("پرداخت وجه", new usrPaymentMoney(),sender , "Definitions/paymentMoney3.png");
         }
 
         private void rbnRecieveCheck_Click(object sender, RoutedEventArgs e)
@@ -387,10 +506,10 @@ namespace WpfRaziLedgerApp
             var item = list.FirstOrDefault(y => y.Tag?.ToString() == "چک های دریافتی");
             if (item != null)
             {
-                tabcontrol.SelectedItem = item;
+                {tabcontrol.SelectedItem = item; if (sender is MyPublisher publisher) ((item.Content as Grid).Children[0] as FrameworkElement).Tag = sender;}
             }
             else            
-                AddTabWithTriangle("چک های دریافتی", new usrRecieveCheck(), sender as RibbonButton, "Definitions/recieveCheck copy.png");
+                AddTabWithTriangle("چک های دریافتی", new usrRecieveCheck(), sender , "Definitions/recieveCheck.png");
         }
 
         private void rbnPaymentCheck_Click(object sender, RoutedEventArgs e)
@@ -399,10 +518,10 @@ namespace WpfRaziLedgerApp
             var item = list.FirstOrDefault(y => y.Tag?.ToString() == "چک های پرداختی");
             if (item != null)
             {
-                tabcontrol.SelectedItem = item;
+                {tabcontrol.SelectedItem = item; if (sender is MyPublisher publisher) ((item.Content as Grid).Children[0] as FrameworkElement).Tag = sender;}
             }
             else            
-                AddTabWithTriangle("چک های پرداختی", new usrPaymentCheck(), sender as RibbonButton, "Definitions/recieveCheck copy.png");
+                AddTabWithTriangle("چک های پرداختی", new usrPaymentCheck(), sender , "Definitions/paymentCheck.png");
         }
 
         private void rbnProvince_Click(object sender, RoutedEventArgs e)
@@ -410,12 +529,12 @@ namespace WpfRaziLedgerApp
             var list = GetTabControlItems;
             var item = list.FirstOrDefault(y => y.Tag?.ToString() == "استان");
             if (item != null)
-                tabcontrol.SelectedItem = item;
+                {tabcontrol.SelectedItem = item; if (sender is MyPublisher publisher) ((item.Content as Grid).Children[0] as FrameworkElement).Tag = sender;}
             else
-                AddTabWithTriangle("استان", new usrProvince(),sender as RibbonButton, "Commerce/province.jpg");
+                AddTabWithTriangle("استان", new usrProvince(),sender , "Commerce/province.jpg");
         }
     
-        private void AddTabWithTriangle(string header, UserControl userControl, RibbonButton tabItemExt,string imagename,bool isTringle=true)
+        private void AddTabWithTriangle(string header, UserControl userControl, object sender,string imagename,bool isTringle=true)
         {
             // ایجاد تب
             var headerPanel = new StackPanel
@@ -446,6 +565,7 @@ namespace WpfRaziLedgerApp
 
             // Container برای overlay کردن محتوا و مثلث
             var container = new Grid();
+            RibbonButton tabItemExt = null;
 
             // اضافه کردن محتوا (UserControl)
             container.Children.Add(userControl);
@@ -461,7 +581,13 @@ namespace WpfRaziLedgerApp
                     header = "معین";
                 if (header == "سند حسابداری")
                     header = " سند حسابداری";
-                var per = db.Permissions.Include(t => t.FkRibbonItem).FirstOrDefault(u => u.FkUserGroupId == StatusOptions.User.FkUserGroupId && u.FkRibbonItem.DisplayName == header && ((tabItemExt.Parent as RibbonBar).Parent as RibbonTab).Caption == u.FkRibbonItem.Category);
+                if (sender is MyPublisher publisher)
+                {
+                    tabItemExt = publisher.eventNav.MyRibbonButton;
+                }
+                else
+                    tabItemExt = sender as RibbonButton;
+                var per = db.Permissions.Include(t => t.FkRibbonItem).FirstOrDefault(u => u.FkUserGroupId == StatusOptions.User.FkUserGroupId && u.FkRibbonItem.DisplayName == header && u.FkRibbonItem.Category.Contains(((tabItemExt.Parent as RibbonBar).Parent as RibbonTab).Caption));
                 var btnSave = userControl.FindName("btnConfirm") as FrameworkElement;
                 var btnDelete = userControl.FindName("btnDelete") as FrameworkElement;
                 if (btnSave != null)
@@ -478,7 +604,7 @@ namespace WpfRaziLedgerApp
                         (btnSave.Parent as Grid).Visibility = Visibility.Collapsed;
                 }
 
-                // ایجاد مثلث سبز
+                // ایجاد مثلث آبی
                 var triangle = CreateGreenTriangle(per.CanInsert == true);
                 triangle.Tag = per;
                 triangle.VerticalAlignment = VerticalAlignment.Top;
@@ -497,6 +623,7 @@ namespace WpfRaziLedgerApp
                             : Visibility.Visible;
                         if (borderEditField.Visibility == Visibility.Visible)
                         {
+                            ((btnSave.Parent as Grid).Children[1] as Image).Source = new BitmapImage(new Uri("pack://application:,,,/Images/Save - Copy.png"));
                             if (per.CanModify == true)
                                 (btnSave.Parent as Grid).Visibility = Visibility.Visible;
                             else
@@ -504,6 +631,7 @@ namespace WpfRaziLedgerApp
                         }
                         else if (borderEditField.Visibility != Visibility.Visible)
                         {
+                            ((btnSave.Parent as Grid).Children[1] as Image).Source = new BitmapImage(new Uri("pack://application:,,,/Images/Save.png"));
                             if (per.CanInsert == true)
                                 (btnSave.Parent as Grid).Visibility = Visibility.Visible;
                             else
@@ -528,11 +656,21 @@ namespace WpfRaziLedgerApp
                                 : Visibility.Visible;
                     };
                 }
+                if (tabItemExt.Tag != null)
+                {
+                    //(userControl as IEventTools).MyEventh += MainWindow_MyEventh;
+                    userControl.Tag = sender;
+                }
             }
             // اضافه به تب‌ها
             item.Content = container;
             tabcontrol.Items.Add(item);
-            tabcontrol.SelectedItem = item;
+
+            /*if (DeskWindow.OpenTabs.FirstOrDefault(t => (t.Tag as Dictionary<RibbonButton, UserControl>).First().Key == tabItemExt) is Border border)
+            {
+                (border.Tag as Dictionary<RibbonButton, UserControl>)[tabItemExt] = userControl;
+                DeskWindow.CurrentTab = border;
+            }*/
         }
 
         private void btnDelete_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -587,8 +725,8 @@ namespace WpfRaziLedgerApp
             // انیمیشن رنگ (از سبز معمولی به سبز روشن‌تر و برگشت)
             var animation = new ColorAnimation
             {
-                From = green ? Colors.LimeGreen : Colors.MistyRose,
-                To = green ? Colors.LightGreen : Colors.Crimson,
+                From = green ? Colors.RoyalBlue : Colors.MistyRose,
+                To = green ? Colors.SkyBlue : Colors.Crimson,
                 Duration = TimeSpan.FromSeconds(0.6),
                 AutoReverse = true,
                 RepeatBehavior = RepeatBehavior.Forever
@@ -606,10 +744,10 @@ namespace WpfRaziLedgerApp
             var item = list.FirstOrDefault(y => y.Tag?.ToString() == "شهر");
             if (item != null)
             {
-                tabcontrol.SelectedItem = item;
+                {tabcontrol.SelectedItem = item; if (sender is MyPublisher publisher) ((item.Content as Grid).Children[0] as FrameworkElement).Tag = sender;}
             }
             else            
-                AddTabWithTriangle("شهر", new usrCity(),sender as RibbonButton, "Commerce/province.jpg");
+                AddTabWithTriangle("شهر", new usrCity(),sender , "Commerce/province.jpg");
         }
 
         private void rbnPriceGroup_Click(object sender, RoutedEventArgs e)
@@ -618,10 +756,10 @@ namespace WpfRaziLedgerApp
             var item = list.FirstOrDefault(y => y.Tag?.ToString() == "گروه قیمت");
             if (item != null)
             {
-                tabcontrol.SelectedItem = item;
+                {tabcontrol.SelectedItem = item; if (sender is MyPublisher publisher) ((item.Content as Grid).Children[0] as FrameworkElement).Tag = sender;}
             }
             else            
-                AddTabWithTriangle("گروه قیمت", new usrPriceGroup(),sender as RibbonButton, "Commerce/priceGroup.png");
+                AddTabWithTriangle("گروه قیمت", new usrPriceGroup(),sender , "Commerce/priceGroup.png");
         }
 
         private void rbnCustomerGroup_Click(object sender, RoutedEventArgs e)
@@ -630,10 +768,10 @@ namespace WpfRaziLedgerApp
             var item = list.FirstOrDefault(y => y.Tag?.ToString() == "گروه مشتریان");
             if (item != null)
             {
-                tabcontrol.SelectedItem = item;
+                {tabcontrol.SelectedItem = item; if (sender is MyPublisher publisher) ((item.Content as Grid).Children[0] as FrameworkElement).Tag = sender;}
             }
             else            
-                AddTabWithTriangle("گروه مشتریان", new usrCustomerGroup(),sender as RibbonButton, "Commerce/customerGroup.png");
+                AddTabWithTriangle("گروه مشتریان", new usrCustomerGroup(),sender , "Commerce/customerGroup.png");
         }
 
         private void rbnGroupStorage_Click(object sender, RoutedEventArgs e)
@@ -642,10 +780,10 @@ namespace WpfRaziLedgerApp
             var item = list.FirstOrDefault(y => y.Tag?.ToString() == "گروه انبار");
             if (item != null)
             {
-                tabcontrol.SelectedItem = item;
+                {tabcontrol.SelectedItem = item; if (sender is MyPublisher publisher) ((item.Content as Grid).Children[0] as FrameworkElement).Tag = sender;}
             }
             else            
-                AddTabWithTriangle("گروه انبار", new usrGroupStorage(),sender as RibbonButton, "Commerce/groupStorage.jpg");
+                AddTabWithTriangle("گروه انبار", new usrGroupStorage(),sender , "Commerce/groupStorage.jpg");
         }
 
         private void rbnDefinitionStorage_Click(object sender, RoutedEventArgs e)
@@ -654,10 +792,10 @@ namespace WpfRaziLedgerApp
             var item = list.FirstOrDefault(y => y.Tag?.ToString() == "انبار");
             if (item != null)
             {
-                tabcontrol.SelectedItem = item;
+                {tabcontrol.SelectedItem = item; if (sender is MyPublisher publisher) ((item.Content as Grid).Children[0] as FrameworkElement).Tag = sender;}
             }
             else            
-                AddTabWithTriangle("انبار", new usrStorage(),sender as RibbonButton, "Commerce/DefinitionStorage.png");
+                AddTabWithTriangle("انبار", new usrStorage(),sender , "Commerce/DefinitionStorage.png");
         }
 
         private void rbnUnit_Click(object sender, RoutedEventArgs e)
@@ -666,10 +804,10 @@ namespace WpfRaziLedgerApp
             var item = list.FirstOrDefault(y => y.Tag?.ToString() == "واحد اندازه گیری");
             if (item != null)
             {
-                tabcontrol.SelectedItem = item;
+                {tabcontrol.SelectedItem = item; if (sender is MyPublisher publisher) ((item.Content as Grid).Children[0] as FrameworkElement).Tag = sender;}
             }
             else            
-                AddTabWithTriangle("واحد اندازه گیری", new usrUnit(),sender as RibbonButton, "Commerce/unit.jpg");
+                AddTabWithTriangle("واحد اندازه گیری", new usrUnit(),sender , "Commerce/unit.jpg");
         }
 
         private void rbnGroupCommodity_Click(object sender, RoutedEventArgs e)
@@ -678,10 +816,10 @@ namespace WpfRaziLedgerApp
             var item = list.FirstOrDefault(y => y.Tag?.ToString() == "گروه کالا");
             if (item != null)
             {
-                tabcontrol.SelectedItem = item;
+                {tabcontrol.SelectedItem = item; if (sender is MyPublisher publisher) ((item.Content as Grid).Children[0] as FrameworkElement).Tag = sender;}
             }
             else
-                AddTabWithTriangle("گروه کالا", new usrGroupCommodity(),sender as RibbonButton, "Commerce/groupCommodity.jpg");
+                AddTabWithTriangle("گروه کالا", new usrGroupCommodity(),sender , "Commerce/groupCommodity.jpg");
         }
 
         private void rbnDefinitionCommodity_Click(object sender, RoutedEventArgs e)
@@ -690,10 +828,10 @@ namespace WpfRaziLedgerApp
             var item = list.FirstOrDefault(y => y.Tag?.ToString() == "کالا");
             if (item != null)
             {
-                tabcontrol.SelectedItem = item;
+                {tabcontrol.SelectedItem = item; if (sender is MyPublisher publisher) ((item.Content as Grid).Children[0] as FrameworkElement).Tag = sender;}
             }
             else            
-                AddTabWithTriangle("کالا", new usrCommodity(),sender as RibbonButton, "Commerce/commodity.png");
+                AddTabWithTriangle("کالا", new usrCommodity(),sender , "Commerce/commodity.png");
         }
 
         private void rbnCommodityPricingPanel_Click(object sender, RoutedEventArgs e)
@@ -702,10 +840,10 @@ namespace WpfRaziLedgerApp
             var item = list.FirstOrDefault(y => y.Tag?.ToString() == "پنل قیمت گذاری کالا");
             if (item != null)
             {
-                tabcontrol.SelectedItem = item;
+                {tabcontrol.SelectedItem = item; if (sender is MyPublisher publisher) ((item.Content as Grid).Children[0] as FrameworkElement).Tag = sender;}
             }
             else            
-                AddTabWithTriangle("پنل قیمت گذاری کالا", new usrCommodityPricingPanel(),sender as RibbonButton, "Commerce/commodityPricingPanel.jpg");
+                AddTabWithTriangle("پنل قیمت گذاری کالا", new usrCommodityPricingPanel(),sender , "Commerce/commodityPricingPanel.jpg");
         }
 
         private void rbnCodingReceiptTypes_Click(object sender, RoutedEventArgs e)
@@ -714,10 +852,10 @@ namespace WpfRaziLedgerApp
             var item = list.FirstOrDefault(y => y.Tag?.ToString() == "کدینگ انواع رسید");
             if (item != null)
             {
-                tabcontrol.SelectedItem = item;
+                {tabcontrol.SelectedItem = item; if (sender is MyPublisher publisher) ((item.Content as Grid).Children[0] as FrameworkElement).Tag = sender;}
             }
             else            
-                AddTabWithTriangle("کدینگ انواع رسید", new usrCodingReceiptTypes(),sender as RibbonButton, "Commerce/receiptTypes.jpg");
+                AddTabWithTriangle("کدینگ انواع رسید", new usrCodingReceiptTypes(),sender , "Commerce/receiptTypes.jpg");
         }
         private void rbnCodingTypesTransfer_Click(object sender, RoutedEventArgs e)
         {
@@ -725,10 +863,10 @@ namespace WpfRaziLedgerApp
             var item = list.FirstOrDefault(y => y.Tag?.ToString() == "کدینگ انواع حواله");
             if (item != null)
             {
-                tabcontrol.SelectedItem = item;
+                {tabcontrol.SelectedItem = item; if (sender is MyPublisher publisher) ((item.Content as Grid).Children[0] as FrameworkElement).Tag = sender;}
             }
             else            
-                AddTabWithTriangle("کدینگ انواع حواله", new usrCodingTypesTransfer(),sender as RibbonButton, "Commerce/receiptTypes.jpg");
+                AddTabWithTriangle("کدینگ انواع حواله", new usrCodingTypesTransfer(),sender , "Commerce/receiptTypes.jpg");
         }
 
         private void rbnStorageReceipt_Click(object sender, RoutedEventArgs e)
@@ -737,10 +875,10 @@ namespace WpfRaziLedgerApp
             var item = list.FirstOrDefault(y => y.Tag?.ToString() == "رسید انبار");
             if (item != null)
             {
-                tabcontrol.SelectedItem = item;
+                {tabcontrol.SelectedItem = item; if (sender is MyPublisher publisher) ((item.Content as Grid).Children[0] as FrameworkElement).Tag = sender;}
             }
             else            
-                AddTabWithTriangle("رسید انبار", new usrStorageReceipt(),sender as RibbonButton, "Commerce/storageReceipt.jpg");
+                AddTabWithTriangle("رسید انبار", new usrStorageReceipt(),sender , "Commerce/storageReceipt.jpg");
         }
 
         private void rbnStorageTransfer_Click(object sender, RoutedEventArgs e)
@@ -749,10 +887,10 @@ namespace WpfRaziLedgerApp
             var item = list.FirstOrDefault(y => y.Tag?.ToString() == "حواله انبار");
             if (item != null)
             {
-                tabcontrol.SelectedItem = item;
+                {tabcontrol.SelectedItem = item; if (sender is MyPublisher publisher) ((item.Content as Grid).Children[0] as FrameworkElement).Tag = sender;}
             }
             else            
-                AddTabWithTriangle("حواله انبار", new usrStorageTransfer(),sender as RibbonButton, "Commerce/storageReceipt.jpg");
+                AddTabWithTriangle("حواله انبار", new usrStorageTransfer(),sender , "Commerce/storageReceipt.jpg");
         }
 
         private void rbnStorageBetweenTransfer_Click(object sender, RoutedEventArgs e)
@@ -761,10 +899,10 @@ namespace WpfRaziLedgerApp
             var item = list.FirstOrDefault(y => y.Tag?.ToString() == "حواله بین انبار");
             if (item != null)
             {
-                tabcontrol.SelectedItem = item;
+                {tabcontrol.SelectedItem = item; if (sender is MyPublisher publisher) ((item.Content as Grid).Children[0] as FrameworkElement).Tag = sender;}
             }
             else            
-                AddTabWithTriangle("حواله بین انبار", new usrStorageBetweenTransfer(),sender as RibbonButton, "Commerce/storageBetweenTransfer.jpg");
+                AddTabWithTriangle("حواله بین انبار", new usrStorageBetweenTransfer(),sender , "Commerce/storageBetweenTransfer.jpg");
         }
 
         private void rbnStorageRotation_Click(object sender, RoutedEventArgs e)
@@ -773,10 +911,10 @@ namespace WpfRaziLedgerApp
             var item = list.FirstOrDefault(y => y.Tag?.ToString() == "انبارگردانی");
             if (item != null)
             {
-                tabcontrol.SelectedItem = item;
+                {tabcontrol.SelectedItem = item; if (sender is MyPublisher publisher) ((item.Content as Grid).Children[0] as FrameworkElement).Tag = sender;}
             }
             else            
-                AddTabWithTriangle("انبارگردانی", new usrStorageRotation(),sender as RibbonButton, "Commerce/StorageRotation.jpg");
+                AddTabWithTriangle("انبارگردانی", new usrStorageRotation(),sender , "Commerce/StorageRotation.jpg");
         }
 
         private void rbnNPStorage_Click(object sender, RoutedEventArgs e)
@@ -785,7 +923,7 @@ namespace WpfRaziLedgerApp
             var item = list.FirstOrDefault(y => y.Tag?.ToString() == "کسر و اضافات انبار");
             if (item != null)
             {
-                tabcontrol.SelectedItem = item;
+                {tabcontrol.SelectedItem = item; if (sender is MyPublisher publisher) ((item.Content as Grid).Children[0] as FrameworkElement).Tag = sender;}
             }
             else
             {
@@ -801,10 +939,10 @@ namespace WpfRaziLedgerApp
             var item = list.FirstOrDefault(y => y.Tag?.ToString() == "سفارش");
             if (item != null)
             {
-                tabcontrol.SelectedItem = item;
+                {tabcontrol.SelectedItem = item; if (sender is MyPublisher publisher) ((item.Content as Grid).Children[0] as FrameworkElement).Tag = sender;}
             }    
             else
-                AddTabWithTriangle("سفارش", new usrOrder(),sender as RibbonButton, "Commerce2/order.jpg");
+                AddTabWithTriangle("سفارش", new usrOrder(),sender , "Commerce2/order.jpg");
         }
 
         private void rbnPurchaseInvoice_Click(object sender, RoutedEventArgs e)
@@ -813,10 +951,10 @@ namespace WpfRaziLedgerApp
             var item = list.FirstOrDefault(y => y.Tag?.ToString() == "فاکتور خرید");
             if (item != null)
             {
-                tabcontrol.SelectedItem = item;
+                {tabcontrol.SelectedItem = item; if (sender is MyPublisher publisher) ((item.Content as Grid).Children[0] as FrameworkElement).Tag = sender;}
             }
             else            
-                AddTabWithTriangle("فاکتور خرید", new usrProductBuy(),sender as RibbonButton, "Commerce2/purchaseInvoice.jpg");
+                AddTabWithTriangle("فاکتور خرید", new usrProductBuy(),sender , "Commerce2/purchaseInvoice.jpg");
         }
 
         private void rbnSalesInvoice_Click(object sender, RoutedEventArgs e)
@@ -825,10 +963,10 @@ namespace WpfRaziLedgerApp
             var item = list.FirstOrDefault(y => y.Tag?.ToString() == "فاکتور فروش");
             if (item != null)
             {
-                tabcontrol.SelectedItem = item;
+                {tabcontrol.SelectedItem = item; if (sender is MyPublisher publisher) ((item.Content as Grid).Children[0] as FrameworkElement).Tag = sender;}
             }
             else            
-                AddTabWithTriangle("فاکتور فروش", new usrProductSell(),sender as RibbonButton, "Commerce2/salesInvoice.jpg");
+                AddTabWithTriangle("فاکتور فروش", new usrProductSell(),sender , "Commerce2/salesInvoice.jpg");
         }
 
         private void rbnSalesProforma_Click(object sender, RoutedEventArgs e)
@@ -837,22 +975,22 @@ namespace WpfRaziLedgerApp
             var item = list.FirstOrDefault(y => y.Tag?.ToString() == "پیش فاکتور فروش");
             if (item != null)
             {
-                tabcontrol.SelectedItem = item;
+                {tabcontrol.SelectedItem = item; if (sender is MyPublisher publisher) ((item.Content as Grid).Children[0] as FrameworkElement).Tag = sender;}
             }
             else            
-                AddTabWithTriangle("پیش فاکتور فروش", new usrPreInvoice(),sender as RibbonButton, "Commerce2/salesProforma.jpg");
+                AddTabWithTriangle("پیش فاکتور فروش", new usrPreInvoice(),sender , "Commerce2/salesProforma.jpg");
         }
 
         private void rbnConfiguration_Click(object sender, RoutedEventArgs e)
         {
             var list = GetTabControlItems;
-            var item = list.FirstOrDefault(y => y.Tag?.ToString() == "تنظیمات پیکربندی");
+            var item = list.FirstOrDefault(y => y.Tag?.ToString() == "چارچوب سیستم");
             if (item != null)
             {
-                tabcontrol.SelectedItem = item;
+                {tabcontrol.SelectedItem = item; if (sender is MyPublisher publisher) ((item.Content as Grid).Children[0] as FrameworkElement).Tag = sender;}
             }
             else
-                AddTabWithTriangle("تنظیمات پیکربندی", new usrSettingConfig(), sender as RibbonButton, "Definitions/configuration.png", false);            
+                AddTabWithTriangle("چارچوب سیستم", new usrSettingConfig(), sender , "Tools/configuration.png", false);            
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -862,7 +1000,13 @@ namespace WpfRaziLedgerApp
             {
                 e.Cancel = true;
                 this.Effect = null;
+                return;
             }
+            Dispatcher.BeginInvoke(new Action(async () =>
+            {
+                await Task.Delay(500);
+                Environment.Exit(0);
+            }));
         }
 
         private void rbnBrowseAccounts_Click(object sender, RoutedEventArgs e)
@@ -871,10 +1015,10 @@ namespace WpfRaziLedgerApp
             var item = list.FirstOrDefault(y => y.Tag?.ToString() == "مرور حساب ها");
             if (item != null)
             {
-                tabcontrol.SelectedItem = item;
+                {tabcontrol.SelectedItem = item; if (sender is MyPublisher publisher) ((item.Content as Grid).Children[0] as FrameworkElement).Tag = sender;}
             }
             else
-                AddTabWithTriangle("مرور حساب ها", new usrBrowseAccounts(), sender as RibbonButton, "reports/BrowseAccounts.jpg",false);            
+                AddTabWithTriangle("مرور حساب ها", new usrBrowseAccounts(), sender , "reports/BrowseAccounts.jpg",false);            
 
             //var report = new StiReport();
             //report.Load("Report.mrt");
@@ -894,10 +1038,10 @@ namespace WpfRaziLedgerApp
             var item = list.FirstOrDefault(y => y.Tag?.ToString() == "کاربر");
             if (item != null)
             {
-                tabcontrol.SelectedItem = item;
+                {tabcontrol.SelectedItem = item; if (sender is MyPublisher publisher) ((item.Content as Grid).Children[0] as FrameworkElement).Tag = sender;}
             }
             else            
-                AddTabWithTriangle("کاربر", new usrUser(),sender as RibbonButton, "Tools/User.png");
+                AddTabWithTriangle("کاربر", new usrUser(),sender , "Tools/User1.png");
         }
 
         private void rbnUserGroup_Click(object sender, RoutedEventArgs e)
@@ -906,10 +1050,10 @@ namespace WpfRaziLedgerApp
             var item = list.FirstOrDefault(y => y.Tag?.ToString() == "گروه کاربر");
             if (item != null)
             {
-                tabcontrol.SelectedItem = item;
+                {tabcontrol.SelectedItem = item; if (sender is MyPublisher publisher) ((item.Content as Grid).Children[0] as FrameworkElement).Tag = sender;}
             }
             else            
-                AddTabWithTriangle("گروه کاربر", new usrUserGroup(),sender as RibbonButton, "Tools/UserGroup.png");
+                AddTabWithTriangle("گروه کاربر", new usrUserGroup(),sender , "Tools/UserGroup1.png");
         }
 
         private void rbnPermissionManager_Click(object sender, RoutedEventArgs e)
@@ -918,10 +1062,10 @@ namespace WpfRaziLedgerApp
             var item = list.FirstOrDefault(y => y.Tag?.ToString() == "سطح دسترسی");
             if (item != null)
             {
-                tabcontrol.SelectedItem = item;
+                {tabcontrol.SelectedItem = item; if (sender is MyPublisher publisher) ((item.Content as Grid).Children[0] as FrameworkElement).Tag = sender;}
             }
             else
-                AddTabWithTriangle("سطح دسترسی", new usrPermissionManager(), sender as RibbonButton, "Tools/Premession.png",false);            
+                AddTabWithTriangle("سطح دسترسی", new usrPermissionManager(), sender , "Tools/Premession1.png",false);            
         }
 
         private void rbnConfiguration2_Click(object sender, RoutedEventArgs e)
@@ -964,10 +1108,10 @@ namespace WpfRaziLedgerApp
             var item = list.FirstOrDefault(y => y.Tag?.ToString() == "گزارش حواله خرید");
             if (item != null)
             {
-                tabcontrol.SelectedItem = item;
+                {tabcontrol.SelectedItem = item; if (sender is MyPublisher publisher) ((item.Content as Grid).Children[0] as FrameworkElement).Tag = sender;}
             }
             else
-                AddTabWithTriangle("گزارش حواله خرید", new usrBuyRemittance(), sender as RibbonButton, "reports/BuyRemittance.png",false);            
+                AddTabWithTriangle("گزارش حواله خرید", new usrBuyRemittance(), sender , "reports/BuyRemittance.png",false);            
         }
 
         private void rbnSellReport_Click(object sender, RoutedEventArgs e)
@@ -976,10 +1120,10 @@ namespace WpfRaziLedgerApp
             var item = list.FirstOrDefault(y => y.Tag?.ToString() == "گزارش فروش");
             if (item != null)
             {
-                tabcontrol.SelectedItem = item;
+                {tabcontrol.SelectedItem = item; if (sender is MyPublisher publisher) ((item.Content as Grid).Children[0] as FrameworkElement).Tag = sender;}
             }
             else
-                AddTabWithTriangle("گزارش فروش", new usrSellReport(), sender as RibbonButton, "", false);
+                AddTabWithTriangle("گزارش فروش", new usrSellReport(), sender , "reports/SellReport.png", false);
         }
 
         private void rbnSupport_Click(object sender, RoutedEventArgs e)
@@ -988,10 +1132,64 @@ namespace WpfRaziLedgerApp
             var item = list.FirstOrDefault(y => y.Tag?.ToString() == "پشتیبان");
             if (item != null)
             {
-                tabcontrol.SelectedItem = item;
+                {tabcontrol.SelectedItem = item; if (sender is MyPublisher publisher) ((item.Content as Grid).Children[0] as FrameworkElement).Tag = sender;}
             }
             else
-                AddTabWithTriangle("پشتیبان", new BackupRestoreControl(), sender as RibbonButton, "Tools/backup.png", false);
+                AddTabWithTriangle("پشتیبان", new BackupRestoreControl(), sender , "Tools/backup.png", false);
+        }
+        private Dictionary<Guid, RibbonButton> BuildRibbonButtonMap()
+        {
+            var map = new Dictionary<Guid, RibbonButton>();
+
+            // فرض: keyValuePairs قبلاً داری (RibbonButton -> RibbonItemId)
+            foreach (var kv in keyValuePairs)
+            {
+                map[kv.Value] = kv.Key;
+            }
+
+            return map;
+        }
+        private void rbnDoshboardSetting_Click(object sender, RoutedEventArgs e)
+        {
+            var list = GetTabControlItems;
+            var item = list.FirstOrDefault(y => y.Tag?.ToString() == "میز کار");
+            if (item != null)
+            {
+                { tabcontrol.SelectedItem = item; if (sender is MyPublisher publisher) ((item.Content as Grid).Children[0] as FrameworkElement).Tag = sender; }
+            }
+            else
+            {
+                var map = BuildRibbonButtonMap();
+                var settings = new DeskSettingsWindow(StatusOptions.User.Id, map);
+                AddTabWithTriangle("میز کار", settings, sender, "Tools/DoshboardSetting2.png", false);
+            }
+        }
+
+        private async void rbnPreview_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            //if (e.LeftButton != MouseButtonState.Pressed)
+            //    return;
+            //ribbon.Visibility= Visibility.Collapsed;
+            //var map = BuildRibbonButtonMap();
+            //var desk = new DeskWindow(StatusOptions.User.Id, map);
+            //desk.Show();
+            //await Dispatcher.BeginInvoke((Action)(async () =>
+            //{
+            //    await Task.Delay(100);
+            //    ribbon.Visibility= Visibility.Visible;
+            //    ribbon.RibbonStateChanged -= ribbon_RibbonStateChanged;
+            //    ribbon.RibbonState = Syncfusion.Windows.Tools.RibbonState.Hide;
+            //    ribbon.RibbonStateChanged += ribbon_RibbonStateChanged;
+            //    row.Height = new GridLength(); 
+            //}));
+        }
+        private void borderMiz_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton != MouseButtonState.Pressed)
+                return;
+            var map = BuildRibbonButtonMap();
+            var desk = new DeskWindow(StatusOptions.User.Id, map);
+            desk.Show();
         }
     }
 }

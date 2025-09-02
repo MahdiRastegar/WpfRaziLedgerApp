@@ -68,6 +68,12 @@ namespace WpfRaziLedgerApp
             datagrid.ItemsSource = M;
             datagrid.SearchHelper.AllowFiltering = true;
             txtGroupName.Focus();
+            datagrid.SortColumnDescriptions.Clear();
+            datagrid.SortColumnDescriptions.Add(new Syncfusion.UI.Xaml.Grid.SortColumnDescription()
+            {
+                ColumnName = "GroupCode",
+                SortDirection = System.ComponentModel.ListSortDirection.Ascending
+            });
         }
 
         private void btnConfirm_Click(object sender, RoutedEventArgs e)
@@ -223,10 +229,7 @@ namespace WpfRaziLedgerApp
         bool forceClose = false;
         private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            if(e.Key == Key.Escape)
-            {
-                CloseForm();
-            }
+            
         }
 
         private bool _iscancel = false;
@@ -343,7 +346,7 @@ namespace WpfRaziLedgerApp
             }
             forceClose = true;
             var list = MainWindow.Current.GetTabControlItems;
-            var item = list.FirstOrDefault(u => u.Header == "گروه حساب");
+            var item = list.FirstOrDefault(y => y.Tag?.ToString() == "گروه حساب");
             MainWindow.Current.tabcontrol.Items.Remove(item);
             return true;
         }

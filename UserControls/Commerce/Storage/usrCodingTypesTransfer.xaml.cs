@@ -241,10 +241,7 @@ namespace WpfRaziLedgerApp
         bool forceClose = false;
         private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            if(e.Key == Key.Escape)
-            {
-                CloseForm();
-            }
+            
         }
 
         private bool _iscancel = false;
@@ -363,7 +360,7 @@ namespace WpfRaziLedgerApp
             }
             forceClose = true;
             var list = MainWindow.Current.GetTabControlItems;
-            var item = list.FirstOrDefault(u => u.Header == "کدینگ انواع حواله");
+            var item = list.FirstOrDefault(y => y.Tag?.ToString() == "کدینگ انواع حواله");
             MainWindow.Current.tabcontrol.Items.Remove(item);
             return true;
         }

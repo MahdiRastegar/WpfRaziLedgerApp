@@ -792,7 +792,7 @@ namespace WpfRaziLedgerApp
         public bool CloseForm()
         {            
             var list = MainWindow.Current.GetTabControlItems;
-            var item = list.FirstOrDefault(u => u.Header == "مرور حساب ها");
+            var item = list.FirstOrDefault(y => y.Tag?.ToString() == "مرور حساب ها");
             MainWindow.Current.tabcontrol.Items.Remove(item);
             Dispatcher.BeginInvoke(new Action(() =>
             {

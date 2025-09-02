@@ -217,11 +217,8 @@ namespace WpfRaziLedgerApp
         bool forceClose = false;
         private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Escape)
-            {
-                CloseForm();
-            }
-            else if (e.Key == Key.F1)
+            
+            if (e.Key == Key.F1)
             {
                 if (txtCommodity.IsFocused && !txtCommodity.IsReadOnly)
                 {
@@ -482,7 +479,7 @@ namespace WpfRaziLedgerApp
             }
             forceClose = true;
             var list = MainWindow.Current.GetTabControlItems;
-            var item = list.FirstOrDefault(u => u.Header == "پنل قیمت گذاری کالا");
+            var item = list.FirstOrDefault(y => y.Tag?.ToString() == "پنل قیمت گذاری کالا");
             MainWindow.Current.tabcontrol.Items.Remove(item);
             return true;
         }

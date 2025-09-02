@@ -340,6 +340,12 @@ namespace WpfRaziLedgerApp
                 th.Start();
                 searchImage.Visibility = Visibility.Collapsed;
                 Xceed.Wpf.Toolkit.MessageBox.Show("اطلاعات اضافه شد.", "ثبت سفارش");
+                if (Tag != null)
+                {
+                    (Tag as MyPublisher).eventNav.Message = txtNoDocumen.Text;
+                    (Tag as MyPublisher).DoSomething();
+                    Tag = null;
+                }
                 searchImage.Visibility = Visibility.Visible;
                 this.gifImage.Visibility = Visibility.Collapsed;
                 txtNoDocumen.Text = (long.Parse(txtNoDocumen.Text) + 1).ToString();
@@ -586,10 +592,7 @@ namespace WpfRaziLedgerApp
         bool forceClose = false;
         private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Escape)
-            {
-                CloseForm();
-            }         
+                     
         }
 
         bool isCancel = true;
@@ -889,7 +892,7 @@ namespace WpfRaziLedgerApp
             }
             forceClose = true;
             var list = MainWindow.Current.GetTabControlItems;
-            var item = list.FirstOrDefault(u => u.Header == "سفارش");
+            var item = list.FirstOrDefault(y => y.Tag?.ToString() == "سفارش");
             MainWindow.Current.tabcontrol.Items.Remove(item);
             Dispatcher.BeginInvoke(new Action(() =>
             {

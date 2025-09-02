@@ -23,6 +23,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using WpfRaziLedgerApp.Interfaces;
+using WpfRaziLedgerApp.Utility;
 using WpfRaziLedgerApp.Windows.toolWindows;
 
 namespace WpfRaziLedgerApp
@@ -30,8 +31,11 @@ namespace WpfRaziLedgerApp
     /// <summary>
     /// Interaction logic for winCol.xaml
     /// </summary>
-    public partial class usrPreferential : UserControl,ITabForm
+    public partial class usrPreferential : UserControl,ITabForm,IEventTools
     {
+        public EventTools eventTools { get; set; }
+        public event EventHandler<EventTools> MyEventh;
+
         public usrPreferential()
         {
             Preferentials = new ObservableCollection<Preferential>();
@@ -98,6 +102,17 @@ namespace WpfRaziLedgerApp
             txtGroup.Focus();
             dataPager.Source = null;
             dataPager.Source = Preferentials;
+            datagrid.SortColumnDescriptions.Clear();
+            datagrid.SortColumnDescriptions.Add(new Syncfusion.UI.Xaml.Grid.SortColumnDescription()
+            {
+                ColumnName = "FkGroup.GroupCode",
+                SortDirection = System.ComponentModel.ListSortDirection.Ascending
+            });
+            datagrid.SortColumnDescriptions.Add(new Syncfusion.UI.Xaml.Grid.SortColumnDescription()
+            {
+                ColumnName = "PreferentialCode",
+                SortDirection = System.ComponentModel.ListSortDirection.Ascending
+            });
         }
 
         private void btnConfirm_Click(object sender, RoutedEventArgs e)
@@ -210,6 +225,12 @@ namespace WpfRaziLedgerApp
             {
                 e_add.FkCity = cmbCity.SelectedItem as City;
                 Xceed.Wpf.Toolkit.MessageBox.Show("اطلاعات اضافه شد.", "ثبت تفضیلی");
+                if (Tag != null)
+                {
+                    (Tag as MyPublisher).eventNav.Message = txtCodePreferential.Text;
+                    (Tag as MyPublisher).DoSomething();
+                    Tag = null;
+                }
                 txtCodePreferential.Text = (e_add.PreferentialCode + 1).ToString();
             }
             else
@@ -316,11 +337,8 @@ namespace WpfRaziLedgerApp
         bool forceClose = false;
         private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Escape)
-            {
-                CloseForm();
-            }
-            else if (e.Key == Key.F1 && txtGroup.IsFocused && !txtGroup.IsReadOnly)
+            
+            if (e.Key == Key.F1 && txtGroup.IsFocused && !txtGroup.IsReadOnly)
             {
                 if (window != null)
                     return;
@@ -370,6 +388,7 @@ namespace WpfRaziLedgerApp
                 gridContainer.IsEnabled = false;
             }
         }
+
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
@@ -549,7 +568,7 @@ namespace WpfRaziLedgerApp
             }
             if (listPreferentials.Contains(preferential.PreferentialCode.ToString()))
             {
-                Xceed.Wpf.Toolkit.MessageBox.Show("در تنظیمات پیکربندی از این تفضیل استفاده شده است و قابل حذف نیست!");
+                Xceed.Wpf.Toolkit.MessageBox.Show("در چارچوب سیستم از این تفضیل استفاده شده است و قابل حذف نیست!");
                 return;
             }
             db.Preferentials.Remove(preferential);
@@ -583,6 +602,7 @@ namespace WpfRaziLedgerApp
             isCancel = false;
         }
         public static Window window;
+
         private void TxtGroup_TextChanged(object sender, TextChangedEventArgs e)
         {
             isCancel = false;
@@ -636,7 +656,7 @@ namespace WpfRaziLedgerApp
             }
             forceClose = true;
             var list = MainWindow.Current.GetTabControlItems;
-            var item = list.FirstOrDefault(u => u.Header == "حساب تفضیلی");
+            var item = list.FirstOrDefault(y => y.Tag?.ToString() == "حساب تفضیلی");
             MainWindow.Current.tabcontrol.Items.Remove(item);
             return true;
         }

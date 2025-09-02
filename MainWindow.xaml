@@ -6,185 +6,246 @@
         xmlns:local="clr-namespace:WpfRaziLedgerApp" xmlns:Syncfusion="http://schemas.syncfusion.com/wpf"
         mc:Ignorable="d" Loaded="Window_Loaded" SizeChanged="Window_SizeChanged" Closing="Window_Closing"
         Title="صفحه اصلی" Height="450" Width="1150"  MinHeight="815" MinWidth="1130">
+    <!--xmlns:skin="clr-namespace:Syncfusion.SfSkinManager;assembly=Syncfusion.SfSkinManager.WPF"
+        skin:SfSkinManager.Theme="{skin:SkinManagerExtension ThemeName=Black}"-->
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Name="row" Height="160" MinHeight="45"/>
-            <RowDefinition/>
-            <RowDefinition Height="44"/>
-        </Grid.RowDefinitions>
-        <Syncfusion:Ribbon RibbonStateChanged="ribbon_RibbonStateChanged" FontSize="11.2" Panel.ZIndex="0" x:Name="ribbon" Syncfusion:Ribbon.IsAutoSizeFormEnabled="True" FlowDirection="RightToLeft"  RenderTransformOrigin="1,0" Margin="262,0,0,0">
-            <Syncfusion:Ribbon.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform ScaleX="1.3" ScaleY="1.3"/>
-                    <SkewTransform/>
-                    <RotateTransform/>
-                    <TranslateTransform Y="0"/>
-                </TransformGroup>
-            </Syncfusion:Ribbon.RenderTransform>
-            <Syncfusion:RibbonTab Name="rbnMain" Caption="تعاریف" IsChecked="True">
-                <Syncfusion:RibbonBar Name="New" Width="225" Header="حساب">
-                    <Syncfusion:RibbonButton  Name="rbnAgroup" Click="rbnAgroup_Click" SizeForm="Large" Label="گروه حساب" LargeIcon="/Images/Definitions/agroup.png"/>
-                    <Syncfusion:RibbonButton  Name="rbnCol" Click="rbnCol_Click" SizeForm="Large" Label="کل" LargeIcon="/Images/Definitions/col.png"/>
-                    <Syncfusion:RibbonButton Name="rbnMoein" Click="rbnMoein_Click" SizeForm="Large" Label="معین" LargeIcon="/Images/Definitions/moeinPng.png"/>
-                    <Syncfusion:RibbonSeparator/>
-                    <Syncfusion:RibbonButton Name="rbnGroup" Click="rbnGroup_Click" SizeForm="Large" Label="گروه تفضیلی" LargeIcon="/Images/Definitions/preferentialGroup.png"/>
-                    <Syncfusion:RibbonButton Name="rbnPreferential" Click="rbnPreferential_Click" SizeForm="Large" Label="تفضیلی" LargeIcon="/Images/Definitions/preferential.jpg"/>
-                </Syncfusion:RibbonBar>
-            </Syncfusion:RibbonTab>
-            <Syncfusion:RibbonTab Name="rbnCommerce2" Caption="خرید و فروش">
-                <Syncfusion:RibbonBar Name="barOperation2" Width="182" Header="عملیات">
-                    <Syncfusion:RibbonButton  Name="rbnOrder" Click="rbnOrder_Click" SizeForm="Large" Label="سفارش" LargeIcon="/Images/Commerce2/order.jpg"/>
-                    <Syncfusion:RibbonButton  Name="rbnPurchaseInvoice" Click="rbnPurchaseInvoice_Click" SizeForm="Large" Label="فاکتور خرید" LargeIcon="/Images/Commerce2/purchaseInvoice.png"/>
-                    <Syncfusion:RibbonButton Name="rbnSalesInvoice" Click="rbnSalesInvoice_Click" SizeForm="Large" Label="فاکتور فروش" LargeIcon="/Images/Commerce2/salesInvoice.png"/>
-                    <Syncfusion:RibbonButton Name="rbnSalesProforma" Click="rbnSalesProforma_Click" SizeForm="Large" Label="پیش فاکتور فروش" LargeIcon="/Images/Commerce2/salesProforma.png"/>
-                </Syncfusion:RibbonBar>
-            </Syncfusion:RibbonTab>
-            <Syncfusion:RibbonTab Name="rbnFinance" Caption="مالی">
-                <Syncfusion:RibbonBar Name="barOperation" Width="110" Header="عملیات">
-                    <Syncfusion:RibbonButton  Name="rbnAcDoc" Click="rbnAcDoc_Click" SizeForm="Large" Label=" سند حسابداری" LargeIcon="/Images/Definitions/acDoc.png"/>
-                    <Syncfusion:RibbonSeparator/>
-                    <Syncfusion:RibbonButton Name="rbnAcType" Click="rbnAcType_Click" SizeForm="Large" Label="نوع سند" LargeIcon="/Images/Definitions/acTypecopy.png"/>
-                </Syncfusion:RibbonBar>
-            </Syncfusion:RibbonTab>
-            <Syncfusion:RibbonTab Name="rbnTreasury" Caption="خزانه داری">
-                <Syncfusion:RibbonBar Name="barTreasury" Width="137" Header="">
-                    <Syncfusion:RibbonButton  Name="rbnBank" Click="rbnBank_Click" SizeForm="Large" Label="بانک" LargeIcon="/Images/Definitions/bank copy.png"/>
-                    <Syncfusion:RibbonSeparator/>
-                    <Syncfusion:RibbonButton Name="rbnRecieveMoney" Click="rbnRecieveMoney_Click" SizeForm="Large" Label="دریافت وجه" LargeIcon="/Images/Definitions/recieveMoney.png"/>
-                    <Syncfusion:RibbonButton Name="rbnPaymentMoney" Click="rbnPaymentMoney_Click" SizeForm="Large" Label="پرداخت وجه" LargeIcon="/Images/Definitions/recieveMoney.png"/>
-                </Syncfusion:RibbonBar>
-                <Syncfusion:RibbonBar Name="barTreasury1" Width="92" Header="">
-                    <Syncfusion:RibbonButton Name="rbnRecieveCheck" Click="rbnRecieveCheck_Click" SizeForm="Large" Label="چک های دریافتی" LargeIcon="/Images/Definitions/recieveCheck copy.png"/>
-                    <Syncfusion:RibbonButton Name="rbnPaymentCheck" Click="rbnPaymentCheck_Click" SizeForm="Large" Label="چک های پرداختی" LargeIcon="/Images/Definitions/recieveCheck copy.png"/>
-                </Syncfusion:RibbonBar>
-            </Syncfusion:RibbonTab>
-            <Syncfusion:RibbonTab Name="rbnCommerce1" Caption="کالا و انبار">
-                <Syncfusion:RibbonBar Name="barDefinitions" Width="215" Header="تعاریف ابتدایی">
-                    <Syncfusion:RibbonButton  Name="rbnProvince" Click="rbnProvince_Click" SizeForm="Large" Label="استان" LargeIcon="/Images/Commerce/province.png"/>
-                    <Syncfusion:RibbonButton  Name="rbnCity" Click="rbnCity_Click" SizeForm="Large" Label="شهر" LargeIcon="/Images/Commerce/province.png"/>
-                    <Syncfusion:RibbonSeparator/>
-                    <Syncfusion:RibbonButton Name="rbnPriceGroup" Click="rbnPriceGroup_Click" SizeForm="Large" Label="گروه قیمت"  LargeIcon="/Images/Commerce/priceGroup.png"/>
-                    <Syncfusion:RibbonButton Name="rbnPreferential1" Click="rbnPreferential_Click" SizeForm="Large" Label="تفضیلی" LargeIcon="/Images/Definitions/preferential.jpg"/>
-                    <Syncfusion:RibbonButton Name="rbnCustomerGroup" Click="rbnCustomerGroup_Click" SizeForm="Large" Label="گروه مشتریان"  LargeIcon="/Images/Commerce/customerGroup.png"/>
-                </Syncfusion:RibbonBar>
-                <Syncfusion:RibbonBar Name="barDefinitionStorage" Width="90" Header="تعریف انبار">
-                    <Syncfusion:RibbonButton  Name="rbnGroupStorage" Click="rbnGroupStorage_Click" SizeForm="Large" Label="گروه انبار"  LargeIcon="/Images/Commerce/groupStorage.png"/>
-                    <Syncfusion:RibbonButton  Name="rbnDefinitionStorage" Click="rbnDefinitionStorage_Click" SizeForm="Large" Label="انبار"  LargeIcon="/Images/Commerce/definitionStorage2.png"/>
-                </Syncfusion:RibbonBar>
-                <Syncfusion:RibbonBar Name="barCommodity" Width="180" Header="کالا">
-                    <Syncfusion:RibbonButton  Name="rbnUnit" Click="rbnUnit_Click" SizeForm="Large" Label="واحد اندازه گیری" LargeIcon="/Images/Commerce/unit.png"/>
-                    <Syncfusion:RibbonButton  Name="rbnGroupCommodity" Click="rbnGroupCommodity_Click" SizeForm="Large" Label="گروه کالا" LargeIcon="/Images/Commerce/groupCommodity.png"/>
-                    <Syncfusion:RibbonButton  Name="rbnDefinitionCommodity" Click="rbnDefinitionCommodity_Click" SizeForm="Large" Label="کالا" LargeIcon="/Images/Commerce/commodity.png"/>
-                    <Syncfusion:RibbonButton  Name="rbnCommodityPricingPanel" Click="rbnCommodityPricingPanel_Click" SizeForm="Large" Label="پنل قیمت گذاری کالا" LargeIcon="/Images/Commerce/commodityPricingPanel.png"/>
-                </Syncfusion:RibbonBar>
-                <Syncfusion:RibbonBar Name="barStorage" Width="275" Header="انبار">
-                    <Syncfusion:RibbonButton  Name="rbnCodingReceiptTypes" Click="rbnCodingReceiptTypes_Click" SizeForm="Large" Label="کدینگ انواع رسید" LargeIcon="/Images/Commerce/receiptTypes.jpg"/>
-                    <Syncfusion:RibbonButton  Name="rbnCodingTypesTransfer" Click="rbnCodingTypesTransfer_Click" SizeForm="Large" Label="کدینگ انواع حواله" LargeIcon="/Images/Commerce/receiptTypes.jpg"/>
-                    <Syncfusion:RibbonSeparator/>
-                    <Syncfusion:RibbonButton  Name="rbnStorageReceipt" Click="rbnStorageReceipt_Click" SizeForm="Large" Label="رسید انبار" LargeIcon="/Images/Commerce/storageReceipt.jpg"/>
-                    <Syncfusion:RibbonButton  Name="rbnStorageTransfer" Click="rbnStorageTransfer_Click" SizeForm="Large" Label="حواله انبار" LargeIcon="/Images/Commerce/storageReceipt.jpg"/>
-                    <Syncfusion:RibbonButton  Name="rbnStorageBetweenTransfer" Click="rbnStorageBetweenTransfer_Click" SizeForm="Large" Label="حواله بین انبار" LargeIcon="/Images/Commerce/storageBetweenTransfer.jpg"/>
-                    <Syncfusion:RibbonButton  Name="rbnStorageRotation" Click="rbnStorageRotation_Click" SizeForm="Large" Label="انبارگردانی" LargeIcon="/Images/Commerce/StorageRotation.png"/>
-                </Syncfusion:RibbonBar>
-            </Syncfusion:RibbonTab>
-            <Syncfusion:RibbonTab Name="rbnReports" Caption="گزارشات" >
-                <Syncfusion:RibbonBar Name="barReports" Width="145" Header="">
-                    <Syncfusion:RibbonButton  Name="rbnBrowseAccounts" Click="rbnBrowseAccounts_Click" SizeForm="Large" Label="مرور حساب ها" LargeIcon="/Images/reports/BrowseAccounts.jpg"/>
-                    <Syncfusion:RibbonButton  Name="rbnBuyRemittance" Click="rbnBuyRemittance_Click" SizeForm="Large" Label="گزارش حواله خرید" LargeIcon="/Images/reports/BuyRemittance.png"/>
-                    <Syncfusion:RibbonButton  Name="rbnSellReport" Click="rbnSellReport_Click" SizeForm="Large" Label="گزارش فروش"/>
-                </Syncfusion:RibbonBar>
-            </Syncfusion:RibbonTab>
-            <Syncfusion:RibbonTab Name="rbnSetting" Caption="امکانات">
-                <Syncfusion:RibbonBar Width="120" Header="تنظیمات برنامه">
-                    <Syncfusion:RibbonButton  Name="rbnConfiguration" Click="rbnConfiguration_Click" SizeForm="Large" Label="تنظیمات پیکربندی" LargeIcon="/Images/Definitions/configuration.png"/>
-                    <Syncfusion:RibbonButton  Name="rbnConfiguration2" Click="rbnConfiguration2_Click" SizeForm="Large" Label="نمایش فرم"/>
-                </Syncfusion:RibbonBar>
-                <Syncfusion:RibbonBar Width="175" Header="مدیریت برنامه">
-                    <Syncfusion:RibbonButton  Name="rbnUserGroup" Click="rbnUserGroup_Click" SizeForm="Large" Label="گروه کاربر" LargeIcon="/Images/Tools/UserGroup.png"/>
-                    <Syncfusion:RibbonButton  Name="rbnUser" Click="rbnUser_Click" SizeForm="Large" Label="کاربر" LargeIcon="/Images/Tools/User.png"/>
-                    <Syncfusion:RibbonButton  Name="rbnPermissionManager" Click="rbnPermissionManager_Click" SizeForm="Large" Label="سطح دسترسی" LargeIcon="/Images/Tools/Premession.png"/>
-                    <Syncfusion:RibbonButton  Name="rbnSupport" Click="rbnSupport_Click" SizeForm="Large" Label="پشتیبان" LargeIcon="/Images/Tools/backup.png"/>
-                </Syncfusion:RibbonBar>
-            </Syncfusion:RibbonTab>
-            
-        </Syncfusion:Ribbon>
-        <Syncfusion:TabControlExt Panel.ZIndex="1" FlowDirection="RightToLeft" SelectionChanged="tabcontrol_SelectionChanged" EnableLabelEdit="False" Margin="10 0 10 4" FontSize="16" Name="tabcontrol" Grid.Row="1" CloseButtonType="Extended" TabClosed="tabcontrol_TabClosed" TabClosing="tabcontrol_TabClosing">
-            <Syncfusion:TabControlExt.Background>
-                <ImageBrush ImageSource="pack://application:,,,/Images/RazyLogo.jpg" Stretch="Uniform">
-                    <ImageBrush.RelativeTransform>
-                        <TransformGroup>
-                            <ScaleTransform CenterY="0.5" CenterX="0.5" ScaleX="-1" ScaleY="1"/>
-                        </TransformGroup>
-                    </ImageBrush.RelativeTransform>
-                </ImageBrush>
-            </Syncfusion:TabControlExt.Background>
-        </Syncfusion:TabControlExt>
-        <Image Name="gifImage" Visibility="Collapsed" Width="192" Height="108" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="250,80,0,0" />
-        <Syncfusion:RibbonStatusBar Name="statusBar" x:FieldModifier="public" Grid.Row="2" Height="42" DockPanel.Dock="Bottom">
-            <StatusBarItem Margin="5" HorizontalContentAlignment="Stretch">
-                <Grid FlowDirection="RightToLeft">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1.5*"/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <Border Width="3" Background="#FF9CB3D0" Opacity=".8"  HorizontalAlignment="Right" BorderThickness="1 0 0 1" BorderBrush="#FF798AA0" Margin="0 -7.54 8 -5" />
-                    <Border Grid.Column="1" Visibility="Collapsed" Width="3" Background="#FF9CB3D0" Opacity=".8"  HorizontalAlignment="Right" BorderThickness="1 0 0 1" BorderBrush="#FF798AA0" Margin="0 -7.54 10 -5" />
-                    <Border Grid.Column="2" Width="3" Background="#FF9CB3D0" Opacity=".8"  HorizontalAlignment="Right" BorderThickness="1 0 0 1" BorderBrush="#FF798AA0" Margin="0 -7.54 10 -5" />
-                    <Border Grid.Column="3" Width="3" Background="#FF9CB3D0" Opacity=".8"  HorizontalAlignment="Right" BorderThickness="1 0 0 1" BorderBrush="#FF798AA0" Margin="0 -7.54 10 -5" />
-                    <Border Grid.Column="4" Width="3" Background="#FF9CB3D0" Opacity=".8"  HorizontalAlignment="Right" BorderThickness="1 0 0 1" BorderBrush="#FF798AA0" Margin="0 -7.54 10 -5" />
-                    <Border Grid.Column="0" Margin="-10 -8 13 -5" Opacity=".5">
-                        <Border.Background>
-                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                <GradientStop Color="#FFF3E5FF"/>
-                                <GradientStop Color="#FF5A4835" Offset="1"/>
+        <Border Width="70" Name="borderMiz" Height="30" CornerRadius="4" Margin="0 0 632 0" PreviewMouseDown="borderMiz_PreviewMouseDown" ToolTip="F5"
+        VerticalAlignment="Top" HorizontalAlignment="Right" Panel.ZIndex="10">
+            <Border.Style>
+                <Style TargetType="Border">
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                <GradientStop Color="#99194C50" Offset="0"/>
+                                <GradientStop Color="#B2006F62" Offset="1"/>
                             </LinearGradientBrush>
-                        </Border.Background>
-                    </Border>
-                    <DockPanel  Grid.Column="0">
-                        <TextBlock Text="دوره مالی : " FontSize="18"/>
-                        <TextBlock Text="{Binding StatusOptions.Period.Name, RelativeSource={RelativeSource AncestorType=Window}}" FontSize="18"/>
-                    </DockPanel>
-                    <Border Grid.Column="1" Grid.ColumnSpan="2" Margin="-8 -8 13 -5" Opacity=".5">
-                        <Border.Background>
-                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                <GradientStop Color="#FF3E6BA4"/>
-                                <GradientStop Color="#FFC26EFF" Offset="1"/>
-                            </LinearGradientBrush>
-                        </Border.Background>
-                    </Border>
-                    <Border Grid.Column="3" Margin="-10 -8 13 -5" Opacity="1">
-                        <Border.Background>
-                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                <GradientStop Color="#FFBB7248" Offset="1"/>
-                                <GradientStop Color="#FFFBE8B3" Offset="0"/>
-                                <GradientStop Color="#FFDDDE87" Offset="0.513"/>
-                            </LinearGradientBrush>
-                        </Border.Background>
-                    </Border>
-                    
-                    <TextBlock Text="سیستم بازرگانی رازی" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" Margin="-30 0 0 0" FontSize="20" FontWeight="Bold">
-                        <TextBlock.Foreground>
-                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                <GradientStop Color="#FF001054"/>
-                                <GradientStop Color="#FF9A0937" Offset="0.715"/>
-                                <GradientStop Color="#FF2A2548" Offset="0.483"/>
-                                <GradientStop Color="#FF5377A7" Offset="1"/>
-                            </LinearGradientBrush>
-                        </TextBlock.Foreground>
-                    </TextBlock>
-                    <DockPanel  Grid.Column="5">
-                        <TextBlock Text="تاریخ : " FontSize="18"/>
-                        <TextBlock Name="txbDate" Text="{Binding StatusOptions.Date, RelativeSource={RelativeSource AncestorType=Window}}" FontSize="18"/>
-                    </DockPanel>
-                    <DockPanel  Grid.Column="3" HorizontalAlignment="Center" Margin="0 0 40 0">
-                        <TextBlock Text="کاربر : " FontFamily="B nazanin" FontSize="18"/>
-                        <TextBlock FontFamily="B nazanin" Text="{Binding StatusOptions.User.UserName, RelativeSource={RelativeSource AncestorType=Window}}" FontSize="18"/>
-                    </DockPanel>
-                    <!--<DockPanel  Grid.Column="4">
+                        </Setter.Value>
+                    </Setter>
+
+                    <!-- وقتی موس روی دکمه میاد -->
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background">
+                                <Setter.Value>
+                                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                        <GradientStop Color="#994B8C85" Offset="0"/>
+                                        <GradientStop Color="#993A4E9E" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+        </Border>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Name="row" Height="160" MinHeight="45"/>
+                <RowDefinition/>
+                <RowDefinition Height="44"/>
+            </Grid.RowDefinitions>
+            <Syncfusion:Ribbon RibbonStateChanged="ribbon_RibbonStateChanged" FontSize="11.2" Panel.ZIndex="0" x:Name="ribbon" Syncfusion:Ribbon.IsAutoSizeFormEnabled="True" FlowDirection="RightToLeft"  RenderTransformOrigin="1,0" Margin="262,0,0,0">
+                <Syncfusion:Ribbon.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform ScaleX="1.3" ScaleY="1.3"/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform Y="0"/>
+                    </TransformGroup>
+                </Syncfusion:Ribbon.RenderTransform>
+                <Syncfusion:RibbonTab Name="rbnMain" Caption="تعاریف"  IsChecked="True">
+                    <Syncfusion:RibbonBar Name="New" Width="241" Header="حساب">
+                        <Syncfusion:RibbonButton  Name="rbnAgroup" Click="rbnAgroup_Click" SizeForm="Large" Label="گروه حساب" LargeIcon="/Images/Definitions/agroup.png"/>
+                        <Syncfusion:RibbonSeparator/>
+                        <Syncfusion:RibbonButton  Name="rbnCol" Click="rbnCol_Click" SizeForm="Large" Label="کل" LargeIcon="/Images/Definitions/col.png"/>
+                        <Syncfusion:RibbonSeparator/>
+                        <Syncfusion:RibbonButton Name="rbnMoein" Click="rbnMoein_Click" SizeForm="Large" Label="معین" LargeIcon="/Images/Definitions/moeinPng.png"/>
+                        <Syncfusion:RibbonSeparator/>
+                        <Syncfusion:RibbonButton Name="rbnGroup" Click="rbnGroup_Click" SizeForm="Large" Label="گروه تفضیلی" LargeIcon="/Images/Definitions/preferentialGroup.png"/>
+                        <Syncfusion:RibbonSeparator/>
+                        <Syncfusion:RibbonButton Name="rbnPreferential" Click="rbnPreferential_Click" SizeForm="Large" Label="تفضیلی" LargeIcon="/Images/Definitions/preferential.jpg"/>
+                    </Syncfusion:RibbonBar>
+                </Syncfusion:RibbonTab>
+                <Syncfusion:RibbonTab Name="rbnCommerce2" Caption="خرید و فروش">
+                    <Syncfusion:RibbonBar Name="barOperation2" Width="206" Header="عملیات">
+                        <Syncfusion:RibbonButton  Name="rbnOrder" Click="rbnOrder_Click" SizeForm="Large" Label="سفارش" LargeIcon="/Images/Commerce2/order.jpg"/>
+                        <Syncfusion:RibbonSeparator/>
+                        <Syncfusion:RibbonButton  Name="rbnPurchaseInvoice" Click="rbnPurchaseInvoice_Click" SizeForm="Large" Label="فاکتور خرید" LargeIcon="/Images/Commerce2/purchaseInvoice.png"/>
+                        <Syncfusion:RibbonSeparator/>
+                        <Syncfusion:RibbonButton Name="rbnSalesInvoice" Click="rbnSalesInvoice_Click" SizeForm="Large" Label="فاکتور فروش" LargeIcon="/Images/Commerce2/salesInvoice.png"/>
+                        <Syncfusion:RibbonSeparator/>
+                        <Syncfusion:RibbonButton Name="rbnSalesProforma" Click="rbnSalesProforma_Click" SizeForm="Large" Label="پیش فاکتور فروش" LargeIcon="/Images/Commerce2/salesProforma.png"/>
+                    </Syncfusion:RibbonBar>
+                </Syncfusion:RibbonTab>
+                <Syncfusion:RibbonTab Name="rbnFinance" Caption="مالی">
+                    <Syncfusion:RibbonBar Name="barOperation" Width="105" Header="عملیات">
+                        <Syncfusion:RibbonButton  Name="rbnAcDoc" Click="rbnAcDoc_Click" SizeForm="Large" Label=" سند حسابداری" LargeIcon="/Images/Definitions/acDoc.png"/>
+                        <Syncfusion:RibbonSeparator/>
+                        <Syncfusion:RibbonButton Name="rbnAcType" Click="rbnAcType_Click" SizeForm="Large" Label="نوع سند" LargeIcon="/Images/Definitions/acTypecopy.png"/>
+                    </Syncfusion:RibbonBar>
+                </Syncfusion:RibbonTab>
+                <Syncfusion:RibbonTab Name="rbnTreasury" Caption="خزانه داری">
+                    <Syncfusion:RibbonBar Name="barTreasury" Width="145" Header="">
+                        <Syncfusion:RibbonButton  Name="rbnBank" Click="rbnBank_Click" SizeForm="Large" Label="بانک" LargeIcon="/Images/Definitions/bank2.png"/>
+                        <Syncfusion:RibbonSeparator/>
+                        <Syncfusion:RibbonButton Name="rbnRecieveMoney" Click="rbnRecieveMoney_Click" SizeForm="Large" Label="دریافت وجه" LargeIcon="/Images/Definitions/recieveMoney4.png"/>
+                        <Syncfusion:RibbonSeparator/>
+                        <Syncfusion:RibbonButton Name="rbnPaymentMoney" Click="rbnPaymentMoney_Click" SizeForm="Large" Label="پرداخت وجه" LargeIcon="/Images/Definitions/paymentMoney3.png"/>
+                    </Syncfusion:RibbonBar>
+                    <Syncfusion:RibbonBar Name="barTreasury1" Width="100" Header="">
+                        <Syncfusion:RibbonButton Name="rbnRecieveCheck" Click="rbnRecieveCheck_Click" SizeForm="Large" Label="چک های دریافتی" LargeIcon="/Images/Definitions/recieveCheck.png"/>
+                        <Syncfusion:RibbonSeparator/>
+                        <Syncfusion:RibbonButton Name="rbnPaymentCheck" Click="rbnPaymentCheck_Click" SizeForm="Large" Label="چک های پرداختی" LargeIcon="/Images/Definitions/paymentCheck.png"/>
+                    </Syncfusion:RibbonBar>
+                </Syncfusion:RibbonTab>
+                <Syncfusion:RibbonTab Name="rbnCommerce1" Caption="انبار">
+                    <Syncfusion:RibbonBar Name="barDefinitions" Width="240" Header="تعاریف ابتدایی">
+                        <Syncfusion:RibbonButton  Name="rbnProvince" Click="rbnProvince_Click" SizeForm="Large" Label="استان" LargeIcon="/Images/Commerce/province.png"/>
+                        <Syncfusion:RibbonSeparator/>
+                        <Syncfusion:RibbonButton  Name="rbnCity" Click="rbnCity_Click" SizeForm="Large" Label="شهر" LargeIcon="/Images/Commerce/province.png"/>
+                        <Syncfusion:RibbonSeparator/>
+                        <Syncfusion:RibbonButton Name="rbnPriceGroup" Click="rbnPriceGroup_Click" SizeForm="Large" Label="گروه قیمت"  LargeIcon="/Images/Commerce/priceGroup.png"/>
+                        <Syncfusion:RibbonSeparator/>
+                        <Syncfusion:RibbonButton Name="rbnPreferential1" Click="rbnPreferential_Click" SizeForm="Large" Label="تفضیلی" LargeIcon="/Images/Definitions/preferential.jpg"/>
+                        <Syncfusion:RibbonSeparator/>
+                        <Syncfusion:RibbonButton Name="rbnCustomerGroup" Click="rbnCustomerGroup_Click" SizeForm="Large" Label="گروه مشتریان"  LargeIcon="/Images/Commerce/customerGroup.png"/>
+                    </Syncfusion:RibbonBar>
+                    <Syncfusion:RibbonBar Name="barDefinitionStorage" Width="95" Header="تعریف انبار">
+                        <Syncfusion:RibbonButton  Name="rbnGroupStorage" Click="rbnGroupStorage_Click" SizeForm="Large" Label="گروه انبار"  LargeIcon="/Images/Commerce/groupStorage.png"/>
+                        <Syncfusion:RibbonSeparator/>
+                        <Syncfusion:RibbonButton  Name="rbnDefinitionStorage" Click="rbnDefinitionStorage_Click" SizeForm="Large" Label="انبار"  LargeIcon="/Images/Commerce/definitionStorage2.png"/>
+                    </Syncfusion:RibbonBar>
+                    <Syncfusion:RibbonBar Name="barCommodity" Width="204" Header="کالا">
+                        <Syncfusion:RibbonButton  Name="rbnUnit" Click="rbnUnit_Click" SizeForm="Large" Label="واحد اندازه گیری" LargeIcon="/Images/Commerce/unit.png"/>
+                        <Syncfusion:RibbonSeparator/>
+                        <Syncfusion:RibbonButton  Name="rbnGroupCommodity" Click="rbnGroupCommodity_Click" SizeForm="Large" Label="گروه کالا" LargeIcon="/Images/Commerce/groupCommodity.png"/>
+                        <Syncfusion:RibbonSeparator/>
+                        <Syncfusion:RibbonButton  Name="rbnDefinitionCommodity" Click="rbnDefinitionCommodity_Click" SizeForm="Large" Label="کالا" LargeIcon="/Images/Commerce/commodity.png"/>
+                        <Syncfusion:RibbonSeparator/>
+                        <Syncfusion:RibbonButton  Name="rbnCommodityPricingPanel" Click="rbnCommodityPricingPanel_Click" SizeForm="Large" Label="پنل قیمت گذاری کالا" LargeIcon="/Images/Commerce/commodityPricingPanel.png"/>
+                    </Syncfusion:RibbonBar>
+                    <Syncfusion:RibbonBar Name="barStorage" Width="307" Header="انبار">
+                        <Syncfusion:RibbonButton  Name="rbnCodingReceiptTypes" Click="rbnCodingReceiptTypes_Click" SizeForm="Large" Label="کدینگ انواع رسید" LargeIcon="/Images/Commerce/receiptTypes.jpg"/>
+                        <Syncfusion:RibbonSeparator/>
+                        <Syncfusion:RibbonButton  Name="rbnCodingTypesTransfer" Click="rbnCodingTypesTransfer_Click" SizeForm="Large" Label="کدینگ انواع حواله" LargeIcon="/Images/Commerce/receiptTypes.jpg"/>
+                        <Syncfusion:RibbonSeparator/>
+                        <Syncfusion:RibbonButton  Name="rbnStorageReceipt" Click="rbnStorageReceipt_Click" SizeForm="Large" Label="رسید انبار" LargeIcon="/Images/Commerce/storageReceipt.jpg"/>
+                        <Syncfusion:RibbonSeparator/>
+                        <Syncfusion:RibbonButton  Name="rbnStorageTransfer" Click="rbnStorageTransfer_Click" SizeForm="Large" Label="حواله انبار" LargeIcon="/Images/Commerce/storageReceipt.jpg"/>
+                        <Syncfusion:RibbonSeparator/>
+                        <Syncfusion:RibbonButton  Name="rbnStorageBetweenTransfer" Click="rbnStorageBetweenTransfer_Click" SizeForm="Large" Label="حواله بین انبار" LargeIcon="/Images/Commerce/storageBetweenTransfer.jpg"/>
+                        <Syncfusion:RibbonSeparator/>
+                        <Syncfusion:RibbonButton  Name="rbnStorageRotation" Click="rbnStorageRotation_Click" SizeForm="Large" Label="انبارگردانی" LargeIcon="/Images/Commerce/StorageRotation.png"/>
+                    </Syncfusion:RibbonBar>
+                </Syncfusion:RibbonTab>
+                <Syncfusion:RibbonTab Name="rbnReports" Caption="گزارشات">
+                    <Syncfusion:RibbonBar Name="barReports" Width="155" Header="">
+                        <Syncfusion:RibbonButton  Name="rbnBrowseAccounts" Click="rbnBrowseAccounts_Click" SizeForm="Large" Label="مرور حساب ها" LargeIcon="/Images/reports/BrowseAccounts.jpg"/>
+                        <Syncfusion:RibbonSeparator/>
+                        <Syncfusion:RibbonButton  Name="rbnBuyRemittance" Click="rbnBuyRemittance_Click" SizeForm="Large" Label="گزارش حواله خرید" LargeIcon="/Images/reports/BuyRemittance.png"/>
+                        <Syncfusion:RibbonSeparator/>
+                        <Syncfusion:RibbonButton  Name="rbnSellReport" Click="rbnSellReport_Click" SizeForm="Large" Label="گزارش فروش" LargeIcon="/Images/reports/SellReport.png"/>
+                    </Syncfusion:RibbonBar>
+                </Syncfusion:RibbonTab>
+                <Syncfusion:RibbonTab Name="rbnSetting" Caption="امکانات">
+                    <Syncfusion:RibbonBar Width="105" Header="تنظیمات برنامه">
+                        <Syncfusion:RibbonButton  Name="rbnConfiguration" Click="rbnConfiguration_Click" SizeForm="Large" Label="چارچوب سیستم" LargeIcon="/Images/Tools/configuration.png"/>
+                        <Syncfusion:RibbonButton  Name="rbnDoshboardSetting" Click="rbnDoshboardSetting_Click" SizeForm="Large" Label="میز کار" LargeIcon="/Images/Tools/DoshboardSetting2.png"/>
+                    </Syncfusion:RibbonBar>
+                    <Syncfusion:RibbonBar Width="195" Header="مدیریت برنامه">
+                        <Syncfusion:RibbonButton  Name="rbnUserGroup" Click="rbnUserGroup_Click" SizeForm="Large" Label="گروه کاربر" LargeIcon="/Images/Tools/UserGroup1.png"/>
+                        <Syncfusion:RibbonSeparator/>
+                        <Syncfusion:RibbonButton  Name="rbnUser" Click="rbnUser_Click" SizeForm="Large" Label="کاربر" LargeIcon="/Images/Tools/User1.png"/>
+                        <Syncfusion:RibbonSeparator/>
+                        <Syncfusion:RibbonButton  Name="rbnPermissionManager" Click="rbnPermissionManager_Click" SizeForm="Large" Label="سطح دسترسی" LargeIcon="/Images/Tools/Premession1.png"/>
+                        <Syncfusion:RibbonSeparator/>
+                        <Syncfusion:RibbonButton  Name="rbnSupport" Click="rbnSupport_Click" SizeForm="Large" Label="پشتیبان" LargeIcon="/Images/Tools/backup.png"/>
+                    </Syncfusion:RibbonBar>
+                </Syncfusion:RibbonTab>
+                <Syncfusion:RibbonTab IsHitTestVisible="False" Caption="میز کار" Name="rbnPreview" ToolTip="F5" PreviewMouseDown="rbnPreview_PreviewMouseDown">
+                </Syncfusion:RibbonTab>
+                <!--<Syncfusion:Ribbon.ContextTabGroups>
+                <Syncfusion:ContextTabGroup Label="F8" Name="rbnDoshboard" IsGroupVisible="True" BackColor="#FF3E110A">
+                </Syncfusion:ContextTabGroup>
+            </Syncfusion:Ribbon.ContextTabGroups>-->
+            </Syncfusion:Ribbon>
+            <Syncfusion:TabControlExt Panel.ZIndex="1" FlowDirection="RightToLeft" SelectionChanged="tabcontrol_SelectionChanged" EnableLabelEdit="False" Margin="5 0 5 4" FontSize="16" Name="tabcontrol" Grid.Row="1" CloseButtonType="Extended" TabClosed="tabcontrol_TabClosed" TabClosing="tabcontrol_TabClosing">
+                <Syncfusion:TabControlExt.Background>
+                    <ImageBrush ImageSource="pack://application:,,,/Images/RazyLogo.jpg" Stretch="Uniform">
+                        <ImageBrush.RelativeTransform>
+                            <TransformGroup>
+                                <ScaleTransform CenterY="0.5" CenterX="0.5" ScaleX="-1" ScaleY="1"/>
+                            </TransformGroup>
+                        </ImageBrush.RelativeTransform>
+                    </ImageBrush>
+                </Syncfusion:TabControlExt.Background>
+            </Syncfusion:TabControlExt>
+            <Image Name="gifImage" Visibility="Collapsed" Width="192" Height="108" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="250,80,0,0" />
+            <Syncfusion:RibbonStatusBar Name="statusBar" x:FieldModifier="public" Grid.Row="2" Height="42" DockPanel.Dock="Bottom">
+                <StatusBarItem Margin="5" HorizontalContentAlignment="Stretch">
+                    <Grid FlowDirection="RightToLeft">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1.5*"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Border Width="3" Background="#FF9CB3D0" Opacity=".8"  HorizontalAlignment="Right" BorderThickness="1 0 0 1" BorderBrush="#FF798AA0" Margin="0 -7.54 8 -5" />
+                        <Border Grid.Column="1" Visibility="Collapsed" Width="3" Background="#FF9CB3D0" Opacity=".8"  HorizontalAlignment="Right" BorderThickness="1 0 0 1" BorderBrush="#FF798AA0" Margin="0 -7.54 10 -5" />
+                        <Border Grid.Column="2" Width="3" Background="#FF9CB3D0" Opacity=".8"  HorizontalAlignment="Right" BorderThickness="1 0 0 1" BorderBrush="#FF798AA0" Margin="0 -7.54 10 -5" />
+                        <Border Grid.Column="3" Width="3" Background="#FF9CB3D0" Opacity=".8"  HorizontalAlignment="Right" BorderThickness="1 0 0 1" BorderBrush="#FF798AA0" Margin="0 -7.54 10 -5" />
+                        <Border Grid.Column="4" Width="3" Background="#FF9CB3D0" Opacity=".8"  HorizontalAlignment="Right" BorderThickness="1 0 0 1" BorderBrush="#FF798AA0" Margin="0 -7.54 10 -5" />
+                        <Border Grid.Column="0" Margin="-10 -8 13 -5" Opacity=".5">
+                            <Border.Background>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FFF3E5FF"/>
+                                    <GradientStop Color="#FF5A4835" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Border.Background>
+                        </Border>
+                        <DockPanel  Grid.Column="0">
+                            <TextBlock Text="دوره مالی : " FontSize="18"/>
+                            <TextBlock Text="{Binding StatusOptions.Period.Name, RelativeSource={RelativeSource AncestorType=Window}}" FontSize="18"/>
+                        </DockPanel>
+                        <Border Grid.Column="1" Grid.ColumnSpan="2" Margin="-8 -8 13 -5" Opacity=".5">
+                            <Border.Background>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FF82A1C8"/>
+                                    <GradientStop Color="#FFC26EFF" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Border.Background>
+                        </Border>
+                        <Border Grid.Column="3" Margin="-10 -8 13 -5" Opacity="1">
+                            <Border.Background>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="White" Offset="1"/>
+                                    <GradientStop Color="#FFFBE8B3" Offset="0"/>
+                                    <GradientStop Color="#FFDDDE87" Offset="0.513"/>
+                                </LinearGradientBrush>
+                            </Border.Background>
+                        </Border>
+
+                        <TextBlock Text="سیستم بازرگانی رازی" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" Margin="-30 0 0 0" FontSize="20" FontWeight="Bold">
+                            <TextBlock.Foreground>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FFB6C1EF"/>
+                                    <GradientStop Color="#FF6D61C3" Offset="0.715"/>
+                                    <GradientStop Color="#FF5D42FF" Offset="0.483"/>
+                                    <GradientStop Color="#FF5088D2" Offset="1"/>
+                                </LinearGradientBrush>
+                            </TextBlock.Foreground>
+                        </TextBlock>
+                        <DockPanel  Grid.Column="5">
+                            <TextBlock Text="تاریخ : " FontSize="18"/>
+                            <TextBlock Name="txbDate" Text="{Binding StatusOptions.Date, RelativeSource={RelativeSource AncestorType=Window}}" FontSize="18"/>
+                        </DockPanel>
+                        <DockPanel  Grid.Column="3" HorizontalAlignment="Center" Margin="0 0 40 0">
+                            <TextBlock Text="کاربر : " FontFamily="B nazanin" FontSize="18"/>
+                            <TextBlock FontFamily="B nazanin" Text="{Binding StatusOptions.User.UserName, RelativeSource={RelativeSource AncestorType=Window}}" FontSize="18"/>
+                        </DockPanel>
+                        <!--<DockPanel  Grid.Column="4">
                         <TextBlock Text="نسخه برنامه : " FontSize="18"/>
                         <TextBlock Text="{Binding StatusOptions.VP, RelativeSource={RelativeSource AncestorType=Window}}" FontSize="18"/>
                     </DockPanel>                    
@@ -192,13 +253,14 @@
                         <TextBlock Text="نسخه دیتابیس : " FontSize="18"/>
                         <TextBlock Text="{Binding StatusOptions.VD, RelativeSource={RelativeSource AncestorType=Window}}" FontSize="18"/>
                     </DockPanel>-->
-                    <DockPanel  Grid.Column="4">
-                        <TextBlock Text="ساعت : " FontSize="18"/>
-                        <TextBlock x:Name="ClockText"  Text="--:--" FontSize="18"/>
-                    </DockPanel>
-                </Grid>
-            </StatusBarItem>
+                        <DockPanel  Grid.Column="4">
+                            <TextBlock Text="ساعت : " FontSize="18"/>
+                            <TextBlock x:Name="ClockText"  Text="--:--" FontSize="18"/>
+                        </DockPanel>
+                    </Grid>
+                </StatusBarItem>
 
-        </Syncfusion:RibbonStatusBar>
+            </Syncfusion:RibbonStatusBar>
+        </Grid>
     </Grid>
 </Window>

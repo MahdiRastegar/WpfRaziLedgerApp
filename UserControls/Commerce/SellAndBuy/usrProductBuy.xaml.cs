@@ -55,7 +55,6 @@ namespace WpfRaziLedgerApp
             }
         }
         ProductBuyViewModel ProductBuyViewModel;
-        List<Mu> mus1 = new List<Mu>();
         List<Mu> mus2 = new List<Mu>();
         public usrProductBuy()
         {
@@ -119,8 +118,9 @@ namespace WpfRaziLedgerApp
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
             using var db = new wpfrazydbContext();
+            if (mus2.Count == 0)
+                txtPreferential.Focus();
 
-            mus1.Clear();
             mus2.Clear();
             //var storages = db.Preferentials.Include("FkGroup").ToList();
             var commodities = db.Commodities.Include("FkUnit").ToList();
@@ -147,10 +147,10 @@ namespace WpfRaziLedgerApp
             if (AddedMode)
             {
                 ProductBuy_Details = ProductBuyViewModel.ProductBuy_Details;
-                //ProductBuy_Details.Clear();                
                 dataPager.Source = null;
                 dataPager.Source = ProductBuy_Details;
-                txtPreferential.Focus();
+                //if (Tag == null)
+                //    txtPreferential.Focus();
             }
             else
             {
@@ -168,6 +168,35 @@ namespace WpfRaziLedgerApp
             datagridSearch.SearchHelper.AllowFiltering = true;
             FirstLevelNestedGrid.SearchHelper.AllowFiltering = true;
             isCancel = true;
+            if (Tag is string str)
+            {
+                Tag = null;
+                datagrid.Focus();
+                await Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    keybd_event(VK_F2, 0, 0, UIntPtr.Zero); // فشار دادن کلید
+                    Thread.Sleep(50); // تاخیر برای شبیه‌سازی فشار دادن
+                    keybd_event(VK_F2, 0, KEYEVENTF_KEYUP, UIntPtr.Zero); // آزاد کردن کلید
+                    var th = new Thread(async () =>
+                    {
+                        await Task.Delay(10);
+                        Dispatcher.Invoke(() =>
+                        {
+                            dynamic y = null;
+                            var element = (datagrid.SelectionController.CurrentCellManager.CurrentCell.Element as Syncfusion.UI.Xaml.Grid.GridCell)
+                                    .Content as FrameworkElement;
+                            y = element.DataContext;
+                            using var db = new wpfrazydbContext();
+
+                            var code = int.Parse(str);
+                            y.FkCommodity = db.Commodities.First(j => j.Code == code);
+                            datagrid.GetAddNewRowController().CommitAddNew();
+                            return;
+                        });
+                    });
+                    th.Start();
+                }), DispatcherPriority.Render);
+            }
         }
 
         private static void SetAccountName(wpfrazydbContext db, ProductBuyDetail item2)
@@ -1036,10 +1065,7 @@ namespace WpfRaziLedgerApp
         bool forceClose = false;
         private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Escape)
-            {
-                CloseForm();
-            }
+            
         }
 
         bool isCancel = true;
@@ -1089,7 +1115,7 @@ namespace WpfRaziLedgerApp
                     }
                 }
                 AddedMode = true;
-                column2.Width = column1.Width = new GridLength(225);
+                column2.Width = column1.Width = new GridLength(190);
                 datagrid.AllowEditing = datagrid.AllowDeleting = true;
                 datagrid.AddNewRowPosition = Syncfusion.UI.Xaml.Grid.AddNewRowPosition.Bottom;
             }
@@ -1389,7 +1415,7 @@ namespace WpfRaziLedgerApp
             }
             forceClose = true;
             var list = MainWindow.Current.GetTabControlItems;
-            var item = list.FirstOrDefault(u => u.Header == "فاکتور خرید");
+            var item = list.FirstOrDefault(y => y.Tag?.ToString() == "فاکتور خرید");
             MainWindow.Current.tabcontrol.Items.Remove(item);
             Dispatcher.BeginInvoke(new Action(() =>
             {
@@ -1573,7 +1599,7 @@ namespace WpfRaziLedgerApp
                     datagridSearch.Visibility = Visibility.Collapsed;
                     gridConfirm.Visibility = Visibility.Visible;
                     Sf_txtInvoiceNumber.HasError = false;
-                    column2.Width = column1.Width = new GridLength(225);
+                    column2.Width = column1.Width = new GridLength(190);
                     borderEdit.Visibility = Visibility.Visible;
                     RefreshDataGridForSetPersianNumber();
                     datagrid.SelectedIndex = ProductBuy_Details.Count - 1;
@@ -2226,6 +2252,7 @@ namespace WpfRaziLedgerApp
 
         private void btnMorefields_Click(object sender, RoutedEventArgs e)
         {
+            return;
             morefields.Visibility = Visibility.Collapsed;
             column1.Width = new GridLength(225);
             column2.Width = new GridLength(225);
@@ -2234,6 +2261,7 @@ namespace WpfRaziLedgerApp
 
         private void datagrid_GotFocus(object sender, RoutedEventArgs e)
         {
+            return;
             if (SystemParameters.PrimaryScreenWidth <= 1500 && morefields.Visibility == Visibility.Collapsed)
             {
                 column1.Width = new GridLength(50);

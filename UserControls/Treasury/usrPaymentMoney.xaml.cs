@@ -327,7 +327,7 @@ namespace WpfRaziLedgerApp
                         {
                             part2 = $"صدور چک شماره {item.Number} سررسید {item.Date?.ToPersianDateString()} در وجه {e_addHeader.FkPreferential.PreferentialName} طی رسید {e_addHeader.ReceiptNumber} بابت {e_addHeader.Description}";
                         }
-                        else if (db.Moeins.FirstOrDefault(y => y.MoeinName == "حساب های پرداختنی تجاری").Id == item.FkMoein.Id || db.Moeins.FirstOrDefault(y => y.MoeinName == "حسابهای پرداختنی تجاری").Id == item.FkMoein.Id)
+                        else if (db.Moeins.FirstOrDefault(y => y.MoeinName == "حساب های پرداختنی تجاری")?.Id == item.FkMoein.Id || db.Moeins.FirstOrDefault(y => y.MoeinName == "حسابهای پرداختنی تجاری")?.Id == item.FkMoein.Id)
                         {
                             part2 = $"پرداخت چک شماره {item.Number} سررسید {item.Date?.ToPersianDateString()} طی رسید {e_addHeader.ReceiptNumber} بابت {e_addHeader.Description}";
                         }
@@ -368,7 +368,7 @@ namespace WpfRaziLedgerApp
                         {
                             part2 = $"صدور چک شماره {item.Number} سررسید {item.Date?.ToPersianDateString()} در وجه {e_addHeader.FkPreferential.PreferentialName} طی رسید {e_addHeader.ReceiptNumber} بابت {e_addHeader.Description}";
                         }
-                        else if (db.Moeins.FirstOrDefault(y => y.MoeinName == "حساب های پرداختنی تجاری").Id == item.FkMoein.Id || db.Moeins.FirstOrDefault(y => y.MoeinName == "حسابهای پرداختنی تجاری").Id == item.FkMoein.Id)
+                        else if (db.Moeins.FirstOrDefault(y => y.MoeinName == "حساب های پرداختنی تجاری")?.Id == item.FkMoein.Id || db.Moeins.FirstOrDefault(y => y.MoeinName == "حسابهای پرداختنی تجاری")?.Id == item.FkMoein.Id)
                         {
                             part2 = $"پرداخت چک شماره {item.Number} سررسید {item.Date?.ToPersianDateString()} طی رسید {e_addHeader.ReceiptNumber} بابت {e_addHeader.Description}";
                         }
@@ -534,7 +534,7 @@ namespace WpfRaziLedgerApp
                             {
                                 part2 = $"صدور چک شماره {item.Number} سررسید {item.Date?.ToPersianDateString()} در وجه {e_Edidet.FkPreferential.PreferentialName} طی رسید {e_Edidet.ReceiptNumber} بابت {e_Edidet.Description}";
                             }
-                            else if (db.Moeins.FirstOrDefault(y => y.MoeinName == "حساب های پرداختنی تجاری").Id == item.FkMoein.Id || db.Moeins.FirstOrDefault(y => y.MoeinName == "حسابهای پرداختنی تجاری").Id == item.FkMoein.Id)
+                            else if (db.Moeins.FirstOrDefault(y => y.MoeinName == "حساب های پرداختنی تجاری")?.Id == item.FkMoein.Id || db.Moeins.FirstOrDefault(y => y.MoeinName == "حسابهای پرداختنی تجاری")?.Id == item.FkMoein.Id)
                             {
                                 part2 = $"پرداخت چک شماره {item.Number} سررسید {item.Date?.ToPersianDateString()} طی رسید {e_Edidet.ReceiptNumber} بابت {e_Edidet.Description}";
                             }
@@ -575,7 +575,7 @@ namespace WpfRaziLedgerApp
                             {
                                 part2 = $"صدور چک شماره {item.Number} سررسید {item.Date?.ToPersianDateString()} در وجه {e_Edidet.FkPreferential.PreferentialName} طی رسید {e_Edidet.ReceiptNumber} بابت {e_Edidet.Description}";
                             }
-                            else if (db.Moeins.FirstOrDefault(y => y.MoeinName == "حساب های پرداختنی تجاری").Id == item.FkMoein.Id || db.Moeins.FirstOrDefault(y => y.MoeinName == "حسابهای پرداختنی تجاری").Id == item.FkMoein.Id)
+                            else if (db.Moeins.FirstOrDefault(y => y.MoeinName == "حساب های پرداختنی تجاری")?.Id == item.FkMoein.Id || db.Moeins.FirstOrDefault(y => y.MoeinName == "حسابهای پرداختنی تجاری")?.Id == item.FkMoein.Id)
                             {
                                 part2 = $"پرداخت چک شماره {item.Number} سررسید {item.Date?.ToPersianDateString()} طی رسید {e_Edidet.ReceiptNumber} بابت {e_Edidet.Description}";
                             }
@@ -1155,10 +1155,7 @@ namespace WpfRaziLedgerApp
         bool forceClose = false;
         private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Escape)
-            {
-                CloseForm();
-            }
+            
         }
 
         bool isCancel = true;
@@ -1525,7 +1522,7 @@ namespace WpfRaziLedgerApp
             }
             forceClose = true;
             var list = MainWindow.Current.GetTabControlItems;
-            var item = list.FirstOrDefault(u => u.Header == "پرداخت وجه");
+            var item = list.FirstOrDefault(y => y.Tag?.ToString() == "پرداخت وجه");
             MainWindow.Current.tabcontrol.Items.Remove(item);
             Dispatcher.BeginInvoke(new Action(() =>
             {

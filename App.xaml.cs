@@ -38,59 +38,70 @@ namespace WpfRaziLedgerApp
             {
                 WpfRaziLedgerApp.MainWindow.ViewFormLeftRigth = bool.Parse(File.ReadAllText(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Setting.txt")));
             }
+            // نمایش اسپلش
+            var splash = new SplashWindow();
+            splash.Show();
 
-            if (e.Args.Length == 0)
+            // زمان‌دهی (مثلاً 2 ثانیه) یا تا آماده شدن فرم اصلی
+            Task.Delay(e.Args.Length==0? 2500:0).ContinueWith(_ =>
             {
-                var win = new winLogin();
-
-                Dispatcher.BeginInvoke(new Action(() =>
+                splash.Dispatcher.Invoke(() =>
                 {
-                    win.ShowDialog();
+                    splash.Close();
+
+                    if (e.Args.Length == 0)
+                    {
+                        var win = new winLogin();
+
+                        Dispatcher.BeginInvoke(new Action(() =>
+                        {
+                            win.ShowDialog();
 #if !DEBUG
                     if (!Suspended)
                     {
                         App.Current.Shutdown();
                         string jsonArg = JsonSerializer.Serialize(WpfRaziLedgerApp.MainWindow.StatusOptions);
 
-                        // توجه: چون بعضی کاراکترها ممکنه برای command line مناسب نباشن، پیشنهاد می‌شه encode کنی:
+                         توجه: چون بعضی کاراکترها ممکنه برای command line مناسب نباشن، پیشنهاد می‌شه encode کنی:
                         string encodedArg = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(jsonArg));
 
-                        // Start process with encoded argument
+                         Start process with encoded argument
                         Process.Start(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WpfRaziLedgerApp.exe"), encodedArg);
                     }
 #else
-                    WpfRaziLedgerApp.MainWindow.Current.Show();
+                            WpfRaziLedgerApp.MainWindow.Current.Show();
 
 #endif
-                }));
-            }
-            else
-            {
-
-                string encodedArg = e.Args[0];
-
-                // Decode
-                string jsonArg = System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(encodedArg));
-
-                // Deserialize
-                StatusOptions options = JsonSerializer.Deserialize<StatusOptions>(jsonArg);
-                WpfRaziLedgerApp.MainWindow.StatusOptions = options;
-
-                Dispatcher.BeginInvoke(new Action(() =>
-                {
-                    var oldContext = WpfRaziLedgerApp.MainWindow.Current.statusBar.DataContext;
-                    WpfRaziLedgerApp.MainWindow.Current.statusBar.DataContext = null;
-                    WpfRaziLedgerApp.MainWindow.Current.statusBar.DataContext = oldContext;
-                    foreach (var item in ((WpfRaziLedgerApp.MainWindow.Current.statusBar.Items[0] as StatusBarItem).Content as Grid).GetChildsOfType<TextBlock>())
-                    {
-                        var binding = item.GetBindingExpression(TextBlock.TextProperty);
-                        binding?.UpdateTarget();
+                        }));
                     }
-                    WpfRaziLedgerApp.MainWindow.Current.LoadUser(options.User.Id);
-                    WpfRaziLedgerApp.MainWindow.Current.Show();
-                }));
-            }
+                    else
+                    {
 
+                        string encodedArg = e.Args[0];
+
+                        // Decode
+                        string jsonArg = System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(encodedArg));
+
+                        // Deserialize
+                        StatusOptions options = JsonSerializer.Deserialize<StatusOptions>(jsonArg);
+                        WpfRaziLedgerApp.MainWindow.StatusOptions = options;
+
+                        Dispatcher.BeginInvoke(new Action(() =>
+                        {
+                            var oldContext = WpfRaziLedgerApp.MainWindow.Current.statusBar.DataContext;
+                            WpfRaziLedgerApp.MainWindow.Current.statusBar.DataContext = null;
+                            WpfRaziLedgerApp.MainWindow.Current.statusBar.DataContext = oldContext;
+                            foreach (var item in ((WpfRaziLedgerApp.MainWindow.Current.statusBar.Items[0] as StatusBarItem).Content as Grid).GetChildsOfType<TextBlock>())
+                            {
+                                var binding = item.GetBindingExpression(TextBlock.TextProperty);
+                                binding?.UpdateTarget();
+                            }
+                            WpfRaziLedgerApp.MainWindow.Current.LoadUser(options.User.FkUserGroupId);
+                            WpfRaziLedgerApp.MainWindow.Current.Show();
+                        }));
+                    }
+                });
+            });
             base.OnStartup(e);
         }
 

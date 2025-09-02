@@ -36,10 +36,7 @@ namespace WpfRaziLedgerApp
 
         private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            if(e.Key == Key.Escape)
-            {
-                CloseForm();
-            }
+            
         }
         public bool CloseForm()
         {
@@ -48,7 +45,7 @@ namespace WpfRaziLedgerApp
             //    return false;
             //}
             var list = MainWindow.Current.GetTabControlItems;
-            var item = list.FirstOrDefault(u => u.Header == "تنظیمات پیکربندی");
+            var item = list.FirstOrDefault(y => y.Tag?.ToString() == "چارچوب سیستم");
             MainWindow.Current.tabcontrol.Items.Remove(item);            
             return true;
         }

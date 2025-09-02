@@ -67,6 +67,7 @@ namespace WpfRaziLedgerApp
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            Mouse.OverrideCursor = Cursors.Wait;
             Commodities = new ObservableCollection<Commodity>();
             using var db = new wpfrazydbContext();
             var count = db.Commodities.Count();
@@ -84,6 +85,7 @@ namespace WpfRaziLedgerApp
             txtGroup.Focus();
             dataPager.Source = null;
             dataPager.Source = Commodities;
+            Mouse.OverrideCursor = null;
         }
 
         private void btnConfirm_Click(object sender, RoutedEventArgs e)
@@ -165,6 +167,12 @@ namespace WpfRaziLedgerApp
             if (id == Guid.Empty)
             {
                 Xceed.Wpf.Toolkit.MessageBox.Show("اطلاعات اضافه شد.", "ثبت کالا");
+                if (Tag != null)
+                {
+                    (Tag as MyPublisher).eventNav.Message = txtCodeCommodity.Text;
+                    (Tag as MyPublisher).DoSomething();
+                    Tag = null;
+                }
                 txtCodeCommodity.Text = (e_add.Code + 1).ToString();
             }
             else
@@ -281,11 +289,8 @@ namespace WpfRaziLedgerApp
         bool forceClose = false;
         private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Escape)
-            {
-                CloseForm();
-            }
-            else if (e.Key == Key.F1)
+            
+            if (e.Key == Key.F1)
             {
                 if (txtGroup.IsFocused && !txtGroup.IsReadOnly)
                 {
@@ -541,7 +546,7 @@ namespace WpfRaziLedgerApp
             }
             forceClose = true;
             var list = MainWindow.Current.GetTabControlItems;
-            var item = list.FirstOrDefault(u => u.Header == "کالا");
+            var item = list.FirstOrDefault(y => y.Tag?.ToString() == "کالا");
             MainWindow.Current.tabcontrol.Items.Remove(item);
             return true;
         }
