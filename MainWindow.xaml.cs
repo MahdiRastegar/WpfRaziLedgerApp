@@ -1191,5 +1191,28 @@ namespace WpfRaziLedgerApp
             var desk = new DeskWindow(StatusOptions.User.Id, map);
             desk.Show();
         }
+
+        private void Window_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            if (ribbon.RibbonState == Syncfusion.Windows.Tools.RibbonState.Adorner)
+                if (e.Delta > 0)
+                {
+                    // چرخ موس به سمت بالا حرکت کرده
+                    try
+                    {
+                        ribbon.SelectedIndex -= 1;
+                    }
+                    catch { }
+                }
+                else if (e.Delta < 0)
+                {
+                    try
+                    {
+                        ribbon.SelectedIndex += 1;
+                    }
+                    catch { }
+                    // چرخ موس به سمت پایین حرکت کرده
+                }
+        }
     }
 }
