@@ -1615,7 +1615,7 @@ namespace WpfRaziLedgerApp
             if (e.LeftButton == MouseButtonState.Pressed)
             {
                 var CRE = (sender as Button).DataContext as CheckPaymentEvent;
-                if (Xceed.Wpf.Toolkit.MessageBox.Show("آیا می خواهید تمام سوابق مربوط به این چک به همراه سندهای مربوطه حذف شوند؟", "خروج", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+                if (Xceed.Wpf.Toolkit.MessageBox.Show("آیا می خواهید تمام سوابق مربوط به این چک به همراه سندهای مربوطه حذف شوند؟", "حذف سوابق چک", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
                 {
                     Mouse.OverrideCursor = Cursors.Wait;
                     using var db = new wpfrazydbContext();
