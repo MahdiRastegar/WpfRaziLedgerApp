@@ -1249,11 +1249,11 @@ namespace WpfRaziLedgerApp
                 return;
             }
             using var db = new wpfrazydbContext();
-            foreach (var item in db.RecieveMoneyDetails.Where(u => u.FkHeaderId == id))
+            foreach (var item in db.RecieveMoneyDetails.Where(u => u.FkHeaderId == id).ToList())
             {
                 if (item.MoneyType == 1 && (!(recieveMoney_Details.FirstOrDefault(s => s.Id == item.Id) is RecieveMoneyDetail recieveMoney) || recieveMoney.MoneyType != 1))
                 {
-                    var checkRecieveEvents = db.CheckRecieveEvents.Where(d => d.FkDetaiId == item.Id);
+                    var checkRecieveEvents = db.CheckRecieveEvents.Include(t => t.FkChEvent).Where(d => d.FkDetaiId == item.Id);
                     var checkRecieve = checkRecieveEvents.OrderByDescending(k => k.Indexer).FirstOrDefault();
                     if (checkRecieve != null)
                     {

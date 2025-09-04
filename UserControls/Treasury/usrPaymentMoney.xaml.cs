@@ -325,11 +325,11 @@ namespace WpfRaziLedgerApp
                         string part2 = null;
                         if (moein.Id == item.FkMoein.Id)//اسناد پرداختنی
                         {
-                            part2 = $"صدور چک شماره {item.Number} سررسید {item.Date?.ToPersianDateString()} در وجه {e_addHeader.FkPreferential.PreferentialName} طی رسید {e_addHeader.ReceiptNumber} بابت {e_addHeader.Description}";
+                            part2 = $"صدور چک شماره {item.Number} سررسید {item.Date?.ToPersianDateString()} در وجه {e_addHeader.FkPreferential.PreferentialName} طی رسید {e_addHeader.ReceiptNumber} " + (string.IsNullOrWhiteSpace(e_addHeader.Description) ? "" : $" بابت {e_addHeader.Description}");
                         }
                         else if (db.Moeins.FirstOrDefault(y => y.MoeinName == "حساب های پرداختنی تجاری")?.Id == item.FkMoein.Id || db.Moeins.FirstOrDefault(y => y.MoeinName == "حسابهای پرداختنی تجاری")?.Id == item.FkMoein.Id)
                         {
-                            part2 = $"پرداخت چک شماره {item.Number} سررسید {item.Date?.ToPersianDateString()} طی رسید {e_addHeader.ReceiptNumber} بابت {e_addHeader.Description}";
+                            part2 = $"پرداخت چک شماره {item.Number} سررسید {item.Date?.ToPersianDateString()} طی رسید {e_addHeader.ReceiptNumber} " + (string.IsNullOrWhiteSpace(e_addHeader.Description) ? "" : $" بابت {e_addHeader.Description}");
                         }
                         index2++;
                         var parts = new List<string?>
@@ -366,11 +366,11 @@ namespace WpfRaziLedgerApp
                         string part2 = null;
                         if (moein.Id == item.FkMoein.Id)//اسناد پرداختنی
                         {
-                            part2 = $"صدور چک شماره {item.Number} سررسید {item.Date?.ToPersianDateString()} در وجه {e_addHeader.FkPreferential.PreferentialName} طی رسید {e_addHeader.ReceiptNumber} بابت {e_addHeader.Description}";
+                            part2 = $"صدور چک شماره {item.Number} سررسید {item.Date?.ToPersianDateString()} در وجه {e_addHeader.FkPreferential.PreferentialName} طی رسید {e_addHeader.ReceiptNumber} " + (string.IsNullOrWhiteSpace(e_addHeader.Description) ? "" : $" بابت {e_addHeader.Description}");
                         }
                         else if (db.Moeins.FirstOrDefault(y => y.MoeinName == "حساب های پرداختنی تجاری")?.Id == item.FkMoein.Id || db.Moeins.FirstOrDefault(y => y.MoeinName == "حسابهای پرداختنی تجاری")?.Id == item.FkMoein.Id)
                         {
-                            part2 = $"پرداخت چک شماره {item.Number} سررسید {item.Date?.ToPersianDateString()} طی رسید {e_addHeader.ReceiptNumber} بابت {e_addHeader.Description}";
+                            part2 = $"پرداخت چک شماره {item.Number} سررسید {item.Date?.ToPersianDateString()} طی رسید {e_addHeader.ReceiptNumber} " + (string.IsNullOrWhiteSpace(e_addHeader.Description) ? "" : $" بابت {e_addHeader.Description}");
                         }
                         index2++;
                         var parts = new List<string?>
@@ -1298,11 +1298,11 @@ namespace WpfRaziLedgerApp
                 return;
             }
             using var db = new wpfrazydbContext();
-            foreach (var item in db.PaymentMoneyDetails.Where(u=>u.FkHeaderId==id))
+            foreach (var item in db.PaymentMoneyDetails.Where(u=>u.FkHeaderId==id).ToList())
             {
                 if (item.MoneyType == 1 && (!(paymentMoney_Details.FirstOrDefault(s => s.Id == item.Id) is PaymentMoneyDetail paymentMoney) || paymentMoney.MoneyType != 1))
                 {
-                    var checkPaymentEvents = db.CheckPaymentEvents.Where(d => d.FkDetaiId == item.Id);
+                    var checkPaymentEvents = db.CheckPaymentEvents.Include(t=>t.FkChEvent).Where(d => d.FkDetaiId == item.Id);
                     var checkPayment = checkPaymentEvents.OrderByDescending(k => k.Indexer).FirstOrDefault();
                     if (checkPayment != null)
                     {

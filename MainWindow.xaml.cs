@@ -143,6 +143,7 @@ namespace WpfRaziLedgerApp
             //rbnDoshboard.Visibility = 
             if (rbnPreview.Visibility != Visibility.Visible)
                 borderMiz.Visibility = Visibility.Collapsed;
+            
             //rbnConfiguration2.Visibility = Visibility.Visible;
         }
         private List<Guid> GetPermissionIdsForGroup(Guid groupId)
@@ -231,6 +232,13 @@ namespace WpfRaziLedgerApp
         {
             LoadedWin = true;
             WindowState = WindowState.Maximized;
+            if (rbnPreview.Visibility == Visibility.Visible)
+            {
+                // گرفتن مختصات تب نسبت به کل صفحه (Screen)
+                var screenPoint =630- (SystemParameters.PrimaryScreenWidth - rbnPreview.PointToScreen(new System.Windows.Point(0, 0)).X);
+
+                borderMiz.Margin=new Thickness(0,0,632-screenPoint,0);
+            }
         }
 
         private void tabcontrol_TabClosed(object sender, CloseTabEventArgs e)

@@ -703,7 +703,7 @@ Source="{Binding RecieveMoneyHeaders}"/>
                             </Syncfusion:GridDateTimeColumn>-->
                         <Syncfusion:GridTextColumn MinimumWidth="95" Width="80" HeaderText="کل معین" MappingName="ColeMoein"/>
                         <Syncfusion:GridTextColumn MinimumWidth="97" Width="80" HeaderText="تفضیلی" MappingName="FkPreferential.PreferentialCode"/>
-                        <Syncfusion:GridTextColumn MinimumWidth="200" HeaderText="نام" IsReadOnly="True" MappingName="Name"/>
+                        <Syncfusion:GridTextColumn MinimumWidth="240" HeaderText="نام" IsReadOnly="True" MappingName="Name"/>
                         <Syncfusion:GridTextColumn MinimumWidth="120" HeaderText="توضیحات" ColumnSizer="AutoLastColumnFill" MappingName="Description"/>
                     </Syncfusion:SfDataGrid.Columns>
                     <Syncfusion:SfDataGrid.DetailsViewDefinition>
@@ -714,7 +714,7 @@ Source="{Binding RecieveMoneyHeaders}"/>
                                         <Syncfusion:GridTextColumn HeaderText="نوع وجه" Width="100" MappingName="GetMoneyType"/>
                                         <Syncfusion:GridTextColumn MinimumWidth="95" Width="80" HeaderText="کل معین" MappingName="ColeMoein"/>
                                         <Syncfusion:GridTextColumn MinimumWidth="97" Width="80" HeaderText="تفضیلی" MappingName="PreferentialCode"/>
-                                        <Syncfusion:GridTextColumn MinimumWidth="185" HeaderText="حساب دریافت کننده" MappingName="Name"/>
+                                        <Syncfusion:GridTextColumn MinimumWidth="200" HeaderText="حساب دریافت کننده" MappingName="Name"/>
                                         <Syncfusion:GridTextColumn MinimumWidth="118" HeaderText="مبلغ" MappingName="Price2" TextAlignment="Left"/>
                                         <Syncfusion:GridDateTimeColumn MinimumWidth="150" FilterPopupStyle="{StaticResource SfDataGridFilterPopupStyle1}" HeaderText="تاریخ سررسید چک" MappingName="Date">
                                             <Syncfusion:GridDateTimeColumn.CellTemplate>
