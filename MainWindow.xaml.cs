@@ -87,13 +87,14 @@ namespace WpfRaziLedgerApp
         {
             ApplyPermissions(userGroupId);
         }
-        Dictionary<RibbonButton, Guid> keyValuePairs = new Dictionary<RibbonButton, Guid>();
+        public Dictionary<RibbonButton, Guid> keyValuePairs = new Dictionary<RibbonButton, Guid>();
         private void ApplyPermissions(Guid userGroupId)
         {
             // 1. دریافت دسترسی‌ها از دیتابیس
             var allowedIds = GetPermissionIdsForGroup(userGroupId); // List<Guid>
             if(allowedIds.Count == 0) return;
 
+            int g = 0;
             // 2. مرور کل آیتم‌های Ribbon
             foreach (var tab in ribbon.Items.OfType<RibbonTab>())
             {
@@ -106,13 +107,16 @@ namespace WpfRaziLedgerApp
                     {
                         if (item is RibbonButton btn && btn.Label != null)
                         {
-                            var ribbonId = GetRibbonItemIdByName(btn.Label); // گرفتن Id از نام دکمه
+                            var ribbonId = GetRibbonItemIdByName(btn.Label,tab.Caption); // گرفتن Id از نام دکمه
                             bool canAccess = allowedIds.Contains(ribbonId);
 
                             btn.Visibility = canAccess ? Visibility.Visible : Visibility.Collapsed;
                             if(btn.Visibility == Visibility.Visible) 
-                            {
-                                keyValuePairs.Add(btn, ribbonId);
+                            {                                
+                                if (btn.Label != "تفضیلی" || g == 0)
+                                    keyValuePairs.Add(btn, ribbonId);
+                                if (btn.Label == "تفضیلی")
+                                    g++;
                             }
                             if (btn.Visibility == Visibility.Collapsed && item2 is RibbonSeparator separator)
                                 separator.Visibility = Visibility.Collapsed;
@@ -157,11 +161,11 @@ namespace WpfRaziLedgerApp
             }
         }
 
-        private Guid GetRibbonItemIdByName(string buttonName)
+        private Guid GetRibbonItemIdByName(string buttonName,string category)
         {
             using (var context = new wpfrazydbContext())
             {
-                var item = context.RibbonItems.FirstOrDefault(r => r.DisplayName == buttonName || r.Category == buttonName);
+                var item = context.RibbonItems.FirstOrDefault(r => r.DisplayName == buttonName && r.Category.Contains(category));
                 return item?.Id ?? Guid.Empty;
             }
         }
@@ -234,6 +238,14 @@ namespace WpfRaziLedgerApp
             WindowState = WindowState.Maximized;
             if (rbnPreview.Visibility == Visibility.Visible)
             {
+                if (StatusOptions.User.ribbonFirst_Dash == true)
+                {
+                    ribbon.Items.Remove(rbnPreview);
+                    ribbon.Items.Insert(0,rbnPreview);
+                    borderMiz.Margin = new Thickness(0, 0, 60, 0);
+                    return;
+                }
+
                 // گرفتن مختصات تب نسبت به کل صفحه (Screen)
                 var screenPoint =630- (SystemParameters.PrimaryScreenWidth - rbnPreview.PointToScreen(new System.Windows.Point(0, 0)).X);
 
@@ -717,18 +729,46 @@ namespace WpfRaziLedgerApp
         {
             // براش برای پر کردن مثلث (حتماً باید SolidColorBrush باشه تا رنگش انیمیت بشه)
             var fillBrush = green == true ? new SolidColorBrush(Colors.Green): new SolidColorBrush(Colors.Gray);
+            var leafPath = Geometry.Parse(
+    "M 10,0 C 15,5 20,15 10,20 C 0,15 5,5 10,0 Z"
+);
 
-            var triangle = new System.Windows.Shapes.Polygon
+            var leaf = new System.Windows.Shapes.Path
             {
-                Points = new PointCollection { new Point(0, 0), new Point(22, 0), new Point(0, 22) },
+                Data = leafPath,
                 Fill = fillBrush,
                 Stroke = green == true ? Brushes.DarkGreen : Brushes.DarkGray,
                 StrokeThickness = 1,
-                ToolTip = "جدید"+(green?"": " - عدم دسترسی"),
+                ToolTip = "جدید" + (green ? "" : " - عدم دسترسی"),
                 Width = 20,
                 Height = 20,
-                Margin = new Thickness(1)
+                Margin = new Thickness(1),
+                Stretch = Stretch.Fill
             };
+    //        var triangle = new System.Windows.Shapes.Polygon
+    //        {
+    //            Points = new PointCollection
+    //{
+    //    new Point(10,0),
+    //    new Point(12,7),
+    //    new Point(20,7),
+    //    new Point(13.5,12),
+    //    new Point(16,20),
+    //    new Point(10,15),
+    //    new Point(4,20),
+    //    new Point(6.5,12),
+    //    new Point(0,7),
+    //    new Point(8,7)
+    //},
+    //            Fill = fillBrush,
+    //            Stroke = green == true ? Brushes.DarkGreen : Brushes.DarkGray,
+    //            StrokeThickness = 1,
+    //            ToolTip = "جدید" + (green ? "" : " - عدم دسترسی"),
+    //            Width = 20,
+    //            Height = 20,
+    //            Margin = new Thickness(1),
+    //            Stretch = Stretch.Fill   // تا در همان سایز فیت شود
+    //        };
 
             // انیمیشن رنگ (از سبز معمولی به سبز روشن‌تر و برگشت)
             var animation = new ColorAnimation
@@ -743,7 +783,7 @@ namespace WpfRaziLedgerApp
             // شروع انیمیشن بدون Storyboard
             fillBrush.BeginAnimation(SolidColorBrush.ColorProperty, animation);
 
-            return triangle;
+            return leaf;
         }
        
         private void rbnCity_Click(object sender, RoutedEventArgs e)
@@ -1004,7 +1044,7 @@ namespace WpfRaziLedgerApp
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             this.Effect = new BlurEffect() { Radius = 5 };
-            if (Xceed.Wpf.Toolkit.MessageBox.Show("آیا می خواهید از برنامه خارج شوید؟", "خروج", MessageBoxButton.YesNo, MessageBoxImage.Warning) != MessageBoxResult.Yes)
+            if (Xceed.Wpf.Toolkit.MessageBox.Show("آیا می خواهید از برنامه بازرگانی رازی خارج شوید؟", "خروج", MessageBoxButton.YesNo, MessageBoxImage.Warning) != MessageBoxResult.Yes)
             {
                 e.Cancel = true;
                 this.Effect = null;

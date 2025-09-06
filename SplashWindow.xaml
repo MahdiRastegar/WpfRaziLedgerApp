@@ -26,7 +26,7 @@
                             <ColorAnimationUsingKeyFrames
                             Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
                             Duration="0:0:4">
-                                <LinearColorKeyFrame Value="Yellow"    KeyTime="0:0:0"   />
+                                <LinearColorKeyFrame Value="Silver"    KeyTime="0:0:0"   />
                                 <LinearColorKeyFrame Value="Orange"     KeyTime="0:0:0.5" />
                                 <LinearColorKeyFrame Value="Green"      KeyTime="0:0:1"   />
                                 <LinearColorKeyFrame Value="DodgerBlue" KeyTime="0:0:1.5" />
@@ -39,7 +39,7 @@
         </Style>
     </Window.Resources>
     <Border Style="{StaticResource AnimatedBorderStyle}"  x:Name="SplashBorder0" CornerRadius="20" Padding="1"  BorderThickness="1">
-        <Border Style="{StaticResource AnimatedBorderStyle}"  x:Name="SplashBorder" CornerRadius="20" Padding="10" BorderThickness="1" Background="Black">
+        <Border Style="{StaticResource AnimatedBorderStyle}"  x:Name="SplashBorder" CornerRadius="20" Padding="10" BorderThickness="1" Background="#B2000000">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="255*"/>

@@ -1,63 +1,85 @@
 ﻿<UserControl x:Class="WpfRaziLedgerApp.DeskSettingsWindow"
+             xmlns:Syncfusion="http://schemas.syncfusion.com/wpf"  
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" FlowDirection="RightToLeft"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"  PreviewKeyDown="UserControl_PreviewKeyDown"
              xmlns:local="clr-namespace:WpfRaziLedgerApp"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"  Loaded="UserControl_Loaded"
              Height="auto" Width="auto" Background="White">
-    <StackPanel HorizontalAlignment="Center" Orientation="Vertical">
-        <!-- نوار بالای آیکون‌ها -->
-        <ScrollViewer VerticalAlignment="Top"
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="1" HorizontalAlignment="Right">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="380"/>
+                <RowDefinition Height="120"/>
+                <RowDefinition Height="120"/>
+            </Grid.RowDefinitions>
+            <Syncfusion:SfTextInputLayout Width="145" FontSize="16" Name="Sf_Actin" OutlineCornerRadius="8" Hint="محل میز کار" Grid.Row="1"  VerticalAlignment="Center" Margin="25 0"  HorizontalAlignment="Stretch">
+                <Syncfusion:ComboBoxAdv SelectionChanged="cmbType_SelectionChanged"  Name="cmbAction" FlowDirection="RightToLeft">
+                    <Syncfusion:ComboBoxItemAdv >اول نوار اصلی</Syncfusion:ComboBoxItemAdv>
+                    <Syncfusion:ComboBoxItemAdv >انتهای نوار اصلی</Syncfusion:ComboBoxItemAdv>
+                </Syncfusion:ComboBoxAdv>
+            </Syncfusion:SfTextInputLayout>
+            <CheckBox Content="نمایش منو در میز" FontSize="16" Grid.Row="2" Name="checkbox" Checked="checkbox_Checked" Unchecked="checkbox_Checked" VerticalAlignment="Center" Margin="25 0"/>
+        </Grid>
+        <StackPanel Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" Orientation="Vertical" FlowDirection="RightToLeft">
+            <!-- نوار بالای آیکون‌ها -->
+            <ScrollViewer VerticalAlignment="Top"
               VerticalScrollBarVisibility="Disabled"
               HorizontalScrollBarVisibility="Disabled">
-            <WrapPanel x:Name="TopIconPanel"
+                <WrapPanel x:Name="TopIconPanel"
                        Orientation="Horizontal"
                        VerticalAlignment="Center"/>
-        </ScrollViewer>
-        <Border BorderThickness="2" BorderBrush="#FFFF0046"  HorizontalAlignment="Center"  Margin="10 80 10 10" VerticalAlignment="Center" CornerRadius="5">
-            <Border.Background>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="Black"/>
-                    <GradientStop Color="#FFFFBBBB" Offset="0.053"/>
-                </LinearGradientBrush>
-            </Border.Background>
-            <TextBlock     Foreground="#FF165A2D" Text="« آیکون ها را از بالا، روی میز بکشید و با کلیک راست آن را حذف کنید »" Margin="10 5" FontSize="15"/>
-        </Border>
-        <!-- میز کار (3 سطر × 5 ستون) -->
-        <Border HorizontalAlignment="Center" Margin="10 40"
+            </ScrollViewer>
+            <Border BorderThickness="2" BorderBrush="#FFFF0046"  HorizontalAlignment="Center"  Margin="10 80 10 10" VerticalAlignment="Center" CornerRadius="5">
+                <Border.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="Black"/>
+                        <GradientStop Color="#FFFFBBBB" Offset="0.053"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <TextBlock     Foreground="#FF165A2D" Text="« آیکون ها را از بالا، روی میز بکشید و با کلیک راست آن را حذف کنید »" Margin="10 5" FontSize="15"/>
+            </Border>
+            <!-- میز کار (3 سطر × 5 ستون) -->
+            <Border HorizontalAlignment="Center" Margin="10 40"
         VerticalAlignment="Top"
         Width="576" Height="383"
         Background="LightGray">
-            <Grid x:Name="PreviewGrid"
+                <Grid x:Name="PreviewGrid"
           AllowDrop="True"
           Drop="PreviewGrid_Drop"
           DragOver="PreviewGrid_DragOver"
           ShowGridLines="False"
           HorizontalAlignment="Stretch"
           VerticalAlignment="Stretch">
-                <Grid.Background>
-                    <ImageBrush ImageSource="pack://application:,,,/Images/Miz.png" Stretch="Uniform">
-                        <ImageBrush.RelativeTransform>
-                            <TransformGroup>
-                                <ScaleTransform CenterY="0.5" CenterX="0.5" ScaleX="-1" ScaleY="1"/>
-                            </TransformGroup>
-                        </ImageBrush.RelativeTransform>
-                    </ImageBrush>
-                </Grid.Background>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-            </Grid>
-        </Border>
-    </StackPanel>
+                    <Grid.Background>
+                        <ImageBrush ImageSource="pack://application:,,,/Images/Miz.png" Stretch="Uniform">
+                            <ImageBrush.RelativeTransform>
+                                <TransformGroup>
+                                    <ScaleTransform CenterY="0.5" CenterX="0.5" ScaleX="-1" ScaleY="1"/>
+                                </TransformGroup>
+                            </ImageBrush.RelativeTransform>
+                        </ImageBrush>
+                    </Grid.Background>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                </Grid>
+            </Border>
+        </StackPanel>
+    </Grid>
 </UserControl>

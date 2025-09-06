@@ -10,6 +10,8 @@ using System.Windows.Media.Animation;
 using WpfRaziLedgerApp.RazyDb;
 using WpfRaziLedgerApp;
 using Syncfusion.Windows.Tools.Controls;
+using System.Threading.Tasks;
+using System.Collections;
 namespace WpfRaziLedgerApp
 {
     public partial class DeskWindow : Window
@@ -31,6 +33,7 @@ namespace WpfRaziLedgerApp
             currentUserId = FkuserId;
             ribbonButtonByItemId = ribbonMap;
             Loaded += DeskWindow_Loaded;
+            gridtop.Opacity = 0;
         }
 
         private void DeskWindow_Closed(object? sender, EventArgs e)
@@ -43,6 +46,12 @@ namespace WpfRaziLedgerApp
         {
             LoadDeskItems();
             StartOpenAnimation();
+            if (MainWindow.StatusOptions.User.ShowMainMenu_Dash == null || MainWindow.StatusOptions.User.ShowMainMenu_Dash.Value)
+            {
+
+            }
+            else
+                gridtop.Visibility  = Visibility.Hidden;
         }
 
         private void StartOpenAnimation()
@@ -72,17 +81,46 @@ namespace WpfRaziLedgerApp
             Close();
         }
 
-        private void LoadDeskItems()
+        private void LoadDeskItems(string? category=null)
         {
             DeskGrid.Children.Clear();
 
             using var db = new wpfrazydbContext();
-            var items = db.UserDesktopItems.Where(u => u.FkuserId == currentUserId).ToList();
+            List<UserDesktopItem> items = null;
+            List<RibbonItem> ribbonItems = null;
+            if (category == null)
+                items = db.UserDesktopItems.Where(u => u.FkuserId == currentUserId).ToList();
+            else
+                items = db.RibbonItems
+    .Where(u => u.Category.Contains(category))
+    .ToList()
+    .Select((q, indexA) => new UserDesktopItem()
+    {
+        FkuserId = currentUserId,
+        FkribbonItemId = q.Id,
+        RowIndex = (byte)(indexA / 5), // چون 5 ستون دارید
+        ColIndex = (byte)(indexA % 5)  // ستون باقیمانده تقسیم
+    })
+    .ToList();
+            if (category == "انبار")
+                for (int index = 0; index < items.Count; index++)
+                {
+                    // مکان جدید با یک خانه عقب
+                    int newIndex = index - 1;
 
+                    if (newIndex < 0)
+                        newIndex = items.Count - 1; // اگر اولین بود، بره آخر جدول
+
+                    items[index].RowIndex = (byte)(newIndex / 5);
+                    items[index].ColIndex = (byte)(newIndex % 5);
+                }
+           
             foreach (var item in items)
             {
                 if (ribbonButtonByItemId.TryGetValue(item.FkribbonItemId, out var rb))
                 {
+                    if (rb.Label == "گروه قیمت")
+                        continue;
                     // ساخت StackPanel (آیکون + متن)
                     var panel = new StackPanel
                     {
@@ -127,9 +165,9 @@ namespace WpfRaziLedgerApp
                         {
                             Orientation = Orientation.Vertical,
                             Children =
-        {
-            panel
-        }
+                                    {
+                                        panel
+                                    }
                         }
                     };
 
@@ -327,7 +365,11 @@ namespace WpfRaziLedgerApp
             var pos = e.GetPosition(DeskBorder);
             if (pos.X < 0 || pos.Y < 0 || pos.X > DeskBorder.ActualWidth || pos.Y > DeskBorder.ActualHeight)
             {
-                StartCloseAnimationAndClose();
+                if ((rect2.Tag as StackPanel)?.IsMouseOver == true||imageMiz.IsMouseOver||imageMizSetting.IsMouseOver)
+                    return;
+                pos = e.GetPosition(rect);
+                if ((!sd&& rect.Visibility== Visibility.Hidden) ||(pos.X < 0 || pos.Y < 0 || pos.X > rect.ActualWidth || pos.Y > rect.ActualHeight))
+                    StartCloseAnimationAndClose();
             }
         }
 
@@ -336,7 +378,98 @@ namespace WpfRaziLedgerApp
         {
             if (closed)
                 return;
-            if (e.Key == Key.Escape) StartCloseAnimationAndClose();
+            if (rect2.Visibility==Visibility && e.Key == Key.Left)
+            {
+                StackPanel stack = null;
+                try
+                {
+                    stack = gridtop.Children[Grid.GetColumn(rect2) + 3] as StackPanel;
+                }
+                catch
+                { }
+                if (stack != null)
+                    SelectStack(stack);
+            }
+            else if (rect2.Visibility == Visibility && e.Key == Key.Right)
+            {
+                StackPanel stack = null;
+                try
+                {
+                    stack = gridtop.Children[Grid.GetColumn(rect2) + 1] as StackPanel;
+                }
+                catch
+                { }
+                if (stack != null)
+                    SelectStack(stack);
+            }
+            else if (e.Key == Key.Escape) 
+                StartCloseAnimationAndClose();
+        }
+
+        private void StackPanel_MouseEnter(object sender, MouseEventArgs e)
+        {
+            var stack = sender as StackPanel;
+            if (rect2.Visibility == Visibility.Visible && Grid.GetColumn(stack) == Grid.GetColumn(rect2))
+                return;
+            rect.Visibility = Visibility.Visible;
+            Grid.SetColumn(rect, Grid.GetColumn(stack));
+        }
+
+        private void StackPanel_MouseLeave(object sender, MouseEventArgs e)
+        {
+            var stack = sender as StackPanel;
+            rect.Visibility = Visibility.Hidden;
+        }
+        bool sd = false;
+        private void StackPanel_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            var stack = sender as StackPanel;
+            sd = true;
+            SelectStack(stack);
+            Dispatcher.Invoke(async () =>
+            {
+                await Task.Delay(20);
+                sd = false;
+                rect.Visibility = Visibility.Hidden;
+            });
+        }
+
+        private void SelectStack(StackPanel? stack)
+        {
+            imageMiz.Visibility = Visibility.Visible;
+            rect2.Visibility = Visibility.Visible;
+            rect2.Tag = stack;
+            Grid.SetColumn(rect2, Grid.GetColumn(stack));
+            LoadDeskItems((stack.Children[1] as TextBlock).Text);
+        }
+
+        private void imageMizSetting_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if(e.LeftButton == MouseButtonState.Pressed&&!closed) 
+            {
+                closed = true;
+                StartCloseAnimationAndClose();
+                Dispatcher.BeginInvoke(new Action(async () =>
+                {
+                    await Task.Delay(250);
+                    var rb = MainWindow.Current.keyValuePairs.First(q => q.Key.Label == "میز کار").Key;
+                    rb.RaiseEvent(new RoutedEventArgs(RibbonButton.ClickEvent, rb));
+                }));
+            }
+        }
+
+        private void imageMiz_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                Dispatcher.Invoke(async () =>
+                {
+                    await Task.Delay(250);
+                    imageMiz.Visibility = Visibility.Collapsed;
+                    rect2.Visibility = Visibility.Hidden;
+                    LoadDeskItems();
+                });
+            }
         }
     }
 }

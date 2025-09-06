@@ -307,5 +307,68 @@ namespace WpfRaziLedgerApp
         {
             
         }
+
+        private void checkbox_Checked(object sender, RoutedEventArgs e)
+        {
+            using var db = new wpfrazydbContext();
+            if(checkbox.IsChecked == true)
+            {
+                db.UserApps.First(q => MainWindow.StatusOptions.User.Id == q.Id).ShowMainMenu_Dash = true;
+                MainWindow.StatusOptions.User.ShowMainMenu_Dash = true;
+                db.SafeSaveChanges();
+            }
+            else
+            {
+                db.UserApps.First(q => MainWindow.StatusOptions.User.Id == q.Id).ShowMainMenu_Dash = false;
+                MainWindow.StatusOptions.User.ShowMainMenu_Dash = false;
+                db.SafeSaveChanges();
+            }
+        }
+
+        private void cmbType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            using var db = new wpfrazydbContext();
+            if (cmbAction.SelectedIndex == 0)
+            {
+                db.UserApps.First(q => MainWindow.StatusOptions.User.Id == q.Id).ribbonFirst_Dash = true;
+                MainWindow.StatusOptions.User.ribbonFirst_Dash = true;
+                MainWindow.Current.ribbon.Items.Remove(MainWindow.Current.rbnPreview);
+                MainWindow.Current.ribbon.Items.Insert(0, MainWindow.Current.rbnPreview);
+                MainWindow.Current.borderMiz.Margin = new Thickness(0, 0, 60, 0);
+                db.SafeSaveChanges();
+            }
+            else if (cmbAction.SelectedIndex == 1)
+            {
+                db.UserApps.First(q => MainWindow.StatusOptions.User.Id == q.Id).ribbonFirst_Dash = false;
+                MainWindow.StatusOptions.User.ribbonFirst_Dash = false;
+                MainWindow.Current.ribbon.Items.Remove(MainWindow.Current.rbnPreview);
+                MainWindow.Current.ribbon.Items.Add(MainWindow.Current.rbnPreview);
+                Dispatcher.BeginInvoke(async ()=>
+                { 
+                    await Task.Delay(20);
+                    var screenPoint = 630 - (SystemParameters.PrimaryScreenWidth - MainWindow.Current.rbnPreview.PointToScreen(new System.Windows.Point(0, 0)).X);
+
+                    MainWindow.Current.borderMiz.Margin = new Thickness(0, 0, 632 - screenPoint, 0);
+                });
+                db.SafeSaveChanges();
+            }
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (MainWindow.StatusOptions.User.ribbonFirst_Dash == null || !MainWindow.StatusOptions.User.ribbonFirst_Dash.Value)
+            {
+                cmbAction.SelectedIndex = 1;
+            }
+            else
+                cmbAction.SelectedIndex = 0;
+
+            if (MainWindow.StatusOptions.User.ShowMainMenu_Dash == null || MainWindow.StatusOptions.User.ShowMainMenu_Dash.Value)
+            {
+                checkbox.IsChecked = true;
+            }
+            else
+                checkbox.IsChecked = false;
+        }
     }
 }

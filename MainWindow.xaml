@@ -162,7 +162,7 @@
                         <Syncfusion:RibbonButton  Name="rbnSupport" Click="rbnSupport_Click" SizeForm="Large" Label="پشتیبان" LargeIcon="/Images/Tools/backup.png"/>
                     </Syncfusion:RibbonBar>
                 </Syncfusion:RibbonTab>
-                <Syncfusion:RibbonTab IsHitTestVisible="False" Caption="میز کار" Name="rbnPreview" ToolTip="F5" PreviewMouseDown="rbnPreview_PreviewMouseDown">
+                <Syncfusion:RibbonTab IsHitTestVisible="False" Caption="میز کـار" Name="rbnPreview" ToolTip="F5" PreviewMouseDown="rbnPreview_PreviewMouseDown">
                 </Syncfusion:RibbonTab>
                 <!--<Syncfusion:Ribbon.ContextTabGroups>
                 <Syncfusion:ContextTabGroup Label="F8" Name="rbnDoshboard" IsGroupVisible="True" BackColor="#FF3E110A">

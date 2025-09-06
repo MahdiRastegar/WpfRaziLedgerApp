@@ -11,6 +11,8 @@ namespace WpfRaziLedgerApp
         public string UserName { get; set; }
         public string Password { get; set; }
         public Guid FkUserGroupId { get; set; }
+        public bool? ribbonFirst_Dash { get; set; }
+        public bool? ShowMainMenu_Dash { get; set; }
 
         public virtual UserGroup FkUserGroup { get; set; }
     }
