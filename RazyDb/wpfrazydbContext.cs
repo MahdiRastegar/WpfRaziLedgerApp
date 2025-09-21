@@ -61,6 +61,7 @@ namespace WpfRaziLedgerApp
         public virtual DbSet<RecieveMoneyDetail> RecieveMoneyDetails { get; set; }
         public virtual DbSet<RecieveMoneyHeader> RecieveMoneyHeaders { get; set; }
         public virtual DbSet<RibbonItem> RibbonItems { get; set; }
+        public virtual DbSet<RibbonItemMain> RibbonItemMains { get; set; }
         public virtual DbSet<Storage> Storages { get; set; }
         public virtual DbSet<StorageReceiptDetail> StorageReceiptDetails { get; set; }
         public virtual DbSet<StorageReceiptHeader> StorageReceiptHeaders { get; set; }
@@ -1100,8 +1101,18 @@ namespace WpfRaziLedgerApp
                 entity.ToTable("RibbonItem");
 
                 entity.Property(e => e.Id).ValueGeneratedNever();
+                entity.HasOne(d => d.fkRbMain)
+                    .WithMany(p => p.fkRbMains)
+                    .HasForeignKey(d => d.fkRbMainId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_RibbonItem_RibbonItemMain");
             });
+            modelBuilder.Entity<RibbonItemMain>(entity =>
+            {
+                entity.ToTable("RibbonItemMain");
 
+                entity.Property(e => e.Id).ValueGeneratedNever();
+            });
             modelBuilder.Entity<Storage>(entity =>
             {
                 entity.ToTable("Storage");
@@ -1341,7 +1352,7 @@ namespace WpfRaziLedgerApp
 
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
-                entity.Property(e => e.FkribbonItemId).HasColumnName("FKRibbonItemId");
+                entity.Property(e => e.FKRibbonItemMainId).HasColumnName("FKRibbonItemMainId");
 
                 entity.Property(e => e.FkuserId).HasColumnName("FKUserId");
             });

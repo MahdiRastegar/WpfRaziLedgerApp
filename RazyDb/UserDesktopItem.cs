@@ -9,7 +9,7 @@ namespace WpfRaziLedgerApp.RazyDb
     {
         public Guid Id { get; set; }
         public Guid FkuserId { get; set; }
-        public Guid FkribbonItemId { get; set; }
+        public Guid FKRibbonItemMainId { get; set; }
         public byte RowIndex { get; set; }
         public byte ColIndex { get; set; }
     }

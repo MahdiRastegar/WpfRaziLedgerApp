@@ -121,7 +121,9 @@ namespace WpfRaziLedgerApp
 
             foreach (var item in items)
             {
-                if (_ribbonMap.TryGetValue(item.FkribbonItemId, out var rb))
+                //var id = db.RibbonItems.FirstOrDefault(r => r.Id == item.FkribbonItemId);
+                //var ribbonId = id.fkRbMainId;
+                if (_ribbonMap.TryGetValue(item.FKRibbonItemMainId, out var rb))
                 {
                     var panel = new StackPanel
                     {
@@ -135,7 +137,7 @@ namespace WpfRaziLedgerApp
                         Width = 48,
                         Height = 48,
                         Stretch = Stretch.Uniform,
-                        Tag = item.FkribbonItemId
+                        Tag = item.FKRibbonItemMainId
                     };
 
                     img.Source = rb.LargeIcon;
@@ -144,8 +146,8 @@ namespace WpfRaziLedgerApp
                     var text = new TextBlock
                     {
                         Text = rb.Label,
-                        Margin=new Thickness(0,10,0,10),
-                        Foreground= Brushes.White,
+                        Margin = new Thickness(0, 10, 0, 10),
+                        Foreground = Brushes.White,
                         FontSize = 15,
                         HorizontalAlignment = HorizontalAlignment.Center,
                         TextAlignment = TextAlignment.Center
@@ -158,7 +160,7 @@ namespace WpfRaziLedgerApp
                     // کانتکست منو برای حذف
                     var ctx = new ContextMenu();
                     var deleteItem = new MenuItem { Header = "حذف از میز کار" };
-                    deleteItem.Click += (s, ev) => RemoveDeskItem(item.FkribbonItemId, item.RowIndex, item.ColIndex);
+                    deleteItem.Click += (s, ev) => RemoveDeskItem(item.FKRibbonItemMainId, item.RowIndex, item.ColIndex);
                     ctx.Items.Add(deleteItem);
                     panel.ContextMenu = ctx;
 
@@ -174,7 +176,7 @@ namespace WpfRaziLedgerApp
             using var db = new wpfrazydbContext();
             var entity = db.UserDesktopItems
                            .FirstOrDefault(u => u.FkuserId == _currentUserId
-                                             && u.FkribbonItemId == ribbonItemId
+                                             && u.FKRibbonItemMainId == ribbonItemId
                                              && u.RowIndex == row
                                              && u.ColIndex == col);
             if (entity != null)
@@ -250,14 +252,16 @@ namespace WpfRaziLedgerApp
         private void SaveDeskItem(Guid ribbonId, byte row, byte col)
         {
             using var db = new wpfrazydbContext();
-            var item = db.UserDesktopItems.FirstOrDefault(u => u.FkuserId == _currentUserId && u.FkribbonItemId == ribbonId);
+            //var id = db.RibbonItems.FirstOrDefault(r => r.fkRbMainId == ribbonId);
+            //ribbonId = id.Id;
+            var item = db.UserDesktopItems.FirstOrDefault(u => u.FkuserId == _currentUserId && u.FKRibbonItemMainId == ribbonId);
             if (item == null)
             {
                 item = new UserDesktopItem
                 {
                     Id = Guid.NewGuid(),
                     FkuserId = _currentUserId,
-                    FkribbonItemId = ribbonId,
+                    FKRibbonItemMainId = ribbonId,
                     RowIndex = row,
                     ColIndex = col
                 };

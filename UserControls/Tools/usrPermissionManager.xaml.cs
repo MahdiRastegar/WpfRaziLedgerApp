@@ -49,7 +49,7 @@ namespace WpfRaziLedgerApp
         private void LoadTreePermissions()
         {
             using var db = new wpfrazydbContext();
-            var ribbonItems = db.RibbonItems.ToList();
+            var ribbonItems = db.RibbonItemMains.ToList();
             var existingPermissions = db.Permissions
                                         .Where(p => p.FkUserGroupId == selectedGroupId)
                                         .ToList();

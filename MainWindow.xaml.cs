@@ -146,8 +146,7 @@ namespace WpfRaziLedgerApp
                 rbnPreview.Visibility = Visibility.Visible;
             //rbnDoshboard.Visibility = 
             if (rbnPreview.Visibility != Visibility.Visible)
-                borderMiz.Visibility = Visibility.Collapsed;
-            
+                borderMiz.Visibility = Visibility.Collapsed;            
             //rbnConfiguration2.Visibility = Visibility.Visible;
         }
         private List<Guid> GetPermissionIdsForGroup(Guid groupId)
@@ -165,7 +164,7 @@ namespace WpfRaziLedgerApp
         {
             using (var context = new wpfrazydbContext())
             {
-                var item = context.RibbonItems.FirstOrDefault(r => r.DisplayName == buttonName && r.Category.Contains(category));
+                var item = context.RibbonItemMains.FirstOrDefault(r => r.DisplayName == buttonName && r.Category.Contains(category));
                 return item?.Id ?? Guid.Empty;
             }
         }
@@ -600,7 +599,7 @@ namespace WpfRaziLedgerApp
                 if (header == "حساب معین")
                     header = "معین";
                 if (header == "سند حسابداری")
-                    header = " سند حسابداری";
+                    header = "سند حسابداری";
                 if (sender is MyPublisher publisher)
                 {
                     tabItemExt = publisher.eventNav.MyRibbonButton;
@@ -695,7 +694,7 @@ namespace WpfRaziLedgerApp
 
         private void btnDelete_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            if (sender is Grid grid && (((grid.DataContext as UserControl).Parent as Grid).Children[1] as Polygon).Tag is Permission permission)
+            if (sender is Grid grid && (((grid.DataContext as UserControl).Parent as Grid).Children[1] as Path).Tag is Permission permission)
             {
                 if (grid.Visibility == Visibility.Visible)
                 {
@@ -711,7 +710,7 @@ namespace WpfRaziLedgerApp
         }
         private void btnSave_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            if (sender is Grid grid && (((grid.DataContext as UserControl).Parent as Grid).Children[1] as Polygon).Tag is Permission permission)
+            if (sender is Grid grid && (((grid.DataContext as UserControl).Parent as Grid).Children[1] as Path).Tag is Permission permission)
             {
                 if (grid.Visibility == Visibility.Visible)
                 {
@@ -735,6 +734,7 @@ namespace WpfRaziLedgerApp
 
             var leaf = new System.Windows.Shapes.Path
             {
+                Opacity = .7,
                 Data = leafPath,
                 Fill = fillBrush,
                 Stroke = green == true ? Brushes.DarkGreen : Brushes.DarkGray,
@@ -772,9 +772,9 @@ namespace WpfRaziLedgerApp
 
             // انیمیشن رنگ (از سبز معمولی به سبز روشن‌تر و برگشت)
             var animation = new ColorAnimation
-            {
-                From = green ? Colors.RoyalBlue : Colors.MistyRose,
-                To = green ? Colors.SkyBlue : Colors.Crimson,
+            {                
+                From = green ? Colors.GreenYellow : Colors.MistyRose,
+                To = green ? Colors.LimeGreen : Colors.Crimson,
                 Duration = TimeSpan.FromSeconds(0.6),
                 AutoReverse = true,
                 RepeatBehavior = RepeatBehavior.Forever
@@ -1261,6 +1261,60 @@ namespace WpfRaziLedgerApp
                     catch { }
                     // چرخ موس به سمت پایین حرکت کرده
                 }
+        }
+
+        private void rbnClosingtemporaryaccounts_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void rbnIssuanceofopeningdocument_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void rbnIssuanceofclosingdocument_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void rbnBill_Click(object sender, RoutedEventArgs e)
+        {
+            var list = GetTabControlItems;
+            var item = list.FirstOrDefault(y => y.Tag?.ToString() == "صورتحساب");
+            if (item != null)
+            {
+                { tabcontrol.SelectedItem = item; if (sender is MyPublisher publisher) ((item.Content as Grid).Children[0] as FrameworkElement).Tag = sender; }
+            }
+            else
+                AddTabWithTriangle("صورتحساب", new usrBillReport(), sender, "", false);
+        }
+
+        private void rbnCardex_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void rbnCommerce_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void rbnStoage_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void rbnElectronicOO_Click(object sender, RoutedEventArgs e)
+        {
+            var list = GetTabControlItems;
+            var item = list.FirstOrDefault(y => y.Tag?.ToString() == "خروجی دفتر الکترونیکی");
+            if (item != null)
+            {
+                { tabcontrol.SelectedItem = item; if (sender is MyPublisher publisher) ((item.Content as Grid).Children[0] as FrameworkElement).Tag = sender; }
+            }
+            else
+                AddTabWithTriangle("خروجی دفتر الکترونیکی", new usrElectronicOO(), sender, "", false);
         }
     }
 }

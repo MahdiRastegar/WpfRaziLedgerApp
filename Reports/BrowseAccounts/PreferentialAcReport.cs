@@ -109,5 +109,23 @@ namespace WpfRaziLedgerApp
         }
         [JsonIgnore]
         public Guid? moeinId { get; set; }
+        public string Diagnosis
+        {
+            get
+            {
+                if (RemainingDebtor > 0)
+                    return "بد";
+                return "بس";
+            }
+        }
+        public decimal Remaining
+        {
+            get
+            {
+                if (RemainingDebtor > 0)
+                    return RemainingDebtor.Value;
+                return RemainingCreditor.HasValue ? RemainingCreditor.Value : 0;
+            }
+        }
     }
 }

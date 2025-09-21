@@ -1507,6 +1507,12 @@ namespace WpfRaziLedgerApp
         {
             if (control.SelectedItem == null || (tempSelectedIndex_TabControl == control.SelectedIndex && sender != null))
                 return;
+            datagrid.SortColumnDescriptions.Clear();
+            datagrid.SortColumnDescriptions.Add(new Syncfusion.UI.Xaml.Grid.SortColumnDescription()
+            {
+                ColumnName = "FkDetai.Date",
+                SortDirection = System.ComponentModel.ListSortDirection.Ascending
+            });
             (datagrid.Parent as TabItemExt).Content = null;
             (control.SelectedItem as TabItemExt).Content = datagrid;
             if (control.SelectedIndex == 0 || control.SelectedIndex == 3)

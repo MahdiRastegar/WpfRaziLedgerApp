@@ -89,38 +89,45 @@ namespace WpfRaziLedgerApp
             List<UserDesktopItem> items = null;
             List<RibbonItem> ribbonItems = null;
             if (category == null)
+            {
                 items = db.UserDesktopItems.Where(u => u.FkuserId == currentUserId).ToList();
+                foreach (var item in items)
+                {
+                    item.Id = db.RibbonItemMains.FirstOrDefault(r => item.FKRibbonItemMainId == r.Id).Id;
+                }
+            }
             else
                 items = db.RibbonItems
     .Where(u => u.Category.Contains(category))
     .ToList()
     .Select((q, indexA) => new UserDesktopItem()
     {
+        Id = q.fkRbMainId,
         FkuserId = currentUserId,
-        FkribbonItemId = q.Id,
+        FKRibbonItemMainId = q.Id,
         RowIndex = (byte)(indexA / 5), // چون 5 ستون دارید
         ColIndex = (byte)(indexA % 5)  // ستون باقیمانده تقسیم
     })
     .ToList();
-            if (category == "انبار")
-                for (int index = 0; index < items.Count; index++)
-                {
-                    // مکان جدید با یک خانه عقب
-                    int newIndex = index - 1;
+            //if (category == "انبار")
+            //    for (int index = 0; index < items.Count; index++)
+            //    {
+            //        // مکان جدید با یک خانه عقب
+            //        int newIndex = index - 1;
 
-                    if (newIndex < 0)
-                        newIndex = items.Count - 1; // اگر اولین بود، بره آخر جدول
+            //        if (newIndex < 0)
+            //            newIndex = items.Count - 1; // اگر اولین بود، بره آخر جدول
 
-                    items[index].RowIndex = (byte)(newIndex / 5);
-                    items[index].ColIndex = (byte)(newIndex % 5);
-                }
+            //        items[index].RowIndex = (byte)(newIndex / 5);
+            //        items[index].ColIndex = (byte)(newIndex % 5);
+            //    }
            
             foreach (var item in items)
             {
-                if (ribbonButtonByItemId.TryGetValue(item.FkribbonItemId, out var rb))
+                if (ribbonButtonByItemId.TryGetValue(item.Id, out var rb))
                 {
-                    if (rb.Label == "گروه قیمت")
-                        continue;
+                    //if (rb.Label == "گروه قیمت")
+                    //    continue;
                     // ساخت StackPanel (آیکون + متن)
                     var panel = new StackPanel
                     {
@@ -343,18 +350,18 @@ namespace WpfRaziLedgerApp
 
         private void SaveDeskItemPosition(Guid FkribbonItemId, byte row, byte col)
         {
-            using var db = new wpfrazydbContext();
-            var item = db.UserDesktopItems.FirstOrDefault(u => u.FkuserId == currentUserId && u.FkribbonItemId == FkribbonItemId);
-            if (item == null)
-            {
-                item = new UserDesktopItem { Id = Guid.NewGuid(), FkuserId = currentUserId, FkribbonItemId = FkribbonItemId, RowIndex = row, ColIndex = col };
-                db.UserDesktopItems.Add(item);
-            }
-            else
-            {
-                item.RowIndex = row; item.ColIndex = col;
-            }
-            db.SaveChanges();
+            //using var db = new wpfrazydbContext();
+            //var item = db.UserDesktopItems.FirstOrDefault(u => u.FkuserId == currentUserId && u.FkribbonItemId == FkribbonItemId);
+            //if (item == null)
+            //{
+            //    item = new UserDesktopItem { Id = Guid.NewGuid(), FkuserId = currentUserId, FkribbonItemId = FkribbonItemId, RowIndex = row, ColIndex = col };
+            //    db.UserDesktopItems.Add(item);
+            //}
+            //else
+            //{
+            //    item.RowIndex = row; item.ColIndex = col;
+            //}
+            //db.SaveChanges();
         }
         bool closed = false;
         // clicking outside closes:

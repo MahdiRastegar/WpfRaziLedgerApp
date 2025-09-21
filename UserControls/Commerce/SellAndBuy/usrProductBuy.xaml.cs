@@ -1347,9 +1347,23 @@ namespace WpfRaziLedgerApp
             {
                 var tt = item.Data as ProductBuyHeader;
                 if (!tt.ProductBuyDetails.Any(i => i.Value.ToString().Contains(SearchTermTextBox.Text.ToLower()) == true ||
-                i.FkCommodity.FkUnit.Name.ToString().Contains(SearchTermTextBox.Text.ToLower()) ||
                 i.FkCommodity.Code.ToString().Contains(SearchTermTextBox.Text.ToLower()) ||
-                i.FkCommodity.Name.ToLower().Contains(SearchTermTextBox.Text.ToLower()) == true))
+                i.FkCommodity.Name.ToLower().Contains(SearchTermTextBox.Text.ToLower()) == true ||
+                    i.Value.ToString().ToLower().Contains(SearchTermTextBox.Text.ToLower()) == true ||
+                    i.SumNextDiscount.ToString().ToLower().Contains(SearchTermTextBox.Text.ToLower()) == true ||
+                    i.Sum.ToString().ToLower().Contains(SearchTermTextBox.Text.ToLower()) == true ||
+                    i.Discount.ToString().ToLower().Contains(SearchTermTextBox.Text.ToLower()) == true ||
+                    i.Fee.ToString().ToLower().Contains(SearchTermTextBox.Text.ToLower()) == true ||
+                    i.Tax.ToString().ToLower().Contains(SearchTermTextBox.Text.ToLower()) == true)
+                    /*||
+                tt.InvoiceDiscount.ToString().ToLower().Contains(SearchTermTextBox.Text.ToLower())||
+                tt.Description.ToString().ToLower().Contains(SearchTermTextBox.Text.ToLower()) ||
+                tt.InvoiceNumber.ToString().ToLower().Contains(SearchTermTextBox.Text.ToLower()) ||
+                tt.BuyRemittanceNumber.ToString().ToLower().Contains(SearchTermTextBox.Text.ToLower()) ||
+                tt.ShippingCost.ToString().ToLower().Contains(SearchTermTextBox.Text.ToLower()) ||
+                tt.CarPlate.ToString().ToLower().Contains(SearchTermTextBox.Text.ToLower()) ||
+                tt.CarType.ToString().ToLower().Contains(SearchTermTextBox.Text.ToLower())*/
+                )
                 {
                     //datagridSearch.View.Records.Remove(item);
                     list.Add(ir);

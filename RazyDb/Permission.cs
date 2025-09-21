@@ -19,7 +19,7 @@ namespace WpfRaziLedgerApp
         public Guid FkRibbonItemId { get; set; }
         public Guid FkUserGroupId { get; set; }
 
-        public virtual RibbonItem FkRibbonItem { get; set; }
+        public virtual RibbonItemMain FkRibbonItem { get; set; }
         public virtual UserGroup FkUserGroup { get; set; }
     }
 }

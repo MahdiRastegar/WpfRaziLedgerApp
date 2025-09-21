@@ -642,18 +642,29 @@ namespace WpfRaziLedgerApp
                         moeinId=anyRecord.FkMoeinId
                     };
                     if (groupedY.ContainsKey(key))
-                        preferential.acDocumentDetails = groupedY[key].OrderBy(y => y.FkAcDocHeader.Date).ToObservableCollection();
-                    decimal runningCount = 0;
-                    foreach (var item in preferential.acDocumentDetails)
                     {
-                        runningCount += (item.Debtor??0)-(item.Creditor??0);
-                        if (runningCount >= 0)
-                            item.RunningSum = runningCount.ToString("#,##0");
-                        else
-                            item.RunningSum = $"({(-runningCount).ToString("#,##0")})";
+                        preferential.acDocumentDetails = groupedY[key].OrderBy(y => y.FkAcDocHeader.Date).ToObservableCollection();
+                        decimal runningCount = 0;
+                        foreach (var item in preferential.acDocumentDetails)
+                        {
+                            runningCount += (item.Debtor ?? 0) - (item.Creditor ?? 0);
+                            if (runningCount >= 0)
+                                item.RunningSum = runningCount.ToString("#,##0");
+                            else
+                                item.RunningSum = $"({(-runningCount).ToString("#,##0")})";
+                        }
+                        preferential.acDocumentDetails.Insert(0,new AcDocumentDetail()
+                        {
+                            FkMoein = preferential.FkMoein,
+                            FkPreferential = preferential.FkPreferential,
+                            Description = "مانده از قبل",
+                            Debtor = preferential.BeforeDebtor,
+                            Creditor = preferential.BeforeCreditor,
+                            RunningSum = (preferential.BeforeDebtor - preferential.BeforeCreditor >= 0) ? (preferential.BeforeDebtor - preferential.BeforeCreditor).Value.ToString("#,##0") :
+                    $"({(-(preferential.BeforeDebtor - preferential.BeforeCreditor)).Value.ToString("#,##0")})"
+                        });
+                        PreferentialAcReportEntities.Add(preferential);
                     }
-
-                    PreferentialAcReportEntities.Add(preferential);
                 }
 
                 if (control.SelectedIndex == 3)
@@ -752,15 +763,19 @@ namespace WpfRaziLedgerApp
 
         private void SearchTermTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            try
+            var sfDataGrid = control.SelectedContent as Syncfusion.UI.Xaml.Grid.SfDataGrid;
+            if (sfDataGrid != null)
             {
-                if (SearchTermTextBox.Text.Trim() == "")
-                    datagrid.SearchHelper.ClearSearch();
-                else
-                    datagrid.SearchHelper.Search(SearchTermTextBox.Text);
-            }
-            catch (Exception ex)
-            {
+                try
+                {
+                    if (SearchTermTextBox.Text.Trim() == "")
+                        sfDataGrid.SearchHelper.ClearSearch();
+                    else
+                        sfDataGrid.SearchHelper.Search(SearchTermTextBox.Text);
+                }
+                catch (Exception ex)
+                {
+                }
             }
         }
 
@@ -1021,7 +1036,7 @@ namespace WpfRaziLedgerApp
                 }
                 catch { }
                 try
-                {
+                {                    
                     dataPager5.Source = baseBrowseAccounts.acDocumentDetails;
                 }
                 catch { }
@@ -1039,6 +1054,11 @@ namespace WpfRaziLedgerApp
                     datagridِDetails.SortColumnDescriptions.Add(new Syncfusion.UI.Xaml.Grid.SortColumnDescription()
                     {
                         ColumnName = "FkAcDocHeader.Date",
+                        SortDirection = System.ComponentModel.ListSortDirection.Ascending
+                    });
+                    datagridِDetails.SortColumnDescriptions.Add(new Syncfusion.UI.Xaml.Grid.SortColumnDescription()
+                    {
+                        ColumnName = "FkAcDocHeader.NoDoument",
                         SortDirection = System.ComponentModel.ListSortDirection.Ascending
                     });
                 } catch { }

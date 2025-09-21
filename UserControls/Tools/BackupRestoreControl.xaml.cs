@@ -1,4 +1,5 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using DocumentFormat.OpenXml.Wordprocessing;
+using Microsoft.Data.SqlClient;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -37,6 +38,7 @@ namespace WpfRaziLedgerApp
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
             connectionString = System.IO.File.ReadAllText(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "cs.txt"));
+            cmbAction.ItemsSource =  DriveInfo.GetDrives().Select(x => x.Name);
         }
 
         // انتخاب مسیر فولدر بکاپ
@@ -72,7 +74,10 @@ namespace WpfRaziLedgerApp
                     Xceed.Wpf.Toolkit.MessageBox.Show("لطفا مسیر پوشه بکاپ را انتخاب کنید.");
                     return;
                 }
-
+                if (!Directory.Exists(folderPath))
+                {
+                    Directory.CreateDirectory(folderPath);
+                }
                 string fileName = $"{dbName}-{DateTime.Now:yyyy-MM-dd-HH-mm-ss}.bak";
                 string filePath = System.IO.Path.Combine(folderPath, fileName);
 
@@ -160,16 +165,22 @@ namespace WpfRaziLedgerApp
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                txtBackupFolder.Text = System.IO.Path.Combine(Directory.GetDirectoryRoot(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory)), "wpfrazydbBackup");
-            }
-            catch { }
+            
         }
 
         private void UserControl_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             
+        }
+
+        private void cmbAction_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                //txtBackupFolder.Text = System.IO.Path.Combine(Directory.GetDirectoryRoot(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory)), "wpfrazydbBackup");
+                txtBackupFolder.Text = System.IO.Path.Combine(cmbAction.SelectedItem.ToString(), "wpfrazydbBackup");
+            }
+            catch { }
         }
     }
 }

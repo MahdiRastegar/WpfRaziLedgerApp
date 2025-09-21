@@ -1433,9 +1433,14 @@ namespace WpfRaziLedgerApp
             {
                 var tt = item.Data as ProductSellHeader;
                 if (!tt.ProductSellDetails.Any(i => i.Value.ToString().Contains(SearchTermTextBox.Text.ToLower())==true ||
-                i.FkCommodity.FkUnit.Name.ToString().Contains(SearchTermTextBox.Text.ToLower()) ||
                 i.FkCommodity.Code.ToString().Contains(SearchTermTextBox.Text.ToLower()) ||
-                i.FkCommodity.Name.ToLower().Contains(SearchTermTextBox.Text.ToLower()) == true))
+                i.FkCommodity.Name.ToLower().Contains(SearchTermTextBox.Text.ToLower()) == true ||
+                    i.Value.ToString().ToLower().Contains(SearchTermTextBox.Text.ToLower()) == true ||
+                    i.SumNextDiscount.ToString().ToLower().Contains(SearchTermTextBox.Text.ToLower()) == true ||
+                    i.Sum.ToString().ToLower().Contains(SearchTermTextBox.Text.ToLower()) == true ||
+                    i.Discount.ToString().ToLower().Contains(SearchTermTextBox.Text.ToLower()) == true ||
+                    i.Fee.ToString().ToLower().Contains(SearchTermTextBox.Text.ToLower()) == true ||
+                    i.Tax.ToString().ToLower().Contains(SearchTermTextBox.Text.ToLower()) == true))
                 {
                     //datagridSearch.View.Records.Remove(item);
                     list.Add(ir);
