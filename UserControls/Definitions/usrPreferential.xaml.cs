@@ -568,7 +568,7 @@ namespace WpfRaziLedgerApp
             }
             if (listPreferentials.Contains(preferential.PreferentialCode.ToString()))
             {
-                Xceed.Wpf.Toolkit.MessageBox.Show("در چارچوب سیستم از این تفضیل استفاده شده است و قابل حذف نیست!");
+                Xceed.Wpf.Toolkit.MessageBox.Show("در مالی از این تفضیل استفاده شده است و قابل حذف نیست!");
                 return;
             }
             db.Preferentials.Remove(preferential);

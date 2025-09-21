@@ -545,7 +545,7 @@ FontFamily="{StaticResource IranSans}" Width="27"
                     <Image Source="/Images/print.png" IsHitTestVisible="False" Width="36" />
                 </Grid>
                 <Grid x:Name="gridSetting" Visibility="Collapsed">
-                    <Button Style="{StaticResource CustomButtonStyle}" ToolTip="چارچوب سیستم" Click="btnSetting_Click" x:Name="btnSetting" HorizontalAlignment="Center" Margin="10 0 10 0" Width="60" Content="" FontSize="20" Height="45">
+                    <Button Style="{StaticResource CustomButtonStyle}" ToolTip="مالی" Click="btnSetting_Click" x:Name="btnSetting" HorizontalAlignment="Center" Margin="10 0 10 0" Width="60" Content="" FontSize="20" Height="45">
                         <Button.Background>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                 <GradientStop Color="#FFFAFFCD"/>

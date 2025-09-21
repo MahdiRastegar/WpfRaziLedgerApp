@@ -45,7 +45,7 @@ namespace WpfRaziLedgerApp
             //    return false;
             //}
             var list = MainWindow.Current.GetTabControlItems;
-            var item = list.FirstOrDefault(y => y.Tag?.ToString() == "چارچوب سیستم");
+            var item = list.FirstOrDefault(y => y.Tag?.ToString() == "مالی");
             MainWindow.Current.tabcontrol.Items.Remove(item);            
             return true;
         }

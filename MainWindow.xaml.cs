@@ -1032,13 +1032,13 @@ namespace WpfRaziLedgerApp
         private void rbnConfiguration_Click(object sender, RoutedEventArgs e)
         {
             var list = GetTabControlItems;
-            var item = list.FirstOrDefault(y => y.Tag?.ToString() == "چارچوب سیستم");
+            var item = list.FirstOrDefault(y => y.Tag?.ToString() == "مالی");
             if (item != null)
             {
                 {tabcontrol.SelectedItem = item; if (sender is MyPublisher publisher) ((item.Content as Grid).Children[0] as FrameworkElement).Tag = sender;}
             }
             else
-                AddTabWithTriangle("چارچوب سیستم", new usrSettingConfig(), sender , "Tools/configuration.png", false);            
+                AddTabWithTriangle("مالی", new usrSettingConfig(), sender , "Tools/configuration.png", false);            
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
