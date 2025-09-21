@@ -1316,5 +1316,15 @@ namespace WpfRaziLedgerApp
             else
                 AddTabWithTriangle("خروجی دفتر الکترونیکی", new usrElectronicOO(), sender, "", false);
         }
+
+        private void rbnPrint_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void rbnDate_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
