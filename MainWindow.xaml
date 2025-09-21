@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" PreviewKeyDown="Window_PreviewKeyDown" PreviewMouseWheel="Window_PreviewMouseWheel"
         xmlns:local="clr-namespace:WpfRaziLedgerApp" xmlns:Syncfusion="http://schemas.syncfusion.com/wpf"
         mc:Ignorable="d" Loaded="Window_Loaded" SizeChanged="Window_SizeChanged" Closing="Window_Closing"
-        Title="صفحه اصلی" Height="450" Width="1150"  MinHeight="1024" MinWidth="1280">
+        Title="صفحه اصلی" Height="450" Width="1150"  MinHeight="980" MinWidth="1280">
     <!--xmlns:skin="clr-namespace:Syncfusion.SfSkinManager;assembly=Syncfusion.SfSkinManager.WPF"
         skin:SfSkinManager.Theme="{skin:SkinManagerExtension ThemeName=Black}"-->
     <Grid>
