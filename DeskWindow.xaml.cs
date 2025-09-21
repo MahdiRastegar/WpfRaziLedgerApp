@@ -154,7 +154,8 @@ namespace WpfRaziLedgerApp
                         Foreground = Brushes.White,
                         FontSize = 15,
                         HorizontalAlignment = HorizontalAlignment.Center,
-                        TextAlignment = TextAlignment.Center
+                        TextAlignment = TextAlignment.Center,
+                        TextWrapping = TextWrapping.Wrap
                     };
 
                     // اضافه کردن آیکون و متن به پنل
