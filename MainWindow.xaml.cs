@@ -897,24 +897,24 @@ namespace WpfRaziLedgerApp
         private void rbnCodingReceiptTypes_Click(object sender, RoutedEventArgs e)
         {
             var list = GetTabControlItems;
-            var item = list.FirstOrDefault(y => y.Tag?.ToString() == "کدینگ انواع رسید");
+            var item = list.FirstOrDefault(y => y.Tag?.ToString() == "انواع رسید");
             if (item != null)
             {
                 {tabcontrol.SelectedItem = item; if (sender is MyPublisher publisher) ((item.Content as Grid).Children[0] as FrameworkElement).Tag = sender;}
             }
             else            
-                AddTabWithTriangle("کدینگ انواع رسید", new usrCodingReceiptTypes(),sender , "Commerce/receiptTypes.jpg");
+                AddTabWithTriangle("انواع رسید", new usrCodingReceiptTypes(),sender , "Commerce/receiptTypes.jpg");
         }
         private void rbnCodingTypesTransfer_Click(object sender, RoutedEventArgs e)
         {
             var list = GetTabControlItems;
-            var item = list.FirstOrDefault(y => y.Tag?.ToString() == "کدینگ انواع حواله");
+            var item = list.FirstOrDefault(y => y.Tag?.ToString() == "انواع حواله");
             if (item != null)
             {
                 {tabcontrol.SelectedItem = item; if (sender is MyPublisher publisher) ((item.Content as Grid).Children[0] as FrameworkElement).Tag = sender;}
             }
             else            
-                AddTabWithTriangle("کدینگ انواع حواله", new usrCodingTypesTransfer(),sender , "Commerce/receiptTypes.jpg");
+                AddTabWithTriangle("انواع حواله", new usrCodingTypesTransfer(),sender , "Commerce/receiptTypes.jpg");
         }
 
         private void rbnStorageReceipt_Click(object sender, RoutedEventArgs e)

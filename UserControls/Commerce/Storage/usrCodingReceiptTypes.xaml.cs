@@ -112,10 +112,10 @@ namespace WpfRaziLedgerApp
             var M = db.CodingReceiptTypes.ToList();
             datagrid.ItemsSource = M;
             if (group == null)
-                Xceed.Wpf.Toolkit.MessageBox.Show("اطلاعات اضافه شد.", "ثبت کدینگ انواع رسید");
+                Xceed.Wpf.Toolkit.MessageBox.Show("اطلاعات اضافه شد.", "ثبت انواع رسید");
             else
             {
-                Xceed.Wpf.Toolkit.MessageBox.Show("اطلاعات ویرایش شد.", "ویرایش کدینگ انواع رسید");
+                Xceed.Wpf.Toolkit.MessageBox.Show("اطلاعات ویرایش شد.", "ویرایش انواع رسید");
             }
             btnCancel_Click(null, null);
 
@@ -360,7 +360,7 @@ namespace WpfRaziLedgerApp
             }
             forceClose = true;
             var list = MainWindow.Current.GetTabControlItems;
-            var item = list.FirstOrDefault(y => y.Tag?.ToString() == "کدینگ انواع رسید");
+            var item = list.FirstOrDefault(y => y.Tag?.ToString() == "انواع رسید");
             MainWindow.Current.tabcontrol.Items.Remove(item);
             return true;
         }

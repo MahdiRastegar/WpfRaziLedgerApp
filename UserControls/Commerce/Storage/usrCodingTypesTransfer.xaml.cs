@@ -112,10 +112,10 @@ namespace WpfRaziLedgerApp
             var M = db.CodingTypesTransfers.ToList();
             datagrid.ItemsSource = M;
             if (group == null)
-                Xceed.Wpf.Toolkit.MessageBox.Show("اطلاعات اضافه شد.", "ثبت کدینگ انواع حواله");
+                Xceed.Wpf.Toolkit.MessageBox.Show("اطلاعات اضافه شد.", "ثبت انواع حواله");
             else
             {
-                Xceed.Wpf.Toolkit.MessageBox.Show("اطلاعات ویرایش شد.", "ویرایش کدینگ انواع حواله");
+                Xceed.Wpf.Toolkit.MessageBox.Show("اطلاعات ویرایش شد.", "ویرایش انواع حواله");
             }
             btnCancel_Click(null, null);
 
@@ -360,7 +360,7 @@ namespace WpfRaziLedgerApp
             }
             forceClose = true;
             var list = MainWindow.Current.GetTabControlItems;
-            var item = list.FirstOrDefault(y => y.Tag?.ToString() == "کدینگ انواع حواله");
+            var item = list.FirstOrDefault(y => y.Tag?.ToString() == "انواع حواله");
             MainWindow.Current.tabcontrol.Items.Remove(item);
             return true;
         }
